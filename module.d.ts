@@ -3,22 +3,22 @@ declare module "*.css" {
     export default res;
 }
 
-  declare module "*.json" {
+declare module "*.json" {
     const res: string;
     export default res;
-  }
+}
 
-  declare module "*.jpg" {
+declare module "*.jpg" {
     const res: string;
     export default res;
-  }
+}
 
-  declare module "*.png" {
+declare module "*.png" {
     const res: string;
     export default res;
-  }
+}
 
-  declare module "*.svg" {
+declare module "*.svg" {
     const res: string;
     export default res;
-  }
+}
