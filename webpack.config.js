@@ -13,7 +13,7 @@ const baseConfig = {
                 test: /\.tsx?$/,
                 use: {
                     loader: "ts-loader",
-                  },
+                },
                 include: [path.resolve(__dirname, 'src')]
             },
             {
@@ -24,11 +24,11 @@ const baseConfig = {
                     {
                         loader: 'postcss-loader',
                         options: {
-                          postcssOptions: {
+                        postcssOptions: {
                             plugins: () => [
-                              require('autoprefixer')
+                                require('autoprefixer')
                             ]
-                          }
+                        }
                         }
                     },
                     'sass-loader',
