@@ -21,6 +21,16 @@ const baseConfig = {
                 use: [
                     miniCss.loader,
                     'css-loader',
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                          postcssOptions: {
+                            plugins: () => [
+                              require('autoprefixer')
+                            ]
+                          }
+                        }
+                    },
                     'sass-loader',
                 ],
             },
