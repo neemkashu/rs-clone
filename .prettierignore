@@ -1,0 +1,7 @@
+# Ignore all HTML files:
+*.html
+
+# Ignore all js configs:
+*.js
+/src/*.js
+src/.js
