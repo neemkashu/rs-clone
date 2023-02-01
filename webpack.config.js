@@ -34,6 +34,12 @@ const baseConfig = {
                     'sass-loader',
                 ],
             },
+            {
+                test: /\.svg$/,
+                use: {
+                    loader: 'svg-url-loader',
+                },
+            }
         ],
     },
     resolve: {

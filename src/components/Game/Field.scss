@@ -1,0 +1,15 @@
+td {
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    table-layout:fixed;
+
+    overflow:hidden;
+}
+.filled-square {
+    background-color: var(--bs-teal);
+}
+.crossed-square {
+    background-image: url("../../image/cross.svg");
+    background-size: cover;
+}
