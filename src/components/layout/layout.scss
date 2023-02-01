@@ -1,4 +1,7 @@
-@import '../app/App.scss';
+header,
+footer {
+    transition: 0.2s;
+}
 
 footer {
     a {
@@ -17,4 +20,15 @@ footer {
 .rss-image {
     height: 25px;
     cursor: pointer;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: row;
+}
+
+@media screen and (max-width: 576px) {
+    .main-container {
+        flex-direction: column;
+    }
 }
