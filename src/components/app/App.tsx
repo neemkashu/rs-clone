@@ -6,14 +6,12 @@ import { Catalog } from '../../pages/catalog/catalog';
 
 function App(): JSX.Element {
     return (
-        <>
-            <Routes>
-                <Route path="/" element={<Layout />}>
-                    <Route index element={<Main />} />
-                    <Route path="catalog" element={<Catalog />} />
-                </Route>
-            </Routes>
-        </>
+        <Routes>
+            <Route path="/" element={<Layout />}>
+                <Route index element={<Main />} />
+                <Route path="/catalog" element={<Catalog />} />
+            </Route>
+        </Routes>
     );
 }
 
