@@ -6,7 +6,7 @@ import Stopwatch from './Stopwatch';
 
 function Game(): JSX.Element {
     return (
-        <div className="container">
+        <div className="container game">
             <GameHeader />
             <Stopwatch />
             <Field />

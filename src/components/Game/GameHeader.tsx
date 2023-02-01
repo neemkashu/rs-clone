@@ -28,7 +28,7 @@ const {
 
 function GameHeader(): JSX.Element {
     return (
-        <div className="container game-header">
+        <div className="game-header">
             <h2>
                 {nonogramCaption} {showName}
             </h2>
