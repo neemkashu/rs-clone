@@ -1,22 +1,19 @@
 import './aside.scss';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 export function Aside(): JSX.Element {
     const mQuery = window.matchMedia('(max-width: 576px)');
 
-    function handleResize(query: MediaQueryList | MediaQueryListEvent) {
+    function handleResize(query: MediaQueryList | MediaQueryListEvent): void {
         const asideBtns = document.body.querySelector('#aside-btns');
         const aside = document.body.querySelector('#aside');
-        if (query.matches) {
-            asideBtns?.classList.remove('not-load-state');
+        if (query?.matches) {
             asideBtns?.classList.remove('btn-group-vertical');
-            console.log(asideBtns);
             aside?.classList.remove('border-end');
             asideBtns?.classList.add('btn-group');
             asideBtns?.classList.add('btn-group-sm');
         } else {
-            console.log('sda');
-            asideBtns?.classList.remove('not-load-state');
             asideBtns?.classList.remove('btn-group');
             asideBtns?.classList.remove('btn-group-sm');
             asideBtns?.classList.add('btn-group-vertical');
@@ -26,13 +23,13 @@ export function Aside(): JSX.Element {
 
     mQuery.addListener(handleResize);
 
-    window.addEventListener('load', () => {
+    useEffect(() => {
         handleResize(mQuery);
-    });
+    }, [mQuery]);
 
     return (
-        <aside id="aside" className="col-sm-3 col-lg-2 border-3">
-            <div id="aside-btns" className="not-load-state container p-2">
+        <aside id="aside" className="col-sm-4 col-md-3 col-lg-2 border-3">
+            <div id="aside-btns" className="container p-2">
                 <Link to="/" className="btn btn-outline-primary">
                     Main Page
                 </Link>
