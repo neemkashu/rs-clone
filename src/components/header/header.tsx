@@ -10,7 +10,7 @@ export function Header(): JSX.Element {
         allLangContainers.forEach((elem) => {
             elem.classList.remove('active');
         });
-        eventTarget?.classList.add('active');
+        properEventTarget?.classList.add('active');
         if (dropDownButton) dropDownButton.innerHTML = eventTargetContent;
         console.log('eventTargetContent', eventTargetContent);
     }
