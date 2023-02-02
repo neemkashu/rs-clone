@@ -21,7 +21,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "react-scripts build && git checkout deploy"
+    "deploy": "react-scripts build && git stash && git checkout deploy && cp -r ./build/* ./nonograms && git add -A && git commit -m \"feat: update deploy\" && git push && git checkout - && git stash pop"
   },
   "browserslist": {
     "production": [

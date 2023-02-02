@@ -8,7 +8,7 @@ const { progress: progressCaption } = CAPTIONS;
 
 const getProgress = (): string => {
     // TODO: calculates persentage from input parameters
-    const progress = 23;
+    const progress = 100;
     return `${progress}%`;
 };
 const progress = getProgress();

@@ -8,7 +8,7 @@ const NONOGRAM_INFO = {
     difficulty: 3.2,
     status: 'new',
     id: 234,
-    userTime: 375570842,
+    userTime: 370842,
 };
 
 const { userTime } = NONOGRAM_INFO;
