@@ -18,14 +18,22 @@ columnsUnified.forEach((column, index) => {
     }
 });
 
-const tableRows = Array.from({ length: columnsHeight }, (item, index) => (
-    <tr key={`head-numbers-${index}`}></tr>
+const tableRows = Array.from({ length: columnsHeight }, (item, indexRow) => (
+    <tr key={`head-numbers-${indexRow}`}>
+        {columnsUnified.map((column, indexColumn) => {
+            console.log(column, indexColumn);
+            const square = (
+                <div className="square square-number">{column[indexRow] ?? ''}</div>
+            );
+            return <td className="cell-square">{square}</td>;
+        })}
+    </tr>
 ));
 
 console.log(columnsUnified, columnsHeight, tableRows);
 function Columns(): JSX.Element {
     return (
-        <table className="table nonogram-numbers-border">
+        <table className="table table-bordered nonogram-numbers-border">
             <tbody className="numbers-column-container">{tableRows}</tbody>
         </table>
     );

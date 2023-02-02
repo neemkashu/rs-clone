@@ -21,7 +21,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "react-scripts build && git stash && git checkout deploy && cp -r ./build/* ./nonograms && git add -A && git commit -m \"feat: update deploy\" && git push && git checkout - && git stash pop"
+    "deploy-bash": "react-scripts build && git stash && git checkout deploy && cp -r ./build/* ./nonograms && git add -A && git commit -m \"feat: update deploy\" && git push && git checkout - && git stash pop",
+    "deploy-win": "react-scripts build && git stash && git checkout deploy && xcopy build nonograms\\ /E/Y && git add -A && git commit -m \"feat: update deploy\" && git push && git checkout - && git stash pop"
   },
   "browserslist": {
     "production": [
