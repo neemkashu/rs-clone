@@ -13,7 +13,6 @@ if (!rootDiv) {
 const root = ReactDOM.createRoot(rootDiv);
 root.render(
     <React.StrictMode>
-        <div>Some Div</div>
         <BrowserRouter>
             <App />
         </BrowserRouter>
