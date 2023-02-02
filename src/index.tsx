@@ -2,7 +2,7 @@ import './index.css';
 import '../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import App from './components/app/App';
 
 const rootDiv = document.getElementById('root');
@@ -13,8 +13,8 @@ if (!rootDiv) {
 const root = ReactDOM.createRoot(rootDiv);
 root.render(
     <React.StrictMode>
-        <HashRouter>
+        <BrowserRouter>
             <App />
-        </HashRouter>
+        </BrowserRouter>
     </React.StrictMode>
 );

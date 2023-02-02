@@ -15,11 +15,27 @@ export function Header(): JSX.Element {
         console.log('eventTargetContent', eventTargetContent);
     }
 
+    function handleColorThemeChange(e: React.MouseEvent): void {
+        const btn = e.currentTarget as HTMLButtonElement;
+        const lightThemeBtnContent = btn.querySelector(
+            '#lightThemeBtnContent'
+        ) as HTMLDivElement;
+        const darkThemeBtnContent = btn.querySelector(
+            '#darkThemeBtnContent'
+        ) as HTMLDivElement;
+        btn.classList.toggle('btn-warning');
+        btn.classList.toggle('btn-dark');
+        console.log(btn);
+        lightThemeBtnContent.toggleAttribute('hidden');
+        darkThemeBtnContent.toggleAttribute('hidden');
+    }
+
     return (
         <header className="container p-2 border-bottom border-start border-end border-3 rounded-bottom">
             <div className="row flex-wrap">
-                <div className="col d-flex justify-content-center justify-content-sm-start gap-2 py-1">
-                    <div className="dropdown">
+                <div className="col d-flex justify-content-between justify-content-sm-start gap-2 py-1">
+                    <div className="d-flex align-items-center">☰</div>
+                    <div className="dropdown d-flex align-items-center">
                         <button
                             className="btn dropdown-toggle"
                             type="button"
@@ -142,6 +158,14 @@ export function Header(): JSX.Element {
                             </div>
                         </div>
                     </div>
+                    <button onClick={handleColorThemeChange} className="btn btn-warning">
+                        <div id="lightThemeBtnContent" className=" text-center">
+                            Ligth ☀
+                        </div>
+                        <div id="darkThemeBtnContent" hidden className=" text-center">
+                            Dark: 🌒
+                        </div>
+                    </button>
                 </div>
                 <div className="col d-flex justify-content-center justify-content-sm-end gap-2 py-1">
                     <a href="#" className="btn btn-outline-secondary">

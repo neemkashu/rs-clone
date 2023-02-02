@@ -1,3 +1,7 @@
+#dropdownLangButton::after {
+    display: none;
+}
+
 .dropdown-menu{
     --bs-dropdown-min-width: fit-content;
 }
