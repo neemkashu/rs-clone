@@ -1,23 +1,70 @@
 {
     "extends": [
-    "react-app",
-    "react-app/jest"
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "airbnb",
+      "plugin:prettier/recommended",
+      "plugin:import/typescript"
     ],
-    "overrides": [
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint", "prettier", "react-hooks"],
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        }
+      }
+    },
+    "env": {
+      "browser": true,
+      "node": true,
+      "jest": true
+    },
+    "rules": {
+      "prettier/prettier": "error",
+      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/no-explicit-any": "error",
+      "no-use-before-define": "off",
+      "@typescript-eslint/no-use-before-define": ["error"],
+      "react/jsx-filename-extension": [ "warn", {"extensions": [".tsx"]} ],
+      "react/react-in-jsx-scope": "off",
+      "react/jsx-props-no-spreading": "off",
+      "react/no-array-index-key": "warn",
+      "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+      "react/default-props-match-prop-types": [0, { "allowRequiredDefaults": true }],
+      "import/extensions": ["error", "ignorePackages", {
+        "": "never",
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }],
+      "max-len": [
+        "error",
         {
-        "files": ["**/*.ts?(x)"],
-        "rules": {
-            "@typescript-eslint/no-unused-vars": "off",
-            "max-len": [
-            "error",
-            {
-                "code": 90,
-                "ignoreStrings": true,
-                "ignoreUrls": true,
-                "ignoreTemplateLiterals": true
-            }
-            ]
+            "code": 90,
+            "ignoreStrings": true,
+            "ignoreUrls": true,
+            "ignoreTemplateLiterals": true
         }
+      ],
+      "no-console": "off",
+      "no-unused-vars": "off",
+      "react/prop-types": "off",
+      "react/require-default-props": "off",
+      "react/no-unused-prop-types": "off",
+      "no-param-reassign": [
+        "error",
+        {
+          "props": true,
+          "ignorePropertyModificationsFor": ["total"]
         }
-    ]
+      ],
+      "no-shadow": "off",
+      "@typescript-eslint/no-shadow": ["error"],
+      "react-hooks/exhaustive-deps": "warn"
+    },
+    "globals": {
+      "JSX": true
+  }
 }

@@ -22,22 +22,40 @@ const {
 function Controls(): JSX.Element {
     return (
         <div className="btn-group game-controls">
-            <button className="game-undo btn btn-toolbar btn-outline-primary">
+            <button
+                type="button"
+                className="game-undo btn btn-toolbar btn-outline-primary"
+            >
                 {stepBackCaption}
             </button>
-            <button className="game-redo btn btn-toolbar btn-outline-primary">
+            <button
+                type="button"
+                className="game-redo btn btn-toolbar btn-outline-primary"
+            >
                 {stepForwardCaption}
             </button>
-            <button className="game-clear btn btn-toolbar btn-outline-primary">
+            <button
+                type="button"
+                className="game-clear btn btn-toolbar btn-outline-primary"
+            >
                 {clearCaption}
             </button>
-            <button className="game-clear btn btn-toolbar btn-outline-primary btn-outline-danger">
+            <button
+                type="button"
+                className="game-clear btn btn-toolbar btn-outline-primary btn-outline-danger"
+            >
                 {restartCaption}
             </button>
-            <button className="game-clear btn btn-toolbar btn-outline-primary">
+            <button
+                type="button"
+                className="game-clear btn btn-toolbar btn-outline-primary"
+            >
                 {checkCaption}
             </button>
-            <button className="game-clear btn btn-toolbar btn-outline-primary btn-outline-danger">
+            <button
+                type="button"
+                className="game-clear btn btn-toolbar btn-outline-primary btn-outline-danger"
+            >
                 {hintCaption}
             </button>
         </div>

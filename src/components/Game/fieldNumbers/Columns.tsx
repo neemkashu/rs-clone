@@ -1,8 +1,10 @@
 import { NONOGRAM_INFO } from '../../../utils/constants';
 import './Columns.scss';
+import NumberCell from './NumberCell';
 
 const { width, height, goal, rows, columns } = NONOGRAM_INFO;
 
+// the columnsUnified generation will be server part in the future
 const columnsUnified = columns
     .trim()
     .split('\n')
@@ -17,20 +19,20 @@ columnsUnified.forEach((column, index) => {
         column.unshift('');
     }
 });
+const location = 'header';
 
 const tableRows = Array.from({ length: columnsHeight }, (item, indexRow) => (
-    <tr key={`head-numbers-${indexRow}`}>
+    <tr key={`${location}-row-${indexRow}`}>
         {columnsUnified.map((column, indexColumn) => {
-            console.log(column, indexColumn);
-            const square = (
-                <div className="square square-number">{column[indexRow] ?? ''}</div>
+            return (
+                <td className="cell-square">
+                    {NumberCell(column[indexRow], indexRow, indexColumn, location)}
+                </td>
             );
-            return <td className="cell-square">{square}</td>;
         })}
     </tr>
 ));
 
-console.log(columnsUnified, columnsHeight, tableRows);
 function Columns(): JSX.Element {
     return (
         <table className="table table-bordered nonogram-numbers-border">
