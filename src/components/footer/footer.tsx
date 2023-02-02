@@ -1,7 +1,7 @@
 export function Footer(): JSX.Element {
     return (
         <footer className="footer container p-2 d-flex flex-wrap justify-content-center justify-content-sm-between border-3 border-top border-start border-end rounded-top">
-            <div className="d-flex justify-content-between gap-3 p-1">
+            <div className="d-flex flex-wrap justify-content-between gap-3 p-1">
                 <a
                     className="col-auto text-decoration-none"
                     href="https://github.com/neemkashu"

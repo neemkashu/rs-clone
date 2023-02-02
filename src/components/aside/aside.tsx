@@ -6,19 +6,26 @@ export function Aside(): JSX.Element {
     const mQuery = window.matchMedia('(max-width: 576px)');
 
     function handleResize(query: MediaQueryList | MediaQueryListEvent): void {
-        const asideBtns = document.body.querySelector('#aside-btns');
         const aside = document.body.querySelector('#aside');
+        const asideCloseBtn = document.body.querySelector('#asideCloseBtn') as HTMLButtonElement;
         if (query?.matches) {
-            asideBtns?.classList.remove('btn-group-vertical');
-            aside?.classList.remove('border-end');
-            asideBtns?.classList.add('btn-group');
-            asideBtns?.classList.add('btn-group-sm');
+            asideCloseBtn.style.display = 'flex';
+            aside?.classList.add('aside-modal');
+            aside?.classList.remove('col-sm-4');
+            aside?.classList.remove('col-md-3');
+            aside?.classList.remove('col-lg-2');
         } else {
-            asideBtns?.classList.remove('btn-group');
-            asideBtns?.classList.remove('btn-group-sm');
-            asideBtns?.classList.add('btn-group-vertical');
-            aside?.classList.add('border-end');
+            asideCloseBtn.style.display = 'none';
+            aside?.classList.remove('aside-modal');
+            aside?.classList.add('col-sm-4');
+            aside?.classList.add('col-md-3');
+            aside?.classList.add('col-lg-2');
         }
+    }
+
+    function handleAsideCloseBtnClick(e: React.MouseEvent) {
+        const aside = document.body.querySelector('#aside') as HTMLDivElement;
+        aside.style.left = '-170px';
     }
 
     mQuery.addEventListener('change', handleResize);
@@ -28,21 +35,28 @@ export function Aside(): JSX.Element {
     }, [mQuery]);
 
     return (
-        <aside id="aside" className="col-sm-4 col-md-3 col-lg-2 border-3">
-            <div id="aside-btns" className="container p-2">
+        <aside id="aside" className="border-3 border-end">
+            <button
+                onClick={handleAsideCloseBtnClick}
+                id="asideCloseBtn"
+                className="btn btn-outline-secondary my-1"
+            >
+                ✕
+            </button>
+            <div id="aside-btns" className="container p-2 btn-group-vertical">
                 <Link to="/" className="btn btn-outline-primary">
                     Main Page
                 </Link>
-                <Link to="/catalog" className="btn btn-outline-secondary">
+                <Link to="/catalog" className="btn btn-outline-dark">
                     Catalog
                 </Link>
-                <Link to="" className="btn btn-outline-secondary">
+                <Link to="" className="btn btn-outline-dark">
                     Random Game
                 </Link>
-                <Link to="" className="btn btn-outline-secondary">
+                <Link to="" className="btn btn-outline-dark">
                     How to solve?
                 </Link>
-                <Link to="" className="btn btn-outline-secondary">
+                <Link to="" className="btn btn-outline-dark">
                     Help
                 </Link>
             </div>

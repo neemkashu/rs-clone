@@ -1,6 +1,29 @@
 import './header.scss';
+import { useEffect } from 'react';
 
 export function Header(): JSX.Element {
+    const mQuery = window.matchMedia('(max-width: 576px)');
+
+    function handleBurgerShow(query: MediaQueryList | MediaQueryListEvent): void {
+        const burgerBtn = document.body.querySelector('#burgerButton') as HTMLButtonElement;
+        if (query?.matches) {
+            burgerBtn?.removeAttribute('hidden');
+        } else {
+            burgerBtn?.setAttribute('hidden', '');
+        }
+    }
+
+    function handleBurgerBtnClick(e: React.MouseEvent) {
+        const aside = document.body.querySelector('#aside') as HTMLDivElement;
+        aside.style.left = '0';
+    }
+
+    mQuery.addEventListener('change', handleBurgerShow);
+
+    useEffect(() => {
+        handleBurgerShow(mQuery);
+    }, [mQuery]);
+
     function handleLang(e: React.MouseEvent): void {
         const dropDownButton = document.body.querySelector('#dropdownLangButton');
         const allLangContainers = document.body.querySelectorAll('#dropdownMenuLang div');
@@ -34,10 +57,30 @@ export function Header(): JSX.Element {
         <header className="container p-2 border-bottom border-start border-end border-3 rounded-bottom">
             <div className="row flex-wrap">
                 <div className="col d-flex justify-content-between justify-content-sm-start gap-2 py-1">
-                    <div className="d-flex align-items-center">☰</div>
+                    <button
+                        onClick={handleBurgerBtnClick}
+                        id="burgerButton"
+                        className="btn btn-outline-secondary"
+                        hidden
+                    >
+                        ☰
+                    </button>
+                    <button
+                        className="btn btn-outline-secondary"
+                    >
+                        ⚙
+                    </button>
+                    <button onClick={handleColorThemeChange} className="btn btn-warning">
+                        <div id="lightThemeBtnContent" className=" text-center">
+                            ☀
+                        </div>
+                        <div id="darkThemeBtnContent" hidden className=" text-center">
+                            🌒
+                        </div>
+                    </button>
                     <div className="dropdown d-flex align-items-center">
                         <button
-                            className="btn dropdown-toggle"
+                            className="btn btn-outline-secondary dropdown-toggle"
                             type="button"
                             id="dropdownLangButton"
                             data-bs-toggle="dropdown"
@@ -158,21 +201,13 @@ export function Header(): JSX.Element {
                             </div>
                         </div>
                     </div>
-                    <button onClick={handleColorThemeChange} className="btn btn-warning">
-                        <div id="lightThemeBtnContent" className=" text-center">
-                            Ligth ☀
-                        </div>
-                        <div id="darkThemeBtnContent" hidden className=" text-center">
-                            Dark: 🌒
-                        </div>
-                    </button>
                 </div>
                 <div className="col d-flex justify-content-center justify-content-sm-end gap-2 py-1">
-                    <a href="#" className="btn btn-outline-secondary">
+                    <a href="#" className="btn btn-outline-success text-nowrap">
                         {' '}
-                        Sing In
+                        Sign In
                     </a>
-                    <a href="#" className="btn btn-outline-primary">
+                    <a href="#" className="btn btn-outline-primary text-nowrap">
                         Sign Up
                     </a>
                 </div>

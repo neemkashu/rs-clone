@@ -24,11 +24,18 @@ footer {
 
 .main-container {
     display: flex;
+    flex-grow: 10;
+    max-width: 1920px;
+}
+
+.main-container-content {
+    display: flex;
     flex-direction: row;
+    width: 100%;
 }
 
 @media screen and (max-width: 576px) {
-    .main-container {
+    .main-container-content {
         flex-direction: column;
     }
 }

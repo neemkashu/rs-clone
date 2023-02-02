@@ -8,10 +8,14 @@ export function Layout(): JSX.Element {
     return (
         <>
             <Header />
-            <div className="main-container d-flex flex-grow-1">
-                <Aside />
-                <Outlet />
-            </div>
+            <main className="main-container container">
+                <div className="main-container-content">
+                    <Aside />
+                    <section>
+                        <Outlet />
+                    </section>
+                </div>
+            </main>
             <Footer />
         </>
     );
