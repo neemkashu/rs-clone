@@ -21,7 +21,7 @@ export function Aside(): JSX.Element {
         }
     }
 
-    mQuery.addListener(handleResize);
+    mQuery.addEventListener('change', handleResize);
 
     useEffect(() => {
         handleResize(mQuery);
