@@ -1,3 +1,4 @@
+import { log } from 'console';
 import { fieldPlace } from '../../../utils/types';
 import NumberCell from './NumberCell';
 
@@ -37,15 +38,18 @@ export default function TableRow(
             </tr>
         );
     }
-    return (
-        <tr key={`${location}-row-${indexRow}`}>
-            {numberLinesUnified.map((column, indexColumn) => {
-                return (
-                    <td className="cell-square">
-                        {NumberCell(column[indexRow], indexRow, indexColumn, location)}
-                    </td>
-                );
-            })}
-        </tr>
-    );
+    if (location === 'area') {
+        return (
+            <tr key={`${location}-row-${indexRow}`}>
+                {numberLinesUnified[indexRow].map((cell, indexNumberRow) => {
+                    return (
+                        <td className="cell-square">
+                            {NumberCell(cell, indexRow, indexNumberRow, location)}
+                        </td>
+                    );
+                })}
+            </tr>
+        );
+    }
+    throw new Error('Incorrect location for table row');
 }

@@ -1,3 +1,3 @@
 export type a = 'filled' | 'empty' | 'crossed';
 
-export type fieldPlace = 'header' | 'aside' | 'picture' | 'miniature';
+export type fieldPlace = 'header' | 'aside' | 'area' | 'miniature';

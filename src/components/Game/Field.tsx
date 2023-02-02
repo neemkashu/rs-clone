@@ -1,5 +1,6 @@
 import './Field.scss';
 import ColumnNumbers from './fieldParts/ColumnNumbers';
+import DrawArea from './fieldParts/DrawArea';
 import RowNumbers from './fieldParts/RowNumbers';
 
 const NONOGRAM_INFO = {
@@ -74,54 +75,9 @@ function Field(): JSX.Element {
     return (
         <div className="game-table-container">
             <ColumnNumbers />
-            <div className="aside-and-filed">
+            <div className="aside-and-field">
                 <RowNumbers />
-                <table className="table table-bordered game-field nonogram-border">
-                    <tbody>
-                        <tr>
-                            <td className="cell-square">
-                                <div className="square crossed-square" />
-                            </td>
-                            <td className="cell-square">
-                                <div className="square filled-square" />
-                            </td>
-                            <td className="cell-square">
-                                <div className="square crossed-square" />
-                            </td>
-                            <td className="cell-square">
-                                <div className="square crossed-square" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="cell-square">
-                                <div className="square" />
-                            </td>
-                            <td className="cell-square">
-                                <div className="square filled-square" />
-                            </td>
-                            <td className="cell-square">
-                                <div className="square filled-square" />
-                            </td>
-                            <td className="cell-square">
-                                <div className="square crossed-square" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="cell-square">
-                                <div className="square crossed-square" />
-                            </td>
-                            <td className="cell-square">
-                                <div className="square filled-square" />
-                            </td>
-                            <td className="cell-square">
-                                <div className="square" />
-                            </td>
-                            <td className="cell-square">
-                                <div className="square" />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <DrawArea />
             </div>
         </div>
     );
