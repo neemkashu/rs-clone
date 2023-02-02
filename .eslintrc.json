@@ -1,0 +1,23 @@
+{
+    "extends": [
+    "react-app",
+    "react-app/jest"
+    ],
+    "overrides": [
+        {
+        "files": ["**/*.ts?(x)"],
+        "rules": {
+            "@typescript-eslint/no-unused-vars": "off",
+            "max-len": [
+            "error",
+            {
+                "code": 90,
+                "ignoreStrings": true,
+                "ignoreUrls": true,
+                "ignoreTemplateLiterals": true
+            }
+            ]
+        }
+        }
+    ]
+}
