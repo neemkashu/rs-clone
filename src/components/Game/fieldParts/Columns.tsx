@@ -1,36 +1,32 @@
 import { NONOGRAM_INFO } from '../../../utils/constants';
 import './Columns.scss';
-import NumberCell from './NumberCell';
+import TableRow from './TableRow';
 
+// getting NONOGRAM INFO will be server part or local storage
 const { width, height, goal, rows, columns } = NONOGRAM_INFO;
 
 // the columnsUnified generation will be server part in the future
+// --------------server part-------------------------
 const columnsUnified = columns
     .trim()
     .split('\n')
-    .map((column, index) => column.split(','));
+    .map((column) => column.split(','));
 
 const columnsHeight = columnsUnified.reduce((maxLength, column) => {
     return maxLength > column.length ? maxLength : column.length;
 }, 1);
 
-columnsUnified.forEach((column, index) => {
+columnsUnified.forEach((column) => {
     while (column.length < columnsHeight) {
         column.unshift('');
     }
 });
+// --------------server part-------------------------
+
 const location = 'header';
 
 const tableRows = Array.from({ length: columnsHeight }, (item, indexRow) => (
-    <tr key={`${location}-row-${indexRow}`}>
-        {columnsUnified.map((column, indexColumn) => {
-            return (
-                <td className="cell-square">
-                    {NumberCell(column[indexRow], indexRow, indexColumn, location)}
-                </td>
-            );
-        })}
-    </tr>
+    <>{TableRow(location, indexRow, columnsUnified)}</>
 ));
 
 function Columns(): JSX.Element {

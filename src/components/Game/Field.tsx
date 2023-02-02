@@ -1,5 +1,5 @@
 import './Field.scss';
-import Columns from './fieldNumbers/Columns';
+import Columns from './fieldParts/Columns';
 
 const NONOGRAM_INFO = {
     // temp const before getting info from back-end
