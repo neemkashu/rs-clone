@@ -1,5 +1,6 @@
 import './Field.scss';
-import Columns from './fieldParts/Columns';
+import ColumnNumbers from './fieldParts/ColumnNumbers';
+import RowNumbers from './fieldParts/RowNumbers';
 
 const NONOGRAM_INFO = {
     // temp const before getting info from back-end
@@ -72,53 +73,56 @@ const { width, height, goal, rows, columns } = NONOGRAM_INFO;
 function Field(): JSX.Element {
     return (
         <div className="game-table-container">
-            <Columns />
-            <table className="table table-bordered game-field nonogram-border">
-                <tbody>
-                    <tr>
-                        <td className="cell-square">
-                            <div className="square crossed-square" />
-                        </td>
-                        <td className="cell-square">
-                            <div className="square filled-square" />
-                        </td>
-                        <td className="cell-square">
-                            <div className="square crossed-square" />
-                        </td>
-                        <td className="cell-square">
-                            <div className="square crossed-square" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td className="cell-square">
-                            <div className="square" />
-                        </td>
-                        <td className="cell-square">
-                            <div className="square filled-square" />
-                        </td>
-                        <td className="cell-square">
-                            <div className="square filled-square" />
-                        </td>
-                        <td className="cell-square">
-                            <div className="square crossed-square" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td className="cell-square">
-                            <div className="square crossed-square" />
-                        </td>
-                        <td className="cell-square">
-                            <div className="square filled-square" />
-                        </td>
-                        <td className="cell-square">
-                            <div className="square" />
-                        </td>
-                        <td className="cell-square">
-                            <div className="square" />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <ColumnNumbers />
+            <div className="aside-and-filed">
+                <RowNumbers />
+                <table className="table table-bordered game-field nonogram-border">
+                    <tbody>
+                        <tr>
+                            <td className="cell-square">
+                                <div className="square crossed-square" />
+                            </td>
+                            <td className="cell-square">
+                                <div className="square filled-square" />
+                            </td>
+                            <td className="cell-square">
+                                <div className="square crossed-square" />
+                            </td>
+                            <td className="cell-square">
+                                <div className="square crossed-square" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td className="cell-square">
+                                <div className="square" />
+                            </td>
+                            <td className="cell-square">
+                                <div className="square filled-square" />
+                            </td>
+                            <td className="cell-square">
+                                <div className="square filled-square" />
+                            </td>
+                            <td className="cell-square">
+                                <div className="square crossed-square" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td className="cell-square">
+                                <div className="square crossed-square" />
+                            </td>
+                            <td className="cell-square">
+                                <div className="square filled-square" />
+                            </td>
+                            <td className="cell-square">
+                                <div className="square" />
+                            </td>
+                            <td className="cell-square">
+                                <div className="square" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 }

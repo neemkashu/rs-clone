@@ -1,5 +1,5 @@
 import { NONOGRAM_INFO } from '../../../utils/constants';
-import './Columns.scss';
+import './ColumnNumbers.scss';
 import TableRow from './TableRow';
 
 // getting NONOGRAM INFO will be server part or local storage
@@ -29,7 +29,7 @@ const tableRows = Array.from({ length: columnsHeight }, (item, indexRow) => (
     <>{TableRow(location, indexRow, columnsUnified)}</>
 ));
 
-function Columns(): JSX.Element {
+function ColumnNumbers(): JSX.Element {
     return (
         <table className="table table-bordered nonogram-numbers-border">
             <tbody className="numbers-column-container">{tableRows}</tbody>
@@ -37,4 +37,4 @@ function Columns(): JSX.Element {
     );
 }
 
-export default Columns;
+export default ColumnNumbers;
