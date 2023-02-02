@@ -1,0 +1,20 @@
+:root {
+    --nonogram-square-width: 16px;
+    --nonogram-number-width: calc(6px + var(--nonogram-square-width));
+    --cell-padding: 3px;
+}
+.numbers-column {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+.numbers-column-container {
+    display: flex;
+    align-content: flex-end;
+    align-items: flex-end;
+}
+.square-number{
+    width: calc(var(--nonogram-number-width) - 2px);
+    height: calc(var(--nonogram-number-width) - 2px);
+    padding: 0 !important;
+}

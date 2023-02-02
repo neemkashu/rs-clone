@@ -1,4 +1,5 @@
 import './Field.scss';
+import Columns from './fieldTop/Columns';
 
 const NONOGRAM_INFO = {
     // temp const before getting info from back-end
@@ -72,6 +73,7 @@ const { width, height, goal, rows, columns } = NONOGRAM_INFO;
 function Field(): JSX.Element {
     return (
         <div className="game-table-container">
+            <Columns />
             <table className="table table-bordered game-field nonogram-border">
                 <tbody>
                     <tr>
