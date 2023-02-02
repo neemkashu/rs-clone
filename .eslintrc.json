@@ -1,41 +1,14 @@
 {
-    "plugins": ["@typescript-eslint", "prettier"],
     "extends": [
-        "plugin:prettier/recommended",
-        "prettier",
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:react/recommended",
-        "plugin:react-hooks/recommended",
-        "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    "react-app",
+    "react-app/jest"
     ],
-    "parser": "@typescript-eslint/parser",
-    "root": true,
-    "ignorePatterns": ["*config.js"],
-    "parserOptions": {
-        "ecmaVersion": 2020,
-        "sourceType": "module",
-        "project": ["./tsconfig.json"]
-    },
-    "env": {
-        "es6": true,
-        "browser": true,
-        "node": false
-    },
-    "rules": {
-        "no-debugger": "off",
-        "no-console": 0,
-        "@typescript-eslint/no-unused-vars": "off",
-        "class-methods-use-this": "off",
-        "@typescript-eslint/no-explicit-any": "error",
-        "react/react-in-jsx-scope": "off",
-        "prettier/prettier": [
-            "error",
-            {
-                "endOfLine": "auto"
-            }
-        ],
-        "max-len": [
+    "overrides": [
+        {
+        "files": ["**/*.ts?(x)"],
+        "rules": {
+            "@typescript-eslint/no-unused-vars": "off",
+            "max-len": [
             "error",
             {
                 "code": 90,
@@ -43,6 +16,8 @@
                 "ignoreUrls": true,
                 "ignoreTemplateLiterals": true
             }
-        ]
-    }
+            ]
+        }
+        }
+    ]
 }
