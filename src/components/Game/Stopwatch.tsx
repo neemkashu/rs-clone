@@ -1,17 +1,7 @@
+import { cwd } from 'process';
+import { useEffect, useRef, useState } from 'react';
+import { NONOGRAM_INFO } from '../../utils/constants';
 import './Stopwatch.scss';
-
-const NONOGRAM_INFO = {
-    // temp const before getting info from back-end
-    name: 'Apple',
-    width: 30,
-    height: 20,
-    difficulty: 3.2,
-    status: 'new',
-    id: 234,
-    userTime: 370842,
-};
-
-const { userTime } = NONOGRAM_INFO;
 
 const getTwoDigitIndicator = (time: number) => {
     const isOneDigit = time < 10;
@@ -20,10 +10,34 @@ const getTwoDigitIndicator = (time: number) => {
 };
 
 function Stopwatch(): JSX.Element {
-    const date = new Date(userTime);
-    const hours = getTwoDigitIndicator(date.getHours());
-    const minutes = getTwoDigitIndicator(date.getMinutes());
-    const seconds = getTwoDigitIndicator(date.getSeconds());
+    const [userTime, setUserTime] = useState(NONOGRAM_INFO.userTime);
+    const [isTicking, setIsTicking] = useState(true);
+    const gameSessionStart = useRef(new Date());
+
+    let date = new Date(userTime);
+    let hours = getTwoDigitIndicator(date.getHours());
+    let minutes = getTwoDigitIndicator(date.getMinutes());
+    let seconds = getTwoDigitIndicator(date.getSeconds());
+
+    const refreshPeriod = 1000;
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setUserTime((previousTime) => previousTime + refreshPeriod);
+        }, refreshPeriod);
+        return () => {
+            clearInterval(timer);
+        };
+    }, []);
+    useEffect(() => {
+        if (!isTicking) {
+            console.log('stop clock');
+        }
+    }, [isTicking]);
+
+    date = new Date(userTime);
+    hours = getTwoDigitIndicator(date.getHours());
+    minutes = getTwoDigitIndicator(date.getMinutes());
+    seconds = getTwoDigitIndicator(date.getSeconds());
     return (
         <div className="container game-timer">
             {hours}:{minutes}:{seconds}
