@@ -31,6 +31,9 @@
         "react/jsx-props-no-spreading": "off",
         "react/no-array-index-key": "error",
         "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+        "import/prefer-default-export": [
+            "off"
+        ],
         "react/default-props-match-prop-types": [0, { "allowRequiredDefaults": true }],
         "import/extensions": ["error", "ignorePackages", {
             "": "never",
