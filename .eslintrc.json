@@ -29,7 +29,7 @@
       "react/jsx-filename-extension": [ "warn", {"extensions": [".tsx"]} ],
       "react/react-in-jsx-scope": "off",
       "react/jsx-props-no-spreading": "off",
-      "react/no-array-index-key": "warn",
+      "react/no-array-index-key": "error",
       "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
       "react/default-props-match-prop-types": [0, { "allowRequiredDefaults": true }],
       "import/extensions": ["error", "ignorePackages", {

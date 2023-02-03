@@ -26,9 +26,10 @@ rowsUnified.forEach((row) => {
 const location = 'aside';
 const rowLinesAmount = rowsUnified.length;
 
-const tableRows = Array.from({ length: rowLinesAmount }, (item, indexRow) => (
-    <>{TableRow(location, indexRow, rowsUnified)}</>
-));
+const tableRows = Array.from({ length: rowLinesAmount }, (item, indexRow) => {
+    const tableRowKey = `${location}-row-${indexRow}`;
+    return <>{TableRow(tableRowKey, location, indexRow, rowsUnified)}</>;
+});
 
 function RowHints(): JSX.Element {
     return (

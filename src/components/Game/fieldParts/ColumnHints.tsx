@@ -25,11 +25,12 @@ columnsUnified.forEach((column) => {
 
 const location = 'header';
 
-const tableRows = Array.from({ length: columnsHeight }, (item, indexRow) => (
-    <>{TableRow(location, indexRow, columnsUnified)}</>
-));
+const tableRows = Array.from({ length: columnsHeight }, (item, indexRow) => {
+    const tableRowKey = `${location}-row-${indexRow}`;
+    return <>{TableRow(tableRowKey, location, indexRow, columnsUnified)}</>;
+});
 
-function ColumnNumbers(): JSX.Element {
+function ColumnHints(): JSX.Element {
     return (
         <table className="table table-bordered nonogram-numbers-border">
             <tbody className="numbers-column-container">{tableRows}</tbody>
@@ -37,4 +38,4 @@ function ColumnNumbers(): JSX.Element {
     );
 }
 
-export default ColumnNumbers;
+export default ColumnHints;

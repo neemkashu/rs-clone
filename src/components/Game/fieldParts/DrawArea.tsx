@@ -19,9 +19,10 @@ const rowsUnified = goal.map((line) => line.map((cell) => `${cell}`));
 const location = 'area';
 const rowLinesAmount = rowsUnified.length;
 
-const tableRows = Array.from({ length: rowLinesAmount }, (item, indexRow) => (
-    <>{TableRow(location, indexRow, rowsUnified)}</>
-));
+const tableRows = Array.from({ length: rowLinesAmount }, (item, indexRow) => {
+    const tableRowKey = `${location}-row-${indexRow}`;
+    return <>{TableRow(tableRowKey, location, indexRow, rowsUnified)}</>;
+});
 
 function DrawArea(): JSX.Element {
     return (
