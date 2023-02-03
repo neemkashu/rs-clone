@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { NONOGRAM_INFO } from '../../../utils/constants';
 import './ColumnHints.scss';
 import TableRow from './TableRow';
@@ -27,7 +28,11 @@ const location = 'header';
 
 const tableRows = Array.from({ length: columnsHeight }, (item, indexRow) => {
     const tableRowKey = `${location}-row-${indexRow}`;
-    return <>{TableRow(tableRowKey, location, indexRow, columnsUnified)}</>;
+    return (
+        <Fragment key={tableRowKey}>
+            {TableRow(`${tableRowKey}-tableRow`, location, indexRow, columnsUnified)}
+        </Fragment>
+    );
 });
 
 function ColumnHints(): JSX.Element {

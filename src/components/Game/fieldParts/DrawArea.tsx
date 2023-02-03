@@ -1,4 +1,5 @@
 /* eslint-disable max-len */
+import { Fragment } from 'react';
 import { NONOGRAM_INFO } from '../../../utils/constants';
 import './DrawArea.scss';
 import TableRow from './TableRow';
@@ -21,7 +22,11 @@ const rowLinesAmount = rowsUnified.length;
 
 const tableRows = Array.from({ length: rowLinesAmount }, (item, indexRow) => {
     const tableRowKey = `${location}-row-${indexRow}`;
-    return <>{TableRow(tableRowKey, location, indexRow, rowsUnified)}</>;
+    return (
+        <Fragment key={tableRowKey}>
+            {TableRow(`${tableRowKey}-tableRow`, location, indexRow, rowsUnified)}
+        </Fragment>
+    );
 });
 
 function DrawArea(): JSX.Element {
