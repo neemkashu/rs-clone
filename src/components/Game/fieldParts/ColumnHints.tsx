@@ -1,5 +1,5 @@
 import { NONOGRAM_INFO } from '../../../utils/constants';
-import './ColumnNumbers.scss';
+import './ColumnHints.scss';
 import TableRow from './TableRow';
 
 // getting NONOGRAM INFO will be server part or local storage

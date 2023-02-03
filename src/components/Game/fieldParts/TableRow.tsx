@@ -1,21 +1,16 @@
-import { log } from 'console';
 import { fieldPlace } from '../../../utils/types';
-import NumberCell from './NumberCell';
+import Cell from './Cell';
 
 export default function TableRow(
     location: fieldPlace,
     indexRow: number,
-    numberLinesUnified: string[][]
+    linesUnified: string[][]
 ): JSX.Element {
     if (location === 'aside') {
         return (
             <tr key={`${location}-row-${indexRow}`}>
-                {numberLinesUnified[indexRow].map((cell, indexNumberRow) => {
-                    return (
-                        <td className="cell-square">
-                            {NumberCell(cell, indexRow, indexNumberRow, location)}
-                        </td>
-                    );
+                {linesUnified[indexRow].map((hint, indexNumberRow) => {
+                    return Cell(hint, 'hint-crossed');
                 })}
             </tr>
         );
@@ -23,30 +18,17 @@ export default function TableRow(
     if (location === 'header') {
         return (
             <tr key={`${location}-row-${indexRow}`}>
-                {numberLinesUnified.map((column, indexColumn) => {
-                    return (
-                        <td className="cell-square">
-                            {NumberCell(
-                                column[indexRow],
-                                indexRow,
-                                indexColumn,
-                                location
-                            )}
-                        </td>
-                    );
-                })}
+                {linesUnified.map((column, indexColumn) => Cell(column[indexRow]))}
             </tr>
         );
     }
     if (location === 'area') {
         return (
             <tr key={`${location}-row-${indexRow}`}>
-                {numberLinesUnified[indexRow].map((cell, indexNumberRow) => {
-                    return (
-                        <td className="cell-square">
-                            {NumberCell(cell, indexRow, indexNumberRow, location)}
-                        </td>
-                    );
+                {linesUnified[indexRow].map((cell, indexNumberRow) => {
+                    const crossedStyle = cell === '0' ? 'crossed-square' : '';
+                    const filledStyle = +cell > 0 ? 'filled-square' : '';
+                    return Cell('', crossedStyle, filledStyle);
                 })}
             </tr>
         );

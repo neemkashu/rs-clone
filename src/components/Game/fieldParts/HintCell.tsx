@@ -1,7 +1,7 @@
 import { cellClass } from '../../../utils/constants';
 import { fieldPlace } from '../../../utils/types';
 
-export default function NumberCell(
+export default function HintCell(
     keyNumber: string,
     indexRow: number,
     indexColumn: number,

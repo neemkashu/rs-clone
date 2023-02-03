@@ -1,5 +1,5 @@
 import { NONOGRAM_INFO } from '../../../utils/constants';
-import './RowNumbers.scss';
+import './RowHints.scss';
 import TableRow from './TableRow';
 
 // getting NONOGRAM INFO will be server part or local storage
@@ -30,7 +30,7 @@ const tableRows = Array.from({ length: rowLinesAmount }, (item, indexRow) => (
     <>{TableRow(location, indexRow, rowsUnified)}</>
 ));
 
-function RowNumbers(): JSX.Element {
+function RowHints(): JSX.Element {
     return (
         <table className="table table-bordered nonogram-numbers-border">
             <tbody className="numbers-row-container">{tableRows}</tbody>
@@ -38,4 +38,4 @@ function RowNumbers(): JSX.Element {
     );
 }
 
-export default RowNumbers;
+export default RowHints;

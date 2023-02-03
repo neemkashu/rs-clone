@@ -1,6 +1,4 @@
-/* eslint-disable prettier/prettier */
 /* eslint-disable max-len */
-import { log } from 'console';
 import { NONOGRAM_INFO } from '../../../utils/constants';
 import './DrawArea.scss';
 import TableRow from './TableRow';
