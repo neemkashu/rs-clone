@@ -1,0 +1,41 @@
+header,
+footer {
+    transition: 0.2s;
+}
+
+footer {
+    a {
+        display: block;
+        width: fit-content;
+        height: fit-content;
+        transition: 0.2s;
+    }
+
+    a:hover {
+        color: rgb(0, 10, 150);
+        transform: scale(1.15);
+    }
+}
+
+.rss-image {
+    height: 25px;
+    cursor: pointer;
+}
+
+.main-container {
+    display: flex;
+    flex-grow: 10;
+    max-width: 1920px;
+}
+
+.main-container-content {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+@media screen and (max-width: 576px) {
+    .main-container-content {
+        flex-direction: column;
+    }
+}

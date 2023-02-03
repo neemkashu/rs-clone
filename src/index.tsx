@@ -1,7 +1,9 @@
+import '../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// import './index.css';
 import Game from './components/Game/Game';
+import { BrowserRouter } from 'react-router-dom';
+import App from './components/app/App';
 
 const rootDiv = document.getElementById('root');
 if (!rootDiv) {
@@ -11,6 +13,8 @@ if (!rootDiv) {
 const root = ReactDOM.createRoot(rootDiv);
 root.render(
     <React.StrictMode>
-        <Game />
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
     </React.StrictMode>
 );
