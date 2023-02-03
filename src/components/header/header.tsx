@@ -26,11 +26,13 @@ export function Header(): JSX.Element {
         handleBurgerShow(mQuery);
     }, [mQuery]);
 
-    function handleLang(e: React.MouseEvent): void {
+    function handleLang(e: React.MouseEvent | React.KeyboardEvent): void {
         const dropDownButton = document.body.querySelector('#dropdownLangButton');
-        const allLangContainers = document.body.querySelectorAll('#dropdownMenuLang div');
+        const allLangContainers = document.body.querySelectorAll(
+            '#dropdownMenuLang button'
+        );
         const eventTarget = e.target as HTMLDivElement;
-        const properEventTarget = eventTarget.closest('div') as HTMLDivElement;
+        const properEventTarget = eventTarget.closest('button') as HTMLButtonElement;
         const eventTargetContent = properEventTarget.innerHTML;
         allLangContainers.forEach((elem) => {
             elem.classList.remove('active');
@@ -121,7 +123,8 @@ export function Header(): JSX.Element {
                             className="dropdown-menu"
                             aria-labelledby="dropdownLangButton"
                         >
-                            <div
+                            <button
+                                type="button"
                                 onClick={handleLang}
                                 id="dropdownEnLang"
                                 className="dropdown-item active"
@@ -149,8 +152,9 @@ export function Header(): JSX.Element {
                                         strokeWidth="3"
                                     />
                                 </svg>
-                            </div>
-                            <div
+                            </button>
+                            <button
+                                type="button"
                                 onClick={handleLang}
                                 id="dropdownRuLang"
                                 className="dropdown-item"
@@ -165,8 +169,9 @@ export function Header(): JSX.Element {
                                     <rect fill="#d52b1e" y="3" width="9" height="3" />
                                     <rect fill="#0039a6" y="2" width="9" height="2" />
                                 </svg>
-                            </div>
-                            <div
+                            </button>
+                            <button
+                                type="button"
                                 onClick={handleLang}
                                 id="dropdownDeLang"
                                 className="dropdown-item"
@@ -203,7 +208,7 @@ export function Header(): JSX.Element {
                                         fill="#FFCE00"
                                     />
                                 </svg>
-                            </div>
+                            </button>
                         </div>
                     </div>
                 </div>
