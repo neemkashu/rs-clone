@@ -20,7 +20,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint --fix",
+    "deploy-bash": "react-scripts build && git stash && git checkout deploy && cp -r ./build/* ./nonograms && git add -A && git commit -m \"feat: update deploy\" && git push && git checkout - && git stash pop",
+    "deploy-win": "react-scripts build && git stash && git checkout deploy && xcopy build nonograms\\ /E/Y && git add -A && git commit -m \"feat: update deploy\" && git push && git checkout - && git stash pop"
   },
   "browserslist": {
     "production": [
@@ -35,9 +38,13 @@
     ]
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.50.0",
+    "@typescript-eslint/parser": "^5.50.0",
     "bootstrap": "^5.2.3",
+    "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "exlint": "^0.1.6",
     "prettier": "^2.8.3",
     "sass": "^1.58.0",
     "sass-loader": "^13.2.0",
@@ -45,5 +52,30 @@
     "svg-url-loader": "^8.0.0",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.ts?(x)"
+        ],
+        "rules": {
+          "@typescript-eslint/no-unused-vars": "off",
+          "max-len": [
+            "error",
+            {
+              "code": 90,
+              "ignoreStrings": true,
+              "ignoreUrls": true,
+              "ignoreTemplateLiterals": true
+            }
+          ]
+        }
+      }
+    ]
   }
 }
