@@ -1,13 +1,15 @@
 import './aside.scss';
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 export function Aside(): JSX.Element {
     const mQuery = window.matchMedia('(max-width: 576px)');
 
     function handleResize(query: MediaQueryList | MediaQueryListEvent): void {
         const aside = document.body.querySelector('#aside');
-        const asideCloseBtn = document.body.querySelector('#asideCloseBtn') as HTMLButtonElement;
+        const asideCloseBtn = document.body.querySelector(
+            '#asideCloseBtn'
+        ) as HTMLButtonElement;
         if (query?.matches) {
             asideCloseBtn.style.display = 'flex';
             aside?.classList.add('aside-modal');
@@ -37,6 +39,7 @@ export function Aside(): JSX.Element {
     return (
         <aside id="aside" className="border-3 border-end">
             <button
+                type="button"
                 onClick={handleAsideCloseBtnClick}
                 id="asideCloseBtn"
                 className="btn btn-outline-secondary my-1"
@@ -50,13 +53,13 @@ export function Aside(): JSX.Element {
                 <Link to="/catalog" className="btn btn-outline-dark">
                     Catalog
                 </Link>
-                <Link to="" className="btn btn-outline-dark">
+                <Link to="/game" className="btn btn-outline-dark">
                     Random Game
                 </Link>
-                <Link to="" className="btn btn-outline-dark">
+                <Link to="/" className="btn btn-outline-dark">
                     How to solve?
                 </Link>
-                <Link to="" className="btn btn-outline-dark">
+                <Link to="/" className="btn btn-outline-dark">
                     Help
                 </Link>
             </div>

@@ -1,11 +1,13 @@
 import './header.scss';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 export function Header(): JSX.Element {
     const mQuery = window.matchMedia('(max-width: 576px)');
 
     function handleBurgerShow(query: MediaQueryList | MediaQueryListEvent): void {
-        const burgerBtn = document.body.querySelector('#burgerButton') as HTMLButtonElement;
+        const burgerBtn = document.body.querySelector(
+            '#burgerButton'
+        ) as HTMLButtonElement;
         if (query?.matches) {
             burgerBtn?.removeAttribute('hidden');
         } else {
@@ -58,6 +60,7 @@ export function Header(): JSX.Element {
             <div className="row flex-wrap">
                 <div className="col d-flex justify-content-between justify-content-sm-start gap-2 py-1">
                     <button
+                        type="button"
                         onClick={handleBurgerBtnClick}
                         id="burgerButton"
                         className="btn btn-outline-secondary"
@@ -65,12 +68,14 @@ export function Header(): JSX.Element {
                     >
                         ☰
                     </button>
-                    <button
-                        className="btn btn-outline-secondary"
-                    >
+                    <button type="button" className="btn btn-outline-secondary">
                         ⚙
                     </button>
-                    <button onClick={handleColorThemeChange} className="btn btn-warning">
+                    <button
+                        type="button"
+                        onClick={handleColorThemeChange}
+                        className="btn btn-warning"
+                    >
                         <div id="lightThemeBtnContent" className=" text-center">
                             ☀
                         </div>
@@ -203,11 +208,11 @@ export function Header(): JSX.Element {
                     </div>
                 </div>
                 <div className="col d-flex justify-content-center justify-content-sm-end gap-2 py-1">
-                    <a href="#" className="btn btn-outline-success text-nowrap">
+                    <a href="/" className="btn btn-outline-success text-nowrap">
                         {' '}
                         Sign In
                     </a>
-                    <a href="#" className="btn btn-outline-primary text-nowrap">
+                    <a href="/" className="btn btn-outline-primary text-nowrap">
                         Sign Up
                     </a>
                 </div>
