@@ -1,3 +1,4 @@
+import { StorageKeys } from './storage';
 import { NonogramTime } from './types';
 
 export function getUserCurrentTimes(
@@ -16,4 +17,33 @@ export function getUserCurrentTimes(
         return parsedInfo as NonogramTime[];
     }
     return null;
+}
+export function setTimeToStorage(id: number, time: number) {
+    const storageInfo = localStorage.getItem(StorageKeys.userCurrentTime);
+    const storageTimes = getUserCurrentTimes(storageInfo);
+
+    if (Array.isArray(storageTimes)) {
+        const nonogramIndex = storageTimes.findIndex(
+            (nonogramInfo) => nonogramInfo.id === id
+        );
+        if (nonogramIndex > -1) {
+            storageTimes[nonogramIndex] = { id, time };
+        } else {
+            storageTimes.push({ id, time });
+        }
+        localStorage.setItem(StorageKeys.userCurrentTime, JSON.stringify(storageTimes));
+    } else {
+        localStorage.setItem(StorageKeys.userCurrentTime, JSON.stringify([{ id, time }]));
+    }
+}
+export function getTimeFromStorage(id: number): number {
+    const storageInfo = localStorage.getItem(StorageKeys.userCurrentTime);
+    const storageTimes = getUserCurrentTimes(storageInfo);
+    if (storageTimes !== null) {
+        const currentTimebyID = storageTimes.find((nonogramInfo) => {
+            return nonogramInfo.id === id;
+        });
+        return currentTimebyID?.time ?? 0;
+    }
+    return 0;
 }
