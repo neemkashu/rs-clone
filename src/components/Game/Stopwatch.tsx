@@ -26,24 +26,11 @@ function Stopwatch(): JSX.Element {
     // const gameSessionStart = useRef(new Date());
 
     const timeStoreAndRefresh = useCallback((): void => {
-        if (document.hidden) {
-            setTimeToStorage(nonogramID, userTime);
-        } else {
+        if (!document.hidden) {
             setUserTime(userTime + REFRESH_PERIOD);
         }
+        setTimeToStorage(nonogramID, userTime);
     }, [userTime]);
-
-    useEffect(() => {
-        isPageChange.current = true;
-        return () => {
-            isPageChange.current = false;
-        };
-    }, []);
-    useEffect(() => {
-        if (!isPageChange.current) {
-            setTimeToStorage(nonogramID, userTime);
-        }
-    }, [userTime, isPageChange]);
 
     setTimeout(timeStoreAndRefresh, REFRESH_PERIOD);
     document.onvisibilitychange = timeStoreAndRefresh;
