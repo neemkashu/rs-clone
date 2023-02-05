@@ -1,6 +1,6 @@
 import { SettingsMainContent } from './settings-modal-body';
 
-export default function SettingsModal(): JSX.Element {
+export function SettingsModal(): JSX.Element {
     return (
         <div id="settingsModal" className="modal fade">
             <div className="modal-dialog">
