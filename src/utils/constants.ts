@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 export const NONOGRAM_INFO = {
     // temp const before getting info from back-end
-    id: 123,
+    id: 234,
     title: 'Bowl',
     width: 3,
     height: 2,

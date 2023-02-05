@@ -1,4 +1,5 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { NONOGRAM_INFO } from '../../utils/constants'; // imitation of back-end info
 import { getTimeFromStorage, setTimeToStorage } from '../../utils/helpers';
 import './gameStyles/Stopwatch.scss';
@@ -6,7 +7,7 @@ import './gameStyles/Stopwatch.scss';
 const REFRESH_PERIOD = 1000;
 const { id: nonogramID } = NONOGRAM_INFO;
 
-const getTwoDigitIndicator = (time: number) => {
+const getTwoDigitIndicator = (time: number): string => {
     const isOneDigit = time < 10;
     const converted = isOneDigit ? `0${time}` : `${time}`;
     return converted;
@@ -19,7 +20,8 @@ function Stopwatch(): JSX.Element {
     const [userTime, setUserTime] = useState(
         isUserLogged() ? NONOGRAM_INFO.userTime : getTimeFromStorage(nonogramID)
     );
-
+    const isPageChange = useRef(false);
+    isPageChange.current = false;
     // TODO: future using: for more precise time counting
     // const gameSessionStart = useRef(new Date());
 
@@ -31,8 +33,19 @@ function Stopwatch(): JSX.Element {
         }
     }, [userTime]);
 
-    setTimeout(timeStoreAndRefresh, REFRESH_PERIOD);
+    useEffect(() => {
+        isPageChange.current = true;
+        return () => {
+            isPageChange.current = false;
+        };
+    }, []);
+    useEffect(() => {
+        if (!isPageChange.current) {
+            setTimeToStorage(nonogramID, userTime);
+        }
+    }, [userTime, isPageChange]);
 
+    setTimeout(timeStoreAndRefresh, REFRESH_PERIOD);
     document.onvisibilitychange = timeStoreAndRefresh;
 
     const date = new Date(userTime);
