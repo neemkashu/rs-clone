@@ -1,3 +1,3 @@
 export enum StorageKeys {
-    userCurrentTime = 'userCurrentTime',
+    USER_CURRENT_TIME = 'userCurrentTime',
 }

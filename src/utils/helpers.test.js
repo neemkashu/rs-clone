@@ -29,13 +29,13 @@ describe('test get User Current Times from passed string', () => {
         const localStorage = new LocalStorageMock();
         localStorage.clear();
         localStorage.setItem(
-            StorageKeys.userCurrentTime,
+            StorageKeys.USER_CURRENT_TIME,
             JSON.stringify([
                 { id: 234, time: 152000 },
                 { id: 123, time: 48000 },
             ])
         );
-        const currentTimesInfo = localStorage.getItem(StorageKeys.userCurrentTime);
+        const currentTimesInfo = localStorage.getItem(StorageKeys.USER_CURRENT_TIME);
         expect(getUserCurrentTimes(currentTimesInfo)).toEqual([
             { id: 234, time: 152000 },
             { id: 123, time: 48000 },
@@ -45,10 +45,10 @@ describe('test get User Current Times from passed string', () => {
         const localStorage = new LocalStorageMock();
         localStorage.clear();
         localStorage.setItem(
-            StorageKeys.userCurrentTime,
+            StorageKeys.USER_CURRENT_TIME,
             JSON.stringify([{ id: 234 }, { id: 123, time: 48000 }])
         );
-        const currentTimesInfo = localStorage.getItem(StorageKeys.userCurrentTime);
+        const currentTimesInfo = localStorage.getItem(StorageKeys.USER_CURRENT_TIME);
 
         expect(getUserCurrentTimes(currentTimesInfo)).toBe(null);
     });
@@ -56,10 +56,10 @@ describe('test get User Current Times from passed string', () => {
         const localStorage = new LocalStorageMock();
         localStorage.clear();
         localStorage.setItem(
-            StorageKeys.userCurrentTime,
+            StorageKeys.USER_CURRENT_TIME,
             JSON.stringify({ id: 123, time: 48000 })
         );
-        const currentTimesInfo = localStorage.getItem(StorageKeys.userCurrentTime);
+        const currentTimesInfo = localStorage.getItem(StorageKeys.USER_CURRENT_TIME);
 
         expect(getUserCurrentTimes(currentTimesInfo)).toBe(null);
     });
@@ -70,7 +70,7 @@ describe('test get Time From Storage', () => {
         global.localStorage = new LocalStorageMock();
         localStorage.clear();
         localStorage.setItem(
-            StorageKeys.userCurrentTime,
+            StorageKeys.USER_CURRENT_TIME,
             JSON.stringify([{ id: 234, time: 152000 }])
         );
         expect(getTimeFromStorage(234)).toBe(152000);
@@ -80,7 +80,7 @@ describe('test get Time From Storage', () => {
         global.localStorage = new LocalStorageMock();
         localStorage.clear();
         localStorage.setItem(
-            StorageKeys.userCurrentTime,
+            StorageKeys.USER_CURRENT_TIME,
             JSON.stringify([
                 { id: 234, time: 152000 },
                 { id: 123, time: 52000 },
@@ -93,7 +93,7 @@ describe('test get Time From Storage', () => {
         global.localStorage = new LocalStorageMock();
         localStorage.clear();
         localStorage.setItem(
-            StorageKeys.userCurrentTime,
+            StorageKeys.USER_CURRENT_TIME,
             JSON.stringify([
                 { id: 234, time: 152000 },
                 { id: 123, time: 52000 },
@@ -108,14 +108,14 @@ describe('test Setting Time by id and time data', () => {
         global.localStorage = new LocalStorageMock();
         localStorage.clear();
         localStorage.setItem(
-            StorageKeys.userCurrentTime,
+            StorageKeys.USER_CURRENT_TIME,
             JSON.stringify([
                 { id: 234, time: 152000 },
                 { id: 123, time: 48000 },
             ])
         );
         setTimeToStorage(234, 347823);
-        const updatedStorage = localStorage.getItem(StorageKeys.userCurrentTime);
+        const updatedStorage = localStorage.getItem(StorageKeys.USER_CURRENT_TIME);
         const desiredStorage = JSON.stringify([
             { id: 234, time: 347823 },
             { id: 123, time: 48000 },
@@ -126,14 +126,14 @@ describe('test Setting Time by id and time data', () => {
         global.localStorage = new LocalStorageMock();
         localStorage.clear();
         localStorage.setItem(
-            StorageKeys.userCurrentTime,
+            StorageKeys.USER_CURRENT_TIME,
             JSON.stringify([
                 { id: 234, time: 152000 },
                 { id: 123, time: 48000 },
             ])
         );
         setTimeToStorage(503, 9000);
-        const updatedStorage = localStorage.getItem(StorageKeys.userCurrentTime);
+        const updatedStorage = localStorage.getItem(StorageKeys.USER_CURRENT_TIME);
         const desiredStorage = JSON.stringify([
             { id: 234, time: 152000 },
             { id: 123, time: 48000 },
@@ -145,7 +145,7 @@ describe('test Setting Time by id and time data', () => {
         global.localStorage = new LocalStorageMock();
         localStorage.clear();
         setTimeToStorage(503, 9000);
-        const updatedStorage = localStorage.getItem(StorageKeys.userCurrentTime);
+        const updatedStorage = localStorage.getItem(StorageKeys.USER_CURRENT_TIME);
         const desiredStorage = JSON.stringify([{ id: 503, time: 9000 }]);
         expect(updatedStorage).toEqual(desiredStorage);
     });

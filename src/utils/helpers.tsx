@@ -19,7 +19,7 @@ export function getUserCurrentTimes(
     return null;
 }
 export function setTimeToStorage(id: number, time: number) {
-    const storageInfo = localStorage.getItem(StorageKeys.userCurrentTime);
+    const storageInfo = localStorage.getItem(StorageKeys.USER_CURRENT_TIME);
     const storageTimes = getUserCurrentTimes(storageInfo);
 
     if (Array.isArray(storageTimes)) {
@@ -31,13 +31,16 @@ export function setTimeToStorage(id: number, time: number) {
         } else {
             storageTimes.push({ id, time });
         }
-        localStorage.setItem(StorageKeys.userCurrentTime, JSON.stringify(storageTimes));
+        localStorage.setItem(StorageKeys.USER_CURRENT_TIME, JSON.stringify(storageTimes));
     } else {
-        localStorage.setItem(StorageKeys.userCurrentTime, JSON.stringify([{ id, time }]));
+        localStorage.setItem(
+            StorageKeys.USER_CURRENT_TIME,
+            JSON.stringify([{ id, time }])
+        );
     }
 }
 export function getTimeFromStorage(id: number): number {
-    const storageInfo = localStorage.getItem(StorageKeys.userCurrentTime);
+    const storageInfo = localStorage.getItem(StorageKeys.USER_CURRENT_TIME);
     const storageTimes = getUserCurrentTimes(storageInfo);
     if (storageTimes !== null) {
         const currentTimebyID = storageTimes.find((nonogramInfo) => {
