@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
 import { NONOGRAM_INFO } from '../../utils/constants'; // imitation of back-end info
 import { getTimeFromStorage, setTimeToStorage } from '../../utils/helpers';
-import './Stopwatch.scss';
+import './gameStyles/Stopwatch.scss';
 
 const REFRESH_PERIOD = 1000;
 const { id: nonogramID } = NONOGRAM_INFO;
@@ -40,7 +40,7 @@ function Stopwatch(): JSX.Element {
     const minutes = getTwoDigitIndicator(date.getUTCMinutes());
     const seconds = getTwoDigitIndicator(date.getUTCSeconds());
     return (
-        <div className="container game-timer">
+        <div className="container border border-success">
             {hours}:{minutes}:{seconds}
         </div>
     );

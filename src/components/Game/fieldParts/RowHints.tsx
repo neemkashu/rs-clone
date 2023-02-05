@@ -38,8 +38,8 @@ const tableRows = Array.from({ length: rowLinesAmount }, (item, indexRow) => {
 
 function RowHints(): JSX.Element {
     return (
-        <table className="table table-bordered nonogram-numbers-border">
-            <tbody className="numbers-row-container">{tableRows}</tbody>
+        <table className="table table-bordered nonogram-hints-border">
+            <tbody>{tableRows}</tbody>
         </table>
     );
 }

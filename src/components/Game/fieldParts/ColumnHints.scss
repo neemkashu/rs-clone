@@ -3,10 +3,6 @@
     --nonogram-number-width: calc(6px + var(--nonogram-square-width));
     --cell-padding: 3px;
 }
-.square-number{
-    display: flex;
-    justify-content: center;
-    //width: calc(var(--nonogram-number-width) - 2px);
-    //height: calc(var(--nonogram-number-width) - 2px);
-    padding: 0 !important;
+.nonogram-hints-border {
+    border: 1px solid var(--bs-cyan);
 }

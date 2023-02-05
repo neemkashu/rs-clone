@@ -37,7 +37,7 @@ const tableRows = Array.from({ length: columnsHeight }, (item, indexRow) => {
 
 function ColumnHints(): JSX.Element {
     return (
-        <table className="table table-bordered nonogram-numbers-border">
+        <table className="table table-bordered nonogram-hints-border">
             <tbody className="numbers-column-container">{tableRows}</tbody>
         </table>
     );

@@ -1,4 +1,4 @@
-import './Controls.scss';
+import './gameStyles/Controls.scss';
 
 // temp solution before getting file with all captions
 const CAPTIONS = {

@@ -1,5 +1,5 @@
 import { NONOGRAM_INFO } from '../../utils/constants';
-import './GameHeader.scss';
+import './gameStyles/GameHeader.scss';
 import Progress from './Progress';
 
 // temp solution before getting file with all captions
@@ -24,7 +24,7 @@ function GameHeader(): JSX.Element {
             <h2>
                 {nonogramCaption} {showTitle}
             </h2>
-            <div className="container game-base-info">
+            <div className="container d-flex gap-2">
                 <div>
                     {sizeCaption}: {width} ✖ {height}
                 </div>

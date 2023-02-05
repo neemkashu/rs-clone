@@ -31,8 +31,8 @@ const tableRows = Array.from({ length: rowLinesAmount }, (item, indexRow) => {
 
 function DrawArea(): JSX.Element {
     return (
-        <table className="table table-bordered game-field nonogram-border">
-            <tbody className="numbers-row-container">{tableRows}</tbody>
+        <table className="table table-bordered border-success">
+            <tbody>{tableRows}</tbody>
         </table>
     );
 }

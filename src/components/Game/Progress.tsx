@@ -1,4 +1,4 @@
-import './Progress.scss';
+import './gameStyles/Progress.scss';
 
 const CAPTIONS = {
     progress: 'Progress',
@@ -16,7 +16,7 @@ const progress = getProgress();
 
 function Progress(): JSX.Element {
     return (
-        <div className="container game-progress">
+        <div className="container">
             {progressCaption} {progress}
         </div>
     );
