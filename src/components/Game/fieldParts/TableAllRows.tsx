@@ -1,4 +1,4 @@
-import { TableAllRowsProps } from '../../../utils/types';
+import { TableAllRowsProps, TableFieldRowsProps } from '../../../utils/types';
 import TableRow from './TableRow';
 
 export default function TableAllRows({

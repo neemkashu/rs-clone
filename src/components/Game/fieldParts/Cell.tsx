@@ -1,9 +1,9 @@
-import { CellProps, fieldPlace } from '../../../utils/types';
+import { CellProps, fieldPlace, NonogramHint } from '../../../utils/types';
 
-export default function Cell({ hint, styles }: CellProps): JSX.Element {
+export default function Cell({ cellContent, styles }: CellProps): JSX.Element {
     return (
         <td className="cell-square">
-            <div className={`square ${styles?.join(' ')}`}>{hint ?? ''}</div>
+            <div className={`square ${styles?.join(' ')}`}>{cellContent ?? ''}</div>
         </td>
     );
 }

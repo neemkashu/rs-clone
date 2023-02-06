@@ -1,5 +1,5 @@
 import { NONOGRAM_INFO } from '../../../utils/constants';
-import { fieldPlace } from '../../../utils/types';
+import { fieldPlace, NonogramRaw } from '../../../utils/types';
 import './DrawArea.scss';
 import TableAllRows from './TableAllRows';
 
@@ -13,21 +13,27 @@ const goal = [
     [0, 1, 0],
 ];
 
-const rowsUnified = goal.map((line) => line.map((cell) => `${cell}`));
+// const rowsUnified = goal.map((line) => line.map((cell) => `${cell}`));
 // --------------server part-------------------------
 
 const location: fieldPlace = 'area';
-const rowLinesAmount = rowsUnified.length;
+// const rowLinesAmount = rowsUnified.length;
 
-function DrawArea(): JSX.Element {
+function DrawArea({ nonogramRaw }: { nonogramRaw: NonogramRaw | null }): JSX.Element {
+    const rowsUnified = nonogramRaw?.nonogram.goal;
+    const rowLinesAmount = rowsUnified?.length ?? 0;
     return (
         <table className="table m-0 table-bordered border-success">
             <tbody>
-                <TableAllRows
-                    location={location}
-                    dataLength={rowLinesAmount}
-                    linesUnified={rowsUnified}
-                />
+                {rowsUnified ? (
+                    <TableAllRows
+                        location={location}
+                        dataLength={rowLinesAmount}
+                        linesUnified={rowsUnified}
+                    />
+                ) : (
+                    <tr />
+                )}
             </tbody>
         </table>
     );

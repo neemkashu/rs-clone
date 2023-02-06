@@ -1,4 +1,7 @@
+import { useContext } from 'react';
 import { NONOGRAM_INFO } from '../../utils/constants';
+import { NonogramRaw } from '../../utils/types';
+import { NonogramContext } from './contexts/context';
 import './gameStyles/GameHeader.scss';
 import Progress from './Progress';
 
@@ -18,7 +21,9 @@ const {
     nonogram: nonogramCaption,
 } = CAPTIONS;
 
-function GameHeader(): JSX.Element {
+function GameHeader({ nonogramRaw }: { nonogramRaw: NonogramRaw | null }): JSX.Element {
+    // const nonogram = useContext(NonogramContext);
+    console.warn('nonogram in game header', nonogramRaw);
     return (
         <div className="game-header">
             <h2>
@@ -26,7 +31,8 @@ function GameHeader(): JSX.Element {
             </h2>
             <div className="container d-flex gap-2">
                 <div>
-                    {sizeCaption}: {width} ✖ {height}
+                    {sizeCaption}: {nonogramRaw?.nonogram.width} ✖{' '}
+                    {nonogramRaw?.nonogram.height}
                 </div>
                 <div>
                     {difficultyCaption}: {difficulty}
