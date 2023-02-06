@@ -21,6 +21,7 @@ function Stopwatch(): JSX.Element {
         isUserLogged() ? NONOGRAM_INFO.userTime : getTimeFromStorage(nonogramID)
     );
     const isPageChange = useRef(false);
+    // eslint-disable-next-line no-undef
     isPageChange.current = false;
     // TODO: future using: for more precise time counting
     // const gameSessionStart = useRef(new Date());
@@ -32,7 +33,16 @@ function Stopwatch(): JSX.Element {
         setTimeToStorage(nonogramID, userTime);
     }, [userTime]);
 
-    setTimeout(timeStoreAndRefresh, REFRESH_PERIOD);
+    const interval = useRef<ReturnType<typeof setTimeout> | null>(
+        setTimeout(timeStoreAndRefresh, REFRESH_PERIOD)
+    );
+    useEffect(() => {
+        console.log('mount stopwatch?');
+        return () => {
+            console.log('delete timer');
+            interval.current = null;
+        };
+    }, []);
     document.onvisibilitychange = timeStoreAndRefresh;
 
     const date = new Date(userTime);
