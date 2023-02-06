@@ -1,6 +1,6 @@
-import './Header.scss';
+import './header.scss';
 import React, { useEffect } from 'react';
-import SettingsModal from './Settings_modal/Settings-modal';
+import SettingsModal from './settings-modal/settings-modal';
 
 export function Header(): JSX.Element {
     const mQuery = window.matchMedia('(max-width: 576px)');
