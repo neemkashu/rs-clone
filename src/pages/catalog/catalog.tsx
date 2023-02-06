@@ -21,7 +21,13 @@ export function Catalog(): JSX.Element {
     return (
         <div className="p-2 d-flex flex-wrap gap-2">
             {catalogDB.map((item, index) => {
-                return <CatalogItem catalogItem={item} cardNumber={index + 1} />;
+                return (
+                    <CatalogItem
+                        key={item.id}
+                        catalogItem={item}
+                        cardNumber={index + 1}
+                    />
+                );
             })}
         </div>
     );
