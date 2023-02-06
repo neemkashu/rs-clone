@@ -1,7 +1,7 @@
 import './Layout.scss';
 import { Outlet } from 'react-router-dom';
-import { Header } from '../Header/Header';
-import { Aside } from '../Aside/Aside';
+import { Header } from '../Header/header';
+import { Aside } from '../Aside/aside';
 import { Footer } from '../Footer/Footer';
 
 export function Layout(): JSX.Element {
