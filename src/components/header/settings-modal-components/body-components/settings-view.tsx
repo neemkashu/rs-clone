@@ -1,7 +1,7 @@
 export function SettingsViewContent() {
     return (
-        <ul className="modal-body ms-2 mb-0 py-1">
-            <li>
+        <ul className="modal-body mb-0 py-1">
+            <li className="ms-2">
                 Marking an empty cell:
                 <div className="form-check form-switch">
                     <label className="form-check-label" htmlFor="emptyCell">
@@ -25,7 +25,7 @@ export function SettingsViewContent() {
                     </label>
                 </div>
             </li>
-            <li>
+            <li className="ms-2">
                 <div className="form-check form-switch">
                     <label className="form-check-label" htmlFor="guessTime">
                         Show guess time

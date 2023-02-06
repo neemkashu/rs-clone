@@ -1,6 +1,6 @@
 import './App.scss';
 import { Route, Routes } from 'react-router-dom';
-import { Layout } from '../layout/layout';
+import { Layout } from '../Layout/layout';
 import { Main } from '../../pages/main/main';
 import { Catalog } from '../../pages/catalog/catalog';
 import Game from '../Game/Game';

@@ -4,33 +4,42 @@ import { SettingsGameContent } from './body-components/settings-game';
 import { SettingsViewContent } from './body-components/settings-view';
 
 export default function SettingsModal(): JSX.Element {
-    const [category, setCategory] = useState('main');
+    // const [category, setCategory] = useState('main');
     const [isMainSettingCategory, setMainSettingsCategory] = useState(true);
     const [isGameSettingCategory, setGameSettingsCategory] = useState(false);
     const [isViewSettingCategory, setViewSettingsCategory] = useState(false);
 
-    function changeCategory(e: React.ChangeEvent) {
-        const eventTarget = e.target as HTMLInputElement;
-        setCategory(eventTarget.value);
-    }
+    // function changeCategory(e: React.MouseEvent) {
+    //     const eventTarget = e.target as HTMLInputElement;
+    //     setCategory(eventTarget.value);
+    //     console.log('change', eventTarget.value);
+    //     console.log(category);
+    // }
 
     function hadnleSettingsCategoryPick(e: React.MouseEvent) {
-        const currentBtn = e.target as HTMLButtonElement;
-        if (currentBtn.id === 'settingsCategoryMain') {
+        const currentInput = e.target as HTMLInputElement;
+        const currentLabel = currentInput.closest('label') as HTMLLabelElement;
+        const allLabels = document
+            .querySelector('#settingsBtnGroup')
+            ?.querySelectorAll('label');
+        if (currentInput.id === 'settingsMainBtn') {
             setMainSettingsCategory(true);
             setGameSettingsCategory(false);
             setViewSettingsCategory(false);
         }
-        if (currentBtn.id === 'settingsCategoryGame') {
+        if (currentInput.id === 'settingsGameBtn') {
             setMainSettingsCategory(false);
             setGameSettingsCategory(true);
             setViewSettingsCategory(false);
         }
-        if (currentBtn.id === 'settingsCategoryView') {
+        if (currentInput.id === 'settingsViewBtn') {
             setMainSettingsCategory(false);
             setGameSettingsCategory(false);
             setViewSettingsCategory(true);
         }
+        allLabels?.forEach((elem) => elem.classList.remove('active'));
+        currentLabel.classList.add('active');
+        // changeCategory(e);
     }
 
     return (
@@ -52,86 +61,53 @@ export default function SettingsModal(): JSX.Element {
                             </div>
                         </div>
                         <div
+                            id="settingsBtnGroup"
                             className="container btn-group my-2"
                             role="group"
                             aria-label="Basic checkbox toggle button group"
                         >
-                            {/*
-                            eslint-disable-next-line jsx-a11y/label-has-associated-control
-                            */}
                             <label
-                                // onClick={hadnleSettingsCategoryPick}
-                                className="btn btn-outline-dark btn-sm"
+                                className="btn btn-outline-dark btn-sm active"
                                 htmlFor="settingsMainBtn"
                             >
                                 Main
+                                <input
+                                    type="radio"
+                                    className="btn-check"
+                                    name="settings"
+                                    id="settingsMainBtn"
+                                    autoComplete="off"
+                                    onClick={hadnleSettingsCategoryPick}
+                                />
                             </label>
-                            <input
-                                type="radio"
-                                className="btn-check"
-                                name="settings"
-                                id="settingsMainBtn"
-                                autoComplete="off"
-                                value="main"
-                                checked={category === 'main'}
-                                onChange={changeCategory}
-                            />
-                            {/*
-                            eslint-disable-next-line jsx-a11y/label-has-associated-control
-                            */}
                             <label
-                                // onClick={hadnleSettingsCategoryPick}
                                 className="btn btn-outline-dark btn-sm"
                                 htmlFor="settingsGameBtn"
                             >
                                 Game
+                                <input
+                                    type="radio"
+                                    className="btn-check"
+                                    name="settings"
+                                    id="settingsGameBtn"
+                                    autoComplete="off"
+                                    onClick={hadnleSettingsCategoryPick}
+                                />
                             </label>
-                            <input
-                                type="radio"
-                                className="btn-check"
-                                name="settings"
-                                id="settingsGameBtn"
-                                autoComplete="off"
-                                value="game"
-                                checked={category === 'game'}
-                                onChange={changeCategory}
-                            />
-                            {/*
-                            eslint-disable-next-line jsx-a11y/label-has-associated-control
-                            */}
                             <label
-                                // onClick={hadnleSettingsCategoryPick}
                                 className="btn btn-outline-dark btn-sm"
                                 htmlFor="settingsViewBtn"
                             >
                                 View
+                                <input
+                                    type="radio"
+                                    className="btn-check"
+                                    name="settings"
+                                    id="settingsViewBtn"
+                                    autoComplete="off"
+                                    onClick={hadnleSettingsCategoryPick}
+                                />
                             </label>
-                            <input
-                                type="radio"
-                                className="btn-check"
-                                name="settings"
-                                id="settingsViewBtn"
-                                autoComplete="off"
-                                value="view"
-                                checked={category === 'view'}
-                                onChange={changeCategory}
-                            />
-                            {/* <button
-                                onClick={hadnleSettingsCategoryPick}
-                                id="settingsCategoryGame"
-                                type="submit"
-                                className="btn btn-outline-dark btn-sm"
-                            >
-                                Game
-                            </button>
-                            <button
-                                onClick={hadnleSettingsCategoryPick}
-                                id="settingsCategoryView"
-                                type="submit"
-                                className="btn btn-outline-dark btn-sm"
-                            >
-                                View
-                            </button> */}
                         </div>
                     </div>
                     {isMainSettingCategory && <SettingsMainContent />}

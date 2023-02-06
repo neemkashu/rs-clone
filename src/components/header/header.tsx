@@ -1,6 +1,6 @@
-import './header.scss';
+import './Header.scss';
 import React, { useEffect } from 'react';
-import SettingsModal from './settings-modal/settings-modal';
+import SettingsModal from './settings-modal-components/settings-modal';
 
 export function Header(): JSX.Element {
     const mQuery = window.matchMedia('(max-width: 576px)');
@@ -16,7 +16,7 @@ export function Header(): JSX.Element {
         }
     }
 
-    function handleBurgerBtnClick(e: React.MouseEvent) {
+    function handleBurgerBtnClick() {
         const aside = document.body.querySelector('#aside') as HTMLDivElement;
         aside.style.left = '0';
     }

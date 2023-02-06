@@ -1,7 +1,7 @@
 export function SettingsMainContent() {
     return (
-        <ul className="modal-body ms-2 mb-0 py-1">
-            <li>
+        <ul className="modal-body mb-0 py-1">
+            <li className="ms-2">
                 <div className="form-check form-switch">
                     <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
                         Show crossword titles before solving
@@ -14,7 +14,7 @@ export function SettingsMainContent() {
                     </label>
                 </div>
             </li>
-            <li>
+            <li className="ms-2">
                 <div className="form-check form-switch">
                     <label className="form-check-label" htmlFor="flexSwitchCheckChecked">
                         Show crossword thumbnails before solving

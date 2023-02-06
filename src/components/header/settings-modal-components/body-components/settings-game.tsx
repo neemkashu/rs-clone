@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 export function SettingsGameContent() {
     return (
-        <ul className="modal-body ms-2 mb-0 py-1">
-            <li>
+        <ul className="modal-body mb-0 py-1">
+            <li className="ms-2">
                 Highlight cells with an error:
                 <div className="form-check">
                     <label className="form-check-label" htmlFor="higlightNever">
@@ -78,7 +78,7 @@ export function SettingsGameContent() {
                     </label>
                 </div>
             </li>
-            <li>
+            <li className="ms-2">
                 Automatically cross out numbers:
                 <div className="form-check">
                     <label className="form-check-label" htmlFor="crossOutNever">
@@ -153,7 +153,7 @@ export function SettingsGameContent() {
                     </label>
                 </div>
             </li>
-            <li>
+            <li className="ms-2">
                 <div className="form-check form-switch">
                     <label className="form-check-label" htmlFor="flexSwitchCheckChecked">
                         The last crossed out digit fills the line with crosses
