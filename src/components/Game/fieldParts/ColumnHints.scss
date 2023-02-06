@@ -1,8 +1,3 @@
-:root {
-    --nonogram-square-width: 16px;
-    --nonogram-number-width: calc(6px + var(--nonogram-square-width));
-    --cell-padding: 3px;
-}
 .nonogram-hints-border {
     border: 1px solid var(--bs-cyan);
 }

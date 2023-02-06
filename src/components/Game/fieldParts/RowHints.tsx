@@ -1,7 +1,7 @@
-import { Fragment } from 'react';
 import { NONOGRAM_INFO } from '../../../utils/constants';
+import { fieldPlace } from '../../../utils/types';
 import './RowHints.scss';
-import TableRow from './TableRow';
+import TableAllRows from './TableAllRows';
 
 // getting NONOGRAM INFO will be server part or local storage
 const { width, height, goal, rows, columns } = NONOGRAM_INFO;
@@ -24,22 +24,19 @@ rowsUnified.forEach((row) => {
 });
 // --------------server part-------------------------
 
-const location = 'aside';
+const location: fieldPlace = 'aside';
 const rowLinesAmount = rowsUnified.length;
-
-const tableRows = Array.from({ length: rowLinesAmount }, (item, indexRow) => {
-    const tableRowKey = `${location}-row-${indexRow}`;
-    return (
-        <Fragment key={tableRowKey}>
-            {TableRow(`${tableRowKey}-tableRow`, location, indexRow, rowsUnified)}
-        </Fragment>
-    );
-});
 
 function RowHints(): JSX.Element {
     return (
         <table className="table table-bordered nonogram-hints-border">
-            <tbody>{tableRows}</tbody>
+            <tbody>
+                <TableAllRows
+                    location={location}
+                    dataLength={rowLinesAmount}
+                    linesUnified={rowsUnified}
+                />
+            </tbody>
         </table>
     );
 }

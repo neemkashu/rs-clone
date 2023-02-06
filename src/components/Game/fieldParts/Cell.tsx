@@ -1,16 +1,9 @@
-import { fieldPlace } from '../../../utils/types';
+import { CellProps, fieldPlace } from '../../../utils/types';
 
-export default function Cell(
-    hint: string,
-    indexX: number,
-    indexY: number,
-    location: fieldPlace,
-    ...styles: string[]
-): JSX.Element {
-    const squareKey = `${location}-cell-col-${indexX}-row-${indexY}`;
+export default function Cell({ hint, styles }: CellProps): JSX.Element {
     return (
-        <td key={squareKey} className="cell-square">
-            <div className={`square ${styles.join(' ')}`}>{hint ?? ''}</div>
+        <td className="cell-square">
+            <div className={`square ${styles?.join(' ')}`}>{hint ?? ''}</div>
         </td>
     );
 }

@@ -4,7 +4,7 @@ import { NONOGRAM_INFO } from '../../utils/constants'; // imitation of back-end 
 import { getTimeFromStorage, setTimeToStorage } from '../../utils/helpers';
 import './gameStyles/Stopwatch.scss';
 
-const REFRESH_PERIOD = 1000;
+const REFRESH_PERIOD = 500;
 const { id: nonogramID } = NONOGRAM_INFO;
 
 const getTwoDigitIndicator = (time: number): string => {

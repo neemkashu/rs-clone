@@ -1,8 +1,7 @@
-/* eslint-disable max-len */
-import { Fragment } from 'react';
 import { NONOGRAM_INFO } from '../../../utils/constants';
+import { fieldPlace } from '../../../utils/types';
 import './DrawArea.scss';
-import TableRow from './TableRow';
+import TableAllRows from './TableAllRows';
 
 // getting NONOGRAM INFO will be server part or local storage
 const { width, height, rows, columns } = NONOGRAM_INFO;
@@ -17,22 +16,19 @@ const goal = [
 const rowsUnified = goal.map((line) => line.map((cell) => `${cell}`));
 // --------------server part-------------------------
 
-const location = 'area';
+const location: fieldPlace = 'area';
 const rowLinesAmount = rowsUnified.length;
-
-const tableRows = Array.from({ length: rowLinesAmount }, (item, indexRow) => {
-    const tableRowKey = `${location}-row-${indexRow}`;
-    return (
-        <Fragment key={tableRowKey}>
-            {TableRow(`${tableRowKey}-tableRow`, location, indexRow, rowsUnified)}
-        </Fragment>
-    );
-});
 
 function DrawArea(): JSX.Element {
     return (
-        <table className="table table-bordered border-success">
-            <tbody>{tableRows}</tbody>
+        <table className="table m-0 table-bordered border-success">
+            <tbody>
+                <TableAllRows
+                    location={location}
+                    dataLength={rowLinesAmount}
+                    linesUnified={rowsUnified}
+                />
+            </tbody>
         </table>
     );
 }
