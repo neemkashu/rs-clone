@@ -1,4 +1,4 @@
-import './header.scss';
+import './Header.scss';
 import React, { useEffect } from 'react';
 
 export function Header(): JSX.Element {
