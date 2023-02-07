@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react';
 import Controls from './Controls';
 import Field from './Field';
 import GameHeader from './GameHeader';
-import Stopwatch from './Stopwatch';
+import Chronometer from './Chronometer';
 import { NonogramRaw } from '../../utils/types';
 import { NonogramContext } from './contexts/context';
 
 const SERVER_ADDRESS = 'http://127.0.0.1:3000/';
-const ID = 'sbSQn4Z20lJ5Dsjmh13w';
+const ID = 'E7UMxLSZv31q5m4RwLG4';
 
 async function getNonogramByID(id: string): Promise<NonogramRaw | null> {
     try {
@@ -37,7 +37,7 @@ function Game(): JSX.Element {
         <NonogramContext.Provider value={nonogramRaw}>
             <div className="container d-flex flex-column gap-2">
                 <GameHeader nonogramRaw={nonogramRaw} />
-                <Stopwatch />
+                <Chronometer />
                 <Field nonogramRaw={nonogramRaw} />
                 <Controls />
             </div>

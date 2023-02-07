@@ -13,7 +13,6 @@ const CAPTIONS = {
 };
 // TODO: may add to tech spec changing title from id to name after solution
 const { title, width, height, difficulty, status, id } = NONOGRAM_INFO;
-const showTitle = status === 'isFinished' ? title : `#${id}`;
 
 const {
     size: sizeCaption,
@@ -23,7 +22,7 @@ const {
 
 function GameHeader({ nonogramRaw }: { nonogramRaw: NonogramRaw | null }): JSX.Element {
     // const nonogram = useContext(NonogramContext);
-    console.warn('nonogram in game header', nonogramRaw);
+    const showTitle = status === 'isFinished' ? title : '*****';
     return (
         <div className="game-header">
             <h2>
