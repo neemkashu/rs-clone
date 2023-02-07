@@ -1,6 +1,5 @@
-import './catalog.scss';
 import { useEffect, useState } from 'react';
-import { CatalogItem } from '../../components/Catalog/Catalog-item';
+import { CatalogItem } from './Catalog-item';
 import { NonogramObject } from '../../utils/types';
 
 export function Catalog(): JSX.Element {
@@ -14,7 +13,7 @@ export function Catalog(): JSX.Element {
                 const result = await response.json();
                 setCatalogDB(result);
             } catch (e) {
-                console.log(`${e} occured while fetch catalog DB`);
+                console.log(e);
             }
         })();
     }, []);

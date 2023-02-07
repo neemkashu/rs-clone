@@ -1,4 +1,4 @@
-import './Catalog-item.scss';
+import './catalog-item.scss';
 import { NonogramObject } from '../../utils/types';
 
 type CatalogItemProps = {

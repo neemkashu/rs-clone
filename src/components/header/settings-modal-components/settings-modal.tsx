@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { SettingsMainContent } from './body-components/settings-main';
-import { SettingsGameContent } from './body-components/settings-game';
-import { SettingsViewContent } from './body-components/settings-view';
+import { SettingsMainContent } from './body-components/Settings-main';
+import { SettingsGameContent } from './body-components/Settings-game';
+import { SettingsViewContent } from './body-components/Settings-view';
 
 export default function SettingsModal(): JSX.Element {
     // const [category, setCategory] = useState('main');

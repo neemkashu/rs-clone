@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 export function SettingsGameContent() {
     return (
         <ul className="modal-body mb-0 py-1">
