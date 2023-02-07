@@ -1,10 +1,10 @@
 import './header.scss';
 import { useState, useEffect } from 'react';
-import { SettingsModal } from './Settings-modal/Settings-modal';
 import { AsideButton } from './Aside-button/Aside-button';
 import { ColorThemeButton } from './Color-theme-button/Color-theme-button';
 import { LanguageButton } from './Language-button/Language-button';
 import { matchSmWindowSize, handleAsideAfterWindowResize } from '../../utils/helpers';
+import SettingsModal from './settings-modal-components/settings-modal';
 
 export function Header(): JSX.Element {
     const [isBurgerBtnVisible, setIsBurgerBtnVisible] = useState(false);

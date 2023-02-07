@@ -1,4 +1,4 @@
-import './Aside.scss';
+import './aside.scss';
 import { Link } from 'react-router-dom';
 import { handleAsideCloseBtnClick } from '../../utils/helpers';
 
