@@ -1,6 +1,11 @@
 /* eslint-disable no-var */
 import { StorageKeys } from './storage';
-import { getTimeFromStorage, getUserCurrentTimes, setTimeToStorage } from './helpers';
+import {
+    getTimeFromStorage,
+    getUserCurrentTimes,
+    setTimeToStorage,
+    unifyTwoDimensionalArray,
+} from './helpers';
 
 class LocalStorageMock {
     constructor() {
@@ -148,5 +153,55 @@ describe('test Setting Time by id and time data', () => {
         const updatedStorage = localStorage.getItem(StorageKeys.USER_CURRENT_TIME);
         const desiredStorage = JSON.stringify([{ id: 503, time: 9000 }]);
         expect(updatedStorage).toEqual(desiredStorage);
+    });
+});
+
+describe('Returns two-dimensional array with equal length subarrays', () => {
+    test('does not change length of input array', () => {
+        const arr = [
+            [{ hint: 7, color: 1 }],
+            [{ hint: 11, color: 1 }],
+            [
+                { hint: 1, color: 1 },
+                { hint: 10, color: 1 },
+                { hint: 11, color: 1 },
+            ],
+            [
+                { hint: 1, color: 1 },
+                { hint: 11, color: 1 },
+            ],
+        ];
+        const oldArray = [...arr];
+        unifyTwoDimensionalArray(arr);
+        expect(oldArray.length).toEqual(arr.length);
+    });
+    test('makes sub arrays of equal length', () => {
+        const arr = [
+            [{ hint: 7, color: 1 }],
+            [{ hint: 11, color: 1 }],
+            [
+                { hint: 1, color: 1 },
+                { hint: 10, color: 1 },
+                { hint: 11, color: 1 },
+            ],
+            [
+                { hint: 1, color: 1 },
+                { hint: 11, color: 1 },
+            ],
+        ];
+        const arr2 = [[{ hint: 7, color: 1 }], [{ hint: 11, color: 1 }]];
+        const unifiedArr = unifyTwoDimensionalArray(arr);
+        const unifiedArr2 = unifyTwoDimensionalArray(arr2);
+
+        const lengthOfSubArray = unifiedArr[0].length;
+        const lengthOfSubArray2 = unifiedArr2[0].length;
+
+        const areSubArraysEqual = unifiedArr.every(
+            (subArray) => subArray.length === lengthOfSubArray
+        );
+        const areSubArraysEqual2 = unifiedArr2.every(
+            (subArray) => subArray.length === lengthOfSubArray2
+        );
+        expect([areSubArraysEqual, areSubArraysEqual2]).toEqual([true, true]);
     });
 });

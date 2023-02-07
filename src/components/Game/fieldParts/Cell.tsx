@@ -1,4 +1,4 @@
-import { CellProps, fieldPlace, NonogramHint } from '../../../utils/types';
+import { CellProps } from '../../../utils/types';
 
 export default function Cell({ cellContent, styles }: CellProps): JSX.Element {
     return (

@@ -50,3 +50,18 @@ export function getTimeFromStorage(id: number): number {
     }
     return 0;
 }
+export function unifyTwoDimensionalArray<T>(arr?: T[][]): (T | null)[][] {
+    if (!arr) {
+        return [[null]];
+    }
+    const innerArrMaxLength = arr.reduce((maxLength, innerArr) => {
+        return maxLength > innerArr.length ? maxLength : innerArr.length;
+    }, 1);
+    const arrUnified: (T | null)[][] = [...arr];
+    arrUnified.forEach((column) => {
+        while (column.length < innerArrMaxLength) {
+            column.unshift(null);
+        }
+    });
+    return arrUnified;
+}

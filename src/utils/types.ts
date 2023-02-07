@@ -19,12 +19,12 @@ export interface CellProps {
 export interface TableRowProps {
     location: fieldPlace;
     indexRow: number;
-    linesUnified: number[][] | NonogramHint[][];
+    linesUnified: (NonogramHint | null)[][] | (number | null)[][];
 }
 export interface TableAllRowsProps {
     location: fieldPlace;
     dataLength: number;
-    linesUnified: NonogramHint[][] | number[][];
+    linesUnified: (NonogramHint | null)[][] | (number | null)[][];
 }
 export interface TableFieldRowsProps {
     location: fieldPlace;

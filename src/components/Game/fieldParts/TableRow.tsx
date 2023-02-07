@@ -1,4 +1,4 @@
-import { fieldPlace, TableAllRowsProps, TableRowProps } from '../../../utils/types';
+import { TableRowProps } from '../../../utils/types';
 import Cell from './Cell';
 
 export default function TableRow({
@@ -51,7 +51,7 @@ export default function TableRow({
 
                         const cellContent = typeof cell === 'number' ? cell : cell?.hint;
                         const crossedStyle = cellContent === 0 ? 'crossed-square' : '';
-                        const filledStyle = cellContent > 0 ? 'filled-square' : '';
+                        const filledStyle = cellContent ?? -1 > 0 ? 'filled-square' : '';
                         const squareKey = `${location}-cell-col-${indexRow}-row-${indexNumberRow}`;
                         return (
                             <Cell
