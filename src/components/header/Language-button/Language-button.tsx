@@ -58,6 +58,7 @@ export function LanguageButton(): JSX.Element {
                         height="25"
                         viewBox="0,0 25,15"
                     >
+                        <desc>Switch page language to english</desc>
                         <rect width="25" height="15" fill="#00247d" />
                         <path
                             d="M 0,0 L 25,15 M 25,0 L 0,15"
@@ -88,6 +89,7 @@ export function LanguageButton(): JSX.Element {
                         width="25"
                         height="25"
                     >
+                        <desc>Switch page language to russian</desc>
                         <rect fill="#fff" width="9" height="3" />
                         <rect fill="#d52b1e" y="3" width="9" height="3" />
                         <rect fill="#0039a6" y="2" width="9" height="2" />
@@ -105,7 +107,7 @@ export function LanguageButton(): JSX.Element {
                         height="25"
                         viewBox="0 0 5 3"
                     >
-                        <desc>Flag of Germany</desc>
+                        <desc>Switch page language to german</desc>
                         <rect
                             id="black_stripe"
                             width="5"
