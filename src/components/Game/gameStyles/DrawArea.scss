@@ -1,12 +1,19 @@
 .square {
     width: var(--nonogram-square-width);
     height: var(--nonogram-square-width);
+    &:hover {
+        cursor: pointer;
+    }
 }
 .filled-square {
     background-color: var(--bs-teal);
 }
 .crossed-square {
     background-image: url("../../../image/cross.svg");
+    background-size: contain;
+}
+.hint-crossed {
+    background-image: url("../../../image/line.svg");
     background-size: contain;
 }
 .nonogram-border {

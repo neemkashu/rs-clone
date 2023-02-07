@@ -1,5 +1,7 @@
 import { FieldPlace, TableRowProps } from '../../../utils/types';
+import AreaCell from './AreaCell';
 import Cell from './Cell';
+import HintCell from './HintCell';
 
 export default function TableRow({
     location,
@@ -13,11 +15,13 @@ export default function TableRow({
                     {linesUnified[indexRow].map((cellContent, indexNumberRow) => {
                         const squareKey = `${location}-cell-col-${indexRow}-row-${indexNumberRow}`;
                         const isHint = typeof cellContent !== 'number';
+                        const hint = (isHint ? cellContent?.hint : '') ?? '';
                         return (
-                            <Cell
+                            <HintCell
                                 key={squareKey}
-                                cellContent={`${(isHint ? cellContent?.hint : '') ?? ''}`}
-                                styles={['hint-crossed']}
+                                hint={`${hint}`}
+                                stateStyle=""
+                                styles={[]}
                             />
                         );
                     })}
@@ -31,10 +35,12 @@ export default function TableRow({
                         const squareKey = `${location}-cell-col-${indexRow}-row-${indexColumn}`;
                         const cellContent = column[indexRow];
                         const isHint = typeof cellContent !== 'number';
+                        const hint = (isHint ? cellContent?.hint : '') ?? '';
                         return (
-                            <Cell
+                            <HintCell
                                 key={squareKey}
-                                cellContent={`${(isHint ? cellContent?.hint : '') ?? ''}`}
+                                hint={`${hint}`}
+                                stateStyle=""
                                 styles={[]}
                             />
                         );
@@ -46,18 +52,18 @@ export default function TableRow({
             return (
                 <tr>
                     {linesUnified[indexRow].map((cell, indexNumberRow) => {
-                        // TODO: in future 'area' case is for
-                        // cell of type number | null
-
-                        const cellContent = typeof cell === 'number' ? cell : cell?.hint;
+                        const cellContent = typeof cell === 'number' ? cell : null;
                         const crossedStyle = cellContent === 0 ? 'crossed-square' : '';
                         const filledStyle = cellContent ?? -1 > 0 ? 'filled-square' : '';
                         const squareKey = `${location}-cell-col-${indexRow}-row-${indexNumberRow}`;
                         return (
-                            <Cell
+                            <AreaCell
                                 key={squareKey}
-                                cellContent=""
-                                styles={[crossedStyle, filledStyle]}
+                                cell={cellContent}
+                                stateStyle={
+                                    (crossedStyle || filledStyle) ?? 'empty-square'
+                                }
+                                styles={[]}
                             />
                         );
                     })}

@@ -1,5 +1,5 @@
 import { FieldPlace, fieldPlace, NonogramRaw } from '../../../utils/types';
-import './DrawArea.scss';
+import '../gameStyles/DrawArea.scss';
 import TableAllRows from './TableAllRows';
 
 const location: fieldPlace = FieldPlace.AREA;

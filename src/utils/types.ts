@@ -1,5 +1,3 @@
-export type a = 'filled' | 'empty' | 'crossed';
-
 export type fieldPlace = 'header' | 'aside' | 'area' | 'miniature';
 
 export enum FieldPlace {
@@ -21,6 +19,7 @@ export enum GameStatus {
 export interface CellProps {
     cellContent: string;
     styles?: string[];
+    handler?: () => void;
 }
 export interface TableRowProps {
     location: fieldPlace;
