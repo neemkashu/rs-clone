@@ -1,4 +1,4 @@
-import './Header.scss';
+import './header.scss';
 import { useState, useEffect } from 'react';
 import { SettingsModal } from './Settings-modal/Settings-modal';
 import { AsideButton } from './Aside-button/Aside-button';
