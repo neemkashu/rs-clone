@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
+import { NonogramObject } from './types';
 
 export const a = 10;
 
@@ -30,4 +31,17 @@ export function handleAsideAfterWindowResize(
 export function handleAsideCloseBtnClick() {
     const aside = document.body.querySelector('#aside') as HTMLDivElement;
     aside.style.left = '-170px';
+}
+
+export async function getCatalogDB(): Promise<NonogramObject[]> {
+    try {
+        const response = await fetch('http://localhost:3000/nonograms', {
+            method: 'GET',
+        });
+        return await response.json();
+    } catch (e) {
+        console.error(e);
+        console.warn('this error occurred while fetching the catalog database');
+        return [];
+    }
 }

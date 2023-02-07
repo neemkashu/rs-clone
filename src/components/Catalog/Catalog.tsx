@@ -1,22 +1,15 @@
 import { useEffect, useState } from 'react';
 import { CatalogItem } from './Catalog-item';
 import { NonogramObject } from '../../utils/types';
+import { getCatalogDB } from '../../utils/helpers';
 
 export function Catalog(): JSX.Element {
     const [catalogDB, setCatalogDB] = useState<NonogramObject[]>([]);
+
     useEffect(() => {
-        (async function getCatalogDB() {
-            try {
-                const response = await fetch('http://localhost:3000/nonograms', {
-                    method: 'GET',
-                });
-                const result = await response.json();
-                setCatalogDB(result);
-            } catch (e) {
-                console.log(e);
-            }
-        })();
+        getCatalogDB().then((data) => (data.length ? setCatalogDB(data) : ''));
     }, []);
+
     return (
         <div className="p-2 d-flex flex-wrap gap-2">
             {catalogDB.map((item, index) => {
