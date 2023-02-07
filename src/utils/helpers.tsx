@@ -6,13 +6,14 @@ export const a = 10;
 export const matchSmWindowSize = window.matchMedia('(max-width: 576px)');
 
 export function handleAsideAfterWindowResize(
-    query: MediaQueryList | MediaQueryListEvent
-    // setIsBurgerBtnVisible?: Dispatch<SetStateAction<boolean>>
+    query: MediaQueryList | MediaQueryListEvent,
+    setIsBurgerBtnVisible: Dispatch<SetStateAction<boolean>>
 ): void {
     const aside = document.body.querySelector('#aside');
     const asideCloseBtn = document.body.querySelector(
         '#asideCloseBtn'
     ) as HTMLButtonElement;
+    setIsBurgerBtnVisible(query.matches);
     if (query.matches) {
         asideCloseBtn.style.display = 'flex';
         aside?.classList.add('aside-modal');

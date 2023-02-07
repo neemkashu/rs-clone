@@ -9,18 +9,15 @@ import SettingsModal from './Settings-modal-components/Settings-modal';
 export function Header(): JSX.Element {
     const [isBurgerBtnVisible, setIsBurgerBtnVisible] = useState(false);
 
-    function handleBurgerButtonShow() {
-        setIsBurgerBtnVisible(matchSmWindowSize?.matches);
+    function helperFunction(e: MediaQueryList | MediaQueryListEvent) {
+        handleAsideAfterWindowResize(e, setIsBurgerBtnVisible);
     }
 
     useEffect(() => {
-        matchSmWindowSize.addEventListener('change', handleAsideAfterWindowResize);
-        matchSmWindowSize.addEventListener('change', handleBurgerButtonShow);
-        handleAsideAfterWindowResize(matchSmWindowSize);
-        handleBurgerButtonShow();
+        matchSmWindowSize.addEventListener('change', helperFunction);
+        handleAsideAfterWindowResize(matchSmWindowSize, setIsBurgerBtnVisible);
         return () => {
-            matchSmWindowSize.removeEventListener('change', handleAsideAfterWindowResize);
-            matchSmWindowSize.removeEventListener('change', handleBurgerButtonShow);
+            matchSmWindowSize.removeEventListener('change', helperFunction);
         };
     }, []);
 
