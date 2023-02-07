@@ -2,6 +2,12 @@ export type a = 'filled' | 'empty' | 'crossed';
 
 export type fieldPlace = 'header' | 'aside' | 'area' | 'miniature';
 
+export enum FieldPlace {
+    HEADER = 'header',
+    ASIDE = 'aside',
+    AREA = 'area',
+    MINIATURE = 'miniature',
+}
 export interface NonogramTime {
     id: number;
     time: number;

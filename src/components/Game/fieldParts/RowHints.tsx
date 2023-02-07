@@ -1,9 +1,9 @@
 import { unifyTwoDimensionalArray } from '../../../utils/helpers';
-import { fieldPlace, NonogramRaw } from '../../../utils/types';
+import { FieldPlace, fieldPlace, NonogramRaw } from '../../../utils/types';
 import './RowHints.scss';
 import TableAllRows from './TableAllRows';
 
-const location: fieldPlace = 'aside';
+const location: fieldPlace = FieldPlace.ASIDE;
 // const rowLinesAmount = rowsUnified.length;
 
 function RowHints({ nonogramRaw }: { nonogramRaw: NonogramRaw | null }): JSX.Element {

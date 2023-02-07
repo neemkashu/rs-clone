@@ -1,4 +1,4 @@
-import { TableRowProps } from '../../../utils/types';
+import { FieldPlace, TableRowProps } from '../../../utils/types';
 import Cell from './Cell';
 
 export default function TableRow({
@@ -7,7 +7,7 @@ export default function TableRow({
     linesUnified,
 }: TableRowProps): JSX.Element {
     switch (location) {
-        case 'aside': {
+        case FieldPlace.ASIDE: {
             return (
                 <tr>
                     {linesUnified[indexRow].map((cellContent, indexNumberRow) => {
@@ -24,7 +24,7 @@ export default function TableRow({
                 </tr>
             );
         }
-        case 'header': {
+        case FieldPlace.HEADER: {
             return (
                 <tr>
                     {linesUnified.map((column, indexColumn) => {
@@ -42,7 +42,7 @@ export default function TableRow({
                 </tr>
             );
         }
-        case 'area': {
+        case FieldPlace.AREA: {
             return (
                 <tr>
                     {linesUnified[indexRow].map((cell, indexNumberRow) => {

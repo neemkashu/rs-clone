@@ -1,9 +1,9 @@
 import { unifyTwoDimensionalArray } from '../../../utils/helpers';
-import { fieldPlace, NonogramRaw } from '../../../utils/types';
+import { FieldPlace, fieldPlace, NonogramRaw } from '../../../utils/types';
 import './ColumnHints.scss';
 import TableAllRows from './TableAllRows';
 
-const location: fieldPlace = 'header';
+const location: fieldPlace = FieldPlace.HEADER;
 
 function ColumnHints({ nonogramRaw }: { nonogramRaw: NonogramRaw | null }): JSX.Element {
     const columns = nonogramRaw?.nonogram.columns;
