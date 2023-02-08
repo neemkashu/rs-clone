@@ -7,6 +7,7 @@ export const NONOGRAM_INFO = {
     height: 2,
     difficulty: 0.2,
     status: 'new',
+    userTime: 0,
     rows: `
 1,1
 1`,

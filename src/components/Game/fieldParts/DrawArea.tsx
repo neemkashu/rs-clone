@@ -1,38 +1,26 @@
-/* eslint-disable max-len */
-import { Fragment } from 'react';
-import { NONOGRAM_INFO } from '../../../utils/constants';
-import './DrawArea.scss';
-import TableRow from './TableRow';
+import { FieldPlace, fieldPlace, NonogramRaw } from '../../../utils/types';
+import '../gameStyles/DrawArea.scss';
+import TableAllRows from './TableAllRows';
 
-// getting NONOGRAM INFO will be server part or local storage
-const { width, height, rows, columns } = NONOGRAM_INFO;
+const location: fieldPlace = FieldPlace.AREA;
+// const rowLinesAmount = rowsUnified.length;
 
-// the columnsUnified generation will be server part in the future
-// --------------server part-------------------------
-const goal = [
-    [1, 0, 1],
-    [0, 1, 0],
-];
-
-const rowsUnified = goal.map((line) => line.map((cell) => `${cell}`));
-// --------------server part-------------------------
-
-const location = 'area';
-const rowLinesAmount = rowsUnified.length;
-
-const tableRows = Array.from({ length: rowLinesAmount }, (item, indexRow) => {
-    const tableRowKey = `${location}-row-${indexRow}`;
+function DrawArea({ nonogramRaw }: { nonogramRaw: NonogramRaw | null }): JSX.Element {
+    const rowsUnified = nonogramRaw?.nonogram.goal;
+    const rowLinesAmount = rowsUnified?.length ?? 0;
     return (
-        <Fragment key={tableRowKey}>
-            {TableRow(`${tableRowKey}-tableRow`, location, indexRow, rowsUnified)}
-        </Fragment>
-    );
-});
-
-function DrawArea(): JSX.Element {
-    return (
-        <table className="table table-bordered game-field nonogram-border">
-            <tbody className="numbers-row-container">{tableRows}</tbody>
+        <table className="table m-0 table-bordered border-success">
+            <tbody>
+                {rowsUnified ? (
+                    <TableAllRows
+                        location={location}
+                        dataLength={rowLinesAmount}
+                        linesUnified={rowsUnified}
+                    />
+                ) : (
+                    <tr />
+                )}
+            </tbody>
         </table>
     );
 }

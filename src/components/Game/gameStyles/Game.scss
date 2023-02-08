@@ -1,0 +1,9 @@
+:root {
+    --nonogram-square-width: 1rem;
+    --nonogram-number-width: calc(6px + var(--nonogram-square-width));
+    --cell-padding: 1px;
+}
+.table {
+    width: min-content;
+    margin: 0;
+}

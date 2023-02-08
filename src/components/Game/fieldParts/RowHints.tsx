@@ -1,45 +1,28 @@
-import { Fragment } from 'react';
-import { NONOGRAM_INFO } from '../../../utils/constants';
-import './RowHints.scss';
-import TableRow from './TableRow';
+import { unifyTwoDimensionalArray } from '../../../utils/helpers';
+import { FieldPlace, fieldPlace, NonogramRaw } from '../../../utils/types';
+import '../gameStyles/RowHints.scss';
+import TableAllRows from './TableAllRows';
 
-// getting NONOGRAM INFO will be server part or local storage
-const { width, height, goal, rows, columns } = NONOGRAM_INFO;
+const location: fieldPlace = FieldPlace.ASIDE;
+// const rowLinesAmount = rowsUnified.length;
 
-// the columnsUnified generation will be server part in the future
-// --------------server part-------------------------
-const rowsUnified = rows
-    .trim()
-    .split('\n')
-    .map((row) => row.split(','));
-
-const rowsHeight = rowsUnified.reduce((maxLength, row) => {
-    return maxLength > row.length ? maxLength : row.length;
-}, 1);
-
-rowsUnified.forEach((row) => {
-    while (row.length < rowsHeight) {
-        row.unshift('');
-    }
-});
-// --------------server part-------------------------
-
-const location = 'aside';
-const rowLinesAmount = rowsUnified.length;
-
-const tableRows = Array.from({ length: rowLinesAmount }, (item, indexRow) => {
-    const tableRowKey = `${location}-row-${indexRow}`;
+function RowHints({ nonogramRaw }: { nonogramRaw: NonogramRaw | null }): JSX.Element {
+    const rows = nonogramRaw?.nonogram.rows;
+    const rowsUnified = unifyTwoDimensionalArray(rows);
+    const rowLinesAmount = rowsUnified?.length ?? 0;
     return (
-        <Fragment key={tableRowKey}>
-            {TableRow(`${tableRowKey}-tableRow`, location, indexRow, rowsUnified)}
-        </Fragment>
-    );
-});
-
-function RowHints(): JSX.Element {
-    return (
-        <table className="table table-bordered nonogram-numbers-border">
-            <tbody className="numbers-row-container">{tableRows}</tbody>
+        <table className="table table-bordered nonogram-hints-border">
+            <tbody>
+                {rowsUnified ? (
+                    <TableAllRows
+                        location={location}
+                        dataLength={rowLinesAmount}
+                        linesUnified={rowsUnified}
+                    />
+                ) : (
+                    <tr />
+                )}
+            </tbody>
         </table>
     );
 }
