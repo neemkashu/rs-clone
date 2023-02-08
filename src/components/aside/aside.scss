@@ -1,7 +1,3 @@
-aside {
-    transition: 0.4s;
-}
-
 .aside-modal {
     position: fixed;
     top: 0;
@@ -12,4 +8,5 @@ aside {
     padding: 10px 5px;
     background-color: white;
     height: 100%;
+    z-index: 1000;
 }

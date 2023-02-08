@@ -1,8 +1,8 @@
 import './App.scss';
 import { Route, Routes } from 'react-router-dom';
-import { Layout } from '../layout/layout';
-import { Main } from '../../pages/main/main';
-import { Catalog } from '../../pages/catalog/catalog';
+import { Layout } from '../Layout/Layout';
+import { Main } from '../Main/Main';
+import { Catalog } from '../Catalog/Catalog';
 import Game from '../Game/Game';
 
 function App(): JSX.Element {
@@ -12,6 +12,7 @@ function App(): JSX.Element {
                 <Route index element={<Main />} />
                 <Route path="/catalog" element={<Catalog />} />
                 <Route path="/game" element={<Game />} />
+                <Route path="/game" element={<Catalog />} />
             </Route>
         </Routes>
     );
