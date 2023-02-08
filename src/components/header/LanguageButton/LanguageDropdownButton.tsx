@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { SpecificLanguageButton } from './Specific-language-button';
+import { SpecificLanguageButton } from './SpecificLanguageButton';
 
 export function LanguageDropDownButton(): JSX.Element {
     const dropDownButtonRef = useRef<HTMLButtonElement | null>(null);

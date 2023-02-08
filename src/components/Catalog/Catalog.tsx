@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { CatalogItem } from './Catalog-item';
+import { CatalogItem } from './CatalogItem';
 import { NonogramObject } from '../../utils/types';
 import { getCatalogDB } from '../../utils/helpers';
 
