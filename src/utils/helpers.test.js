@@ -119,7 +119,7 @@ describe('test Setting Time by id and time data', () => {
                 { id: 123, time: 48000 },
             ])
         );
-        setTimeToStorage(234, 347823);
+        setTimeToStorage(347823, 234);
         const updatedStorage = localStorage.getItem(StorageKeys.USER_CURRENT_TIME);
         const desiredStorage = JSON.stringify([
             { id: 234, time: 347823 },
@@ -137,7 +137,7 @@ describe('test Setting Time by id and time data', () => {
                 { id: 123, time: 48000 },
             ])
         );
-        setTimeToStorage(503, 9000);
+        setTimeToStorage(9000, 503);
         const updatedStorage = localStorage.getItem(StorageKeys.USER_CURRENT_TIME);
         const desiredStorage = JSON.stringify([
             { id: 234, time: 152000 },
@@ -149,7 +149,7 @@ describe('test Setting Time by id and time data', () => {
     test('Write new nonogram to empty storage', () => {
         global.localStorage = new LocalStorageMock();
         localStorage.clear();
-        setTimeToStorage(503, 9000);
+        setTimeToStorage(9000, 503);
         const updatedStorage = localStorage.getItem(StorageKeys.USER_CURRENT_TIME);
         const desiredStorage = JSON.stringify([{ id: 503, time: 9000 }]);
         expect(updatedStorage).toEqual(desiredStorage);

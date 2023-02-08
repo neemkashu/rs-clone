@@ -7,15 +7,17 @@ export enum FieldPlace {
     MINIATURE = 'miniature',
 }
 export interface NonogramTime {
-    id: number;
+    id: string;
     time: number;
 }
+export type gameStatuses = 'initial' | 'started' | 'finished';
 
 export enum GameStatus {
     INITIAL = 'initial',
     STARTED = 'started',
     FINISHED = 'finished',
 }
+
 export interface CellProps {
     cellContent: string;
     styles?: string[];
@@ -57,4 +59,16 @@ export interface Nonogram {
 export interface NonogramRaw {
     id: string;
     nonogram: Nonogram;
+}
+export interface UserGameData {
+    state: GameStatus;
+    currentUserSolution: (null | number)[][];
+    currentTime: number;
+    currentUserRows: { isCrossedOut: boolean }[][];
+    currentUserColumns: { isCrossedOut: boolean }[][];
+}
+export interface UserGameDataRaw {
+    data: {
+        currentGame: UserGameData;
+    };
 }

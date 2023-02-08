@@ -18,7 +18,10 @@ export function getUserCurrentTimes(
     }
     return null;
 }
-export function setTimeToStorage(id: number, time: number) {
+export function setTimeToStorage(time: number, id?: string): void {
+    if (!id) {
+        return;
+    }
     const storageInfo = localStorage.getItem(StorageKeys.USER_CURRENT_TIME);
     const storageTimes = getUserCurrentTimes(storageInfo);
 
@@ -39,7 +42,10 @@ export function setTimeToStorage(id: number, time: number) {
         );
     }
 }
-export function getTimeFromStorage(id: number): number {
+export function getTimeFromStorage(id?: string): number {
+    if (!id) {
+        return 0;
+    }
     const storageInfo = localStorage.getItem(StorageKeys.USER_CURRENT_TIME);
     const storageTimes = getUserCurrentTimes(storageInfo);
     if (storageTimes !== null) {

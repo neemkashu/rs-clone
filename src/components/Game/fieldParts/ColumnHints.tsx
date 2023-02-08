@@ -1,5 +1,7 @@
+import { useContext } from 'react';
 import { unifyTwoDimensionalArray } from '../../../utils/helpers';
-import { FieldPlace, fieldPlace, NonogramRaw } from '../../../utils/types';
+import { FieldPlace, fieldPlace, GameStatus, NonogramRaw } from '../../../utils/types';
+import { GameStatusContext } from '../contexts/context';
 import '../gameStyles/ColumnHints.scss';
 import TableAllRows from './TableAllRows';
 

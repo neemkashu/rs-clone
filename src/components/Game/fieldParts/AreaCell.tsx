@@ -1,21 +1,7 @@
 import { useEffect, useState } from 'react';
 import Cell from './Cell';
 
-const AREA_STATE_STYLES = ['crossed-square', 'filled-square', 'empty-square'];
-
-function getNextStyleFunction(): () => string {
-    let index = 0;
-    const next: () => string = () => {
-        if (index < AREA_STATE_STYLES.length - 1) {
-            index += 1;
-        } else {
-            index = 0;
-        }
-        console.warn('next style?', index);
-        return AREA_STATE_STYLES[index];
-    };
-    return next;
-}
+const AREA_STATE_STYLES = ['crossed-square', 'empty-square', 'filled-square'];
 
 export default function AreaCell({
     cell,
