@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 export function LanguageButton(): JSX.Element {
+    const dropDownButtonRef = useRef<HTMLButtonElement | null>(null);
+
     function handleLang(e: React.MouseEvent): void {
-        const dropDownButton = document.body.querySelector('#dropdownLangButton');
         const allLangContainers = document.body.querySelectorAll(
             '#dropdownMenuLang button'
         );
@@ -13,11 +14,14 @@ export function LanguageButton(): JSX.Element {
             elem.classList.remove('active');
         });
         properEventTarget?.classList.add('active');
-        if (dropDownButton) dropDownButton.innerHTML = eventTargetContent;
+        if (dropDownButtonRef.current)
+            dropDownButtonRef.current.innerHTML = eventTargetContent;
     }
+
     return (
         <div className="dropdown d-flex align-items-center">
             <button
+                ref={dropDownButtonRef}
                 className="btn btn-outline-secondary dropdown-toggle"
                 type="button"
                 id="dropdownLangButton"
