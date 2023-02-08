@@ -1,18 +1,15 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 export function ColorThemeButton(): JSX.Element {
+    const lightThemeBtnContentRef = useRef<HTMLDivElement>(null);
+    const darkThemeBtnContentRef = useRef<HTMLDivElement>(null);
+
     function handleColorThemeChange(e: React.MouseEvent): void {
         const btn = e.currentTarget as HTMLButtonElement;
-        const lightThemeBtnContent = btn.querySelector(
-            '#lightThemeBtnContent'
-        ) as HTMLDivElement;
-        const darkThemeBtnContent = btn.querySelector(
-            '#darkThemeBtnContent'
-        ) as HTMLDivElement;
         btn.classList.toggle('btn-warning');
         btn.classList.toggle('btn-dark');
-        lightThemeBtnContent.toggleAttribute('hidden');
-        darkThemeBtnContent.toggleAttribute('hidden');
+        lightThemeBtnContentRef.current?.toggleAttribute('hidden');
+        darkThemeBtnContentRef.current?.toggleAttribute('hidden');
     }
     return (
         <button
@@ -20,10 +17,19 @@ export function ColorThemeButton(): JSX.Element {
             onClick={handleColorThemeChange}
             className="btn btn-warning"
         >
-            <div id="lightThemeBtnContent" className=" text-center">
+            <div
+                ref={lightThemeBtnContentRef}
+                id="lightThemeBtnContent"
+                className=" text-center"
+            >
                 ☀
             </div>
-            <div id="darkThemeBtnContent" hidden className=" text-center">
+            <div
+                ref={darkThemeBtnContentRef}
+                id="darkThemeBtnContent"
+                hidden
+                className=" text-center"
+            >
                 🌒
             </div>
         </button>
