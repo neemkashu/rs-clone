@@ -7,7 +7,11 @@ export function Catalog(): JSX.Element {
     const [catalogDB, setCatalogDB] = useState<NonogramObject[]>([]);
 
     useEffect(() => {
-        getCatalogDB().then((data) => (data.length ? setCatalogDB(data) : ''));
+        getCatalogDB().then((data) => {
+            if (data.length) {
+                setCatalogDB(data);
+            }
+        });
     }, []);
 
     return (
