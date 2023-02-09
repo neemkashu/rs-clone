@@ -1,28 +1,24 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import { SpecificLanguageButton } from './SpecificLanguageButton';
+import EnglishFlag from '../../../svg/EnglishFlag';
+import GermanFlag from '../../../svg/GermanFlag';
+import RussianFlag from '../../../svg/RussianFlag';
+import { LanguagesEnum } from '../../../utils/types';
 
 export function LanguageDropDownButton(): JSX.Element {
-    const dropDownButtonRef = useRef<HTMLButtonElement | null>(null);
+    const [selectedLang, setSelectedLang] = useState<LanguagesEnum>(LanguagesEnum.RU);
 
-    const handleLang = (e: React.MouseEvent): void => {
-        const allLangContainers = document.body.querySelectorAll(
-            '#dropdownMenuLang button'
-        );
-        const eventTarget = e.target as HTMLDivElement;
-        const properEventTarget = eventTarget.closest('button') as HTMLButtonElement;
-        const eventTargetContent = properEventTarget.innerHTML;
-        allLangContainers.forEach((elem) => {
-            elem.classList.remove('active');
-        });
-        properEventTarget?.classList.add('active');
-        if (dropDownButtonRef.current)
-            dropDownButtonRef.current.innerHTML = eventTargetContent;
-    };
+    function handleLanguageSwitch(id: LanguagesEnum) {
+        setSelectedLang(id);
+    }
+
+    const isEnLangSelected = selectedLang === LanguagesEnum.EN;
+    const isDeLangSelected = selectedLang === LanguagesEnum.DE;
+    const isRuLangSelected = selectedLang === LanguagesEnum.RU;
 
     return (
         <div className="dropdown d-flex align-items-center">
             <button
-                ref={dropDownButtonRef}
                 className="btn btn-outline-secondary dropdown-toggle"
                 type="button"
                 id="dropdownLangButton"
@@ -30,21 +26,9 @@ export function LanguageDropDownButton(): JSX.Element {
                 aria-haspopup="true"
                 aria-expanded="false"
             >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="25"
-                    height="25"
-                    viewBox="0,0 25,15"
-                >
-                    <rect width="25" height="15" fill="#00247d" />
-                    <path d="M 0,0 L 25,15 M 25,0 L 0,15" stroke="#fff" strokeWidth="3" />
-                    <path d="M 12.5,0 V 15 M 0,7.5 H 25" stroke="#fff" strokeWidth="5" />
-                    <path
-                        d="M 12.5,0 V 15 M 0,7.5 H 25"
-                        stroke="#cf142b"
-                        strokeWidth="3"
-                    />
-                </svg>
+                {isEnLangSelected ? <EnglishFlag /> : ''}
+                {isDeLangSelected ? <GermanFlag /> : ''}
+                {isRuLangSelected ? <RussianFlag /> : ''}
             </button>
             <div
                 id="dropdownMenuLang"
@@ -52,90 +36,22 @@ export function LanguageDropDownButton(): JSX.Element {
                 aria-labelledby="dropdownLangButton"
             >
                 <SpecificLanguageButton
-                    handleLang={handleLang}
-                    id="dropdownRuLang"
-                    svg={
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="25"
-                            height="25"
-                            viewBox="0,0 25,15"
-                        >
-                            <desc>Switch page language to english</desc>
-                            <rect width="25" height="15" fill="#00247d" />
-                            <path
-                                d="M 0,0 L 25,15 M 25,0 L 0,15"
-                                stroke="#fff"
-                                strokeWidth="3"
-                            />
-                            <path
-                                d="M 12.5,0 V 15 M 0,7.5 H 25"
-                                stroke="#fff"
-                                strokeWidth="5"
-                            />
-                            <path
-                                d="M 12.5,0 V 15 M 0,7.5 H 25"
-                                stroke="#cf142b"
-                                strokeWidth="3"
-                            />
-                        </svg>
-                    }
-                    active="active"
+                    handleLang={() => handleLanguageSwitch(LanguagesEnum.EN)}
+                    id={LanguagesEnum.EN}
+                    svg={<EnglishFlag />}
+                    active={isEnLangSelected ? 'active' : ''}
                 />
                 <SpecificLanguageButton
-                    handleLang={handleLang}
-                    id="dropdownRuLang"
-                    svg={
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 9 6"
-                            width="25"
-                            height="25"
-                        >
-                            <desc>Switch page language to russian</desc>
-                            <rect fill="#fff" width="9" height="3" />
-                            <rect fill="#d52b1e" y="3" width="9" height="3" />
-                            <rect fill="#0039a6" y="2" width="9" height="2" />
-                        </svg>
-                    }
+                    handleLang={() => handleLanguageSwitch(LanguagesEnum.RU)}
+                    id={LanguagesEnum.RU}
+                    svg={<RussianFlag />}
+                    active={isRuLangSelected ? 'active' : ''}
                 />
                 <SpecificLanguageButton
-                    handleLang={handleLang}
-                    id="dropdownDeLang"
-                    svg={
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="25"
-                            height="25"
-                            viewBox="0 0 5 3"
-                        >
-                            <desc>Switch page language to german</desc>
-                            <rect
-                                id="black_stripe"
-                                width="5"
-                                height="3"
-                                y="0"
-                                x="0"
-                                fill="#000"
-                            />
-                            <rect
-                                id="red_stripe"
-                                width="5"
-                                height="2"
-                                y="1"
-                                x="0"
-                                fill="#D00"
-                            />
-                            <rect
-                                id="gold_stripe"
-                                width="5"
-                                height="1"
-                                y="2"
-                                x="0"
-                                fill="#FFCE00"
-                            />
-                        </svg>
-                    }
+                    handleLang={() => handleLanguageSwitch(LanguagesEnum.DE)}
+                    id={LanguagesEnum.DE}
+                    svg={<GermanFlag />}
+                    active={isDeLangSelected ? 'active' : ''}
                 />
             </div>
         </div>
