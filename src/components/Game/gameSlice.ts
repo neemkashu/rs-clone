@@ -1,8 +1,14 @@
 /* eslint-disable no-param-reassign */
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 // eslint-disable-next-line import/no-cycle
 import { AppDispatch } from '../store';
-import { GameStatus, UserGameDataRaw } from './gameUtils/types';
+import { userNonogramData } from './gameUtils/mochas';
+import {
+    GameStatus,
+    ResponseStatus,
+    UserGameData,
+    UserGameDataRaw,
+} from './gameUtils/types';
 
 export enum LoadStatus {
     PENDING = 'LOADING',
@@ -11,16 +17,37 @@ export enum LoadStatus {
 }
 export interface GameState {
     status: GameStatus | null;
-    checkGameLoaded: LoadStatus | null;
-    userGame: UserGameDataRaw | null;
+    checkGameLoaded: LoadStatus;
+    userGame: UserGameData | null;
+    errorMessage: string;
 }
 
 const initialState: GameState = {
     status: null,
-    checkGameLoaded: null,
+    checkGameLoaded: LoadStatus.PENDING,
     userGame: null,
+    errorMessage: '',
 };
 
+async function saveUserGameState(
+    id: string,
+    userGameData: UserGameData
+): Promise<ResponseStatus> {
+    // mocha before implementing request
+    return new Promise((resolve, reject) => {
+        const reponse = 'ok';
+        resolve(ResponseStatus.SUCCESS);
+        reject(ResponseStatus.ERROR);
+    });
+}
+
+export const saveUserGame = createAsyncThunk(
+    'user/save/game',
+    async ({ id, userGameData }: { id: string; userGameData: UserGameData }) => {
+        const response = await saveUserGameState(id, userGameData);
+        return response;
+    }
+);
 // another slice needs different name field
 export const gameSlice = createSlice({
     name: 'game',
@@ -33,6 +60,11 @@ export const gameSlice = createSlice({
                 state.status = GameStatus.STARTED;
             }
         },
+        pauseGame(state, action: PayloadAction<GameStatus>) {
+            // old value = action.payload
+            console.warn('pause!');
+            state.status = null;
+        },
         winClick(state, action: PayloadAction<GameStatus>) {
             // old value = action.payload
             console.warn('this win Click!');
@@ -41,25 +73,23 @@ export const gameSlice = createSlice({
                 state.status = GameStatus.FINISHED;
             }
         },
+        updateUserGame(state, action: PayloadAction<UserGameData>) {
+            console.warn('update user game!');
+            state.userGame = action.payload;
+        },
     },
     extraReducers(builder) {
-        builder.addCase('user/load/game/pending', (state, action) => {
+        builder.addCase(saveUserGame.pending, (state, action) => {
             state.checkGameLoaded = LoadStatus.PENDING;
         });
-        builder.addCase('user/load/game/fulfilled', (state, action) => {
+        builder.addCase(saveUserGame.fulfilled, (state, action) => {
             state.checkGameLoaded = LoadStatus.FULFILLED;
+        });
+        builder.addCase(saveUserGame.rejected, (state, action) => {
+            state.checkGameLoaded = LoadStatus.REJECTED;
+            state.errorMessage = action.error.message ?? 'error when saving game';
         });
     },
 });
 
-export function checkUserGameLoading() {
-    return function checkUserGameLoadingThunk(dispatch: AppDispatch) {
-        dispatch({ type: 'user/load/game/pending' });
-    };
-}
-export function checkNonogramLoading() {
-    return function checkNonogramLoadingThunk(dispatch: AppDispatch) {
-        dispatch({ type: 'user/load/game/pending' });
-    };
-}
-export const { firstFieldClick } = gameSlice.actions;
+export const { firstFieldClick, winClick, pauseGame, updateUserGame } = gameSlice.actions;

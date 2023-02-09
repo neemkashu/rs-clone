@@ -8,7 +8,7 @@ import { GameStatusContext } from './contexts/context';
 import { useAppSelector } from '../hooks';
 import { store } from '../store';
 import { GameStatus } from './gameUtils/types';
-import { firstFieldClick } from './gameSlice';
+import { firstFieldClick, pauseGame } from './gameSlice';
 
 const REFRESH_PERIOD = 1000;
 
@@ -39,6 +39,10 @@ function Chronometer({ nonogramRaw }: { nonogramRaw: NonogramRaw | null }): JSX.
             : getTimeFromStorage(nonogramID)
     );
     const [isPageHidden, setIsPageHidden] = useState(false);
+
+    useEffect(() => {
+        dispatch(pauseGame(GameStatus.STARTED));
+    }, [dispatch]);
 
     useEffect(() => {
         const timeStoreAndRefresh = () => {

@@ -6,17 +6,14 @@ import GameHeader from './GameHeader';
 import Chronometer from './Chronometer';
 import { NonogramRaw, UserGameDataRaw } from '../../utils/types';
 import { userNonogramData } from '../../utils/mochas';
-import { useAppDispatch, useAppSelector } from '../hooks';
-import { checkNonogramLoading } from './gameSlice';
+import { useAppDispatch } from '../hooks';
+import { updateUserGame } from './gameSlice';
 
 const SERVER_ADDRESS = 'http://127.0.0.1:3000/';
-const ID = 'E7UMxLSZv31q5m4RwLG4';
-
-// const dispatch = useAppDispatch();
+const ID = 'E7UMxLSZv31q5m4RwLG4'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
 
 async function getNonogramByID(id: string): Promise<NonogramRaw | null> {
     try {
-        // dispatch(checkNonogramLoading());
         const url = `${SERVER_ADDRESS}nonograms/${id}`;
         const options = {
             method: 'GET',
@@ -32,7 +29,6 @@ async function getNonogramByID(id: string): Promise<NonogramRaw | null> {
         return null;
     }
 }
-
 async function getGameState(id: string): Promise<UserGameDataRaw | null> {
     // mocha before implementing request
     return new Promise((resolve) => {
@@ -42,9 +38,19 @@ async function getGameState(id: string): Promise<UserGameDataRaw | null> {
 }
 function Game(): JSX.Element {
     const [nonogramRaw, setNonogramRaw] = useState<NonogramRaw | null>(null);
+    const dispatch = useAppDispatch();
+
     useEffect(() => {
         getNonogramByID(ID).then((data) => setNonogramRaw(data));
     }, []);
+    useEffect(() => {
+        getGameState(ID).then((data) => {
+            if (data) {
+                const loadedGame = data.data.currentGame;
+                dispatch(updateUserGame(loadedGame));
+            }
+        });
+    }, [dispatch]);
 
     return (
         <div className="container d-flex flex-column gap-2">

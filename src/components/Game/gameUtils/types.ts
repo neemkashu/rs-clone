@@ -72,3 +72,7 @@ export interface UserGameDataRaw {
         currentGame: UserGameData;
     };
 }
+export enum ResponseStatus {
+    SUCCESS = 'successful',
+    ERROR = 'failed',
+}
