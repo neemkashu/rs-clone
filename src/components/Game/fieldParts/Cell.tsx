@@ -2,6 +2,7 @@ import { CellProps } from '../../../utils/types';
 import { firstFieldClick } from '../gameSlice';
 import { GameStatus } from '../gameUtils/types';
 import { useAppDispatch } from '../../hooks';
+import { store } from '../../store';
 
 export default function Cell({ cellContent, styles, handler }: CellProps): JSX.Element {
     const dispatch = useAppDispatch();
@@ -9,7 +10,9 @@ export default function Cell({ cellContent, styles, handler }: CellProps): JSX.E
         if (handler) {
             handler();
         }
-        dispatch(firstFieldClick(GameStatus.INITIAL));
+        if (!store.getState().game.status) {
+            dispatch(firstFieldClick(GameStatus.STARTED));
+        }
     }
     return (
         <td role="presentation" onClick={handlers} className="cell-square">

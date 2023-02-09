@@ -31,7 +31,7 @@ function GameHeader({ nonogramRaw }: { nonogramRaw: NonogramRaw | null }): JSX.E
             <h2>
                 {nonogramCaption} {showTitle}
             </h2>
-            <div className="container d-flex gap-2">
+            <div className="d-flex gap-2">
                 <div>
                     {sizeCaption}: {width} ✖ {height}
                 </div>

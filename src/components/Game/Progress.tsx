@@ -16,7 +16,7 @@ const progress = getProgress();
 
 function Progress(): JSX.Element {
     return (
-        <div className="container">
+        <div>
             {progressCaption} {progress}
         </div>
     );

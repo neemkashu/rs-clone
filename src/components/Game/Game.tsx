@@ -6,13 +6,17 @@ import GameHeader from './GameHeader';
 import Chronometer from './Chronometer';
 import { NonogramRaw, UserGameDataRaw } from '../../utils/types';
 import { userNonogramData } from '../../utils/mochas';
-import { useAppSelector } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { checkNonogramLoading } from './gameSlice';
 
 const SERVER_ADDRESS = 'http://127.0.0.1:3000/';
 const ID = 'E7UMxLSZv31q5m4RwLG4';
 
+// const dispatch = useAppDispatch();
+
 async function getNonogramByID(id: string): Promise<NonogramRaw | null> {
     try {
+        // dispatch(checkNonogramLoading());
         const url = `${SERVER_ADDRESS}nonograms/${id}`;
         const options = {
             method: 'GET',
@@ -28,6 +32,7 @@ async function getNonogramByID(id: string): Promise<NonogramRaw | null> {
         return null;
     }
 }
+
 async function getGameState(id: string): Promise<UserGameDataRaw | null> {
     // mocha before implementing request
     return new Promise((resolve) => {
@@ -40,7 +45,6 @@ function Game(): JSX.Element {
     useEffect(() => {
         getNonogramByID(ID).then((data) => setNonogramRaw(data));
     }, []);
-    const currentStatus = useAppSelector((state) => state.game);
 
     return (
         <div className="container d-flex flex-column gap-2">

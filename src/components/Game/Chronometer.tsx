@@ -68,7 +68,7 @@ function Chronometer({ nonogramRaw }: { nonogramRaw: NonogramRaw | null }): JSX.
     const seconds = getTwoDigitIndicator(date.getUTCSeconds());
 
     return (
-        <div className="container border border-success">
+        <div className="p-1 border border-success chronometer">
             {hours}:{minutes}:{seconds}
         </div>
     );
