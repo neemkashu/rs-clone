@@ -31,7 +31,7 @@ export function WinChecker({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.E
         });
         if (isWin) {
             console.log('isWin', isWin);
-            // dispatch(winClick(GameStatus.FINISHED));
+            dispatch(winClick(GameStatus.FINISHED));
             return <div>Win!</div>;
         }
     }
