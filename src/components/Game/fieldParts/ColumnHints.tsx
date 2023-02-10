@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { unifyTwoDimensionalArray } from '../../../utils/helpers';
 import { FieldPlace, fieldPlace, GameStatus, NonogramRaw } from '../../../utils/types';
+import { useAppSelector } from '../../hooks';
 import { GameStatusContext } from '../contexts/context';
 import '../gameStyles/ColumnHints.scss';
 import TableAllRows from './TableAllRows';
@@ -11,6 +12,7 @@ function ColumnHints({ nonogramRaw }: { nonogramRaw: NonogramRaw | null }): JSX.
     const columns = nonogramRaw?.nonogram.columns;
     const columnsUnified = unifyTwoDimensionalArray(columns);
     const columnsHeight = columnsUnified[0].length;
+
     return (
         <table className="table table-bordered nonogram-hints-border">
             <tbody className="numbers-column-container">

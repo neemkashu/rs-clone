@@ -64,8 +64,8 @@ export interface UserGameData {
     state: GameStatus;
     currentUserSolution: (null | number)[][];
     currentTime: number;
-    currentUserRows: { isCrossedOut: boolean }[][];
-    currentUserColumns: { isCrossedOut: boolean }[][];
+    currentUserRows: ({ isCrossedOut: boolean } | null)[][];
+    currentUserColumns: ({ isCrossedOut: boolean } | null)[][];
 }
 export interface UserGameDataRaw {
     data: {

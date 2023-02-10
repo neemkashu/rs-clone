@@ -5,7 +5,9 @@ import {
     getUserCurrentTimes,
     setTimeToStorage,
     unifyTwoDimensionalArray,
+    makeInitialSaveGame,
 } from './helpers';
+import { nonogram } from './mochas';
 
 class LocalStorageMock {
     constructor() {
@@ -203,5 +205,31 @@ describe('Returns two-dimensional array with equal length subarrays', () => {
             (subArray) => subArray.length === lengthOfSubArray2
         );
         expect([areSubArraysEqual, areSubArraysEqual2]).toEqual([true, true]);
+    });
+});
+describe('Make initial saved game for new game', () => {
+    test('fills every solution cell with null', () => {
+        const result = makeInitialSaveGame(nonogram);
+        const isEveryCellNull = result.currentUserSolution
+            .flat()
+            .every((cell) => cell === null);
+
+        expect(isEveryCellNull).toBeTruthy();
+    });
+    test('fills hints rows state with false', () => {
+        const result = makeInitialSaveGame(nonogram);
+        const isEveryHintFalse = result.currentUserRows
+            .flat()
+            .every((cell) => cell.isCrossedOut === false);
+
+        expect(isEveryHintFalse).toBeTruthy();
+    });
+    test('fills hints columns state with false', () => {
+        const result = makeInitialSaveGame(nonogram);
+        const isEveryHintFalse = result.currentUserColumns
+            .flat()
+            .every((cell) => cell.isCrossedOut === false);
+
+        expect(isEveryHintFalse).toBeTruthy();
     });
 });

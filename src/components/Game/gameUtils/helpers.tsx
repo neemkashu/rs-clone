@@ -1,5 +1,5 @@
 import { StorageKeys } from './storage';
-import { NonogramTime } from './types';
+import { GameStatus, NonogramRaw, NonogramTime, UserGameData } from './types';
 
 export function getUserCurrentTimes(
     currentTimesInfo: string | null
@@ -70,4 +70,25 @@ export function unifyTwoDimensionalArray<T>(arr?: T[][]): (T | null)[][] {
         }
     });
     return arrUnified;
+}
+export function makeInitialSaveGame(nonogram: NonogramRaw | null): UserGameData | null {
+    if (!nonogram) {
+        return null;
+    }
+    const solution = nonogram.nonogram.goal.map((row) => row.map((cell) => null));
+    const columnsUnified = unifyTwoDimensionalArray(nonogram.nonogram.columns).map(
+        (line) => line.map((cell) => ({ isCrossedOut: false }))
+    );
+    const rowsUnified = unifyTwoDimensionalArray(nonogram.nonogram.rows).map((line) =>
+        line.map((cell) => ({ isCrossedOut: false }))
+    );
+
+    const initialGame: UserGameData = {
+        state: GameStatus.INITIAL,
+        currentUserSolution: solution,
+        currentTime: 0,
+        currentUserRows: rowsUnified,
+        currentUserColumns: columnsUnified,
+    };
+    return initialGame;
 }

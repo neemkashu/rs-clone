@@ -8,6 +8,8 @@ import { NonogramRaw, UserGameDataRaw } from '../../utils/types';
 import { userNonogramData } from '../../utils/mochas';
 import { useAppDispatch } from '../hooks';
 import { updateUserGame } from './gameSlice';
+import { martini } from './gameUtils/mochas';
+import { makeInitialSaveGame } from './gameUtils/helpers';
 
 const SERVER_ADDRESS = 'http://127.0.0.1:3000/';
 const ID = 'E7UMxLSZv31q5m4RwLG4'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
@@ -31,9 +33,15 @@ async function getNonogramByID(id: string): Promise<NonogramRaw | null> {
 }
 async function getGameState(id: string): Promise<UserGameDataRaw | null> {
     // mocha before implementing request
-    return new Promise((resolve) => {
+
+    /* return new Promise((resolve) => {
         const data = userNonogramData as UserGameDataRaw;
         resolve(data);
+    }); */
+
+    return new Promise((resolve, reject) => {
+        const data = userNonogramData as UserGameDataRaw;
+        reject(new Error('no data'));
     });
 }
 function Game(): JSX.Element {
@@ -41,16 +49,26 @@ function Game(): JSX.Element {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        getNonogramByID(ID).then((data) => setNonogramRaw(data));
+        getNonogramByID(ID).then((data) => {
+            // server mocha martini
+            setNonogramRaw(martini);
+        });
     }, []);
     useEffect(() => {
-        getGameState(ID).then((data) => {
-            if (data) {
-                const loadedGame = data.data.currentGame;
-                dispatch(updateUserGame(loadedGame));
-            }
-        });
-    }, [dispatch]);
+        getGameState(ID)
+            .then((data) => {
+                console.warn('in game rewrite', data?.data.currentGame);
+                if (data) {
+                    const loadedGame = data.data.currentGame;
+                    // server mocha martini
+                    dispatch(updateUserGame(loadedGame));
+                }
+            })
+            .catch((error) => {
+                const newGame = makeInitialSaveGame(nonogramRaw);
+                dispatch(updateUserGame(newGame));
+            });
+    }, [dispatch, nonogramRaw]);
 
     return (
         <div className="container d-flex flex-column gap-2">

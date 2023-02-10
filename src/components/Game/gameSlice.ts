@@ -2,6 +2,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 // eslint-disable-next-line import/no-cycle
 import { AppDispatch } from '../store';
+import { unifyTwoDimensionalArray } from './gameUtils/helpers';
 import { userNonogramData } from './gameUtils/mochas';
 import {
     GameStatus,
@@ -9,6 +10,8 @@ import {
     UserGameData,
     UserGameDataRaw,
 } from './gameUtils/types';
+
+export const AREA_STATE_STYLES = ['crossed-square', 'empty-square', 'filled-square'];
 
 export enum LoadStatus {
     PENDING = 'LOADING',
@@ -73,9 +76,73 @@ export const gameSlice = createSlice({
                 state.status = GameStatus.FINISHED;
             }
         },
-        updateUserGame(state, action: PayloadAction<UserGameData>) {
-            console.warn('update user game!');
-            state.userGame = action.payload;
+        updateUserGame(state, action: PayloadAction<UserGameData | null>) {
+            if (action.payload) {
+                const columns = action.payload.currentUserColumns;
+                const columnsUnified = unifyTwoDimensionalArray(columns);
+                const rows = action.payload.currentUserRows;
+                const rowsUnified = unifyTwoDimensionalArray(rows);
+                console.warn('update user game!');
+                state.userGame = {
+                    state: action.payload.state,
+                    currentUserSolution: action.payload.currentUserSolution,
+                    currentTime: action.payload.currentTime,
+                    currentUserColumns: columnsUnified,
+                    currentUserRows: rowsUnified,
+                };
+            }
+        },
+        updateAsideHintCell(
+            state,
+            action: PayloadAction<{
+                isCrossedOut: boolean;
+                indexColumn: number;
+                indexRow: number;
+            }>
+        ) {
+            if (state.userGame) {
+                const { indexRow, indexColumn } = action.payload;
+                const cell = state.userGame.currentUserRows[indexRow][indexColumn];
+                // console.warn('update hint info!');
+                if (cell) {
+                    cell.isCrossedOut = action.payload.isCrossedOut;
+                }
+            }
+        },
+        updateHeaderHintCell(
+            state,
+            action: PayloadAction<{
+                isCrossedOut: boolean;
+                indexColumn: number;
+                indexRow: number;
+            }>
+        ) {
+            if (state.userGame) {
+                const { indexRow, indexColumn } = action.payload;
+                const cell = state.userGame.currentUserColumns[indexColumn][indexRow];
+                // console.warn('update hint info!');
+                if (cell) {
+                    cell.isCrossedOut = action.payload.isCrossedOut;
+                }
+            }
+        },
+        updateAreaCell(
+            state,
+            action: PayloadAction<{
+                clickType: string;
+                indexNumberRow: number;
+                indexRow: number;
+            }>
+        ) {
+            if (state.userGame) {
+                const { indexRow, indexNumberRow, clickType } = action.payload;
+                const cell = state.userGame.currentUserSolution[indexRow][indexNumberRow];
+                const CELL_STATES = [null, 'number'];
+                const switchType = clickType === 'click' ? 1 : 0;
+                state.userGame.currentUserSolution[indexRow][indexNumberRow] =
+                    typeof cell === 'number' ? null : switchType;
+                console.warn('UPDATE CELL', cell);
+            }
         },
     },
     extraReducers(builder) {
@@ -92,4 +159,12 @@ export const gameSlice = createSlice({
     },
 });
 
-export const { firstFieldClick, winClick, pauseGame, updateUserGame } = gameSlice.actions;
+export const {
+    firstFieldClick,
+    winClick,
+    pauseGame,
+    updateUserGame,
+    updateAsideHintCell,
+    updateHeaderHintCell,
+    updateAreaCell,
+} = gameSlice.actions;

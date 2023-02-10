@@ -1,6 +1,8 @@
 import { FieldPlace, TableRowProps } from '../../../utils/types';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { updateAreaCell, updateAsideHintCell, updateHeaderHintCell } from '../gameSlice';
+import { HINT_STATE_STYLE } from '../gameUtils/constants';
 import AreaCell from './AreaCell';
-import Cell from './Cell';
 import HintCell from './HintCell';
 
 export default function TableRow({
@@ -8,19 +10,48 @@ export default function TableRow({
     indexRow,
     linesUnified,
 }: TableRowProps): JSX.Element {
+    const columnsUnified = useAppSelector(
+        (state) => state.game.userGame?.currentUserColumns
+    );
+    const rowsUnified = useAppSelector((state) => state.game.userGame?.currentUserRows);
+    const userSolution = useAppSelector(
+        (state) => state.game.userGame?.currentUserSolution
+    );
+    const dispatch = useAppDispatch();
+
     switch (location) {
         case FieldPlace.ASIDE: {
+            // console.warn('indexRow', indexRow);
+            // console.warn('rowsUnified', rowsUnified);
             return (
                 <tr>
                     {linesUnified[indexRow].map((cellContent, indexNumberRow) => {
                         const squareKey = `${location}-cell-col-${indexRow}-row-${indexNumberRow}`;
                         const isHint = typeof cellContent !== 'number';
                         const hint = (isHint ? cellContent?.hint : '') ?? '';
+                        const isCrossed =
+                            (rowsUnified &&
+                                rowsUnified[indexRow][indexNumberRow]?.isCrossedOut) ??
+                            false;
+
+                        const handleClick = () => {
+                            if (hint !== '') {
+                                // console.warn('handleClick isCrossed', isCrossed);
+                                dispatch(
+                                    updateAsideHintCell({
+                                        isCrossedOut: !isCrossed,
+                                        indexRow,
+                                        indexColumn: indexNumberRow,
+                                    })
+                                );
+                            }
+                        };
                         return (
                             <HintCell
                                 key={squareKey}
+                                handler={handleClick}
                                 hint={`${hint}`}
-                                stateStyle=""
+                                stateStyle={isCrossed ? HINT_STATE_STYLE : ''}
                                 styles={[]}
                             />
                         );
@@ -36,11 +67,29 @@ export default function TableRow({
                         const cellContent = column[indexRow];
                         const isHint = typeof cellContent !== 'number';
                         const hint = (isHint ? cellContent?.hint : '') ?? '';
+                        const isCrossed =
+                            (columnsUnified &&
+                                columnsUnified[indexColumn][indexRow]?.isCrossedOut) ??
+                            false;
+
+                        const handleClick = () => {
+                            if (hint !== '') {
+                                // console.warn('handleClick isCrossed', isCrossed);
+                                dispatch(
+                                    updateHeaderHintCell({
+                                        isCrossedOut: !isCrossed,
+                                        indexRow,
+                                        indexColumn,
+                                    })
+                                );
+                            }
+                        };
                         return (
                             <HintCell
                                 key={squareKey}
+                                handler={handleClick}
                                 hint={`${hint}`}
-                                stateStyle=""
+                                stateStyle={isCrossed ? HINT_STATE_STYLE : ''}
                                 styles={[]}
                             />
                         );
@@ -52,14 +101,42 @@ export default function TableRow({
             return (
                 <tr>
                     {linesUnified[indexRow].map((cell, indexNumberRow) => {
-                        const cellContent = typeof cell === 'number' ? cell : null;
-                        const crossedStyle = cellContent === 0 ? 'crossed-square' : '';
-                        const filledStyle = cellContent ?? -1 > 0 ? 'filled-square' : '';
+                        const userCell =
+                            userSolution && userSolution[indexRow][indexNumberRow];
+
+                        console.log('userCell', userCell);
+                        const crossedStyle = userCell === 0 ? 'crossed-square' : '';
+                        const filledStyle = userCell ?? -1 > 0 ? 'filled-square' : '';
                         const squareKey = `${location}-cell-col-${indexRow}-row-${indexNumberRow}`;
+
+                        const handleClick = () => {
+                            console.warn('handleClick AREA cell', userCell);
+
+                            dispatch(
+                                updateAreaCell({
+                                    clickType: 'click',
+                                    indexRow,
+                                    indexNumberRow,
+                                })
+                            );
+                        };
+                        const handlerContext = () => {
+                            console.warn('handlerContext AREA cell', userCell);
+
+                            dispatch(
+                                updateAreaCell({
+                                    clickType: 'context',
+                                    indexRow,
+                                    indexNumberRow,
+                                })
+                            );
+                        };
+
                         return (
                             <AreaCell
                                 key={squareKey}
-                                cell={cellContent}
+                                handleClick={handleClick}
+                                handleContext={handlerContext}
                                 stateStyle={
                                     (crossedStyle || filledStyle) ?? 'empty-square'
                                 }

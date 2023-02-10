@@ -23,3 +23,5 @@ export const cellClass = {
     empty: '',
     crossed: 'crossed-square',
 };
+
+export const HINT_STATE_STYLE = 'hint-crossed';
