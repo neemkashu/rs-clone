@@ -11,17 +11,6 @@ export default function HintCell({
     stateStyle: string;
     styles: string[];
 }): JSX.Element {
-    // const [currentStateStyle, setCurrentStateStyle] = useState(stateStyle);
-    // const dispatch = useAppDispatch();
-
-    // const handleClick = () => {
-    //     if (hint !== '') {
-    //         setCurrentStateStyle((previous) =>
-    //             previous === HINT_STATE_STYLE ? '' : HINT_STATE_STYLE
-    //         );
-    //         // dispatch(updateHintCell(currentStateStyle));
-    //     }
-    // };
     return (
         <Cell
             handleClick={handler}

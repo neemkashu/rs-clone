@@ -5,6 +5,8 @@ import { AppDispatch } from '../store';
 import { unifyTwoDimensionalArray } from './gameUtils/helpers';
 import { userNonogramData } from './gameUtils/mochas';
 import {
+    CellAreaState,
+    ClickType,
     GameStatus,
     ResponseStatus,
     UserGameData,
@@ -117,6 +119,8 @@ export const gameSlice = createSlice({
                 indexRow: number;
             }>
         ) {
+            // In future ii can be different from updateAsideHintCell
+            // because there will be light-up event for columns and rows separately
             if (state.userGame) {
                 const { indexRow, indexColumn } = action.payload;
                 const cell = state.userGame.currentUserColumns[indexColumn][indexRow];
@@ -129,7 +133,7 @@ export const gameSlice = createSlice({
         updateAreaCell(
             state,
             action: PayloadAction<{
-                clickType: string;
+                clickType: ClickType;
                 indexNumberRow: number;
                 indexRow: number;
             }>
@@ -137,11 +141,16 @@ export const gameSlice = createSlice({
             if (state.userGame) {
                 const { indexRow, indexNumberRow, clickType } = action.payload;
                 const cell = state.userGame.currentUserSolution[indexRow][indexNumberRow];
-                const CELL_STATES = [null, 'number'];
-                const switchType = clickType === 'click' ? 1 : 0;
-                state.userGame.currentUserSolution[indexRow][indexNumberRow] =
-                    typeof cell === 'number' ? null : switchType;
-                console.warn('UPDATE CELL', cell);
+                const crossOrFill =
+                    clickType === ClickType.MOUSE_CLICK
+                        ? CellAreaState.FILLED
+                        : CellAreaState.CROSSED;
+                const isCellEmpty = cell === CellAreaState.EMPTY;
+
+                state.userGame.currentUserSolution[indexRow][indexNumberRow] = isCellEmpty
+                    ? crossOrFill
+                    : CellAreaState.EMPTY;
+                // console.warn('UPDATE CELL', cell);
             }
         },
     },

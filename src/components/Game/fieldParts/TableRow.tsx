@@ -2,6 +2,7 @@ import { FieldPlace, TableRowProps } from '../../../utils/types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { updateAreaCell, updateAsideHintCell, updateHeaderHintCell } from '../gameSlice';
 import { HINT_STATE_STYLE } from '../gameUtils/constants';
+import { CellAreaState, ClickType } from '../gameUtils/types';
 import AreaCell from './AreaCell';
 import HintCell from './HintCell';
 
@@ -104,28 +105,28 @@ export default function TableRow({
                         const userCell =
                             userSolution && userSolution[indexRow][indexNumberRow];
 
-                        console.log('userCell', userCell);
-                        const crossedStyle = userCell === 0 ? 'crossed-square' : '';
-                        const filledStyle = userCell ?? -1 > 0 ? 'filled-square' : '';
+                        // console.log('userCell', userCell);
+                        const crossedStyle =
+                            userCell === CellAreaState.CROSSED ? 'crossed-square' : '';
+                        const filledStyle =
+                            userCell === CellAreaState.FILLED ? 'filled-square' : '';
                         const squareKey = `${location}-cell-col-${indexRow}-row-${indexNumberRow}`;
 
                         const handleClick = () => {
-                            console.warn('handleClick AREA cell', userCell);
-
+                            // console.warn('handleClick AREA cell', userCell);
                             dispatch(
                                 updateAreaCell({
-                                    clickType: 'click',
+                                    clickType: ClickType.MOUSE_CLICK,
                                     indexRow,
                                     indexNumberRow,
                                 })
                             );
                         };
                         const handlerContext = () => {
-                            console.warn('handlerContext AREA cell', userCell);
-
+                            // console.warn('handlerContext AREA cell', userCell);
                             dispatch(
                                 updateAreaCell({
-                                    clickType: 'context',
+                                    clickType: ClickType.MOUSE_CONTEXT,
                                     indexRow,
                                     indexNumberRow,
                                 })

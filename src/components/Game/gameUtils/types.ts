@@ -76,3 +76,12 @@ export enum ResponseStatus {
     SUCCESS = 'successful',
     ERROR = 'failed',
 }
+export enum ClickType {
+    MOUSE_CLICK = 'click',
+    MOUSE_CONTEXT = 'context',
+}
+export const CellAreaState = {
+    EMPTY: null,
+    CROSSED: 0,
+    FILLED: 1,
+};
