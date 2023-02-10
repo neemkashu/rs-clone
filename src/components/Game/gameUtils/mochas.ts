@@ -1,3 +1,5 @@
+import { UserGameData } from './types';
+
 export const userNonogramData = {
     data: {
         currentGame: {
@@ -1195,6 +1197,45 @@ export const martini = {
                 { hint: 1, color: 1 },
             ],
             [{ hint: 2, color: 1 }],
+        ],
+    },
+};
+
+export const Cat = {
+    id: '77777',
+    nonogram: {
+        height: 3,
+        width: 5,
+        title: {
+            en: 'Cat',
+            ru: 'Кошка',
+            de: 'Das Cat',
+        },
+        colorMapping: {
+            '1': '#000000',
+        },
+        goal: [
+            [1, 0, 1, 0, 0],
+            [0, 1, 0, 1, 1],
+            [0, 1, 0, 0, 0],
+        ],
+        rows: [
+            [
+                { hint: 1, color: 1 },
+                { hint: 1, color: 1 },
+            ],
+            [
+                { hint: 1, color: 1 },
+                { hint: 2, color: 1 },
+            ],
+            [{ hint: 1, color: 1 }],
+        ],
+        columns: [
+            [{ hint: 1, color: 1 }],
+            [{ hint: 2, color: 1 }],
+            [{ hint: 1, color: 1 }],
+            [{ hint: 1, color: 1 }],
+            [{ hint: 1, color: 1 }],
         ],
     },
 };

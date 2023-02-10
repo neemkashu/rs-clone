@@ -8,8 +8,10 @@ import { NonogramRaw, UserGameDataRaw } from '../../utils/types';
 import { userNonogramData } from '../../utils/mochas';
 import { useAppDispatch } from '../hooks';
 import { updateUserGame } from './gameSlice';
-import { martini } from './gameUtils/mochas';
+import { Cat, martini } from './gameUtils/mochas';
 import { makeInitialSaveGame } from './gameUtils/helpers';
+import { WinChecker } from './WinChecker';
+import { UserGameData } from './gameUtils/types';
 
 const SERVER_ADDRESS = 'http://127.0.0.1:3000/';
 const ID = 'E7UMxLSZv31q5m4RwLG4'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
@@ -51,7 +53,8 @@ function Game(): JSX.Element {
     useEffect(() => {
         getNonogramByID(ID).then((data) => {
             // server mocha martini
-            setNonogramRaw(martini);
+            // little mocha cat
+            setNonogramRaw(Cat);
         });
     }, []);
     useEffect(() => {
@@ -59,7 +62,7 @@ function Game(): JSX.Element {
             .then((data) => {
                 console.warn('in game rewrite', data?.data.currentGame);
                 if (data) {
-                    const loadedGame = data.data.currentGame;
+                    const loadedGame: UserGameData = data.data.currentGame;
                     // server mocha martini
                     dispatch(updateUserGame(loadedGame));
                 }
@@ -74,6 +77,7 @@ function Game(): JSX.Element {
         <div className="container d-flex flex-column gap-2">
             <GameHeader nonogramRaw={nonogramRaw} />
             {nonogramRaw ? <Chronometer nonogramRaw={nonogramRaw} /> : <div />}
+            {nonogramRaw ? <WinChecker nonogramRaw={nonogramRaw} /> : <div />}
             <Field nonogramRaw={nonogramRaw} />
             <Controls />
         </div>
