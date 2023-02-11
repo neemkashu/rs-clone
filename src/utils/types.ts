@@ -34,6 +34,9 @@ export enum LanguagesEnum {
     EN = 'dropdownEnLang',
     RU = 'dropdownRuLang',
     DE = 'fropdownDeLang',
+    EN_VALUE = 'en',
+    DE_VALUE = 'de',
+    RU_VALUE = 'ru',
 }
 
 export enum FieldPlace {
