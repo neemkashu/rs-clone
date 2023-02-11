@@ -1,3 +1,5 @@
+import React from 'react';
+
 export type fieldPlace = 'header' | 'aside' | 'area' | 'miniature';
 
 export type NonogramObject = {
@@ -28,6 +30,25 @@ export type NonogramObject = {
             }[]
         >;
     };
+};
+
+export type CatalogItemProps = {
+    catalogItem: NonogramObject;
+    cardNumber: number;
+};
+
+export type SpecificLanguageButtonPropsType = {
+    id: string;
+    svg: React.ReactNode;
+    active?: string;
+    handleLang: (e: React.MouseEvent) => void;
+};
+
+export type SettingsCategoryItemPropsType = {
+    name: string;
+    id: string;
+    active?: string;
+    handleSettingsCategorySelect: (e: React.MouseEvent) => void;
 };
 
 export enum FieldPlace {

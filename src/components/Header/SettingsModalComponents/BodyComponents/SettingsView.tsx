@@ -1,23 +1,25 @@
+import { useState } from 'react';
+
 export function SettingsViewContent() {
+    const [emptyCellSettingState, setEmptyCellSettingState] = useState<string>('dot');
+
+    function handleEmptyCellSetting() {
+        if (emptyCellSettingState === 'dot') {
+            setEmptyCellSettingState('cross');
+        } else {
+            setEmptyCellSettingState('dot');
+        }
+    }
     return (
         <ul className="modal-body mb-0 py-1">
             <li className="ms-2">
                 Marking an empty cell:
                 <div className="form-check form-switch">
                     <label className="form-check-label" htmlFor="emptyCell">
-                        <span id="emptyCellText">dot</span>
+                        {emptyCellSettingState}
                         <input
                             role="button"
-                            onClick={(e) => {
-                                const currentInput = e.target as HTMLInputElement;
-                                const textContainer = currentInput
-                                    .closest('label')
-                                    ?.querySelector('#emptyCellText') as HTMLSpanElement;
-                                // maybe I will use useRef here,
-                                // when I understand how to work with it
-                                textContainer.innerText =
-                                    textContainer.innerText === 'dot' ? 'cross' : 'dot';
-                            }}
+                            onClick={handleEmptyCellSetting}
                             className="form-check-input"
                             type="checkbox"
                             id="emptyCell"

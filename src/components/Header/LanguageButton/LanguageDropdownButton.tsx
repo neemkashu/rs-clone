@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { SpecificLanguageButton } from './SpecificLanguageButton';
 import EnglishFlag from '../../../svg/EnglishFlag';
 import GermanFlag from '../../../svg/GermanFlag';
 import RussianFlag from '../../../svg/RussianFlag';
-import { LanguagesEnum } from '../../../utils/types';
+import { LanguagesEnum } from '../../../utils/enums';
 
 export function LanguageDropDownButton(): JSX.Element {
     const [selectedLang, setSelectedLang] = useState<LanguagesEnum>(LanguagesEnum.RU);

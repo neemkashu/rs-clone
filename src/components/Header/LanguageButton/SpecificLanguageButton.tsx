@@ -1,11 +1,4 @@
-import React from 'react';
-
-type SpecificLanguageButtonPropsType = {
-    id: string;
-    svg: React.ReactNode;
-    active?: string;
-    handleLang: (e: React.MouseEvent) => void;
-};
+import { SpecificLanguageButtonPropsType } from '../../../utils/types';
 
 export function SpecificLanguageButton({
     id,

@@ -1,10 +1,5 @@
 import './CatalogItem.scss';
-import { NonogramObject } from '../../utils/types';
-
-type CatalogItemProps = {
-    catalogItem: NonogramObject;
-    cardNumber: number;
-};
+import { CatalogItemProps } from '../../utils/types';
 
 export function CatalogItem({ catalogItem, cardNumber }: CatalogItemProps) {
     return (

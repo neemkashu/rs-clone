@@ -1,45 +1,21 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { SettingsMainContent } from './BodyComponents/SettingsMain';
 import { SettingsGameContent } from './BodyComponents/SettingsGame';
 import { SettingsViewContent } from './BodyComponents/SettingsView';
+import { SettingsCategoryItem } from './SettingsCategoryItem';
+import { SettingsCategoryEnum } from '../../../utils/enums';
 
 export default function SettingsModal(): JSX.Element {
-    // const [category, setCategory] = useState('main');
-    const [isMainSettingCategory, setMainSettingsCategory] = useState(true);
-    const [isGameSettingCategory, setGameSettingsCategory] = useState(false);
-    const [isViewSettingCategory, setViewSettingsCategory] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState<SettingsCategoryEnum>(
+        SettingsCategoryEnum.ID_MAIN
+    );
 
-    // function changeCategory(e: React.MouseEvent) {
-    //     const eventTarget = e.target as HTMLInputElement;
-    //     setCategory(eventTarget.value);
-    //     console.log('change', eventTarget.value);
-    //     console.log(category);
-    // }
+    const isMainCategorySelected = selectedCategory === SettingsCategoryEnum.ID_MAIN;
+    const isGameCategorySelected = selectedCategory === SettingsCategoryEnum.ID_GAME;
+    const isViewCategorySelected = selectedCategory === SettingsCategoryEnum.ID_VIEW;
 
-    function hadnleSettingsCategoryPick(e: React.MouseEvent) {
-        const currentInput = e.target as HTMLInputElement;
-        const currentLabel = currentInput.closest('label') as HTMLLabelElement;
-        const allLabels = document
-            .querySelector('#settingsBtnGroup')
-            ?.querySelectorAll('label');
-        if (currentInput.id === 'settingsMainBtn') {
-            setMainSettingsCategory(true);
-            setGameSettingsCategory(false);
-            setViewSettingsCategory(false);
-        }
-        if (currentInput.id === 'settingsGameBtn') {
-            setMainSettingsCategory(false);
-            setGameSettingsCategory(true);
-            setViewSettingsCategory(false);
-        }
-        if (currentInput.id === 'settingsViewBtn') {
-            setMainSettingsCategory(false);
-            setGameSettingsCategory(false);
-            setViewSettingsCategory(true);
-        }
-        allLabels?.forEach((elem) => elem.classList.remove('active'));
-        currentLabel.classList.add('active');
-        // changeCategory(e);
+    function handleSettingsCategorySelect(id: SettingsCategoryEnum) {
+        setSelectedCategory(id);
     }
 
     return (
@@ -66,53 +42,41 @@ export default function SettingsModal(): JSX.Element {
                             role="group"
                             aria-label="Basic checkbox toggle button group"
                         >
-                            <label
-                                className="btn btn-outline-dark btn-sm active"
-                                htmlFor="settingsMainBtn"
-                            >
-                                Main
-                                <input
-                                    type="radio"
-                                    className="btn-check"
-                                    name="settings"
-                                    id="settingsMainBtn"
-                                    autoComplete="off"
-                                    onClick={hadnleSettingsCategoryPick}
-                                />
-                            </label>
-                            <label
-                                className="btn btn-outline-dark btn-sm"
-                                htmlFor="settingsGameBtn"
-                            >
-                                Game
-                                <input
-                                    type="radio"
-                                    className="btn-check"
-                                    name="settings"
-                                    id="settingsGameBtn"
-                                    autoComplete="off"
-                                    onClick={hadnleSettingsCategoryPick}
-                                />
-                            </label>
-                            <label
-                                className="btn btn-outline-dark btn-sm"
-                                htmlFor="settingsViewBtn"
-                            >
-                                View
-                                <input
-                                    type="radio"
-                                    className="btn-check"
-                                    name="settings"
-                                    id="settingsViewBtn"
-                                    autoComplete="off"
-                                    onClick={hadnleSettingsCategoryPick}
-                                />
-                            </label>
+                            <SettingsCategoryItem
+                                name={SettingsCategoryEnum.NAME_MAIN}
+                                id={SettingsCategoryEnum.ID_MAIN}
+                                active={isMainCategorySelected ? 'active' : ''}
+                                handleSettingsCategorySelect={() =>
+                                    handleSettingsCategorySelect(
+                                        SettingsCategoryEnum.ID_MAIN
+                                    )
+                                }
+                            />
+                            <SettingsCategoryItem
+                                name={SettingsCategoryEnum.NAME_GAME}
+                                id={SettingsCategoryEnum.ID_GAME}
+                                active={isGameCategorySelected ? 'active' : ''}
+                                handleSettingsCategorySelect={() =>
+                                    handleSettingsCategorySelect(
+                                        SettingsCategoryEnum.ID_GAME
+                                    )
+                                }
+                            />
+                            <SettingsCategoryItem
+                                name={SettingsCategoryEnum.NAME_VIEW}
+                                id={SettingsCategoryEnum.ID_VIEW}
+                                active={isViewCategorySelected ? 'active' : ''}
+                                handleSettingsCategorySelect={() =>
+                                    handleSettingsCategorySelect(
+                                        SettingsCategoryEnum.ID_VIEW
+                                    )
+                                }
+                            />
                         </div>
                     </div>
-                    {isMainSettingCategory && <SettingsMainContent />}
-                    {isGameSettingCategory && <SettingsGameContent />}
-                    {isViewSettingCategory && <SettingsViewContent />}
+                    {isMainCategorySelected && <SettingsMainContent />}
+                    {isGameCategorySelected && <SettingsGameContent />}
+                    {isViewCategorySelected && <SettingsViewContent />}
                     <div className="modal-footer">
                         <button type="button" className="btn btn-danger btn-sm">
                             Set all to default
