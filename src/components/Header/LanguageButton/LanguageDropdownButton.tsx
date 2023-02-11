@@ -26,9 +26,9 @@ export function LanguageDropDownButton(): JSX.Element {
                 aria-haspopup="true"
                 aria-expanded="false"
             >
-                {isEnLangSelected ? <EnglishFlag /> : ''}
-                {isDeLangSelected ? <GermanFlag /> : ''}
-                {isRuLangSelected ? <RussianFlag /> : ''}
+                {isEnLangSelected && <EnglishFlag />}
+                {isDeLangSelected && <GermanFlag />}
+                {isRuLangSelected && <RussianFlag />}
             </button>
             <div
                 id="dropdownMenuLang"

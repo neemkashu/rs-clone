@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { CatalogItem } from './CatalogItem';
 import { NonogramObject } from '../../utils/types';
-import { getCatalogDB } from '../../utils/helpers';
+import { getCatalogDB } from '../../api/requests';
 
 export function Catalog(): JSX.Element {
     const [catalogDB, setCatalogDB] = useState<NonogramObject[]>([]);

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 export function ColorThemeButton(): JSX.Element {
-    const [isLightTheme, setIsLightTheme] = useState(false);
+    const [isLightTheme, setIsLightTheme] = useState(true);
 
     function handleColorThemeChange(e: React.MouseEvent): void {
         setIsLightTheme(!isLightTheme);
