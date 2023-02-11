@@ -30,12 +30,6 @@ export type NonogramObject = {
     };
 };
 
-export enum LanguagesEnum {
-    EN = 'dropdownEnLang',
-    RU = 'dropdownRuLang',
-    DE = 'fropdownDeLang',
-}
-
 export enum FieldPlace {
     HEADER = 'header',
     ASIDE = 'aside',
