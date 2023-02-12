@@ -86,3 +86,4 @@ export const CellAreaState = {
     FILLED: 1,
 } as const;
 export type CellAreaStateType = (typeof CellAreaState)[keyof typeof CellAreaState];
+export type AreaCellStyle = Record<keyof typeof CellAreaState, string>;
