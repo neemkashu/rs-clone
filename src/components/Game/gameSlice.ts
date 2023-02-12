@@ -61,9 +61,7 @@ export const gameSlice = createSlice({
     initialState,
     reducers: {
         changeGameStatus(state, action: PayloadAction<GameStatus>) {
-            if (!state.status) {
-                state.status = action.payload;
-            }
+            state.status = action.payload;
         },
         updateUserGame(state, action: PayloadAction<UserGameData | null>) {
             if (action.payload) {
