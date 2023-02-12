@@ -30,6 +30,13 @@ export type NonogramObject = {
     };
 };
 
+export type FormCheckItemPropsType = {
+    value: string;
+    name: string;
+    id: string;
+    isChecked?: boolean;
+};
+
 export enum LanguagesEnum {
     EN = 'dropdownEnLang',
     RU = 'dropdownRuLang',

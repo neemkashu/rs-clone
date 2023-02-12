@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { FormCheckItem } from './FormCheckItem';
 
 export function SettingsGameContent() {
     const { t, i18n } = useTranslation();
@@ -7,153 +8,65 @@ export function SettingsGameContent() {
         <ul className="modal-body mb-0 py-1">
             <li className="ms-2">
                 {t('highlightCellsWithError')}
-                <div className="form-check">
-                    <label className="form-check-label" htmlFor="higlightNever">
-                        {t('timingNever')}
-                        <input
-                            role="button"
-                            className="form-check-input"
-                            type="radio"
-                            name="highlightRadio"
-                            id="higlightNever"
-                        />
-                    </label>
-                </div>
-                <div className="form-check">
-                    <label className="form-check-label" htmlFor="higlight1Sec">
-                        {t('timingOneSec')}
-                        <input
-                            role="button"
-                            className="form-check-input"
-                            type="radio"
-                            name="highlightRadio"
-                            id="higlight1Sec"
-                        />
-                    </label>
-                </div>
-                <div className="form-check">
-                    <label className="form-check-label" htmlFor="higlight2Sec">
-                        {t('timingTwoSec')}
-                        <input
-                            role="button"
-                            className="form-check-input"
-                            type="radio"
-                            name="highlightRadio"
-                            id="higlight2Sec"
-                        />
-                    </label>
-                </div>
-                <div className="form-check">
-                    <label className="form-check-label" htmlFor="higlight10Sec">
-                        {t('timingTenSec')}
-                        <input
-                            role="button"
-                            className="form-check-input"
-                            type="radio"
-                            name="highlightRadio"
-                            id="higlight10Sec"
-                        />
-                    </label>
-                </div>
-                <div className="form-check">
-                    <label className="form-check-label" htmlFor="higlight30Sec">
-                        {t('timingThirtySec')}
-                        <input
-                            role="button"
-                            className="form-check-input"
-                            type="radio"
-                            name="highlightRadio"
-                            id="higlight30Sec"
-                        />
-                    </label>
-                </div>
-                <div className="form-check">
-                    <label className="form-check-label" htmlFor="higlight5min">
-                        {t('timingFiveMin')}
-                        <input
-                            role="button"
-                            className="form-check-input"
-                            type="radio"
-                            name="highlightRadio"
-                            id="higlight5min"
-                        />
-                    </label>
-                </div>
+                <FormCheckItem
+                    value={t('timingNever')}
+                    name="highlightRadio"
+                    // ! after merge move next line to enum in all components
+                    id="higlightOneSec"
+                />
+                <FormCheckItem
+                    value={t('timingOneSec')}
+                    name="highlightRadio"
+                    id="higlightTwoSec"
+                />
+                <FormCheckItem
+                    value={t('timingTenSec')}
+                    name="highlightRadio"
+                    id="higlightTenSec"
+                />
+                <FormCheckItem
+                    value={t('timingThirtySec')}
+                    name="highlightRadio"
+                    id="higlightThirtySec"
+                />
+                <FormCheckItem
+                    value={t('timingFiveMin')}
+                    name="highlightRadio"
+                    id="higlightFiveMin"
+                />
             </li>
             <li className="ms-2">
                 {t('automaticallyCrossOutNumbers')}
-                <div className="form-check">
-                    <label className="form-check-label" htmlFor="crossOutNever">
-                        {t('timingNever')}
-                        <input
-                            role="button"
-                            className="form-check-input"
-                            type="radio"
-                            name="crossOutRadio"
-                            id="crossOutNever"
-                        />
-                    </label>
-                </div>
-                <div className="form-check">
-                    <label className="form-check-label" htmlFor="crossOut1Sec">
-                        {t('timingOneSec')}
-                        <input
-                            role="button"
-                            className="form-check-input"
-                            type="radio"
-                            name="crossOutRadio"
-                            id="crossOut1Sec"
-                        />
-                    </label>
-                </div>
-                <div className="form-check">
-                    <label className="form-check-label" htmlFor="crossOut2Sec">
-                        {t('timingTwoSec')}
-                        <input
-                            role="button"
-                            className="form-check-input"
-                            type="radio"
-                            name="crossOutRadio"
-                            id="crossOut2Sec"
-                        />
-                    </label>
-                </div>
-                <div className="form-check">
-                    <label className="form-check-label" htmlFor="crossOut10Sec">
-                        {t('timingTenSec')}
-                        <input
-                            role="button"
-                            className="form-check-input"
-                            type="radio"
-                            name="crossOutRadio"
-                            id="crossOut10Sec"
-                        />
-                    </label>
-                </div>
-                <div className="form-check">
-                    <label className="form-check-label" htmlFor="crossOut30Sec">
-                        {t('timingThirtySec')}
-                        <input
-                            role="button"
-                            className="form-check-input"
-                            type="radio"
-                            name="crossOutRadio"
-                            id="crossOut30Sec"
-                        />
-                    </label>
-                </div>
-                <div className="form-check">
-                    <label className="form-check-label" htmlFor="crossOut5min">
-                        {t('timingFiveMin')}
-                        <input
-                            role="button"
-                            className="form-check-input"
-                            type="radio"
-                            name="crossOutRadio"
-                            id="crossOut5min"
-                        />
-                    </label>
-                </div>
+                <FormCheckItem
+                    value={t('timingNever')}
+                    name="crossOutRadio"
+                    id="crossNever"
+                />
+                <FormCheckItem
+                    value={t('timingOneSec')}
+                    name="crossOutRadio"
+                    id="crossOneSec"
+                />
+                <FormCheckItem
+                    value={t('timingTwoSec')}
+                    name="crossOutRadio"
+                    id="crossTwoSec"
+                />
+                <FormCheckItem
+                    value={t('timingTenSec')}
+                    name="crossOutRadio"
+                    id="crossTenSec"
+                />
+                <FormCheckItem
+                    value={t('timingThirtySec')}
+                    name="crossOutRadio"
+                    id="crossThirtySec"
+                />
+                <FormCheckItem
+                    value={t('timingFiveMin')}
+                    name="crossOutRadio"
+                    id="crossFiveMin"
+                />
             </li>
             <li className="ms-2">
                 <div className="form-check form-switch">
