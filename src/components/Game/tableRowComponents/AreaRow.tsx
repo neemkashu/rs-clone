@@ -55,7 +55,7 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                         })
                     );
                 };
-                const handlerContext = () => {
+                const handleContext = () => {
                     // console.warn('handlerContext AREA cell', userCell);
                     dispatch(
                         updateAreaCell({
@@ -70,7 +70,7 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                     <AreaCell
                         key={squareKey}
                         handleClick={handleClick}
-                        handleContext={handlerContext}
+                        handleContext={handleContext}
                         stateStyle={style}
                         styles={[]}
                     />

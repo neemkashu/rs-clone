@@ -1,7 +1,7 @@
 import { MouseEventHandler } from 'react';
-import { firstFieldClick } from '../gameSlice';
+import { changeGameStatus } from '../gameSlice';
 import { GameStatus } from '../gameUtils/types';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { store } from '../../store';
 
 export interface CellProps {
@@ -17,13 +17,14 @@ export default function Cell({
     handleContext,
 }: CellProps): JSX.Element {
     const dispatch = useAppDispatch();
+    const gameStatus = useAppSelector((state) => state.game.status);
 
     function handlersClickMouse() {
         if (handleClick) {
             handleClick();
         }
-        if (!store.getState().game.status) {
-            dispatch(firstFieldClick(GameStatus.STARTED));
+        if (!gameStatus) {
+            dispatch(changeGameStatus(GameStatus.STARTED));
         }
     }
     const handlersContextMouse: MouseEventHandler = (event?) => {
@@ -31,8 +32,8 @@ export default function Cell({
         if (handleContext) {
             handleContext();
         }
-        if (!store.getState().game.status) {
-            dispatch(firstFieldClick(GameStatus.STARTED));
+        if (!gameStatus) {
+            dispatch(changeGameStatus(GameStatus.STARTED));
         }
     };
     return (

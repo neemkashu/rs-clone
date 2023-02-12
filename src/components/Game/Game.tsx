@@ -33,7 +33,7 @@ function Game(): JSX.Element {
         getGameState(ID)
             // TODO: refactor then block after implementing server fetch
             .then((data) => {
-                console.warn('in game rewrite', data?.data.currentGame);
+                console.warn('get mocha user game', data?.data.currentGame);
                 if (data) {
                     const loadedGame: UserGameData = data.data.currentGame;
                     // server mocha cat
@@ -41,6 +41,7 @@ function Game(): JSX.Element {
                 }
             })
             .catch((error) => {
+                console.warn('create empty game');
                 const newGame = makeInitialSaveGame(nonogramRaw);
                 dispatch(updateUserGame(newGame));
             });

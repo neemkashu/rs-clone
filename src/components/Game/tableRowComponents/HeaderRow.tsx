@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import HintCell from '../fieldParts/HintCell';
-import { updateHeaderHintCell } from '../gameSlice';
+import { updateHintCell } from '../gameSlice';
 import { HINT_STATE_STYLE } from '../gameUtils/constants';
 import { fieldPlace, FieldPlace, NonogramHint } from '../gameUtils/types';
 
@@ -30,10 +30,11 @@ export function HeaderRow({ linesUnified, indexRow }: HeaderRowProps) {
                     if (hint !== '') {
                         // console.warn('handleClick isCrossed', isCrossed);
                         dispatch(
-                            updateHeaderHintCell({
+                            updateHintCell({
                                 isCrossedOut: !isCrossed,
                                 indexRow,
                                 indexColumn,
+                                location,
                             })
                         );
                     }

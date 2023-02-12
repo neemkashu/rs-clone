@@ -1,5 +1,3 @@
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { winClick } from '../gameSlice';
 import {
     CellAreaState,
     CellAreaStateType,
