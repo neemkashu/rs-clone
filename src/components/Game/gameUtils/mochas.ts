@@ -1,4 +1,4 @@
-import { UserGameData } from './types';
+import { GameStatus, UserGameData, UserGameDataRaw } from './types';
 
 export const userNonogramData = {
     data: {
@@ -1237,5 +1237,30 @@ export const Cat = {
             [{ hint: 1, color: 1 }],
             [{ hint: 1, color: 1 }],
         ],
+    },
+};
+export const userCat: UserGameDataRaw = {
+    data: {
+        currentGame: {
+            state: GameStatus.STARTED,
+            currentUserSolution: [
+                [null, null, null, null, null],
+                [null, null, null, null, null],
+                [null, null, null, null, null],
+            ],
+            currentTime: 200,
+            currentUserRows: [
+                [{ isCrossedOut: false }, { isCrossedOut: false }],
+                [{ isCrossedOut: false }, { isCrossedOut: false }],
+                [{ isCrossedOut: false }],
+            ],
+            currentUserColumns: [
+                [{ isCrossedOut: false }],
+                [{ isCrossedOut: false }],
+                [{ isCrossedOut: false }],
+                [{ isCrossedOut: false }],
+                [{ isCrossedOut: false }],
+            ],
+        },
     },
 };

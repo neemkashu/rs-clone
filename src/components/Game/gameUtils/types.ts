@@ -84,4 +84,5 @@ export const CellAreaState = {
     EMPTY: null,
     CROSSED: 0,
     FILLED: 1,
-};
+} as const;
+export type CellAreaStateType = (typeof CellAreaState)[keyof typeof CellAreaState];

@@ -21,7 +21,7 @@ const getTwoDigitIndicator = (time: number): string => {
 // imitation before registration implementing
 const isUserLogged = () => false;
 
-function Chronometer({ nonogramRaw }: { nonogramRaw: NonogramRaw | null }): JSX.Element {
+function Chronometer({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element {
     const nonogramID = nonogramRaw?.id;
     const dispatch = useDispatch();
     const gameState = useAppSelector((state) => state.game.status);
