@@ -4,5 +4,22 @@
     "catalogMainPage": "Main Page",
     "catalogCatalog": "Catalog",
     "catalogRandomGame": "Random Game",
-    "catalogHelp": "Help"
+    "catalogHelp": "Help",
+    "settingsMainCategoryName": "Main",
+    "settingsGameCategoryName": "Game",
+    "settingsViewCategoryName": "View",
+    "showNonogramsTitlesBeforeSolving": "Show nonograms titles before solving",
+    "showNonogramsThumbnailsBeforeSolving": "Show nonograms thumbnails before solving",
+    "timingNever": "never",
+    "timingOneSec": "1 sec",
+    "timingTwoSec": "2 sec",
+    "timingTenSec": "10 sec",
+    "timingThirtySec": "30 sec",
+    "timingFiveMin": "5 min",
+    "highlightCellsWithError": "Highlight cells with errors:",
+    "automaticallyCrossOutNumbers": "Automatically cross out numbers:",
+    "lastCrossedOutDigitFillsLineWithCrosses": "The last crossed out digit fills the line with crosses",
+    "markingEmptyCell": "Marking an empty cell",
+    "showGuessTime": "Show guess time",
+    "setAllToDefault": "Set all to default"
 }

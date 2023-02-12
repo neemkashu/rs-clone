@@ -1,8 +1,12 @@
+import { useTranslation } from 'react-i18next';
+
 export function SettingsViewContent() {
+    const { t, i18n } = useTranslation();
+
     return (
         <ul className="modal-body mb-0 py-1">
             <li className="ms-2">
-                Marking an empty cell:
+                {t('markingEmptyCell')}
                 <div className="form-check form-switch">
                     <label className="form-check-label" htmlFor="emptyCell">
                         <span id="emptyCellText">dot</span>
@@ -28,7 +32,7 @@ export function SettingsViewContent() {
             <li className="ms-2">
                 <div className="form-check form-switch">
                     <label className="form-check-label" htmlFor="guessTime">
-                        Show guess time
+                        {t('showGuessTime')}
                         <input
                             role="button"
                             className="form-check-input"

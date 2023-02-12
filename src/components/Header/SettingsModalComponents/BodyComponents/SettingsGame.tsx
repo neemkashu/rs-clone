@@ -1,11 +1,15 @@
+import { useTranslation } from 'react-i18next';
+
 export function SettingsGameContent() {
+    const { t, i18n } = useTranslation();
+
     return (
         <ul className="modal-body mb-0 py-1">
             <li className="ms-2">
-                Highlight cells with an error:
+                {t('highlightCellsWithError')}
                 <div className="form-check">
                     <label className="form-check-label" htmlFor="higlightNever">
-                        never
+                        {t('timingNever')}
                         <input
                             role="button"
                             className="form-check-input"
@@ -17,7 +21,7 @@ export function SettingsGameContent() {
                 </div>
                 <div className="form-check">
                     <label className="form-check-label" htmlFor="higlight1Sec">
-                        1 sec
+                        {t('timingOneSec')}
                         <input
                             role="button"
                             className="form-check-input"
@@ -29,7 +33,7 @@ export function SettingsGameContent() {
                 </div>
                 <div className="form-check">
                     <label className="form-check-label" htmlFor="higlight2Sec">
-                        2 sec
+                        {t('timingTwoSec')}
                         <input
                             role="button"
                             className="form-check-input"
@@ -41,7 +45,7 @@ export function SettingsGameContent() {
                 </div>
                 <div className="form-check">
                     <label className="form-check-label" htmlFor="higlight10Sec">
-                        10 sec
+                        {t('timingTenSec')}
                         <input
                             role="button"
                             className="form-check-input"
@@ -53,7 +57,7 @@ export function SettingsGameContent() {
                 </div>
                 <div className="form-check">
                     <label className="form-check-label" htmlFor="higlight30Sec">
-                        30 sec
+                        {t('timingThirtySec')}
                         <input
                             role="button"
                             className="form-check-input"
@@ -65,7 +69,7 @@ export function SettingsGameContent() {
                 </div>
                 <div className="form-check">
                     <label className="form-check-label" htmlFor="higlight5min">
-                        5 min
+                        {t('timingFiveMin')}
                         <input
                             role="button"
                             className="form-check-input"
@@ -77,10 +81,10 @@ export function SettingsGameContent() {
                 </div>
             </li>
             <li className="ms-2">
-                Automatically cross out numbers:
+                {t('automaticallyCrossOutNumbers')}
                 <div className="form-check">
                     <label className="form-check-label" htmlFor="crossOutNever">
-                        never
+                        {t('timingNever')}
                         <input
                             role="button"
                             className="form-check-input"
@@ -92,7 +96,7 @@ export function SettingsGameContent() {
                 </div>
                 <div className="form-check">
                     <label className="form-check-label" htmlFor="crossOut1Sec">
-                        1 sec
+                        {t('timingOneSec')}
                         <input
                             role="button"
                             className="form-check-input"
@@ -104,7 +108,7 @@ export function SettingsGameContent() {
                 </div>
                 <div className="form-check">
                     <label className="form-check-label" htmlFor="crossOut2Sec">
-                        2 sec
+                        {t('timingTwoSec')}
                         <input
                             role="button"
                             className="form-check-input"
@@ -116,7 +120,7 @@ export function SettingsGameContent() {
                 </div>
                 <div className="form-check">
                     <label className="form-check-label" htmlFor="crossOut10Sec">
-                        10 sec
+                        {t('timingTenSec')}
                         <input
                             role="button"
                             className="form-check-input"
@@ -128,7 +132,7 @@ export function SettingsGameContent() {
                 </div>
                 <div className="form-check">
                     <label className="form-check-label" htmlFor="crossOut30Sec">
-                        30 sec
+                        {t('timingThirtySec')}
                         <input
                             role="button"
                             className="form-check-input"
@@ -140,7 +144,7 @@ export function SettingsGameContent() {
                 </div>
                 <div className="form-check">
                     <label className="form-check-label" htmlFor="crossOut5min">
-                        5 min
+                        {t('timingFiveMin')}
                         <input
                             role="button"
                             className="form-check-input"
@@ -154,7 +158,7 @@ export function SettingsGameContent() {
             <li className="ms-2">
                 <div className="form-check form-switch">
                     <label className="form-check-label" htmlFor="flexSwitchCheckChecked">
-                        The last crossed out digit fills the line with crosses
+                        {t('lastCrossedOutDigitFillsLineWithCrosses')}
                         <input
                             role="button"
                             className="form-check-input"

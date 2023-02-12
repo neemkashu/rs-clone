@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { SettingsMainContent } from './BodyComponents/SettingsMain';
 import { SettingsGameContent } from './BodyComponents/SettingsGame';
 import { SettingsViewContent } from './BodyComponents/SettingsView';
 
 export default function SettingsModal(): JSX.Element {
+    const { t, i18n } = useTranslation();
     // const [category, setCategory] = useState('main');
     const [isMainSettingCategory, setMainSettingsCategory] = useState(true);
     const [isGameSettingCategory, setGameSettingsCategory] = useState(false);
@@ -115,7 +117,7 @@ export default function SettingsModal(): JSX.Element {
                     {isViewSettingCategory && <SettingsViewContent />}
                     <div className="modal-footer">
                         <button type="button" className="btn btn-danger btn-sm">
-                            Set all to default
+                            {t('setAllToDefault')}
                         </button>
                     </div>
                 </div>
