@@ -25,5 +25,5 @@ export function WinChecker({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.E
         }
     }, [nonogramRaw, userSolution, gameStatus, dispatch, isWin]);
 
-    return <div>{isWin && <WinComponent />}</div>;
+    return <div>{isWin && <WinComponent nonogramRaw={nonogramRaw} />}</div>;
 }

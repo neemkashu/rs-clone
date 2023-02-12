@@ -6,7 +6,7 @@ import GameHeader from './GameHeader';
 import Chronometer from './Chronometer';
 import { NonogramRaw, UserGameDataRaw } from '../../utils/types';
 import { userNonogramData } from '../../utils/mochas';
-import { useAppDispatch } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import { updateUserGame } from './gameSlice';
 import { Cat, martini } from './gameUtils/mochas';
 import { makeInitialSaveGame } from './gameUtils/helpers';
@@ -19,6 +19,7 @@ const ID = 'E7UMxLSZv31q5m4RwLG4'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
 
 function Game(): JSX.Element {
     const [nonogramRaw, setNonogramRaw] = useState<NonogramRaw | null>(null);
+    const userGame = useAppSelector((state) => state.game.userGame?.state);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -49,7 +50,7 @@ function Game(): JSX.Element {
 
     return (
         <div className="container d-flex flex-column gap-2">
-            {nonogramRaw && (
+            {nonogramRaw && userGame && (
                 <>
                     <GameHeader nonogramRaw={nonogramRaw} />
                     <Chronometer nonogramRaw={nonogramRaw} />

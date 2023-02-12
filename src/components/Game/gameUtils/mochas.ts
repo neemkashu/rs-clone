@@ -1248,7 +1248,7 @@ export const userCat: UserGameDataRaw = {
                 [null, null, null, null, null],
                 [null, null, null, null, null],
             ],
-            currentTime: 200,
+            currentTime: 10000,
             currentUserRows: [
                 [{ isCrossedOut: false }, { isCrossedOut: false }],
                 [{ isCrossedOut: false }, { isCrossedOut: false }],
