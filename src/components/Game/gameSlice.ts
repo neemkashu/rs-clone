@@ -122,6 +122,11 @@ export const gameSlice = createSlice({
                     : CellAreaState.EMPTY;
             }
         },
+        updateUserTime(state, action: PayloadAction<number>) {
+            if (state.userGame) {
+                state.userGame.currentTime = action.payload;
+            }
+        },
     },
     extraReducers(builder) {
         builder.addCase(saveUserGame.pending, (state, action) => {
@@ -137,5 +142,10 @@ export const gameSlice = createSlice({
     },
 });
 
-export const { changeGameStatus, updateUserGame, updateHintCell, updateAreaCell } =
-    gameSlice.actions;
+export const {
+    changeGameStatus,
+    updateUserGame,
+    updateHintCell,
+    updateAreaCell,
+    updateUserTime,
+} = gameSlice.actions;

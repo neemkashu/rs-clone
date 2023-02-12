@@ -8,15 +8,10 @@ import { GameStatusContext } from './contexts/context';
 import { useAppSelector } from '../hooks';
 import { store } from '../store';
 import { GameStatus } from './gameUtils/types';
-import { changeGameStatus } from './gameSlice';
+import { changeGameStatus, updateUserTime } from './gameSlice';
+import { Clock } from '../Clock';
 
 const REFRESH_PERIOD = 1000;
-
-const getTwoDigitIndicator = (time: number): string => {
-    const isOneDigit = time < 10;
-    const converted = isOneDigit ? `0${time}` : `${time}`;
-    return converted;
-};
 
 // imitation before registration implementing
 const isUserLogged = () => false;
@@ -25,6 +20,7 @@ function Chronometer({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element
     const nonogramID = nonogramRaw?.id;
     const dispatch = useDispatch();
     const gameState = useAppSelector((state) => state.game.status);
+    const gameTime = useAppSelector((state) => state.game.userGame?.currentTime ?? 0);
 
     const shouldUpdateStatus =
         getTimeFromStorage(nonogramID) > 0 &&
@@ -34,9 +30,7 @@ function Chronometer({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element
     }
 
     const [userTime, setUserTime] = useState(
-        isUserLogged()
-            ? userNonogramData.data.currentGame.currentTime
-            : getTimeFromStorage(nonogramID)
+        isUserLogged() ? gameTime : getTimeFromStorage(nonogramID)
     );
     const [isPageHidden, setIsPageHidden] = useState(false);
 
@@ -45,6 +39,7 @@ function Chronometer({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element
             const currentTimer = userTime + REFRESH_PERIOD;
             setUserTime(currentTimer);
             setTimeToStorage(currentTimer, nonogramID);
+            dispatch(updateUserTime(currentTimer));
         };
         const isGameRunning =
             gameState === GameStatus.INITIAL || gameState === GameStatus.STARTED;
@@ -56,22 +51,13 @@ function Chronometer({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element
         return () => {
             clearInterval(timer);
         };
-    }, [userTime, isPageHidden, nonogramID, gameState]);
+    }, [userTime, isPageHidden, nonogramID, gameState, dispatch]);
 
     document.onvisibilitychange = (event) => {
         setIsPageHidden(document.hidden);
     };
 
-    const date = new Date(userTime);
-    const hours = getTwoDigitIndicator(date.getUTCHours());
-    const minutes = getTwoDigitIndicator(date.getUTCMinutes());
-    const seconds = getTwoDigitIndicator(date.getUTCSeconds());
-
-    return (
-        <div className="p-1 border border-success chronometer">
-            {hours}:{minutes}:{seconds}
-        </div>
-    );
+    return <Clock userTime={userTime} />;
 }
 
 export default Chronometer;
