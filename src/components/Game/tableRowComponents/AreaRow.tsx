@@ -1,5 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { store } from '../../store';
 import AreaCell from '../fieldParts/AreaCell';
+import { mistakesHandler } from '../gameLogic/mistakesHandler';
 import { updateAreaCell } from '../gameSlice';
 import {
     AreaCellStyle,
@@ -36,6 +38,7 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
     const userSolution = useAppSelector(
         (state) => state.game.userGame?.currentUserSolution
     );
+    const goal = useAppSelector((state) => state.game.currentNonogram?.nonogram.goal);
     const location: fieldPlace = FieldPlace.AREA;
     const dispatch = useAppDispatch();
     return (
@@ -56,6 +59,7 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                             indexNumberRow,
                         })
                     );
+                    mistakesHandler(indexRow, indexNumberRow);
                 };
                 const handleContext = () => {
                     // console.warn('handlerContext AREA cell', userCell);

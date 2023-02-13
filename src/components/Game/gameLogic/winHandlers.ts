@@ -5,7 +5,10 @@ import {
     NonogramRaw,
 } from '../gameUtils/types';
 
-const checkCorrectCell = (userCell: number | null, solutionCell: number): boolean => {
+export const checkCorrectCell = (
+    userCell: number | null,
+    solutionCell: number
+): boolean => {
     switch (solutionCell) {
         case CellAreaState.CROSSED: {
             return userCell === CellAreaState.EMPTY || userCell === CellAreaState.CROSSED;
