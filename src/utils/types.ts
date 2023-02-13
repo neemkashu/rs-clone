@@ -1,4 +1,5 @@
 import React from 'react';
+import { EmptyCellStates, SettingsTimingsEnum } from './enums';
 
 export type fieldPlace = 'header' | 'aside' | 'area' | 'miniature';
 
@@ -49,6 +50,20 @@ export type SettingsCategoryItemPropsType = {
     id: string;
     active?: string;
     handleSettingsCategorySelect: (e: React.MouseEvent) => void;
+};
+
+export type NonogramSettingsMainState = {
+    showNonogramTitlesBeforeSolving: boolean;
+    showNonogramThumbnailsBeforeSolving: boolean;
+};
+export type NonogramSettingsGameState = {
+    highlightCellsWithError: SettingsTimingsEnum;
+    automaticallyCrossOutNumbers: SettingsTimingsEnum;
+    lastCrossedOutDigitFillsLineWithCrosses: boolean;
+};
+export type NonogramSettingsViewState = {
+    markingAnEmptyCell: EmptyCellStates;
+    showGuessTime: boolean;
 };
 
 export enum FieldPlace {

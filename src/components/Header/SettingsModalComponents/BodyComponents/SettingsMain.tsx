@@ -1,4 +1,33 @@
+import { useState, useEffect } from 'react';
+import { useAppSelector, useAppDispatch } from '../../../hooks';
+import { changedMainSettings } from '../settingsSlice';
+
 export function SettingsMainContent() {
+    const settingsMain = useAppSelector((state) => state.settings.main);
+    const dispatch = useAppDispatch();
+
+    function handleNonogramTitlesSettingChange() {
+        dispatch(
+            changedMainSettings({
+                showNonogramTitlesBeforeSolving:
+                    !settingsMain.showNonogramTitlesBeforeSolving,
+                showNonogramThumbnailsBeforeSolving:
+                    settingsMain.showNonogramThumbnailsBeforeSolving,
+            })
+        );
+    }
+
+    function handleNonogramThumbnailsSettingChange() {
+        dispatch(
+            changedMainSettings({
+                showNonogramTitlesBeforeSolving:
+                    settingsMain.showNonogramTitlesBeforeSolving,
+                showNonogramThumbnailsBeforeSolving:
+                    !settingsMain.showNonogramThumbnailsBeforeSolving,
+            })
+        );
+    }
+
     return (
         <ul className="modal-body mb-0 py-1">
             <li className="ms-2">
@@ -10,6 +39,8 @@ export function SettingsMainContent() {
                             className="form-check-input"
                             type="checkbox"
                             id="flexSwitchCheckDefault"
+                            checked={settingsMain.showNonogramTitlesBeforeSolving}
+                            onChange={handleNonogramTitlesSettingChange}
                         />
                     </label>
                 </div>
@@ -23,6 +54,8 @@ export function SettingsMainContent() {
                             className="form-check-input"
                             type="checkbox"
                             id="flexSwitchCheckChecked"
+                            checked={settingsMain.showNonogramThumbnailsBeforeSolving}
+                            onChange={handleNonogramThumbnailsSettingChange}
                         />
                     </label>
                 </div>

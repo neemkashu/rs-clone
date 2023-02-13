@@ -12,3 +12,17 @@ export enum SettingsCategoryEnum {
     ID_GAME = 'settingsGameBtn',
     ID_VIEW = 'settingsViewBtn',
 }
+
+export enum SettingsTimingsEnum {
+    NEVER = 'never',
+    ONE_SEC = 1,
+    TWO_SEC = 2,
+    TEN_SEC = 10,
+    THIRTY_SEC = 30,
+    FIVE_MIN = 5,
+}
+
+export enum EmptyCellStates {
+    DOT = 'dot',
+    CROSS = 'cross',
+}
