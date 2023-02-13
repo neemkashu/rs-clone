@@ -39,7 +39,7 @@ function Game(): JSX.Element {
     }, [dispatch]);
 
     return (
-        <div className="container d-flex flex-column gap-2">
+        <div className="container p-0 p-sm-1 d-flex flex-column gap-2">
             {nonogramRaw && userGame && (
                 <>
                     <GameHeader nonogramRaw={nonogramRaw} />

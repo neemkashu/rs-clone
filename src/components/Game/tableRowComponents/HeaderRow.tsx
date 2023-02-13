@@ -25,6 +25,7 @@ export function HeaderRow({ linesUnified, indexRow }: HeaderRowProps) {
                     (columnsUnified &&
                         columnsUnified[indexColumn][indexRow]?.isCrossedOut) ??
                     false;
+                const isFifth = (indexColumn + 1) % 5 === 0;
 
                 const handleClick = () => {
                     if (hint !== '') {
@@ -45,7 +46,7 @@ export function HeaderRow({ linesUnified, indexRow }: HeaderRowProps) {
                         handler={handleClick}
                         hint={`${hint}`}
                         stateStyle={isCrossed ? HINT_STATE_STYLE : ''}
-                        styles={[]}
+                        styles={[isFifth ? 'border-right-plus' : '']}
                     />
                 );
             })}

@@ -20,7 +20,7 @@ const classNames = [
 
 function Controls(): JSX.Element {
     return (
-        <div className="btn-group game-controls">
+        <div className="btn-group btn-group-sm game-controls">
             {Object.values(CAPTIONS).map((caption, index) => {
                 return (
                     <button
