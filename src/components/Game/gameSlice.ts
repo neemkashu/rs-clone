@@ -32,6 +32,7 @@ export interface GameState {
     userGame: UserGameData | null;
     currentNonogram: NonogramRaw | null;
     errorMessage: string;
+    incorrectCells: UserFieldData['currentUserSolution'] | null;
 }
 
 const initialState: GameState = {
@@ -39,6 +40,7 @@ const initialState: GameState = {
     userGame: null,
     currentNonogram: null,
     errorMessage: '',
+    incorrectCells: null,
 };
 
 export const loadNonogramByID = createAsyncThunk(
