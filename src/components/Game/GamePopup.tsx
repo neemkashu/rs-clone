@@ -14,16 +14,17 @@ export function GamePopup({
     children: JSX.Element[];
 }): JSX.Element {
     const modalStates = ['block', 'none'];
-    const [modalShow, setModalShow] = useState(modalStates[0]);
+    const [modalDisplay, setmodalDisplay] = useState(modalStates[0]);
     const modalHandler = () => {
-        const modalStyle = modalShow === modalStates[0] ? modalStates[1] : modalStates[0];
-        setModalShow(modalStyle);
+        const modalStyle =
+            modalDisplay === modalStates[0] ? modalStates[1] : modalStates[0];
+        setmodalDisplay(modalStyle);
     };
     return (
         <div
             className="modal fade show"
             tabIndex={-1}
-            style={{ display: modalShow, backgroundColor: 'rgba(130,130,130,0.5)' }}
+            style={{ display: modalDisplay, backgroundColor: 'rgba(130,130,130,0.5)' }}
             onClick={modalHandler}
             role="presentation"
         >
