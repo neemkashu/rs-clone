@@ -11,6 +11,7 @@ import {
     fieldPlace,
     GameStatus,
     ResponseStatus,
+    UserFieldData,
     UserGameData,
     UserGameDataRaw,
 } from './gameUtils/types';
@@ -82,6 +83,19 @@ export const gameSlice = createSlice({
                 };
             }
         },
+        updateUserField(state, action: PayloadAction<UserFieldData>) {
+            if (action.payload) {
+                const columns = action.payload.currentUserColumns;
+                const rows = action.payload.currentUserRows;
+                const solution = action.payload.currentUserSolution;
+                console.warn('clear user game!');
+                if (state.userGame) {
+                    state.userGame.currentUserColumns = columns;
+                    state.userGame.currentUserRows = rows;
+                    state.userGame.currentUserSolution = solution;
+                }
+            }
+        },
         updateHintCell(
             state,
             action: PayloadAction<{
@@ -151,4 +165,5 @@ export const {
     updateHintCell,
     updateAreaCell,
     updateUserTime,
+    updateUserField,
 } = gameSlice.actions;

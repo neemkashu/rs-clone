@@ -60,12 +60,14 @@ export interface NonogramRaw {
     id: string;
     nonogram: Nonogram;
 }
-export interface UserGameData {
-    state: GameStatus;
+export interface UserFieldData {
     currentUserSolution: (null | number)[][];
-    currentTime: number;
     currentUserRows: ({ isCrossedOut: boolean } | null)[][];
     currentUserColumns: ({ isCrossedOut: boolean } | null)[][];
+}
+export interface UserGameData extends UserFieldData {
+    state: GameStatus;
+    currentTime: number;
 }
 export interface UserGameDataRaw {
     data: {

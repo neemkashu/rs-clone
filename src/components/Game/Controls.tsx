@@ -1,4 +1,6 @@
+import { ClearButton } from '../controlButtons/ClearButton';
 import './gameStyles/Controls.scss';
+import { NonogramRaw } from './gameUtils/types';
 
 // temp solution before getting file with all captions
 const CAPTIONS = {
@@ -18,10 +20,13 @@ const classNames = [
     'game-clear btn-outline-danger',
 ];
 
-function Controls(): JSX.Element {
+function Controls({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element {
     return (
         <div className="btn-group btn-group-sm game-controls">
             {Object.values(CAPTIONS).map((caption, index) => {
+                if (index === 2) {
+                    return <ClearButton key={caption} nonogramRaw={nonogramRaw} />;
+                }
                 return (
                     <button
                         key={caption}

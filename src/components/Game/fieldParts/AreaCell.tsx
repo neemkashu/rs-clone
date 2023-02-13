@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import Cell from './Cell';
 
 export default function AreaCell({
@@ -17,7 +16,8 @@ export default function AreaCell({
             handleClick={handleClick}
             handleContext={handleContext}
             cellContent=""
-            styles={[stateStyle, ...styles]}
+            styles={[...styles]}
+            stateStyle={[stateStyle]}
         />
     );
 }
