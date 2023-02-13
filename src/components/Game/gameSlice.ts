@@ -72,11 +72,6 @@ export const gameSlice = createSlice({
                 state.userGame.state = action.payload;
             }
         },
-        updateNonogram(state, action: PayloadAction<NonogramRaw>) {
-            if (state) {
-                state.currentNonogram = action.payload;
-            }
-        },
         updateUserGame(state, action: PayloadAction<UserGameData | null>) {
             if (action.payload) {
                 const columns = action.payload.currentUserColumns;
@@ -154,6 +149,25 @@ export const gameSlice = createSlice({
                 state.userGame.currentTime = action.payload;
             }
         },
+        updateMistakeData(
+            state,
+            action: PayloadAction<{
+                indexRow: number;
+                indexNumberRow: number;
+                isCorrect: boolean;
+            }>
+        ) {
+            const { indexRow, indexNumberRow, isCorrect } = action.payload;
+            if (state.incorrectCells) {
+                state.incorrectCells[indexRow][indexNumberRow] = isCorrect ? 1 : null;
+            }
+        },
+        clearMistakes(state, action: PayloadAction) {
+            if (state) {
+                const nonogram = state.currentNonogram?.nonogram.goal;
+                state.incorrectCells = nonogram ?? null;
+            }
+        },
     },
     extraReducers(builder) {
         builder.addCase(loadNonogramByID.pending, (state, action) => {
@@ -163,6 +177,9 @@ export const gameSlice = createSlice({
             const { nonogram, userGame } = action.payload;
             state.loadNonogramStatus = LoadStatus.FULFILLED;
             state.currentNonogram = nonogram;
+            if (nonogram) {
+                state.incorrectCells = nonogram.nonogram.goal;
+            }
             const gameToSet = makeInitialSaveGame(nonogram);
             if (userGame) {
                 state.userGame = userGame.data.currentGame;
@@ -195,5 +212,6 @@ export const {
     updateAreaCell,
     updateUserTime,
     updateUserField,
-    updateNonogram,
+    clearMistakes,
+    updateMistakeData,
 } = gameSlice.actions;

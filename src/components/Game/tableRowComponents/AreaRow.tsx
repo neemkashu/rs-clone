@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { store } from '../../store';
 import AreaCell from '../fieldParts/AreaCell';
 import { mistakesHandler } from '../gameLogic/mistakesHandler';
-import { updateAreaCell } from '../gameSlice';
+import { updateAreaCell, updateMistakeData } from '../gameSlice';
 import {
     AreaCellStyle,
     CellAreaState,
@@ -38,7 +38,7 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
     const userSolution = useAppSelector(
         (state) => state.game.userGame?.currentUserSolution
     );
-    const goal = useAppSelector((state) => state.game.currentNonogram?.nonogram.goal);
+    const mistakes = useAppSelector((state) => state.game.incorrectCells);
     const location: fieldPlace = FieldPlace.AREA;
     const dispatch = useAppDispatch();
     return (
@@ -49,6 +49,8 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                 const squareKey = `${location}-cell-col-${indexRow}-row-${indexNumberRow}`;
                 const isBottomBorder = (indexRow + 1) % 5 === 0;
                 const isRightBorder = (indexNumberRow + 1) % 5 === 0;
+                const isNotCorrect =
+                    mistakes && mistakes[indexRow][indexNumberRow] === null;
 
                 const handleClick = () => {
                     // console.warn('handleClick AREA cell', userCell);
@@ -59,7 +61,8 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                             indexNumberRow,
                         })
                     );
-                    mistakesHandler(indexRow, indexNumberRow);
+                    // dispatch(updateMistakeData({ indexRow, indexNumberRow }));
+                    mistakesHandler(indexRow, indexNumberRow, dispatch);
                 };
                 const handleContext = () => {
                     // console.warn('handlerContext AREA cell', userCell);
@@ -77,7 +80,7 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                         key={squareKey}
                         handleClick={handleClick}
                         handleContext={handleContext}
-                        stateStyle={style}
+                        stateStyle={[style, isNotCorrect ? 'incorrect-fill' : '']}
                         styles={[
                             isBottomBorder ? 'border-bottom-plus' : '',
                             isRightBorder ? 'border-right-plus' : '',

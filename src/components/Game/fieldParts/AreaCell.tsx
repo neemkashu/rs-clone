@@ -8,7 +8,7 @@ export default function AreaCell({
 }: {
     handleClick: () => void;
     handleContext: () => void;
-    stateStyle: string;
+    stateStyle: string[];
     styles: string[];
 }): JSX.Element {
     return (
@@ -17,7 +17,7 @@ export default function AreaCell({
             handleContext={handleContext}
             cellContent=""
             styles={[...styles]}
-            stateStyle={[stateStyle]}
+            stateStyle={[...stateStyle]}
         />
     );
 }
