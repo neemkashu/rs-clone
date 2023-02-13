@@ -7,6 +7,8 @@ import { userNonogramData } from './gameUtils/mochas';
 import {
     CellAreaState,
     ClickType,
+    FieldPlace,
+    fieldPlace,
     GameStatus,
     ResponseStatus,
     UserGameData,
@@ -58,24 +60,9 @@ export const gameSlice = createSlice({
     name: 'game',
     initialState,
     reducers: {
-        firstFieldClick(state, action: PayloadAction<GameStatus>) {
-            // old value = action.payload
-            console.warn('first Field Click!');
+        changeGameStatus(state, action: PayloadAction<GameStatus>) {
             if (!state.status) {
-                state.status = GameStatus.STARTED;
-            }
-        },
-        pauseGame(state, action: PayloadAction<GameStatus>) {
-            // old value = action.payload
-            console.warn('pause!');
-            state.status = null;
-        },
-        winClick(state, action: PayloadAction<GameStatus>) {
-            // old value = action.payload
-            console.warn('this win Click!');
-            if (state.status) {
-                // eslint-disable-next-line no-param-reassign
-                state.status = GameStatus.FINISHED;
+                state.status = action.payload;
             }
         },
         updateUserGame(state, action: PayloadAction<UserGameData | null>) {
@@ -94,37 +81,22 @@ export const gameSlice = createSlice({
                 };
             }
         },
-        updateAsideHintCell(
+        updateHintCell(
             state,
             action: PayloadAction<{
                 isCrossedOut: boolean;
                 indexColumn: number;
                 indexRow: number;
+                location: fieldPlace;
             }>
         ) {
             if (state.userGame) {
-                const { indexRow, indexColumn } = action.payload;
-                const cell = state.userGame.currentUserRows[indexRow][indexColumn];
-                // console.warn('update hint info!');
-                if (cell) {
-                    cell.isCrossedOut = action.payload.isCrossedOut;
-                }
-            }
-        },
-        updateHeaderHintCell(
-            state,
-            action: PayloadAction<{
-                isCrossedOut: boolean;
-                indexColumn: number;
-                indexRow: number;
-            }>
-        ) {
-            // In future ii can be different from updateAsideHintCell
-            // because there will be light-up event for columns and rows separately
-            if (state.userGame) {
-                const { indexRow, indexColumn } = action.payload;
-                const cell = state.userGame.currentUserColumns[indexColumn][indexRow];
-                // console.warn('update hint info!');
+                const { indexRow, indexColumn, location } = action.payload;
+
+                const cell =
+                    location === FieldPlace.ASIDE
+                        ? state.userGame.currentUserRows[indexRow][indexColumn]
+                        : state.userGame.currentUserColumns[indexColumn][indexRow];
                 if (cell) {
                     cell.isCrossedOut = action.payload.isCrossedOut;
                 }
@@ -150,7 +122,6 @@ export const gameSlice = createSlice({
                 state.userGame.currentUserSolution[indexRow][indexNumberRow] = isCellEmpty
                     ? crossOrFill
                     : CellAreaState.EMPTY;
-                // console.warn('UPDATE CELL', cell);
             }
         },
     },
@@ -168,12 +139,5 @@ export const gameSlice = createSlice({
     },
 });
 
-export const {
-    firstFieldClick,
-    winClick,
-    pauseGame,
-    updateUserGame,
-    updateAsideHintCell,
-    updateHeaderHintCell,
-    updateAreaCell,
-} = gameSlice.actions;
+export const { changeGameStatus, updateUserGame, updateHintCell, updateAreaCell } =
+    gameSlice.actions;

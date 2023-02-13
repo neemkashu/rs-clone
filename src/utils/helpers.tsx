@@ -105,7 +105,7 @@ export function getTimeFromStorage(id?: string): number {
 }
 export function unifyTwoDimensionalArray<T>(arr?: T[][]): (T | null)[][] {
     if (!arr) {
-        return [[null]];
+        return [];
     }
     const innerArrMaxLength = arr.reduce((maxLength, innerArr) => {
         return maxLength > innerArr.length ? maxLength : innerArr.length;

@@ -20,7 +20,7 @@ const {
     nonogram: nonogramCaption,
 } = CAPTIONS;
 
-function GameHeader({ nonogramRaw }: { nonogramRaw: NonogramRaw | null }): JSX.Element {
+function GameHeader({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element {
     const nonogramData = nonogramRaw?.nonogram;
     const { title, width, height } = nonogramData ?? {};
     const status = userNonogramData.data.currentGame.state;

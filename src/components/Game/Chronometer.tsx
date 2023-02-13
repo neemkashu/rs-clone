@@ -8,7 +8,7 @@ import { GameStatusContext } from './contexts/context';
 import { useAppSelector } from '../hooks';
 import { store } from '../store';
 import { GameStatus } from './gameUtils/types';
-import { firstFieldClick, pauseGame } from './gameSlice';
+import { changeGameStatus } from './gameSlice';
 
 const REFRESH_PERIOD = 1000;
 
@@ -21,7 +21,7 @@ const getTwoDigitIndicator = (time: number): string => {
 // imitation before registration implementing
 const isUserLogged = () => false;
 
-function Chronometer({ nonogramRaw }: { nonogramRaw: NonogramRaw | null }): JSX.Element {
+function Chronometer({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element {
     const nonogramID = nonogramRaw?.id;
     const dispatch = useDispatch();
     const gameState = useAppSelector((state) => state.game.status);
@@ -30,7 +30,7 @@ function Chronometer({ nonogramRaw }: { nonogramRaw: NonogramRaw | null }): JSX.
         getTimeFromStorage(nonogramID) > 0 &&
         (gameState === GameStatus.INITIAL || gameState === null);
     if (shouldUpdateStatus) {
-        dispatch(firstFieldClick(GameStatus.STARTED));
+        dispatch(changeGameStatus(GameStatus.STARTED));
     }
 
     const [userTime, setUserTime] = useState(
@@ -39,10 +39,6 @@ function Chronometer({ nonogramRaw }: { nonogramRaw: NonogramRaw | null }): JSX.
             : getTimeFromStorage(nonogramID)
     );
     const [isPageHidden, setIsPageHidden] = useState(false);
-
-    useEffect(() => {
-        dispatch(pauseGame(GameStatus.STARTED));
-    }, [dispatch]);
 
     useEffect(() => {
         const timeStoreAndRefresh = () => {
