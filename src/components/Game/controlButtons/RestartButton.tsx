@@ -1,4 +1,4 @@
-import { updateUserGame } from '../gameSlice';
+import { clearMistakes, updateUserGame } from '../gameSlice';
 import { makeInitialSaveGame, setTimeToStorage } from '../gameUtils/helpers';
 import { NonogramRaw } from '../gameUtils/types';
 import { useAppDispatch } from '../../hooks';
@@ -13,6 +13,7 @@ export function RestartButton({ nonogramRaw }: { nonogramRaw: NonogramRaw }) {
     const handleClick = () => {
         if (userGame) {
             dispatch(updateUserGame(userGame));
+            dispatch(clearMistakes());
         }
     };
     return <Button caption={caption} buttonClass={buttonClass} handler={handleClick} />;

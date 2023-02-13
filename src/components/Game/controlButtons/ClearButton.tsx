@@ -1,4 +1,4 @@
-import { updateUserField } from '../gameSlice';
+import { clearMistakes, updateUserField } from '../gameSlice';
 import { makeCleanField } from '../gameUtils/helpers';
 import { NonogramRaw } from '../gameUtils/types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -13,6 +13,7 @@ export function ClearButton({ nonogramRaw }: { nonogramRaw: NonogramRaw }) {
     const handleClick = () => {
         if (userGame) {
             dispatch(updateUserField(userGame));
+            dispatch(clearMistakes());
         }
     };
     return <Button caption={caption} buttonClass={buttonClass} handler={handleClick} />;
