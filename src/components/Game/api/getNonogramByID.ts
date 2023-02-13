@@ -1,7 +1,7 @@
 import { NonogramRaw } from '../gameUtils/types';
 
-const SERVER_ADDRESS = 'http://127.0.0.1:3000/';
-// const SERVER_ADDRESS = 'https://rs-clone-backend-1hqs.onrender.com/';
+// const SERVER_ADDRESS = 'http://127.0.0.1:3000/';
+const SERVER_ADDRESS = 'https://rs-clone-backend-1hqs.onrender.com/';
 
 export async function getNonogramByID(id: string): Promise<NonogramRaw | null> {
     try {

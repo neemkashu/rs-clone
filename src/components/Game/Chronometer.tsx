@@ -11,16 +11,6 @@ import { store } from '../store';
 
 const REFRESH_PERIOD = 1000;
 
-const sendGameToServer = (
-    userGameData: UserGameData | null,
-    id: string
-): Promise<string> => {
-    return new Promise((resolve) => {
-        console.warn('save game on server', userGameData);
-        resolve('succsess');
-    });
-};
-
 function Chronometer({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element {
     const nonogramID = nonogramRaw.id;
     const dispatch = useDispatch();
@@ -55,13 +45,6 @@ function Chronometer({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element
             clearInterval(timer);
         };
     }, [userTime, isPageHidden, nonogramID, gameState, dispatch]);
-
-    useEffect(() => {
-        return () => {
-            console.warn('send game to server');
-            sendGameToServer(store.getState().game.userGame, nonogramID);
-        };
-    }, []);
 
     document.onvisibilitychange = (event) => {
         setIsPageHidden(document.hidden);
