@@ -24,7 +24,7 @@ const sendGameToServer = (
 function Chronometer({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element {
     const nonogramID = nonogramRaw.id;
     const dispatch = useDispatch();
-    const gameState = useAppSelector((state) => state.game.status);
+    const gameState = useAppSelector((state) => state.game.userGame?.state);
     const gameTime = useAppSelector((state) => state.game.userGame?.currentTime ?? 0);
 
     const shouldUpdateStatus =

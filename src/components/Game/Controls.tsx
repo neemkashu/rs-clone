@@ -1,4 +1,5 @@
-import { ClearButton } from '../controlButtons/ClearButton';
+import { ClearButton } from './controlButtons/ClearButton';
+import { RestartButton } from './controlButtons/RestartButton';
 import './gameStyles/Controls.scss';
 import { NonogramRaw } from './gameUtils/types';
 
@@ -26,6 +27,9 @@ function Controls({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element {
             {Object.values(CAPTIONS).map((caption, index) => {
                 if (index === 2) {
                     return <ClearButton key={caption} nonogramRaw={nonogramRaw} />;
+                }
+                if (index === 3) {
+                    return <RestartButton key={caption} nonogramRaw={nonogramRaw} />;
                 }
                 return (
                     <button

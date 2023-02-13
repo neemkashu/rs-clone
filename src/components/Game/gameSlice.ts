@@ -24,14 +24,12 @@ export enum LoadStatus {
     REJECTED = 'ERROR',
 }
 export interface GameState {
-    status: GameStatus | null;
     checkGameLoaded: LoadStatus;
     userGame: UserGameData | null;
     errorMessage: string;
 }
 
 const initialState: GameState = {
-    status: null,
     checkGameLoaded: LoadStatus.PENDING,
     userGame: null,
     errorMessage: '',
@@ -62,7 +60,6 @@ export const gameSlice = createSlice({
     initialState,
     reducers: {
         changeGameStatus(state, action: PayloadAction<GameStatus>) {
-            state.status = action.payload;
             if (state.userGame) {
                 state.userGame.state = action.payload;
             }

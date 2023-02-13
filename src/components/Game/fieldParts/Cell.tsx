@@ -19,7 +19,7 @@ export default function Cell({
     handleContext,
 }: CellProps): JSX.Element {
     const dispatch = useAppDispatch();
-    const gameStatus = useAppSelector((state) => state.game.status);
+    const gameStatus = useAppSelector((state) => state.game.userGame?.state);
 
     function handlersClickMouse() {
         if (handleClick) {
@@ -34,7 +34,7 @@ export default function Cell({
         if (handleContext) {
             handleContext();
         }
-        if (!store.getState().game.status) {
+        if (!store.getState().game.userGame?.state) {
             dispatch(changeGameStatus(GameStatus.STARTED));
         }
     };
