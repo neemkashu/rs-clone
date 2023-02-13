@@ -6,47 +6,37 @@ import GameHeader from './GameHeader';
 import Chronometer from './Chronometer';
 import { NonogramRaw } from '../../utils/types';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { changeGameStatus, updateUserGame } from './gameSlice';
-import { makeInitialSaveGame } from './gameUtils/helpers';
-import { GameStatus, UserGameData } from './gameUtils/types';
+import { loadNonogramByID, saveUserGameByID } from './gameSlice';
 import { WinChecker } from './gameLogic/WinChecker';
-import { getNonogramByID } from './api/getNonogramByID';
-import { getGameState } from './api/getGameState';
+import { store } from '../store';
+import { sendGameToServer } from './api/saveGame';
 
-const ID = 'E7UMxLSZv31q5m4RwLG4'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
-
+const ID = 'nsNWHaYMXSERIHX1juXN'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
+// nsNWHaYMXSERIHX1juXN
 function Game(): JSX.Element {
-    const [nonogramRaw, setNonogramRaw] = useState<NonogramRaw | null>(null);
-    const userGame = useAppSelector((state) => state.game.userGame?.state);
+    const userGame = useAppSelector((state) => state.game.userGame);
+    const nonogramInStore = useAppSelector((state) => state.game.currentNonogram);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        const getNonogramData = async () => {
-            const nonogram = await getNonogramByID(ID);
-            if (nonogram) {
-                setNonogramRaw(nonogram);
-                const userData = await getGameState(ID);
-                if (userData) {
-                    const loadedGame: UserGameData = userData.data.currentGame;
-                    dispatch(updateUserGame(loadedGame));
-                } else {
-                    const newGame = makeInitialSaveGame(nonogram);
-                    dispatch(updateUserGame(newGame));
-                }
-            }
+        dispatch(loadNonogramByID(ID));
+
+        return () => {
+            dispatch(
+                saveUserGameByID({ id: ID, userGame: store.getState().game.userGame })
+            );
         };
-        getNonogramData();
     }, [dispatch]);
 
     return (
         <div className="container p-0 p-sm-1 d-flex flex-column gap-2">
-            {nonogramRaw && userGame && (
+            {nonogramInStore && userGame && (
                 <>
-                    <GameHeader nonogramRaw={nonogramRaw} />
-                    <Chronometer nonogramRaw={nonogramRaw} />
-                    <Field nonogramRaw={nonogramRaw} />
-                    <WinChecker nonogramRaw={nonogramRaw} />
-                    <Controls nonogramRaw={nonogramRaw} />
+                    <GameHeader nonogramRaw={nonogramInStore} />
+                    <Chronometer nonogramRaw={nonogramInStore} />
+                    <Field nonogramRaw={nonogramInStore} />
+                    <WinChecker nonogramRaw={nonogramInStore} />
+                    <Controls nonogramRaw={nonogramInStore} />
                 </>
             )}
         </div>

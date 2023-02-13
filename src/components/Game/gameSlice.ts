@@ -2,7 +2,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 // eslint-disable-next-line import/no-cycle
 import { AppDispatch } from '../store';
-import { unifyTwoDimensionalArray } from './gameUtils/helpers';
+import { getGameState } from './api/getGameState';
+import { getNonogramByID } from './api/getNonogramByID';
+import { sendGameToServer } from './api/saveGame';
+import { makeInitialSaveGame, unifyTwoDimensionalArray } from './gameUtils/helpers';
 import { userNonogramData } from './gameUtils/mochas';
 import {
     CellAreaState,
@@ -10,6 +13,7 @@ import {
     FieldPlace,
     fieldPlace,
     GameStatus,
+    NonogramRaw,
     ResponseStatus,
     UserFieldData,
     UserGameData,
@@ -24,36 +28,38 @@ export enum LoadStatus {
     REJECTED = 'ERROR',
 }
 export interface GameState {
-    checkGameLoaded: LoadStatus;
+    loadNonogramStatus: LoadStatus;
     userGame: UserGameData | null;
+    currentNonogram: NonogramRaw | null;
     errorMessage: string;
 }
 
 const initialState: GameState = {
-    checkGameLoaded: LoadStatus.PENDING,
+    loadNonogramStatus: LoadStatus.PENDING,
     userGame: null,
+    currentNonogram: null,
     errorMessage: '',
 };
 
-async function saveUserGameState(
-    id: string,
-    userGameData: UserGameData
-): Promise<ResponseStatus> {
-    // mocha before implementing request
-    return new Promise((resolve, reject) => {
-        const reponse = 'ok';
-        resolve(ResponseStatus.SUCCESS);
-        reject(ResponseStatus.ERROR);
-    });
-}
-
-export const saveUserGame = createAsyncThunk(
-    'user/save/game',
-    async ({ id, userGameData }: { id: string; userGameData: UserGameData }) => {
-        const response = await saveUserGameState(id, userGameData);
-        return response;
+export const loadNonogramByID = createAsyncThunk(
+    'game/load/nonogram',
+    async (id: string) => {
+        const nonogram = await getNonogramByID(id);
+        const userGame = await getGameState(id);
+        return { nonogram, userGame };
     }
 );
+export const saveUserGameByID = createAsyncThunk(
+    'game/save',
+    async ({ id, userGame }: { id: string; userGame: UserGameData | null }) => {
+        if (userGame) {
+            const reponse = await sendGameToServer(userGame, id);
+            return reponse;
+        }
+        return ResponseStatus.ERROR;
+    }
+);
+
 // another slice needs different name field
 export const gameSlice = createSlice({
     name: 'game',
@@ -62,6 +68,11 @@ export const gameSlice = createSlice({
         changeGameStatus(state, action: PayloadAction<GameStatus>) {
             if (state.userGame) {
                 state.userGame.state = action.payload;
+            }
+        },
+        updateNonogram(state, action: PayloadAction<NonogramRaw>) {
+            if (state) {
+                state.currentNonogram = action.payload;
             }
         },
         updateUserGame(state, action: PayloadAction<UserGameData | null>) {
@@ -143,15 +154,34 @@ export const gameSlice = createSlice({
         },
     },
     extraReducers(builder) {
-        builder.addCase(saveUserGame.pending, (state, action) => {
-            state.checkGameLoaded = LoadStatus.PENDING;
+        builder.addCase(loadNonogramByID.pending, (state, action) => {
+            state.loadNonogramStatus = LoadStatus.PENDING;
         });
-        builder.addCase(saveUserGame.fulfilled, (state, action) => {
-            state.checkGameLoaded = LoadStatus.FULFILLED;
+        builder.addCase(loadNonogramByID.fulfilled, (state, action) => {
+            const { nonogram, userGame } = action.payload;
+            state.loadNonogramStatus = LoadStatus.FULFILLED;
+            state.currentNonogram = nonogram;
+            const gameToSet = makeInitialSaveGame(nonogram);
+            if (userGame) {
+                state.userGame = userGame.data.currentGame;
+            } else {
+                state.userGame = gameToSet;
+            }
         });
-        builder.addCase(saveUserGame.rejected, (state, action) => {
-            state.checkGameLoaded = LoadStatus.REJECTED;
-            state.errorMessage = action.error.message ?? 'error when saving game';
+        builder.addCase(loadNonogramByID.rejected, (state, action) => {
+            state.loadNonogramStatus = LoadStatus.REJECTED;
+            state.errorMessage = action.error.message ?? 'error when loading nonogram';
+        });
+
+        builder.addCase(saveUserGameByID.pending, (state, action) => {
+            state.loadNonogramStatus = LoadStatus.PENDING;
+        });
+        builder.addCase(saveUserGameByID.fulfilled, (state, action) => {
+            state.loadNonogramStatus = LoadStatus.FULFILLED;
+        });
+        builder.addCase(saveUserGameByID.rejected, (state, action) => {
+            state.loadNonogramStatus = LoadStatus.REJECTED;
+            state.errorMessage = action.error.message ?? 'error when loading nonogram';
         });
     },
 });
@@ -163,4 +193,5 @@ export const {
     updateAreaCell,
     updateUserTime,
     updateUserField,
+    updateNonogram,
 } = gameSlice.actions;
