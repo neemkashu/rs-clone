@@ -1,36 +1,5 @@
-import { MouseEventHandler } from 'react';
-
 export type fieldPlace = 'header' | 'aside' | 'area' | 'miniature';
 
-export type NonogramObject = {
-    id: string;
-    nonogram: {
-        height: number;
-        width: number;
-        title: {
-            en: string;
-            ru: string;
-            de: string;
-        };
-        colorMapping: {
-            1: string;
-            2: string;
-        };
-        goal: Array<number[]>;
-        rows: Array<
-            {
-                hint: number;
-                color: number;
-            }[]
-        >;
-        columns: Array<
-            {
-                hint: number;
-                color: number;
-            }[]
-        >;
-    };
-};
 export enum FieldPlace {
     HEADER = 'header',
     ASIDE = 'aside',
@@ -49,6 +18,11 @@ export enum GameStatus {
     FINISHED = 'finished',
 }
 
+export interface CellProps {
+    cellContent: string;
+    styles?: string[];
+    handler?: () => void;
+}
 export interface TableRowProps {
     location: fieldPlace;
     indexRow: number;
@@ -90,11 +64,26 @@ export interface UserGameData {
     state: GameStatus;
     currentUserSolution: (null | number)[][];
     currentTime: number;
-    currentUserRows: { isCrossedOut: boolean }[][];
-    currentUserColumns: { isCrossedOut: boolean }[][];
+    currentUserRows: ({ isCrossedOut: boolean } | null)[][];
+    currentUserColumns: ({ isCrossedOut: boolean } | null)[][];
 }
 export interface UserGameDataRaw {
     data: {
         currentGame: UserGameData;
     };
 }
+export enum ResponseStatus {
+    SUCCESS = 'successful',
+    ERROR = 'failed',
+}
+export enum ClickType {
+    MOUSE_CLICK = 'click',
+    MOUSE_CONTEXT = 'context',
+}
+export const CellAreaState = {
+    EMPTY: null,
+    CROSSED: 0,
+    FILLED: 1,
+} as const;
+export type CellAreaStateType = (typeof CellAreaState)[keyof typeof CellAreaState];
+export type AreaCellStyle = Record<keyof typeof CellAreaState, string>;

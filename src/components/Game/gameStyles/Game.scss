@@ -6,4 +6,13 @@
 .table {
     width: min-content;
     margin: 0;
+    &:hover {
+        cursor: pointer;
+    }
+}
+.game-field {
+    user-select: none;
+}
+.chronometer {
+    width: max-content;
 }

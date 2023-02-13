@@ -20,7 +20,7 @@ const {
     nonogram: nonogramCaption,
 } = CAPTIONS;
 
-function GameHeader({ nonogramRaw }: { nonogramRaw: NonogramRaw | null }): JSX.Element {
+function GameHeader({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element {
     const nonogramData = nonogramRaw?.nonogram;
     const { title, width, height } = nonogramData ?? {};
     const status = userNonogramData.data.currentGame.state;
@@ -31,7 +31,7 @@ function GameHeader({ nonogramRaw }: { nonogramRaw: NonogramRaw | null }): JSX.E
             <h2>
                 {nonogramCaption} {showTitle}
             </h2>
-            <div className="container d-flex gap-2">
+            <div className="d-flex gap-2">
                 <div>
                     {sizeCaption}: {width} ✖ {height}
                 </div>
