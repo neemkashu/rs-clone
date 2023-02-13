@@ -6,6 +6,7 @@ import { store } from '../../store';
 
 export interface CellProps {
     cellContent: string;
+    stateStyle?: string[];
     styles?: string[];
     handleClick?: () => void;
     handleContext?: () => void;
@@ -13,6 +14,7 @@ export interface CellProps {
 export default function Cell({
     cellContent,
     styles,
+    stateStyle,
     handleClick,
     handleContext,
 }: CellProps): JSX.Element {
@@ -43,7 +45,9 @@ export default function Cell({
             onContextMenu={handlersContextMouse}
             className={`cell-square ${styles?.join(' ')}`}
         >
-            <div className="square lh-1 text-center">{cellContent ?? ''}</div>
+            <div className={`square lh-1 text-center ${stateStyle?.join(' ')}`}>
+                {cellContent ?? ''}
+            </div>
         </td>
     );
 }

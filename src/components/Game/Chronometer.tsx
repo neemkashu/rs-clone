@@ -34,17 +34,15 @@ function Chronometer({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element
         dispatch(changeGameStatus(GameStatus.STARTED));
     }
 
-    // const [userTime, setUserTime] = useState(
-    //     isUserLogged() ? gameTime : getTimeFromStorage(nonogramID)
-    // );
+    const [userTime, setUserTime] = useState(getTimeFromStorage(nonogramID));
     const [isPageHidden, setIsPageHidden] = useState(false);
 
     useEffect(() => {
         const timeStoreAndRefresh = () => {
-            const currentTimer = gameTime + REFRESH_PERIOD;
-            // setUserTime(currentTimer);
+            const currentTimer = userTime + REFRESH_PERIOD;
+            setUserTime(currentTimer);
             setTimeToStorage(currentTimer, nonogramID);
-            dispatch(updateUserTime(currentTimer));
+            // dispatch(updateUserTime(currentTimer));
         };
         const isGameRunning =
             gameState === GameStatus.INITIAL || gameState === GameStatus.STARTED;
@@ -56,10 +54,11 @@ function Chronometer({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element
         return () => {
             clearInterval(timer);
         };
-    }, [gameTime, isPageHidden, nonogramID, gameState, dispatch]);
+    }, [userTime, isPageHidden, nonogramID, gameState, dispatch]);
 
     useEffect(() => {
         return () => {
+            console.warn('send game to server');
             sendGameToServer(store.getState().game.userGame, nonogramID);
         };
     }, []);
@@ -68,7 +67,8 @@ function Chronometer({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element
         setIsPageHidden(document.hidden);
     };
 
-    return <Clock userTime={gameTime} />;
+    // return <Clock userTime={gameTime} />;
+    return <Clock userTime={userTime} />;
 }
 
 export default Chronometer;

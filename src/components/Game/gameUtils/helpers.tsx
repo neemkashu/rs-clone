@@ -1,5 +1,11 @@
 import { StorageKeys } from './storage';
-import { GameStatus, NonogramRaw, NonogramTime, UserGameData } from './types';
+import {
+    GameStatus,
+    NonogramRaw,
+    NonogramTime,
+    UserFieldData,
+    UserGameData,
+} from './types';
 
 export function getUserCurrentTimes(
     currentTimesInfo: string | null
@@ -71,7 +77,7 @@ export function unifyTwoDimensionalArray<T>(arr?: T[][]): (T | null)[][] {
     });
     return arrUnified;
 }
-export function makeInitialSaveGame(nonogram: NonogramRaw | null): UserGameData | null {
+export function makeCleanField(nonogram: NonogramRaw | null): UserFieldData | null {
     if (!nonogram) {
         return null;
     }
@@ -83,12 +89,26 @@ export function makeInitialSaveGame(nonogram: NonogramRaw | null): UserGameData 
         line.map((cell) => ({ isCrossedOut: false }))
     );
 
-    const initialGame: UserGameData = {
-        state: GameStatus.INITIAL,
+    const cleanField: UserFieldData = {
         currentUserSolution: solution,
-        currentTime: 0,
         currentUserRows: rowsUnified,
         currentUserColumns: columnsUnified,
     };
-    return initialGame;
+    return cleanField;
+}
+export function makeInitialSaveGame(nonogram: NonogramRaw | null): UserGameData | null {
+    if (!nonogram) {
+        return null;
+    }
+    const fieldData = makeCleanField(nonogram);
+
+    if (fieldData) {
+        const initialGame: UserGameData = {
+            state: GameStatus.INITIAL,
+            currentTime: 0,
+            ...fieldData,
+        };
+        return initialGame;
+    }
+    return null;
 }

@@ -46,7 +46,7 @@ function Game(): JSX.Element {
                     <Chronometer nonogramRaw={nonogramRaw} />
                     <Field nonogramRaw={nonogramRaw} />
                     <WinChecker nonogramRaw={nonogramRaw} />
-                    <Controls />
+                    <Controls nonogramRaw={nonogramRaw} />
                 </>
             )}
         </div>
