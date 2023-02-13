@@ -4,7 +4,7 @@ const getTwoDigitIndicator = (time: number): string => {
     return converted;
 };
 
-export function Clock({ userTime }: { userTime: number }) {
+export function Clock({ userTime }: { userTime: number }): JSX.Element {
     const date = new Date(userTime);
     const hours = getTwoDigitIndicator(date.getUTCHours());
     const minutes = getTwoDigitIndicator(date.getUTCMinutes());

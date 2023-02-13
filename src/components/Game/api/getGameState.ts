@@ -5,7 +5,8 @@ export async function getGameState(id: string): Promise<UserGameDataRaw | null> 
     // mocha before implementing request
 
     return new Promise((resolve) => {
-        const data = userCat;
+        const data = null;
+        // const data = userCat;
         resolve(data);
     });
 

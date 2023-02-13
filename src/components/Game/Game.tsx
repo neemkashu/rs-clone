@@ -4,13 +4,11 @@ import Controls from './Controls';
 import Field from './Field';
 import GameHeader from './GameHeader';
 import Chronometer from './Chronometer';
-import { NonogramRaw, UserGameDataRaw } from '../../utils/types';
-import { userNonogramData } from '../../utils/mochas';
+import { NonogramRaw } from '../../utils/types';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { updateUserGame } from './gameSlice';
-import { Cat, martini } from './gameUtils/mochas';
+import { changeGameStatus, updateUserGame } from './gameSlice';
 import { makeInitialSaveGame } from './gameUtils/helpers';
-import { UserGameData } from './gameUtils/types';
+import { GameStatus, UserGameData } from './gameUtils/types';
 import { WinChecker } from './gameLogic/WinChecker';
 import { getNonogramByID } from './api/getNonogramByID';
 import { getGameState } from './api/getGameState';
@@ -23,30 +21,22 @@ function Game(): JSX.Element {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        getNonogramByID(ID).then((data) => {
-            if (data) {
-                // little mocha cat
-                setNonogramRaw(Cat);
-            }
-        });
-    }, []);
-    useEffect(() => {
-        getGameState(ID)
-            // TODO: refactor then block after implementing server fetch
-            .then((data) => {
-                console.warn('get mocha user game', data?.data.currentGame);
-                if (data) {
-                    const loadedGame: UserGameData = data.data.currentGame;
-                    // server mocha cat
+        const getNonogramData = async () => {
+            const nonogram = await getNonogramByID(ID);
+            if (nonogram) {
+                setNonogramRaw(nonogram);
+                const userData = await getGameState(ID);
+                if (userData) {
+                    const loadedGame: UserGameData = userData.data.currentGame;
                     dispatch(updateUserGame(loadedGame));
+                } else {
+                    const newGame = makeInitialSaveGame(nonogram);
+                    dispatch(updateUserGame(newGame));
                 }
-            })
-            .catch((error) => {
-                console.warn('create empty game');
-                const newGame = makeInitialSaveGame(nonogramRaw);
-                dispatch(updateUserGame(newGame));
-            });
-    }, [dispatch, nonogramRaw]);
+            }
+        };
+        getNonogramData();
+    }, [dispatch]);
 
     return (
         <div className="container d-flex flex-column gap-2">
