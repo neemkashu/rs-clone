@@ -32,7 +32,7 @@ export default function Cell({
         if (handleContext) {
             handleContext();
         }
-        if (!gameStatus) {
+        if (!store.getState().game.status) {
             dispatch(changeGameStatus(GameStatus.STARTED));
         }
     };
@@ -41,11 +41,9 @@ export default function Cell({
             role="presentation"
             onClick={handlersClickMouse}
             onContextMenu={handlersContextMouse}
-            className="cell-square"
+            className={`cell-square ${styles?.join(' ')}`}
         >
-            <div className={`square lh-1 text-center ${styles?.join(' ')}`}>
-                {cellContent ?? ''}
-            </div>
+            <div className="square lh-1 text-center">{cellContent ?? ''}</div>
         </td>
     );
 }

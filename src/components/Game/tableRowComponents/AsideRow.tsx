@@ -23,6 +23,7 @@ export function AsideRow({ linesUnified, indexRow }: AsideRowProps) {
                     (rowsUnified &&
                         rowsUnified[indexRow][indexNumberRow]?.isCrossedOut) ??
                     false;
+                const isFifth = (indexRow + 1) % 5 === 0;
 
                 const handleClick = () => {
                     if (hint !== '') {
@@ -43,7 +44,7 @@ export function AsideRow({ linesUnified, indexRow }: AsideRowProps) {
                         handler={handleClick}
                         hint={`${hint}`}
                         stateStyle={isCrossed ? HINT_STATE_STYLE : ''}
-                        styles={[]}
+                        styles={[isFifth ? 'border-bottom-plus' : '']}
                     />
                 );
             })}

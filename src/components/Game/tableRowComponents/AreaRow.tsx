@@ -44,6 +44,8 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                 const userCell = userSolution && userSolution[indexRow][indexNumberRow];
                 const style = getAreaCellStyle(userCell);
                 const squareKey = `${location}-cell-col-${indexRow}-row-${indexNumberRow}`;
+                const isBottomBorder = (indexRow + 1) % 5 === 0;
+                const isRightBorder = (indexNumberRow + 1) % 5 === 0;
 
                 const handleClick = () => {
                     // console.warn('handleClick AREA cell', userCell);
@@ -72,7 +74,10 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                         handleClick={handleClick}
                         handleContext={handleContext}
                         stateStyle={style}
-                        styles={[]}
+                        styles={[
+                            isBottomBorder ? 'border-bottom-plus' : '',
+                            isRightBorder ? 'border-right-plus' : '',
+                        ]}
                     />
                 );
             })}
