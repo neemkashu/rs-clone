@@ -20,9 +20,7 @@ export function SettingsViewContent() {
                     showGuessTime: settingsView.showGuessTime,
                 })
             );
-            console.log('ass');
         } else {
-            console.log('asd');
             dispatch(
                 changedViewSettings({
                     markingAnEmptyCell: t('cross'),
