@@ -1,3 +1,4 @@
+import { CheckButton } from './controlButtons/CheckButton';
 import { ClearButton } from './controlButtons/ClearButton';
 import { RestartButton } from './controlButtons/RestartButton';
 import './gameStyles/Controls.scss';
@@ -30,6 +31,9 @@ function Controls({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element {
                 }
                 if (index === 3) {
                     return <RestartButton key={caption} nonogramRaw={nonogramRaw} />;
+                }
+                if (index === 4) {
+                    return <CheckButton key={caption} />;
                 }
                 return (
                     <button
