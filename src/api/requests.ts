@@ -5,10 +5,12 @@ export async function getCatalogDB(): Promise<NonogramObject[]> {
         const response = await fetch('http://localhost:3000/nonograms', {
             method: 'GET',
         });
+        if (!response.ok) {
+            throw new Error('this error occurred while fetching the catalog database');
+        }
         return await response.json();
     } catch (e) {
-        console.error(e);
-        console.warn('this error occurred while fetching the catalog database');
+        console.warn(e);
         return [];
     }
 }

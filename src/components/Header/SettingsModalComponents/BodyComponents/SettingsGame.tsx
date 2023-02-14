@@ -35,7 +35,8 @@ export function SettingsGameContent() {
                     highlightCellsWithError: item,
                     automaticallyCrossOutNumbers:
                         settingsGame.automaticallyCrossOutNumbers,
-                    lastCrossedOutDigitFillsLineWithCrosses: true,
+                    lastCrossedOutDigitFillsLineWithCrosses:
+                        settingsGame.lastCrossedOutDigitFillsLineWithCrosses,
                 })
             );
         } else {
@@ -43,7 +44,8 @@ export function SettingsGameContent() {
                 changedGameSettings({
                     highlightCellsWithError: settingsGame.highlightCellsWithError,
                     automaticallyCrossOutNumbers: item,
-                    lastCrossedOutDigitFillsLineWithCrosses: true,
+                    lastCrossedOutDigitFillsLineWithCrosses:
+                        settingsGame.lastCrossedOutDigitFillsLineWithCrosses,
                 })
             );
         }

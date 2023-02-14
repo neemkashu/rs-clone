@@ -8,17 +8,13 @@ import { SettingsCategoryEnum } from '../../../utils/enums';
 
 export default function SettingsModal(): JSX.Element {
     const [selectedCategory, setSelectedCategory] = useState<SettingsCategoryEnum>(
-        SettingsCategoryEnum.ID_MAIN
+        SettingsCategoryEnum.NAME_MAIN
     );
     const { t } = useTranslation();
-
-    const isMainCategorySelected = selectedCategory === SettingsCategoryEnum.ID_MAIN;
-    const isGameCategorySelected = selectedCategory === SettingsCategoryEnum.ID_GAME;
-    const isViewCategorySelected = selectedCategory === SettingsCategoryEnum.ID_VIEW;
-
-    function handleSettingsCategorySelect(id: SettingsCategoryEnum) {
-        setSelectedCategory(id);
-    }
+    const isMainCategorySelected = selectedCategory === SettingsCategoryEnum.NAME_MAIN;
+    const isGameCategorySelected = selectedCategory === SettingsCategoryEnum.NAME_GAME;
+    const isViewCategorySelected = selectedCategory === SettingsCategoryEnum.NAME_VIEW;
+    const categoryNames = Object.values(SettingsCategoryEnum);
 
     return (
         <div id="settingsModal" className="modal fade">
@@ -44,36 +40,19 @@ export default function SettingsModal(): JSX.Element {
                             role="group"
                             aria-label="Basic checkbox toggle button group"
                         >
-                            <SettingsCategoryItem
-                                name={SettingsCategoryEnum.NAME_MAIN}
-                                id={SettingsCategoryEnum.ID_MAIN}
-                                active={isMainCategorySelected ? 'active' : ''}
-                                handleSettingsCategorySelect={() =>
-                                    handleSettingsCategorySelect(
-                                        SettingsCategoryEnum.ID_MAIN
-                                    )
-                                }
-                            />
-                            <SettingsCategoryItem
-                                name={SettingsCategoryEnum.NAME_GAME}
-                                id={SettingsCategoryEnum.ID_GAME}
-                                active={isGameCategorySelected ? 'active' : ''}
-                                handleSettingsCategorySelect={() =>
-                                    handleSettingsCategorySelect(
-                                        SettingsCategoryEnum.ID_GAME
-                                    )
-                                }
-                            />
-                            <SettingsCategoryItem
-                                name={SettingsCategoryEnum.NAME_VIEW}
-                                id={SettingsCategoryEnum.ID_VIEW}
-                                active={isViewCategorySelected ? 'active' : ''}
-                                handleSettingsCategorySelect={() =>
-                                    handleSettingsCategorySelect(
-                                        SettingsCategoryEnum.ID_VIEW
-                                    )
-                                }
-                            />
+                            {categoryNames.map((item, index) => {
+                                return (
+                                    <SettingsCategoryItem
+                                        key={item}
+                                        name={item}
+                                        id={item}
+                                        active={selectedCategory === item ? 'active' : ''}
+                                        handleSettingsCategorySelect={() =>
+                                            setSelectedCategory(item)
+                                        }
+                                    />
+                                );
+                            })}
                         </div>
                     </div>
                     {isMainCategorySelected && <SettingsMainContent />}
