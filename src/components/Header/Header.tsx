@@ -1,5 +1,6 @@
 import './Header.scss';
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AsideButton } from './AsideButton/AsideButton';
 import { ColorThemeButton } from './ColorThemeButton/ColorThemeButton';
 import { LanguageDropDownButton } from './LanguageButton/LanguageDropdownButton';
@@ -7,6 +8,7 @@ import { matchSmWindowSize, handleAsideAfterWindowResize } from '../../utils/hel
 import SettingsModal from './SettingsModalComponents/SettingsModal';
 
 export function Header(): JSX.Element {
+    const { t, i18n } = useTranslation();
     const [isBurgerBtnVisible, setIsBurgerBtnVisible] = useState(false);
 
     useEffect(() => {
@@ -40,11 +42,10 @@ export function Header(): JSX.Element {
                     </div>
                     <div className="col d-flex justify-content-center justify-content-sm-end gap-2 py-1">
                         <a href="/" className="btn btn-outline-success text-nowrap">
-                            {' '}
-                            Sign In
+                            {t('signIn')}
                         </a>
                         <a href="/" className="btn btn-outline-primary text-nowrap">
-                            Sign Up
+                            {t('signUp')}
                         </a>
                     </div>
                 </div>

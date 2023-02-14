@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { SettingsMainContent } from './BodyComponents/SettingsMain';
 import { SettingsGameContent } from './BodyComponents/SettingsGame';
@@ -9,6 +10,7 @@ export default function SettingsModal(): JSX.Element {
     const [selectedCategory, setSelectedCategory] = useState<SettingsCategoryEnum>(
         SettingsCategoryEnum.ID_MAIN
     );
+    const { t } = useTranslation();
 
     const isMainCategorySelected = selectedCategory === SettingsCategoryEnum.ID_MAIN;
     const isGameCategorySelected = selectedCategory === SettingsCategoryEnum.ID_GAME;
@@ -79,7 +81,7 @@ export default function SettingsModal(): JSX.Element {
                     {isViewCategorySelected && <SettingsViewContent />}
                     <div className="modal-footer">
                         <button type="button" className="btn btn-danger btn-sm">
-                            Set all to default
+                            {t('setAllToDefault')}
                         </button>
                     </div>
                 </div>

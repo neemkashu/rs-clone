@@ -1,8 +1,10 @@
+import { useTranslation } from 'react-i18next';
 import { EmptyCellStates } from '../../../../utils/enums';
 import { useAppSelector, useAppDispatch } from '../../../hooks';
 import { changedViewSettings } from '../settingsSlice';
 
 export function SettingsViewContent() {
+    const { t } = useTranslation();
     const settingsView = useAppSelector((state) => state.settings.view);
     const dispatch = useAppDispatch();
 
@@ -42,7 +44,7 @@ export function SettingsViewContent() {
     return (
         <ul className="modal-body mb-0 py-1">
             <li className="ms-2">
-                Marking an empty cell:
+                {t('markingEmptyCell')}
                 <div className="form-check form-switch">
                     <label className="form-check-label" htmlFor="emptyCell">
                         {settingsView.markingAnEmptyCell}
@@ -60,7 +62,7 @@ export function SettingsViewContent() {
             <li className="ms-2">
                 <div className="form-check form-switch">
                     <label className="form-check-label" htmlFor="guessTime">
-                        Show guess time
+                        {t('showGuessTime')}
                         <input
                             role="button"
                             className="form-check-input"

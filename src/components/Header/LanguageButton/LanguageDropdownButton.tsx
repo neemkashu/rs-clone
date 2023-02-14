@@ -1,15 +1,18 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { SpecificLanguageButton } from './SpecificLanguageButton';
 import EnglishFlag from '../../../svg/EnglishFlag';
 import GermanFlag from '../../../svg/GermanFlag';
 import RussianFlag from '../../../svg/RussianFlag';
-import { LanguagesEnum } from '../../../utils/enums';
+import { LanguagesEnum, LanguagesShortNamesEnum } from '../../../utils/enums';
 
 export function LanguageDropDownButton(): JSX.Element {
-    const [selectedLang, setSelectedLang] = useState<LanguagesEnum>(LanguagesEnum.RU);
+    const { t, i18n } = useTranslation();
+    const [selectedLang, setSelectedLang] = useState<LanguagesEnum>(LanguagesEnum.EN);
 
-    function handleLanguageSwitch(id: LanguagesEnum) {
+    function handleLanguageSwitch(id: LanguagesEnum, value: LanguagesShortNamesEnum) {
         setSelectedLang(id);
+        i18n.changeLanguage(value);
     }
 
     const isEnLangSelected = selectedLang === LanguagesEnum.EN;
@@ -26,9 +29,9 @@ export function LanguageDropDownButton(): JSX.Element {
                 aria-haspopup="true"
                 aria-expanded="false"
             >
-                {isEnLangSelected && <EnglishFlag />}
                 {isDeLangSelected && <GermanFlag />}
                 {isRuLangSelected && <RussianFlag />}
+                {isEnLangSelected && <EnglishFlag />}
             </button>
             <div
                 id="dropdownMenuLang"
@@ -36,19 +39,34 @@ export function LanguageDropDownButton(): JSX.Element {
                 aria-labelledby="dropdownLangButton"
             >
                 <SpecificLanguageButton
-                    handleLang={() => handleLanguageSwitch(LanguagesEnum.EN)}
+                    handleLang={() =>
+                        handleLanguageSwitch(
+                            LanguagesEnum.EN,
+                            LanguagesShortNamesEnum.EN_VALUE
+                        )
+                    }
                     id={LanguagesEnum.EN}
                     svg={<EnglishFlag />}
                     active={isEnLangSelected ? 'active' : ''}
                 />
                 <SpecificLanguageButton
-                    handleLang={() => handleLanguageSwitch(LanguagesEnum.RU)}
+                    handleLang={() =>
+                        handleLanguageSwitch(
+                            LanguagesEnum.RU,
+                            LanguagesShortNamesEnum.RU_VALUE
+                        )
+                    }
                     id={LanguagesEnum.RU}
                     svg={<RussianFlag />}
                     active={isRuLangSelected ? 'active' : ''}
                 />
                 <SpecificLanguageButton
-                    handleLang={() => handleLanguageSwitch(LanguagesEnum.DE)}
+                    handleLang={() =>
+                        handleLanguageSwitch(
+                            LanguagesEnum.DE,
+                            LanguagesShortNamesEnum.DE_VALUE
+                        )
+                    }
                     id={LanguagesEnum.DE}
                     svg={<GermanFlag />}
                     active={isDeLangSelected ? 'active' : ''}

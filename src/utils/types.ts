@@ -65,6 +65,12 @@ export type NonogramSettingsViewState = {
     markingAnEmptyCell: EmptyCellStates;
     showGuessTime: boolean;
 };
+export type FormCheckItemPropsType = {
+    value: string;
+    name: string;
+    id: string;
+    isChecked?: boolean;
+};
 
 export enum FieldPlace {
     HEADER = 'header',

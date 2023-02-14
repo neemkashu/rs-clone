@@ -1,8 +1,11 @@
 import './Aside.scss';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { handleAsideCloseBtnClick } from '../../utils/helpers';
 
 export function Aside(): JSX.Element {
+    const { t, i18n } = useTranslation();
+
     return (
         <aside id="aside" className="border-3 border-end">
             <button
@@ -15,19 +18,16 @@ export function Aside(): JSX.Element {
             </button>
             <div id="aside-btns" className="container p-2 btn-group-vertical">
                 <Link to="/" className="btn btn-outline-primary">
-                    Main Page
+                    {t('catalogMainPage')}
                 </Link>
                 <Link to="/catalog" className="btn btn-outline-dark">
-                    Catalog
+                    {t('catalogCatalog')}
                 </Link>
                 <Link to="/game" className="btn btn-outline-dark">
-                    Random Game
+                    {t('catalogRandomGame')}
                 </Link>
                 <Link to="/" className="btn btn-outline-dark">
-                    How to solve?
-                </Link>
-                <Link to="/" className="btn btn-outline-dark">
-                    Help
+                    {t('catalogHelp')}
                 </Link>
             </div>
         </aside>
