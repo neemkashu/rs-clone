@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { EmptyCellStates, SettingsTimingsEnum } from '../../../utils/enums';
+import { SettingsTimingsEnum } from '../../../utils/enums';
 import {
     NonogramSettingsMainState,
     NonogramSettingsGameState,
@@ -24,7 +24,9 @@ function getInitialSettingsState(): {
             lastCrossedOutDigitFillsLineWithCrosses: true,
         },
         view: {
-            markingAnEmptyCell: EmptyCellStates.DOT,
+            // ! сделать строку ниже на разных языках
+            // ! в зависимости от текущего языка пользователя
+            markingAnEmptyCell: 'dot',
             showGuessTime: true,
         },
     };
@@ -56,7 +58,6 @@ const settingsSlice = createSlice({
         },
         changedViewSettings(state, action: PayloadAction<NonogramSettingsViewState>) {
             const settingsView = action.payload;
-            console.log(settingsView);
             state.view = settingsView;
             localStorage.setItem('nonogramSettings', JSON.stringify(state));
         },

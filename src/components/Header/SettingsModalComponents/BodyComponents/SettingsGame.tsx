@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { FormCheckItem } from './FormCheckItem';
 
 export function SettingsGameContent() {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     return (
         <ul className="modal-body mb-0 py-1">

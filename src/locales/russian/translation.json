@@ -21,5 +21,7 @@
     "lastCrossedOutDigitFillsLineWithCrosses": "Последняя зачеркнутая цифра заполняет строку крестиками",
     "markingEmptyCell": "Помечать пустую ячейку",
     "showGuessTime": "Показать время угадывания",
+    "dot": "точка",
+    "cross": "крестик",
     "setAllToDefault": "Установить всё по умолчанию"
 }

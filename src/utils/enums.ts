@@ -3,6 +3,11 @@ export enum LanguagesEnum {
     RU = 'dropdownRuLang',
     DE = 'fropdownDeLang',
 }
+export enum LanguagesShortNamesEnum {
+    EN_VALUE = 'en',
+    DE_VALUE = 'de',
+    RU_VALUE = 'ru',
+}
 
 export enum SettingsCategoryEnum {
     NAME_MAIN = 'Main',
@@ -20,9 +25,4 @@ export enum SettingsTimingsEnum {
     TEN_SEC = 10,
     THIRTY_SEC = 30,
     FIVE_MIN = 5,
-}
-
-export enum EmptyCellStates {
-    DOT = 'dot',
-    CROSS = 'cross',
 }

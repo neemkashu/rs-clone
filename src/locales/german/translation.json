@@ -21,5 +21,7 @@
     "lastCrossedOutDigitFillsLineWithCrosses": "Die letzte durchgestrichene Ziffer füllt die Zeile mit Kreuzen",
     "markingEmptyCell": "Markierung einer leeren Zelle",
     "showGuessTime": "Schätzzeit anzeigen",
+    "dot": "punkt",
+    "cross": "kreuzen",
     "setAllToDefault": "Alle auf Standard setzen"
 }

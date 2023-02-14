@@ -21,5 +21,7 @@
     "lastCrossedOutDigitFillsLineWithCrosses": "The last crossed out digit fills the line with crosses",
     "markingEmptyCell": "Marking an empty cell",
     "showGuessTime": "Show guess time",
+    "dot": "dot",
+    "cross": "cross",
     "setAllToDefault": "Set all to default"
 }

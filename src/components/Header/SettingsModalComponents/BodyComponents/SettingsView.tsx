@@ -1,5 +1,5 @@
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { EmptyCellStates } from '../../../../utils/enums';
 import { useAppSelector, useAppDispatch } from '../../../hooks';
 import { changedViewSettings } from '../settingsSlice';
 
@@ -8,24 +8,47 @@ export function SettingsViewContent() {
     const settingsView = useAppSelector((state) => state.settings.view);
     const dispatch = useAppDispatch();
 
+    useEffect(() => {
+        if (
+            settingsView.markingAnEmptyCell === 'точка' ||
+            settingsView.markingAnEmptyCell === 'dot' ||
+            settingsView.markingAnEmptyCell === 'punkt'
+        ) {
+            dispatch(
+                changedViewSettings({
+                    markingAnEmptyCell: t('dot'),
+                    showGuessTime: settingsView.showGuessTime,
+                })
+            );
+            console.log('ass');
+        } else {
+            console.log('asd');
+            dispatch(
+                changedViewSettings({
+                    markingAnEmptyCell: t('cross'),
+                    showGuessTime: settingsView.showGuessTime,
+                })
+            );
+        }
+    }, [t]);
+
     function returnEmptyCellStateInBoolean() {
-        if (settingsView.markingAnEmptyCell === 'dot') return false;
+        if (settingsView.markingAnEmptyCell === t('dot')) return false;
         return true;
     }
 
     function handleEmptyCellSettingChange() {
-        if (settingsView.markingAnEmptyCell === 'dot') {
+        if (settingsView.markingAnEmptyCell === t('dot')) {
             dispatch(
                 changedViewSettings({
-                    markingAnEmptyCell: EmptyCellStates.CROSS,
+                    markingAnEmptyCell: t('cross'),
                     showGuessTime: settingsView.showGuessTime,
                 })
             );
-            console.log('dot');
         } else {
             dispatch(
                 changedViewSettings({
-                    markingAnEmptyCell: EmptyCellStates.DOT,
+                    markingAnEmptyCell: t('dot'),
                     showGuessTime: settingsView.showGuessTime,
                 })
             );

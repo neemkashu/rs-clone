@@ -1,5 +1,5 @@
 import React from 'react';
-import { EmptyCellStates, SettingsTimingsEnum } from './enums';
+import { SettingsTimingsEnum } from './enums';
 
 export type fieldPlace = 'header' | 'aside' | 'area' | 'miniature';
 
@@ -62,7 +62,7 @@ export type NonogramSettingsGameState = {
     lastCrossedOutDigitFillsLineWithCrosses: boolean;
 };
 export type NonogramSettingsViewState = {
-    markingAnEmptyCell: EmptyCellStates;
+    markingAnEmptyCell: string;
     showGuessTime: boolean;
 };
 export type FormCheckItemPropsType = {

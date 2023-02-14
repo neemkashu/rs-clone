@@ -8,7 +8,7 @@ import { matchSmWindowSize, handleAsideAfterWindowResize } from '../../utils/hel
 import SettingsModal from './SettingsModalComponents/SettingsModal';
 
 export function Header(): JSX.Element {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const [isBurgerBtnVisible, setIsBurgerBtnVisible] = useState(false);
 
     useEffect(() => {
