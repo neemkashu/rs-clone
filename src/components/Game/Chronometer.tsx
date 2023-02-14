@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getTimeFromStorage, setTimeToStorage } from '../../utils/helpers';
-import './gameStyles/Chronometer.scss';
 import { NonogramRaw } from '../../utils/types';
 import { useAppSelector } from '../hooks';
 import { GameStatus, UserGameData } from './gameUtils/types';
 import { changeGameStatus, updateUserTime } from './gameSlice';
 import { Clock } from '../Clock';
-import { store } from '../store';
 
 const REFRESH_PERIOD = 1000;
 

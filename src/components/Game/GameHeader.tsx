@@ -1,8 +1,5 @@
-import { useContext } from 'react';
 import { userNonogramData } from '../../utils/mochas';
 import { NonogramRaw } from '../../utils/types';
-import { GameStatusContext } from './contexts/context';
-import './gameStyles/GameHeader.scss';
 import Progress from './Progress';
 
 // temp solution before getting file with all captions
