@@ -4,9 +4,9 @@ export enum LanguagesEnum {
     DE = 'fropdownDeLang',
 }
 export enum LanguagesShortNamesEnum {
-    EN_VALUE = 'en',
-    DE_VALUE = 'de',
-    RU_VALUE = 'ru',
+    EN_VALUE = 'en-EN',
+    DE_VALUE = 'de-DE',
+    RU_VALUE = 'ru-RU',
 }
 
 export enum SettingsCategoryEnum {

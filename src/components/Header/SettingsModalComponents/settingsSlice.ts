@@ -6,6 +6,7 @@ import {
     NonogramSettingsGameState,
     NonogramSettingsViewState,
 } from '../../../utils/types';
+import { getEmptyCellSettingInCurrenLanguage } from '../../../utils/helpers';
 
 function getInitialSettingsState(): {
     main: NonogramSettingsMainState;
@@ -24,9 +25,7 @@ function getInitialSettingsState(): {
             lastCrossedOutDigitFillsLineWithCrosses: true,
         },
         view: {
-            // ! сделать строку ниже на разных языках
-            // ! в зависимости от текущего языка пользователя
-            markingAnEmptyCell: 'dot',
+            markingAnEmptyCell: getEmptyCellSettingInCurrenLanguage(),
             showGuessTime: true,
         },
     };

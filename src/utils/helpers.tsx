@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { NonogramObject, NonogramTime } from './types';
+import { NonogramTime } from './types';
 import { StorageKeys } from './storage';
 
 export const a = 10;
@@ -30,9 +30,35 @@ export function handleAsideAfterWindowResize(
     }
 }
 
-export function handleAsideCloseBtnClick() {
+export function handleAsideCloseBtnClick(): void {
     const aside = document.body.querySelector('#aside') as HTMLDivElement;
     aside.style.left = '-170px';
+}
+
+export function getInitialLanguage(): string {
+    const langInLocalStorage = localStorage.getItem('lang');
+    if (langInLocalStorage) {
+        return langInLocalStorage;
+    }
+    if (
+        navigator.language === 'en-EN' ||
+        navigator.language === 'de-DE' ||
+        navigator.language === 'ru-RU'
+    ) {
+        return navigator.language;
+    }
+    return 'en-EN';
+}
+
+export function getEmptyCellSettingInCurrenLanguage() {
+    const initialLanguage = getInitialLanguage();
+    if (initialLanguage === 'ru-RU') {
+        return 'точка';
+    }
+    if (initialLanguage === 'de-DE') {
+        return 'punkt';
+    }
+    return 'dot';
 }
 
 export function getUserCurrentTimes(

@@ -28,6 +28,7 @@ export function SettingsViewContent() {
                 })
             );
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [t]);
 
     function returnEmptyCellStateInBoolean() {

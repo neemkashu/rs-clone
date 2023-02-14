@@ -5,19 +5,21 @@ import EnglishFlag from '../../../svg/EnglishFlag';
 import GermanFlag from '../../../svg/GermanFlag';
 import RussianFlag from '../../../svg/RussianFlag';
 import { LanguagesEnum, LanguagesShortNamesEnum } from '../../../utils/enums';
+import { getInitialLanguage } from '../../../utils/helpers';
 
 export function LanguageDropDownButton(): JSX.Element {
-    const { t, i18n } = useTranslation();
-    const [selectedLang, setSelectedLang] = useState<LanguagesEnum>(LanguagesEnum.EN);
+    const { i18n } = useTranslation();
+    const [selectedLang, setSelectedLang] = useState<string>(getInitialLanguage());
 
-    function handleLanguageSwitch(id: LanguagesEnum, value: LanguagesShortNamesEnum) {
-        setSelectedLang(id);
+    function handleLanguageSwitch(value: LanguagesShortNamesEnum) {
+        setSelectedLang(value);
         i18n.changeLanguage(value);
+        localStorage.setItem('lang', value);
     }
 
-    const isEnLangSelected = selectedLang === LanguagesEnum.EN;
-    const isDeLangSelected = selectedLang === LanguagesEnum.DE;
-    const isRuLangSelected = selectedLang === LanguagesEnum.RU;
+    const isEnLangSelected = selectedLang === LanguagesShortNamesEnum.EN_VALUE;
+    const isDeLangSelected = selectedLang === LanguagesShortNamesEnum.DE_VALUE;
+    const isRuLangSelected = selectedLang === LanguagesShortNamesEnum.RU_VALUE;
 
     return (
         <div className="dropdown d-flex align-items-center">
@@ -40,10 +42,7 @@ export function LanguageDropDownButton(): JSX.Element {
             >
                 <SpecificLanguageButton
                     handleLang={() =>
-                        handleLanguageSwitch(
-                            LanguagesEnum.EN,
-                            LanguagesShortNamesEnum.EN_VALUE
-                        )
+                        handleLanguageSwitch(LanguagesShortNamesEnum.EN_VALUE)
                     }
                     id={LanguagesEnum.EN}
                     svg={<EnglishFlag />}
@@ -51,10 +50,7 @@ export function LanguageDropDownButton(): JSX.Element {
                 />
                 <SpecificLanguageButton
                     handleLang={() =>
-                        handleLanguageSwitch(
-                            LanguagesEnum.RU,
-                            LanguagesShortNamesEnum.RU_VALUE
-                        )
+                        handleLanguageSwitch(LanguagesShortNamesEnum.RU_VALUE)
                     }
                     id={LanguagesEnum.RU}
                     svg={<RussianFlag />}
@@ -62,10 +58,7 @@ export function LanguageDropDownButton(): JSX.Element {
                 />
                 <SpecificLanguageButton
                     handleLang={() =>
-                        handleLanguageSwitch(
-                            LanguagesEnum.DE,
-                            LanguagesShortNamesEnum.DE_VALUE
-                        )
+                        handleLanguageSwitch(LanguagesShortNamesEnum.DE_VALUE)
                     }
                     id={LanguagesEnum.DE}
                     svg={<GermanFlag />}
