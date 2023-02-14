@@ -9,7 +9,7 @@ import { clearTimers, loadNonogramByID, saveUserGameByID } from './gameSlice';
 import { WinChecker } from './gameLogic/WinChecker';
 import { store } from '../store';
 
-const ID = 'nsNWHaYMXSERIHX1juXN'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
+const ID = 'E7UMxLSZv31q5m4RwLG4'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
 // nsNWHaYMXSERIHX1juXN
 function Game(): JSX.Element {
     const userGame = useAppSelector((state) => state.game.userGame);

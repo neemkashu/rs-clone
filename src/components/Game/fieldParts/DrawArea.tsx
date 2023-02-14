@@ -13,7 +13,7 @@ function DrawArea({ nonogramRaw }: { nonogramRaw: NonogramRaw | null }): JSX.Ele
     );
     const rowLinesAmount = rowsUnified?.length ?? 0;
     return (
-        <table className="table m-0 table-bordered border-success">
+        <table className="table field-table m-0 table-bordered border-success">
             <tbody>
                 {rowsUnified ? (
                     <TableAllRows
