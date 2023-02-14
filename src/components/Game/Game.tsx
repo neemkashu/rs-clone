@@ -1,15 +1,13 @@
 import './gameStyles/Game.scss';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Controls from './Controls';
 import Field from './Field';
 import GameHeader from './GameHeader';
 import Chronometer from './Chronometer';
-import { NonogramRaw } from '../../utils/types';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { clearTimers, loadNonogramByID, saveUserGameByID } from './gameSlice';
 import { WinChecker } from './gameLogic/WinChecker';
 import { store } from '../store';
-import { sendGameToServer } from './api/saveGame';
 
 const ID = 'nsNWHaYMXSERIHX1juXN'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
 // nsNWHaYMXSERIHX1juXN
