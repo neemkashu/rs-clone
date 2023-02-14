@@ -6,7 +6,7 @@ import GameHeader from './GameHeader';
 import Chronometer from './Chronometer';
 import { NonogramRaw } from '../../utils/types';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { loadNonogramByID, saveUserGameByID } from './gameSlice';
+import { clearTimers, loadNonogramByID, saveUserGameByID } from './gameSlice';
 import { WinChecker } from './gameLogic/WinChecker';
 import { store } from '../store';
 import { sendGameToServer } from './api/saveGame';
@@ -25,6 +25,7 @@ function Game(): JSX.Element {
             dispatch(
                 saveUserGameByID({ id: ID, userGame: store.getState().game.userGame })
             );
+            dispatch(clearTimers());
         };
     }, [dispatch]);
 

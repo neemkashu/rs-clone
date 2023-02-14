@@ -1,12 +1,10 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 // eslint-disable-next-line import/no-cycle
-import { AppDispatch } from '../store';
 import { getGameState } from './api/getGameState';
 import { getNonogramByID } from './api/getNonogramByID';
 import { sendGameToServer } from './api/saveGame';
 import { makeInitialSaveGame, unifyTwoDimensionalArray } from './gameUtils/helpers';
-import { userNonogramData } from './gameUtils/mochas';
 import {
     CellAreaState,
     ClickType,
@@ -17,7 +15,6 @@ import {
     ResponseStatus,
     UserFieldData,
     UserGameData,
-    UserGameDataRaw,
 } from './gameUtils/types';
 
 export const AREA_STATE_STYLES = ['crossed-square', 'empty-square', 'filled-square'];
@@ -33,6 +30,7 @@ export interface GameState {
     currentNonogram: NonogramRaw | null;
     errorMessage: string;
     incorrectCells: UserFieldData['currentUserSolution'] | null;
+    timers: ReturnType<typeof setTimeout>[];
 }
 
 const initialState: GameState = {
@@ -41,6 +39,7 @@ const initialState: GameState = {
     currentNonogram: null,
     errorMessage: '',
     incorrectCells: null,
+    timers: [],
 };
 
 export const loadNonogramByID = createAsyncThunk(
@@ -168,6 +167,13 @@ export const gameSlice = createSlice({
                 state.incorrectCells = nonogram ?? null;
             }
         },
+        addTimerId(state, action: PayloadAction<ReturnType<typeof setTimeout>>) {
+            state.timers.push(action.payload);
+        },
+        clearTimers(state, action: PayloadAction) {
+            state.timers.forEach((timer) => clearTimeout(timer));
+            state.timers = [];
+        },
     },
     extraReducers(builder) {
         builder.addCase(loadNonogramByID.pending, (state, action) => {
@@ -214,4 +220,6 @@ export const {
     updateUserField,
     clearMistakes,
     updateMistakeData,
+    addTimerId,
+    clearTimers,
 } = gameSlice.actions;

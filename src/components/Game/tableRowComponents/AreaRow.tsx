@@ -11,6 +11,8 @@ import {
     FieldPlace,
 } from '../gameUtils/types';
 
+const USER_TIMEOUT = 2000;
+
 export interface AreaRowProps {
     linesUnified: (number | null)[][];
     indexRow: number;
@@ -53,7 +55,6 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                     mistakes && mistakes[indexRow][indexNumberRow] === null;
 
                 const handleClick = () => {
-                    // console.warn('handleClick AREA cell', userCell);
                     dispatch(
                         updateAreaCell({
                             clickType: ClickType.MOUSE_CLICK,
@@ -61,11 +62,9 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                             indexNumberRow,
                         })
                     );
-                    // dispatch(updateMistakeData({ indexRow, indexNumberRow }));
-                    mistakesHandler(indexRow, indexNumberRow, dispatch);
+                    mistakesHandler(indexRow, indexNumberRow, dispatch, USER_TIMEOUT);
                 };
                 const handleContext = () => {
-                    // console.warn('handlerContext AREA cell', userCell);
                     dispatch(
                         updateAreaCell({
                             clickType: ClickType.MOUSE_CONTEXT,
@@ -73,6 +72,7 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                             indexNumberRow,
                         })
                     );
+                    mistakesHandler(indexRow, indexNumberRow, dispatch, USER_TIMEOUT);
                 };
 
                 return (

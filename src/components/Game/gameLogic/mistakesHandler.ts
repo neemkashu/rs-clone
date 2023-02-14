@@ -1,6 +1,6 @@
 import { useAppDispatch } from '../../hooks';
 import { store } from '../../store';
-import { updateMistakeData } from '../gameSlice';
+import { addTimerId, updateMistakeData } from '../gameSlice';
 import { CellAreaState } from '../gameUtils/types';
 
 const checkIsCellCorrect = (userCell?: number | null, goalCell?: number): boolean => {
@@ -17,23 +17,21 @@ const checkIsCellCorrect = (userCell?: number | null, goalCell?: number): boolea
     }
 };
 
-const USER_TIMEOUT = 2000;
-
 export function mistakesHandler(
     indexRow: number,
     indexNumberRow: number,
-    dispatch: ReturnType<typeof useAppDispatch>
+    dispatch: ReturnType<typeof useAppDispatch>,
+    delay: number
 ): void {
-    // const dispatch = useAppDispatch();
     const goalCell =
         store.getState().game.currentNonogram?.nonogram.goal[indexRow][indexNumberRow];
     const gotCell =
         store.getState().game.userGame?.currentUserSolution[indexRow][indexNumberRow];
-    console.warn('watch cell!', goalCell, gotCell);
-    console.warn('watch index!', indexRow, indexNumberRow);
+    // console.warn('watch cell!', goalCell, gotCell);
+    // console.warn('watch index!', indexRow, indexNumberRow);
 
     if (!checkIsCellCorrect(gotCell, goalCell)) {
-        setTimeout(() => {
+        const mistakeTimer = setTimeout(() => {
             const actualCell =
                 store.getState().game.userGame?.currentUserSolution[indexRow][
                     indexNumberRow
@@ -47,7 +45,8 @@ export function mistakesHandler(
                 'setTimeout: actual cell',
                 checkIsCellCorrect(actualCell, goalCell)
             );
-        }, USER_TIMEOUT);
+        }, delay);
+        dispatch(addTimerId(mistakeTimer));
     } else {
         dispatch(updateMistakeData({ indexRow, indexNumberRow, isCorrect: true }));
     }
