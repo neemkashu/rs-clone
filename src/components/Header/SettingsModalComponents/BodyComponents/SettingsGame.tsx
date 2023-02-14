@@ -1,72 +1,89 @@
 import { useTranslation } from 'react-i18next';
+import { useAppSelector, useAppDispatch } from '../../../hooks';
+import { changedGameSettings } from '../settingsSlice';
+import { SettingsTimingsEnum } from '../../../../utils/enums';
 import { FormCheckItem } from './FormCheckItem';
 
 export function SettingsGameContent() {
     const { t } = useTranslation();
+    const settingsGame = useAppSelector((state) => state.settings.game);
+    const dispatch = useAppDispatch();
+    const timingsStringValuesArray = [
+        SettingsTimingsEnum.NEVER,
+        SettingsTimingsEnum.ONE_SEC,
+        SettingsTimingsEnum.TWO_SEC,
+        SettingsTimingsEnum.TEN_SEC,
+        SettingsTimingsEnum.THIRTY_SEC,
+        SettingsTimingsEnum.FIVE_MIN,
+    ];
+
+    function handleCrossedOutDigitFillsLineWithCrossesInput() {
+        dispatch(
+            changedGameSettings({
+                highlightCellsWithError: settingsGame.highlightCellsWithError,
+                automaticallyCrossOutNumbers: settingsGame.automaticallyCrossOutNumbers,
+                lastCrossedOutDigitFillsLineWithCrosses:
+                    !settingsGame.lastCrossedOutDigitFillsLineWithCrosses,
+            })
+        );
+    }
+
+    function handleRadioButtonChange(category: string, item: SettingsTimingsEnum) {
+        if (category === 'highlightRadio') {
+            dispatch(
+                changedGameSettings({
+                    highlightCellsWithError: item,
+                    automaticallyCrossOutNumbers:
+                        settingsGame.automaticallyCrossOutNumbers,
+                    lastCrossedOutDigitFillsLineWithCrosses: true,
+                })
+            );
+        } else {
+            dispatch(
+                changedGameSettings({
+                    highlightCellsWithError: settingsGame.highlightCellsWithError,
+                    automaticallyCrossOutNumbers: item,
+                    lastCrossedOutDigitFillsLineWithCrosses: true,
+                })
+            );
+        }
+    }
 
     return (
         <ul className="modal-body mb-0 py-1">
             <li className="ms-2">
                 {t('highlightCellsWithError')}
-                <FormCheckItem
-                    value={t('timingNever')}
-                    name="highlightRadio"
-                    // ! after merge move next line to enum in all components
-                    id="higlightOneSec"
-                />
-                <FormCheckItem
-                    value={t('timingOneSec')}
-                    name="highlightRadio"
-                    id="higlightTwoSec"
-                />
-                <FormCheckItem
-                    value={t('timingTenSec')}
-                    name="highlightRadio"
-                    id="higlightTenSec"
-                />
-                <FormCheckItem
-                    value={t('timingThirtySec')}
-                    name="highlightRadio"
-                    id="higlightThirtySec"
-                />
-                <FormCheckItem
-                    value={t('timingFiveMin')}
-                    name="highlightRadio"
-                    id="higlightFiveMin"
-                />
+                {timingsStringValuesArray.map((item) => {
+                    return (
+                        <FormCheckItem
+                            key={`${item}-highlightKey`}
+                            value={t(`timing${item}`)}
+                            name="highlightRadio"
+                            id={`higlight${item}`}
+                            isChecked={item === settingsGame.highlightCellsWithError}
+                            handleRadioButtonClick={() =>
+                                handleRadioButtonChange('highlightRadio', item)
+                            }
+                        />
+                    );
+                })}
             </li>
             <li className="ms-2">
                 {t('automaticallyCrossOutNumbers')}
-                <FormCheckItem
-                    value={t('timingNever')}
-                    name="crossOutRadio"
-                    id="crossNever"
-                />
-                <FormCheckItem
-                    value={t('timingOneSec')}
-                    name="crossOutRadio"
-                    id="crossOneSec"
-                />
-                <FormCheckItem
-                    value={t('timingTwoSec')}
-                    name="crossOutRadio"
-                    id="crossTwoSec"
-                />
-                <FormCheckItem
-                    value={t('timingTenSec')}
-                    name="crossOutRadio"
-                    id="crossTenSec"
-                />
-                <FormCheckItem
-                    value={t('timingThirtySec')}
-                    name="crossOutRadio"
-                    id="crossThirtySec"
-                />
-                <FormCheckItem
-                    value={t('timingFiveMin')}
-                    name="crossOutRadio"
-                    id="crossFiveMin"
-                />
+                {timingsStringValuesArray.map((item) => {
+                    return (
+                        <FormCheckItem
+                            key={`${item}-crossOutKey`}
+                            value={t(`timing${item}`)}
+                            name="crossOutRadio"
+                            id={`cross${item}`}
+                            isChecked={item === settingsGame.automaticallyCrossOutNumbers}
+                            handleRadioButtonClick={() =>
+                                handleRadioButtonChange('crossOutRadio', item)
+                            }
+                        />
+                    );
+                })}
             </li>
             <li className="ms-2">
                 <div className="form-check form-switch">
@@ -77,6 +94,8 @@ export function SettingsGameContent() {
                             className="form-check-input"
                             type="checkbox"
                             id="flexSwitchCheckChecked"
+                            checked={settingsGame.lastCrossedOutDigitFillsLineWithCrosses}
+                            onChange={handleCrossedOutDigitFillsLineWithCrossesInput}
                         />
                     </label>
                 </div>

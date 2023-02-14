@@ -45,6 +45,14 @@ export type SpecificLanguageButtonPropsType = {
     handleLang: (e: React.MouseEvent) => void;
 };
 
+export type FormCheckItemPropsType = {
+    value: string;
+    name: string;
+    id: string;
+    isChecked?: boolean;
+    handleRadioButtonClick: (e: React.ChangeEvent) => void;
+};
+
 export type SettingsCategoryItemPropsType = {
     name: string;
     id: string;
@@ -56,20 +64,16 @@ export type NonogramSettingsMainState = {
     showNonogramTitlesBeforeSolving: boolean;
     showNonogramThumbnailsBeforeSolving: boolean;
 };
+
 export type NonogramSettingsGameState = {
     highlightCellsWithError: SettingsTimingsEnum;
     automaticallyCrossOutNumbers: SettingsTimingsEnum;
     lastCrossedOutDigitFillsLineWithCrosses: boolean;
 };
+
 export type NonogramSettingsViewState = {
     markingAnEmptyCell: string;
     showGuessTime: boolean;
-};
-export type FormCheckItemPropsType = {
-    value: string;
-    name: string;
-    id: string;
-    isChecked?: boolean;
 };
 
 export enum FieldPlace {

@@ -19,10 +19,10 @@ export enum SettingsCategoryEnum {
 }
 
 export enum SettingsTimingsEnum {
-    NEVER = 'never',
-    ONE_SEC = 1,
-    TWO_SEC = 2,
-    TEN_SEC = 10,
-    THIRTY_SEC = 30,
-    FIVE_MIN = 5,
+    NEVER = 'Never',
+    ONE_SEC = 'OneSec',
+    TWO_SEC = 'TwoSec',
+    TEN_SEC = 'TenSec',
+    THIRTY_SEC = 'ThirtySec',
+    FIVE_MIN = 'FiveMin',
 }

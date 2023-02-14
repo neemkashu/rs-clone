@@ -1,6 +1,12 @@
 import { FormCheckItemPropsType } from '../../../../utils/types';
 
-export function FormCheckItem({ value, name, id, isChecked }: FormCheckItemPropsType) {
+export function FormCheckItem({
+    value,
+    name,
+    id,
+    isChecked,
+    handleRadioButtonClick,
+}: FormCheckItemPropsType) {
     return (
         <div className="form-check">
             <label className="form-check-label" htmlFor={id}>
@@ -11,6 +17,8 @@ export function FormCheckItem({ value, name, id, isChecked }: FormCheckItemProps
                     type="radio"
                     name={name}
                     id={id}
+                    checked={isChecked}
+                    onChange={handleRadioButtonClick}
                 />
             </label>
         </div>
