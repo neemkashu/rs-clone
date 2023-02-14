@@ -1,5 +1,3 @@
-import './gameStyles/Progress.scss';
-
 const CAPTIONS = {
     progress: 'Progress',
 };

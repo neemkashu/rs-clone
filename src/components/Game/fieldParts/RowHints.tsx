@@ -1,6 +1,5 @@
 import { unifyTwoDimensionalArray } from '../../../utils/helpers';
 import { FieldPlace, fieldPlace, NonogramRaw } from '../../../utils/types';
-import '../gameStyles/RowHints.scss';
 import TableAllRows from './TableAllRows';
 
 const location: fieldPlace = FieldPlace.ASIDE;
