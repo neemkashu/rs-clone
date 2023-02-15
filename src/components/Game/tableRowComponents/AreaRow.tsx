@@ -82,6 +82,7 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                         })
                     );
                     mistakesHandler(indexRow, indexNumberRow, dispatch, USER_TIMEOUT);
+                    filledLineHandler(indexRow, indexNumberRow, dispatch, USER_TIMEOUT);
                 };
 
                 const handleDrag: DragEventHandler = (event) => {
