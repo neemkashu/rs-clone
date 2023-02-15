@@ -26,13 +26,13 @@ function Controls({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element {
     return (
         <div className="btn-group btn-group-sm game-controls">
             {Object.values(CAPTIONS).map((caption, index) => {
-                if (index === 2) {
+                if (caption === CAPTIONS.clear) {
                     return <ClearButton key={caption} nonogramRaw={nonogramRaw} />;
                 }
-                if (index === 3) {
+                if (caption === CAPTIONS.restart) {
                     return <RestartButton key={caption} nonogramRaw={nonogramRaw} />;
                 }
-                if (index === 4) {
+                if (caption === CAPTIONS.check) {
                     return <CheckButton key={caption} />;
                 }
                 return (

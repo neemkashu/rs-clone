@@ -4,17 +4,10 @@ import { addTimerId, updateMistakeData } from '../gameSlice';
 import { CellAreaState } from '../gameUtils/types';
 
 const checkIsCellCorrect = (userCell?: number | null, goalCell?: number): boolean => {
-    switch (userCell) {
-        case CellAreaState.CROSSED: {
-            return userCell === goalCell;
-        }
-        case CellAreaState.FILLED: {
-            return userCell === goalCell;
-        }
-        default: {
-            return true;
-        }
+    if (userCell === CellAreaState.CROSSED || userCell === CellAreaState.FILLED) {
+        return userCell === goalCell;
     }
+    return true;
 };
 
 export function mistakesHandler(
