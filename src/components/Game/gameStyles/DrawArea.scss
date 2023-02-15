@@ -1,3 +1,7 @@
+:root {
+    --filled-square: rgba(0, 0, 0, 0.691);
+    --wrong-square: rgba(255, 33, 33, 0.691);
+}
 .square {
     width: var(--nonogram-square-width);
     height: var(--nonogram-square-width);
@@ -6,7 +10,7 @@
     }
 }
 .filled-square {
-    background-color: var(--bs-gray-700);
+    background-color: var(--filled-square);
 }
 .crossed-square {
     background-image: url("../../../image/cross.svg");
@@ -23,7 +27,7 @@
     padding: var(--cell-padding) !important;
 }
 .incorrect-fill {
-    background-color: var(--bs-red);
+    background-color: var(--wrong-square);
     opacity: 1;
 }
 .border-right-plus {

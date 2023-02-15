@@ -6,6 +6,7 @@ import {
     setTimeToStorage,
     unifyTwoDimensionalArray,
     makeInitialSaveGame,
+    checkIsLineCompleted,
 } from './helpers';
 import { nonogram } from './mochas';
 
@@ -231,5 +232,61 @@ describe('Make initial saved game for new game', () => {
             .every((cell) => cell.isCrossedOut === false);
 
         expect(isEveryHintFalse).toBeTruthy();
+    });
+});
+describe('Checks that nonogram line is complted and without errors', () => {
+    test('show true if user line equals goal line', () => {
+        const goalLine = [0, 0, 1, 1, 0, 0, 0, 0, 1, 1];
+        const userLine = [0, 0, 1, 1, 0, 0, 0, 0, 1, 1];
+
+        const result = checkIsLineCompleted(userLine, goalLine);
+        const desired = true;
+
+        expect(result).toBe(desired);
+    });
+    test('show true if user line equals goal line without crosses', () => {
+        const goalLine = [0, 0, 1, 1, 0, 0, 0, 0, 1, 1];
+        const userLine = [null, null, 1, 1, null, null, null, null, 1, 1];
+
+        const result = checkIsLineCompleted(userLine, goalLine);
+        const desired = true;
+
+        expect(result).toBe(desired);
+    });
+    test('show true if user line equals goal line with some crosses', () => {
+        const goalLine = [0, 0, 1, 1, 0, 0, 0, 0, 1, 1];
+        const userLine = [null, null, 1, 1, null, 0, null, null, 1, 1];
+
+        const result = checkIsLineCompleted(userLine, goalLine);
+        const desired = true;
+
+        expect(result).toBe(desired);
+    });
+    test('show false if user line does not have all filled cells', () => {
+        const goalLine = [0, 0, 1, 1, 0, 0, 0, 0, 1, 1];
+        const userLine = [null, null, 0, 1, null, 0, null, null, 1, 1];
+
+        const result = checkIsLineCompleted(userLine, goalLine);
+        const desired = false;
+
+        expect(result).toBe(desired);
+    });
+    test('show false if user line does not have all filled cells', () => {
+        const goalLine = [0, 0, 1, 1, 0, 0, 0, 0, 1, 1];
+        const userLine = [null, null, null, 1, null, 0, null, null, 1, 1];
+
+        const result = checkIsLineCompleted(userLine, goalLine);
+        const desired = false;
+
+        expect(result).toBe(desired);
+    });
+    test('show false if extra filled cells', () => {
+        const goalLine = [0, 0, 1, 1, 0, 0, 0, 0, 1, 1];
+        const userLine = [null, 1, 1, 1, null, 0, null, null, 1, 1];
+
+        const result = checkIsLineCompleted(userLine, goalLine);
+        const desired = false;
+
+        expect(result).toBe(desired);
     });
 });

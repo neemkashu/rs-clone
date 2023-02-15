@@ -2,6 +2,7 @@ import { MouseEventHandler, DragEventHandler } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { store } from '../../store';
 import AreaCell from '../fieldParts/AreaCell';
+import { filledLineHandler } from '../gameLogic/filledLineHandler';
 import { mistakesHandler } from '../gameLogic/mistakesHandler';
 import { updateAreaCell, updateMistakeData } from '../gameSlice';
 import {
@@ -36,14 +37,7 @@ const getAreaCellStyle = (userCell?: number | null): string => {
         }
     }
 };
-const handleDrop: MouseEventHandler = (event) => {
-    // event.preventDefault();
-    const touchedCell = event.target;
-    if (touchedCell instanceof HTMLElement) {
-        // touchedCell.style.background = '#ffff00';
-    }
-    // console.log('on drag drop!', indexRow, indexNumberRow);
-};
+
 const PERIOD_OF_WIDE_TABLE_LINE = 5;
 
 export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
@@ -74,6 +68,7 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                         })
                     );
                     mistakesHandler(indexRow, indexNumberRow, dispatch, USER_TIMEOUT);
+                    filledLineHandler(indexRow, indexNumberRow, dispatch, USER_TIMEOUT);
                 };
                 const handleClick = () => {
                     handlerFillSquare();
@@ -97,10 +92,18 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                             dragCell.style.opacity = '1';
                         });
                     }
-                    console.log('on drag start!', indexRow, indexNumberRow);
+                    // console.log('on drag start!', indexRow, indexNumberRow);
                 };
                 const handleDragEnter: MouseEventHandler = (event) => {
                     handlerFillSquare();
+                };
+                const handleDrop: MouseEventHandler = (event) => {
+                    // event.preventDefault();
+                    const touchedCell = event.target;
+                    if (touchedCell instanceof HTMLElement) {
+                        // touchedCell.style.background = '#ffff00';
+                    }
+                    // console.log('on drag drop!', indexRow, indexNumberRow);
                 };
 
                 return (

@@ -1,7 +1,8 @@
 :root {
     --nonogram-square-width: 1rem;
-    --nonogram-number-width: calc(4px + var(--nonogram-square-width));
+    --nonogram-number-width: calc(2px + var(--nonogram-square-width));
     --cell-padding: 0px;
+    --table-hover: rgba(63, 227, 96, 0.5);
 }
 .table {
     width: min-content;
@@ -22,20 +23,20 @@
     position: relative;
 }
 .field-table > tbody > tr > td:hover::after {
-    background-color: var(--bs-table-hover-bg);
+    background-color: var(--table-hover);
     content: '';
     height: 100vh;
     left: 0;
     position: absolute;
     top: -50vh;
-    width: var(--nonogram-number-width);
+    width: var(--nonogram-square-width);
     z-index: -1;
 }
 
 .field-table > tbody > tr > td:hover::before {
-    background-color: var(--bs-table-hover-bg);
+    background-color: var(--table-hover);
     content: '';
-    height: var(--nonogram-number-width);
+    height: var(--nonogram-square-width);
     left: -50vw;
     position: absolute;
     top: 0;
