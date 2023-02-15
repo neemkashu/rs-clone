@@ -1,3 +1,4 @@
+import { MouseEventHandler, DragEventHandler } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { store } from '../../store';
 import AreaCell from '../fieldParts/AreaCell';
@@ -35,6 +36,14 @@ const getAreaCellStyle = (userCell?: number | null): string => {
         }
     }
 };
+const handleDrop: MouseEventHandler = (event) => {
+    // event.preventDefault();
+    const touchedCell = event.target;
+    if (touchedCell instanceof HTMLElement) {
+        // touchedCell.style.background = '#ffff00';
+    }
+    // console.log('on drag drop!', indexRow, indexNumberRow);
+};
 
 export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
     const userSolution = useAppSelector(
@@ -54,7 +63,7 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                 const isNotCorrect =
                     mistakes && mistakes[indexRow][indexNumberRow] === null;
 
-                const handleClick = () => {
+                const handlerFillSquare = () => {
                     dispatch(
                         updateAreaCell({
                             clickType: ClickType.MOUSE_CLICK,
@@ -63,6 +72,9 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                         })
                     );
                     mistakesHandler(indexRow, indexNumberRow, dispatch, USER_TIMEOUT);
+                };
+                const handleClick = () => {
+                    handlerFillSquare();
                 };
                 const handleContext = () => {
                     dispatch(
@@ -75,11 +87,28 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                     mistakesHandler(indexRow, indexNumberRow, dispatch, USER_TIMEOUT);
                 };
 
+                const handleDrag: DragEventHandler = (event) => {
+                    const dragCell = event.target;
+                    if (dragCell instanceof HTMLElement) {
+                        dragCell.style.opacity = '0';
+                        requestAnimationFrame(() => {
+                            dragCell.style.opacity = '1';
+                        });
+                    }
+                    console.log('on drag start!', indexRow, indexNumberRow);
+                };
+                const handleDragEnter: MouseEventHandler = (event) => {
+                    handlerFillSquare();
+                };
+
                 return (
                     <AreaCell
                         key={squareKey}
                         handleClick={handleClick}
                         handleContext={handleContext}
+                        handleDrag={handleDrag}
+                        handleDragEnter={handleDragEnter}
+                        // handleDragDrop={handleDragDrop}
                         stateStyle={[style, isNotCorrect ? 'incorrect-fill' : '']}
                         styles={[
                             isBottomBorder ? 'border-bottom-plus' : '',

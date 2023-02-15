@@ -1,4 +1,4 @@
-import { MouseEventHandler } from 'react';
+import { MouseEventHandler, DragEventHandler } from 'react';
 import { changeGameStatus } from '../gameSlice';
 import { GameStatus } from '../gameUtils/types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -8,8 +8,12 @@ export interface CellProps {
     cellContent: string;
     stateStyle?: string[];
     styles?: string[];
+    isDraggable?: boolean;
     handleClick?: () => void;
     handleContext?: () => void;
+    handleDrag?: DragEventHandler;
+    handleDragEnter?: MouseEventHandler;
+    handleDragDrop?: MouseEventHandler;
 }
 export default function Cell({
     cellContent,
@@ -17,6 +21,10 @@ export default function Cell({
     stateStyle,
     handleClick,
     handleContext,
+    handleDrag,
+    handleDragEnter,
+    handleDragDrop,
+    isDraggable,
 }: CellProps): JSX.Element {
     const dispatch = useAppDispatch();
     const gameStatus = useAppSelector((state) => state.game.userGame?.state);
@@ -38,14 +46,22 @@ export default function Cell({
             dispatch(changeGameStatus(GameStatus.STARTED));
         }
     };
+
     return (
         <td
             role="presentation"
             onClick={handlersClickMouse}
             onContextMenu={handlersContextMouse}
+            onDragEnter={(event) => event.preventDefault()}
             className={`cell-square ${styles?.join(' ')}`}
         >
-            <div className={`square lh-1 text-center ${stateStyle?.join(' ')}`}>
+            <div
+                draggable={isDraggable}
+                onDragStart={handleDrag}
+                onDragEnter={handleDragEnter}
+                onDrop={handleDragDrop}
+                className={`square lh-1 text-center ${stateStyle?.join(' ')}`}
+            >
                 {cellContent ?? ''}
             </div>
         </td>

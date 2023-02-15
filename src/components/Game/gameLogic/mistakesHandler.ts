@@ -41,10 +41,6 @@ export function mistakesHandler(
                     updateMistakeData({ indexRow, indexNumberRow, isCorrect: false })
                 );
             }
-            console.warn(
-                'setTimeout: actual cell',
-                checkIsCellCorrect(actualCell, goalCell)
-            );
         }, delay);
         dispatch(addTimerId(mistakeTimer));
     } else {

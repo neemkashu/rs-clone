@@ -27,6 +27,16 @@ function Game(): JSX.Element {
         };
     }, [dispatch]);
 
+    useEffect(() => {
+        const preventCursorMorphing = (event: Event) => {
+            event.preventDefault();
+        };
+        document.addEventListener('dragover', preventCursorMorphing);
+        return () => {
+            document.removeEventListener('dragover', preventCursorMorphing);
+        };
+    }, []);
+
     return (
         <div className="container p-0 p-sm-1 d-flex flex-column gap-2">
             {nonogramInStore && userGame && (
