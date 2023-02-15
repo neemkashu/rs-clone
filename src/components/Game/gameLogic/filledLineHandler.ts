@@ -10,8 +10,9 @@ import { checkIsLineCompleted, getColumnFromMatrix } from '../gameUtils/helpers'
 import { CellAreaState, ClickType, FieldPlace } from '../gameUtils/types';
 
 function fillRow(indexRow: number, dispatch: ReturnType<typeof useAppDispatch>) {
-    const hintLine = store.getState().game.userGame?.currentUserRows[indexRow];
-    const fieldLine = store.getState().game.userGame?.currentUserSolution[indexRow];
+    const hintLine = store.getState().game.present.userGame?.currentUserRows[indexRow];
+    const fieldLine =
+        store.getState().game.present.userGame?.currentUserSolution[indexRow];
     console.warn('hintLine', hintLine);
     hintLine?.forEach((hint, index) => {
         if (hint) {
@@ -38,9 +39,10 @@ function fillRow(indexRow: number, dispatch: ReturnType<typeof useAppDispatch>) 
     });
 }
 function fillColumn(indexNumberRow: number, dispatch: ReturnType<typeof useAppDispatch>) {
-    const hintLine = store.getState().game.userGame?.currentUserColumns[indexNumberRow];
+    const hintLine =
+        store.getState().game.present.userGame?.currentUserColumns[indexNumberRow];
     const fieldLine = getColumnFromMatrix(
-        store.getState().game.userGame?.currentUserSolution ?? null,
+        store.getState().game.present.userGame?.currentUserSolution ?? null,
         indexNumberRow
     );
     console.warn('hintColumn', hintLine);
@@ -74,15 +76,17 @@ export function filledLineHandler(
     dispatch: ReturnType<typeof useAppDispatch>,
     delay: number
 ): void {
-    const goalLine = store.getState().game.currentNonogram?.nonogram.goal[indexRow];
-    const userLine = store.getState().game.userGame?.currentUserSolution[indexRow];
+    const goalLine =
+        store.getState().game.present.currentNonogram?.nonogram.goal[indexRow];
+    const userLine =
+        store.getState().game.present.userGame?.currentUserSolution[indexRow];
 
     if (userLine && goalLine && checkIsLineCompleted(userLine, goalLine)) {
         const complitedLineTimer = setTimeout(() => {
             const goalLineActual =
-                store.getState().game.currentNonogram?.nonogram.goal[indexRow];
+                store.getState().game.present.currentNonogram?.nonogram.goal[indexRow];
             const userLineActual =
-                store.getState().game.userGame?.currentUserSolution[indexRow];
+                store.getState().game.present.userGame?.currentUserSolution[indexRow];
 
             if (
                 userLineActual &&
@@ -95,22 +99,22 @@ export function filledLineHandler(
         dispatch(addTimerId(complitedLineTimer));
     }
     const goalColumn = getColumnFromMatrix(
-        store.getState().game.currentNonogram?.nonogram.goal ?? null,
+        store.getState().game.present.currentNonogram?.nonogram.goal ?? null,
         indexNumberRow
     );
     const userColumn = getColumnFromMatrix(
-        store.getState().game.userGame?.currentUserSolution ?? null,
+        store.getState().game.present.userGame?.currentUserSolution ?? null,
         indexNumberRow
     );
 
     if (userColumn && goalColumn && checkIsLineCompleted(userColumn, goalColumn)) {
         const complitedLineTimer = setTimeout(() => {
             const goalActualColumn = getColumnFromMatrix(
-                store.getState().game.currentNonogram?.nonogram.goal ?? null,
+                store.getState().game.present.currentNonogram?.nonogram.goal ?? null,
                 indexNumberRow
             );
             const userActualColumn = getColumnFromMatrix(
-                store.getState().game.userGame?.currentUserSolution ?? null,
+                store.getState().game.present.userGame?.currentUserSolution ?? null,
                 indexNumberRow
             );
 

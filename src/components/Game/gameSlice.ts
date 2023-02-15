@@ -1,6 +1,9 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 // eslint-disable-next-line import/no-cycle
+import undoable from 'redux-undo';
+// eslint-disable-next-line import/no-cycle
+import { RootState } from '../store';
 import { getGameState } from './api/getGameState';
 import { getNonogramByID } from './api/getNonogramByID';
 import { sendGameToServer } from './api/saveGame';
@@ -223,3 +226,16 @@ export const {
     addTimerId,
     clearTimers,
 } = gameSlice.actions;
+
+export const selectUserState = (state: RootState) => state.game.present.userGame?.state;
+export const selectNonogramRaw = (state: RootState) => state.game.present.currentNonogram;
+export const selectUserSolution = (state: RootState) =>
+    state.game.present.userGame?.currentUserSolution;
+export const selectUserTime = (state: RootState) =>
+    state.game.present.userGame?.currentTime ?? 0;
+
+export const ACTIONS_TO_INCLUDE = [
+    // 'game/updateUserField',
+    'game/updateHintCell',
+    'game/updateAreaCell',
+];

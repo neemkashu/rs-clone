@@ -1,5 +1,6 @@
 import { useAppSelector } from '../hooks';
 import { store } from '../store';
+import { selectUserSolution } from './gameSlice';
 
 const CAPTIONS = {
     progress: 'Marked cells: ',
@@ -18,9 +19,7 @@ const getProgress = (userSolution?: (number | null)[][]): number | null => {
 };
 
 function Progress(): JSX.Element {
-    const userSolution = useAppSelector(
-        (state) => state.game.userGame?.currentUserSolution
-    );
+    const userSolution = useAppSelector(selectUserSolution);
     const progress = getProgress(userSolution);
     return (
         <div>

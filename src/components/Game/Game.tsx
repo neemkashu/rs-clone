@@ -5,15 +5,20 @@ import Field from './Field';
 import GameHeader from './GameHeader';
 import Chronometer from './Chronometer';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { clearTimers, loadNonogramByID, saveUserGameByID } from './gameSlice';
+import {
+    clearTimers,
+    loadNonogramByID,
+    saveUserGameByID,
+    selectNonogramRaw,
+} from './gameSlice';
 import { WinChecker } from './gameLogic/WinChecker';
 import { store } from '../store';
 
-const ID = 'E7UMxLSZv31q5m4RwLG4'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
+const ID = 'aI7dRHAVG7gzTishlpjM'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
 // nsNWHaYMXSERIHX1juXN
 function Game(): JSX.Element {
-    const userGame = useAppSelector((state) => state.game.userGame);
-    const nonogramInStore = useAppSelector((state) => state.game.currentNonogram);
+    const userGame = useAppSelector((state) => state.game.present.userGame);
+    const nonogramInStore = useAppSelector(selectNonogramRaw);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -21,7 +26,10 @@ function Game(): JSX.Element {
 
         return () => {
             dispatch(
-                saveUserGameByID({ id: ID, userGame: store.getState().game.userGame })
+                saveUserGameByID({
+                    id: ID,
+                    userGame: store.getState().game.present.userGame,
+                })
             );
             dispatch(clearTimers());
         };
@@ -41,11 +49,11 @@ function Game(): JSX.Element {
         <div className="container p-0 p-sm-1 d-flex flex-column gap-2">
             {nonogramInStore && userGame && (
                 <>
-                    <GameHeader nonogramRaw={nonogramInStore} />
-                    <Chronometer nonogramRaw={nonogramInStore} />
-                    <Field nonogramRaw={nonogramInStore} />
-                    <WinChecker nonogramRaw={nonogramInStore} />
-                    <Controls nonogramRaw={nonogramInStore} />
+                    <GameHeader />
+                    <Chronometer />
+                    <Field />
+                    <WinChecker />
+                    <Controls />
                 </>
             )}
         </div>

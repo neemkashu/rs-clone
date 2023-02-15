@@ -4,7 +4,7 @@ import { store } from '../../store';
 import AreaCell from '../fieldParts/AreaCell';
 import { filledLineHandler } from '../gameLogic/filledLineHandler';
 import { mistakesHandler } from '../gameLogic/mistakesHandler';
-import { updateAreaCell, updateMistakeData } from '../gameSlice';
+import { selectUserSolution, updateAreaCell, updateMistakeData } from '../gameSlice';
 import {
     AreaCellStyle,
     CellAreaState,
@@ -41,10 +41,8 @@ const getAreaCellStyle = (userCell?: number | null): string => {
 const PERIOD_OF_WIDE_TABLE_LINE = 5;
 
 export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
-    const userSolution = useAppSelector(
-        (state) => state.game.userGame?.currentUserSolution
-    );
-    const mistakes = useAppSelector((state) => state.game.incorrectCells);
+    const userSolution = useAppSelector(selectUserSolution);
+    const mistakes = useAppSelector((state) => state.game.present.incorrectCells);
     const location: fieldPlace = FieldPlace.AREA;
     const dispatch = useAppDispatch();
     return (

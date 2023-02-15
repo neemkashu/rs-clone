@@ -25,10 +25,10 @@
 .field-table > tbody > tr > td:hover::after {
     background-color: var(--table-hover);
     content: '';
-    height: 100vh;
+    height: 200vh;
     left: 0;
     position: absolute;
-    top: -50vh;
+    top: -100vh;
     width: var(--nonogram-square-width);
     z-index: -1;
 }
@@ -37,9 +37,9 @@
     background-color: var(--table-hover);
     content: '';
     height: var(--nonogram-square-width);
-    left: -50vw;
+    left: -100vw;
     position: absolute;
     top: 0;
-    width: 100vw;
+    width: 200vw;
     z-index: -2;
 }

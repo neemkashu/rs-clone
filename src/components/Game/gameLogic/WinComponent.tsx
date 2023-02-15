@@ -8,12 +8,12 @@ const WinModalCaptions = {
     modalDismissChoise: 'To Catalog',
     modalAcceptChoice: 'Try Again',
 } as const;
-export function WinComponent({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element {
+export function WinComponent(): JSX.Element {
     return (
         <GamePopup captions={WinModalCaptions}>
             <>
                 <div className="modal-body">
-                    <WinContent nonogramRaw={nonogramRaw} />
+                    <WinContent />
                 </div>
                 <div className="modal-footer">
                     <Link to="/catalog" className="btn btn-outline-dark">

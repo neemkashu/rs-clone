@@ -23,10 +23,13 @@ export const checkCorrectCell = (
     }
 };
 export function handleIsWinnerCheck(
-    nonogramRaw: NonogramRaw,
+    nonogramRaw: NonogramRaw | null,
     userSolution: (number | null)[][] | undefined,
     gameStatus: GameStatus | null
 ): boolean {
+    if (!nonogramRaw) {
+        return false;
+    }
     const puzzleSolution = nonogramRaw.nonogram.goal;
 
     if (userSolution && gameStatus !== GameStatus.FINISHED) {

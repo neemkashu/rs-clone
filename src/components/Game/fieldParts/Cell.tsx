@@ -1,5 +1,5 @@
 import { MouseEventHandler, DragEventHandler } from 'react';
-import { changeGameStatus } from '../gameSlice';
+import { changeGameStatus, selectUserState } from '../gameSlice';
 import { GameStatus } from '../gameUtils/types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { store } from '../../store';
@@ -27,7 +27,7 @@ export default function Cell({
     isDraggable,
 }: CellProps): JSX.Element {
     const dispatch = useAppDispatch();
-    const gameStatus = useAppSelector((state) => state.game.userGame?.state);
+    const gameStatus = useAppSelector(selectUserState);
 
     function handlersClickMouse() {
         if (handleClick) {
@@ -42,7 +42,7 @@ export default function Cell({
         if (handleContext) {
             handleContext();
         }
-        if (!store.getState().game.userGame?.state) {
+        if (!store.getState().game.present.userGame?.state) {
             dispatch(changeGameStatus(GameStatus.STARTED));
         }
     };

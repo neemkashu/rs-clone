@@ -1,10 +1,11 @@
 /* eslint-disable import/no-cycle */
+import undoable, { excludeAction, includeAction } from 'redux-undo';
 import { configureStore } from '@reduxjs/toolkit';
-import { gameSlice } from './Game/gameSlice';
+import { ACTIONS_TO_INCLUDE, gameSlice } from './Game/gameSlice';
 
 export const store = configureStore({
     reducer: {
-        game: gameSlice.reducer,
+        game: undoable(gameSlice.reducer, { filter: includeAction(ACTIONS_TO_INCLUDE) }),
         // ... reducers from other slices
     },
 });

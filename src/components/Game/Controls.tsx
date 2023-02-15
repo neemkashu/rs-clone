@@ -1,11 +1,12 @@
 import { CheckButton } from './controlButtons/CheckButton';
 import { ClearButton } from './controlButtons/ClearButton';
 import { RestartButton } from './controlButtons/RestartButton';
+import { UndoButton } from './controlButtons/UndoButton';
 import './gameStyles/Controls.scss';
 import { NonogramRaw } from './gameUtils/types';
 
 // temp solution before getting file with all captions
-const CAPTIONS = {
+export const CAPTIONS = {
     stepBack: '↪',
     stepForward: '↩',
     clear: 'Clear',
@@ -22,18 +23,21 @@ const classNames = [
     'game-clear btn-outline-danger',
 ];
 
-function Controls({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element {
+function Controls(): JSX.Element {
     return (
         <div className="btn-group btn-group-sm game-controls">
             {Object.values(CAPTIONS).map((caption, index) => {
                 if (caption === CAPTIONS.clear) {
-                    return <ClearButton key={caption} nonogramRaw={nonogramRaw} />;
+                    return <ClearButton key={caption} />;
                 }
                 if (caption === CAPTIONS.restart) {
-                    return <RestartButton key={caption} nonogramRaw={nonogramRaw} />;
+                    return <RestartButton key={caption} />;
                 }
                 if (caption === CAPTIONS.check) {
                     return <CheckButton key={caption} />;
+                }
+                if (caption === CAPTIONS.stepBack) {
+                    return <UndoButton key={caption} caption={caption} />;
                 }
                 return (
                     <button

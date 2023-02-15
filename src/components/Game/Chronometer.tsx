@@ -4,16 +4,23 @@ import { getTimeFromStorage, setTimeToStorage } from '../../utils/helpers';
 import { NonogramRaw } from '../../utils/types';
 import { useAppSelector } from '../hooks';
 import { GameStatus, UserGameData } from './gameUtils/types';
-import { changeGameStatus, updateUserTime } from './gameSlice';
+import {
+    changeGameStatus,
+    selectNonogramRaw,
+    selectUserState,
+    selectUserTime,
+    updateUserTime,
+} from './gameSlice';
 import { Clock } from '../Clock';
 
 const REFRESH_PERIOD = 1000;
 
-function Chronometer({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element {
-    const nonogramID = nonogramRaw.id;
+function Chronometer(): JSX.Element {
+    const nonogramRaw = useAppSelector(selectNonogramRaw);
+    const nonogramID = nonogramRaw?.id;
     const dispatch = useDispatch();
-    const gameState = useAppSelector((state) => state.game.userGame?.state);
-    const gameTime = useAppSelector((state) => state.game.userGame?.currentTime ?? 0);
+    const gameState = useAppSelector(selectUserState);
+    const gameTime = useAppSelector(selectUserTime);
 
     const shouldUpdateStatus =
         // getTimeFromStorage(nonogramID) > 0 &&

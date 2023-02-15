@@ -1,11 +1,14 @@
 import { unifyTwoDimensionalArray } from '../../../utils/helpers';
 import { FieldPlace, fieldPlace, NonogramRaw } from '../../../utils/types';
+import { useAppSelector } from '../../hooks';
+import { selectNonogramRaw } from '../gameSlice';
 import TableAllRows from './TableAllRows';
 
 const location: fieldPlace = FieldPlace.ASIDE;
 // const rowLinesAmount = rowsUnified.length;
 
-function RowHints({ nonogramRaw }: { nonogramRaw: NonogramRaw | null }): JSX.Element {
+function RowHints(): JSX.Element {
+    const nonogramRaw = useAppSelector(selectNonogramRaw);
     const rows = nonogramRaw?.nonogram.rows;
     const rowsUnified = unifyTwoDimensionalArray(rows);
     const rowLinesAmount = rowsUnified?.length ?? 0;

@@ -1,5 +1,7 @@
 import { userNonogramData } from '../../utils/mochas';
 import { NonogramRaw } from '../../utils/types';
+import { useAppSelector } from '../hooks';
+import { selectNonogramRaw } from './gameSlice';
 import Progress from './Progress';
 
 // temp solution before getting file with all captions
@@ -17,9 +19,9 @@ const {
     nonogram: nonogramCaption,
 } = CAPTIONS;
 
-function GameHeader({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element {
-    const nonogramData = nonogramRaw?.nonogram;
-    const { title, width, height } = nonogramData ?? {};
+function GameHeader(): JSX.Element {
+    const nonogramData = useAppSelector(selectNonogramRaw);
+    const { title, width, height } = nonogramData?.nonogram ?? {};
     const status = userNonogramData.data.currentGame.state;
     const difficulty = getDifficulty();
     const showTitle = status === 'finished' ? title?.en : '*****';

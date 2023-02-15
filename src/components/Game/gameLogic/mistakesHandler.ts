@@ -17,16 +17,20 @@ export function mistakesHandler(
     delay: number
 ): void {
     const goalCell =
-        store.getState().game.currentNonogram?.nonogram.goal[indexRow][indexNumberRow];
+        store.getState().game.present.currentNonogram?.nonogram.goal[indexRow][
+            indexNumberRow
+        ];
     const gotCell =
-        store.getState().game.userGame?.currentUserSolution[indexRow][indexNumberRow];
+        store.getState().game.present.userGame?.currentUserSolution[indexRow][
+            indexNumberRow
+        ];
     // console.warn('watch cell!', goalCell, gotCell);
     // console.warn('watch index!', indexRow, indexNumberRow);
 
     if (!checkIsCellCorrect(gotCell, goalCell)) {
         const mistakeTimer = setTimeout(() => {
             const actualCell =
-                store.getState().game.userGame?.currentUserSolution[indexRow][
+                store.getState().game.present.userGame?.currentUserSolution[indexRow][
                     indexNumberRow
                 ];
             if (!checkIsCellCorrect(actualCell, goalCell)) {
