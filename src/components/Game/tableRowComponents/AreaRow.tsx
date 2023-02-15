@@ -35,6 +35,7 @@ const getAreaCellStyle = (userCell?: number | null): string => {
         }
     }
 };
+const PERIOD_OF_WIDE_TABLE_LINE = 5;
 
 export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
     const userSolution = useAppSelector(
@@ -49,8 +50,9 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                 const userCell = userSolution && userSolution[indexRow][indexNumberRow];
                 const style = getAreaCellStyle(userCell);
                 const squareKey = `${location}-cell-col-${indexRow}-row-${indexNumberRow}`;
-                const isBottomBorder = (indexRow + 1) % 5 === 0;
-                const isRightBorder = (indexNumberRow + 1) % 5 === 0;
+                const isBottomBorder = (indexRow + 1) % PERIOD_OF_WIDE_TABLE_LINE === 0;
+                const isRightBorder =
+                    (indexNumberRow + 1) % PERIOD_OF_WIDE_TABLE_LINE === 0;
                 const isNotCorrect =
                     mistakes && mistakes[indexRow][indexNumberRow] === null;
 
