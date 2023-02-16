@@ -41,7 +41,7 @@ const initialState: {
     view: NonogramSettingsViewState;
 } = getInitialSettingsState();
 
-const settingsSlice = createSlice({
+export const settingsSlice = createSlice({
     name: 'settings',
     initialState,
     reducers: {
@@ -65,4 +65,3 @@ const settingsSlice = createSlice({
 
 export const { changedMainSettings, changedGameSettings, changedViewSettings } =
     settingsSlice.actions;
-export default settingsSlice.reducer;
