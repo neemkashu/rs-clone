@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeGameStatus } from '../gameSlice';
 import { GameStatus, NonogramRaw } from '../gameUtils/types';
 import { WinComponent } from './WinComponent';
-import { handleWinnerCheck } from './winHandlers';
+import { handleIsWinnerCheck } from './winHandlers';
 
 export function WinChecker({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element {
     // console.warn('win checker is here!');
@@ -11,12 +11,13 @@ export function WinChecker({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.E
     const userSolution = useAppSelector(
         (state) => state.game.userGame?.currentUserSolution
     );
-    const gameStatus = useAppSelector((state) => state.game.status);
+    const gameStatus = useAppSelector((state) => state.game.userGame?.state);
     const [isWin, setIsWin] = useState(false);
 
     useEffect(() => {
-        if (gameStatus !== GameStatus.FINISHED) {
-            setIsWin(handleWinnerCheck(nonogramRaw, userSolution, gameStatus));
+        // console.warn('gameStatus', gameStatus);
+        if (gameStatus && gameStatus !== GameStatus.FINISHED) {
+            setIsWin(handleIsWinnerCheck(nonogramRaw, userSolution, gameStatus));
             if (isWin) {
                 console.log('isWin', isWin);
                 dispatch(changeGameStatus(GameStatus.FINISHED));
@@ -24,5 +25,5 @@ export function WinChecker({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.E
         }
     }, [nonogramRaw, userSolution, gameStatus, dispatch, isWin]);
 
-    return <div>{isWin && <WinComponent />}</div>;
+    return <div>{isWin && <WinComponent nonogramRaw={nonogramRaw} />}</div>;
 }

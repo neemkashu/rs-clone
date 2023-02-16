@@ -1,6 +1,8 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { store } from '../../store';
 import AreaCell from '../fieldParts/AreaCell';
-import { updateAreaCell } from '../gameSlice';
+import { mistakesHandler } from '../gameLogic/mistakesHandler';
+import { updateAreaCell, updateMistakeData } from '../gameSlice';
 import {
     AreaCellStyle,
     CellAreaState,
@@ -8,6 +10,8 @@ import {
     fieldPlace,
     FieldPlace,
 } from '../gameUtils/types';
+
+const USER_TIMEOUT = 2000;
 
 export interface AreaRowProps {
     linesUnified: (number | null)[][];
@@ -31,11 +35,13 @@ const getAreaCellStyle = (userCell?: number | null): string => {
         }
     }
 };
+const PERIOD_OF_WIDE_TABLE_LINE = 5;
 
 export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
     const userSolution = useAppSelector(
         (state) => state.game.userGame?.currentUserSolution
     );
+    const mistakes = useAppSelector((state) => state.game.incorrectCells);
     const location: fieldPlace = FieldPlace.AREA;
     const dispatch = useAppDispatch();
     return (
@@ -44,9 +50,13 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                 const userCell = userSolution && userSolution[indexRow][indexNumberRow];
                 const style = getAreaCellStyle(userCell);
                 const squareKey = `${location}-cell-col-${indexRow}-row-${indexNumberRow}`;
+                const isBottomBorder = (indexRow + 1) % PERIOD_OF_WIDE_TABLE_LINE === 0;
+                const isRightBorder =
+                    (indexNumberRow + 1) % PERIOD_OF_WIDE_TABLE_LINE === 0;
+                const isNotCorrect =
+                    mistakes && mistakes[indexRow][indexNumberRow] === null;
 
                 const handleClick = () => {
-                    // console.warn('handleClick AREA cell', userCell);
                     dispatch(
                         updateAreaCell({
                             clickType: ClickType.MOUSE_CLICK,
@@ -54,9 +64,9 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                             indexNumberRow,
                         })
                     );
+                    mistakesHandler(indexRow, indexNumberRow, dispatch, USER_TIMEOUT);
                 };
                 const handleContext = () => {
-                    // console.warn('handlerContext AREA cell', userCell);
                     dispatch(
                         updateAreaCell({
                             clickType: ClickType.MOUSE_CONTEXT,
@@ -64,6 +74,7 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                             indexNumberRow,
                         })
                     );
+                    mistakesHandler(indexRow, indexNumberRow, dispatch, USER_TIMEOUT);
                 };
 
                 return (
@@ -71,8 +82,11 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                         key={squareKey}
                         handleClick={handleClick}
                         handleContext={handleContext}
-                        stateStyle={style}
-                        styles={[]}
+                        stateStyle={[style, isNotCorrect ? 'incorrect-fill' : '']}
+                        styles={[
+                            isBottomBorder ? 'border-bottom-plus' : '',
+                            isRightBorder ? 'border-right-plus' : '',
+                        ]}
                     />
                 );
             })}
