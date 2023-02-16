@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import { SettingsTimingsEnum } from './enums';
 
 export type fieldPlace = 'header' | 'aside' | 'area' | 'miniature';
@@ -94,11 +94,6 @@ export enum GameStatus {
     FINISHED = 'finished',
 }
 
-export interface CellProps {
-    cellContent: string;
-    styles?: string[];
-    handler?: () => void;
-}
 export interface TableRowProps {
     location: fieldPlace;
     indexRow: number;

@@ -10,6 +10,7 @@ function RowHints({ nonogramRaw }: { nonogramRaw: NonogramRaw | null }): JSX.Ele
     const rows = nonogramRaw?.nonogram.rows;
     const rowsUnified = unifyTwoDimensionalArray(rows);
     const rowLinesAmount = rowsUnified?.length ?? 0;
+    // console.warn('rowLinesAmount', rowLinesAmount);
     return (
         <table className="table table-bordered nonogram-hints-border">
             <tbody>

@@ -1,65 +1,5 @@
-import { Dispatch, SetStateAction } from 'react';
-import { NonogramTime } from './types';
 import { StorageKeys } from './storage';
-
-export const a = 10;
-
-export const matchSmWindowSize = window.matchMedia('(max-width: 576px)');
-
-export function handleAsideAfterWindowResize(
-    query: MediaQueryList | MediaQueryListEvent,
-    setIsBurgerBtnVisible: Dispatch<SetStateAction<boolean>>
-): void {
-    const aside = document.body.querySelector('#aside');
-    const asideCloseBtn = document.body.querySelector(
-        '#asideCloseBtn'
-    ) as HTMLButtonElement;
-    setIsBurgerBtnVisible(query.matches);
-    if (query.matches) {
-        asideCloseBtn.style.display = 'flex';
-        aside?.classList.add('aside-modal');
-        aside?.classList.remove('col-sm-4');
-        aside?.classList.remove('col-md-3');
-        aside?.classList.remove('col-lg-2');
-    } else {
-        asideCloseBtn.style.display = 'none';
-        aside?.classList.remove('aside-modal');
-        aside?.classList.add('col-sm-4');
-        aside?.classList.add('col-md-3');
-        aside?.classList.add('col-lg-2');
-    }
-}
-
-export function handleAsideCloseBtnClick(): void {
-    const aside = document.body.querySelector('#aside') as HTMLDivElement;
-    aside.style.left = '-170px';
-}
-
-export function getInitialLanguage(): string {
-    const langInLocalStorage = localStorage.getItem('lang');
-    if (langInLocalStorage) {
-        return langInLocalStorage;
-    }
-    if (
-        navigator.language === 'en-EN' ||
-        navigator.language === 'de-DE' ||
-        navigator.language === 'ru-RU'
-    ) {
-        return navigator.language;
-    }
-    return 'en-EN';
-}
-
-export function getEmptyCellSettingInCurrenLanguage() {
-    const initialLanguage = getInitialLanguage();
-    if (initialLanguage === 'ru-RU') {
-        return 'точка';
-    }
-    if (initialLanguage === 'de-DE') {
-        return 'punkt';
-    }
-    return 'dot';
-}
+import { GameStatus, NonogramRaw, NonogramTime, UserGameData } from './types';
 
 export function getUserCurrentTimes(
     currentTimesInfo: string | null
@@ -118,7 +58,7 @@ export function getTimeFromStorage(id?: string): number {
 }
 export function unifyTwoDimensionalArray<T>(arr?: T[][]): (T | null)[][] {
     if (!arr) {
-        return [];
+        return [[null]];
     }
     const innerArrMaxLength = arr.reduce((maxLength, innerArr) => {
         return maxLength > innerArr.length ? maxLength : innerArr.length;
@@ -130,4 +70,25 @@ export function unifyTwoDimensionalArray<T>(arr?: T[][]): (T | null)[][] {
         }
     });
     return arrUnified;
+}
+export function makeInitialSaveGame(nonogram: NonogramRaw | null): UserGameData | null {
+    if (!nonogram) {
+        return null;
+    }
+    const solution = nonogram.nonogram.goal.map((row) => row.map((cell) => null));
+    const columnsUnified = unifyTwoDimensionalArray(nonogram.nonogram.columns).map(
+        (line) => line.map((cell) => ({ isCrossedOut: false }))
+    );
+    const rowsUnified = unifyTwoDimensionalArray(nonogram.nonogram.rows).map((line) =>
+        line.map((cell) => ({ isCrossedOut: false }))
+    );
+
+    const initialGame: UserGameData = {
+        state: GameStatus.INITIAL,
+        currentUserSolution: solution,
+        currentTime: 0,
+        currentUserRows: rowsUnified,
+        currentUserColumns: columnsUnified,
+    };
+    return initialGame;
 }
