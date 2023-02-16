@@ -41,21 +41,34 @@ const getAreaCellStyle = (userCell?: number | null): string => {
 const PERIOD_OF_WIDE_TABLE_LINE = 5;
 
 export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
-    const userSolution = useAppSelector(selectUserSolution);
-    const mistakes = useAppSelector((state) => state.game.present.incorrectCells);
     const location: fieldPlace = FieldPlace.AREA;
     const dispatch = useAppDispatch();
     return (
         <tr>
             {linesUnified[indexRow].map((cell, indexNumberRow) => {
-                const userCell = userSolution && userSolution[indexRow][indexNumberRow];
+                const userCell = useAppSelector((state) => {
+                    if (state.game.present.userGame?.currentUserSolution) {
+                        return state.game.present.userGame?.currentUserSolution[indexRow][
+                            indexNumberRow
+                        ];
+                    }
+                    return null;
+                });
                 const style = getAreaCellStyle(userCell);
                 const squareKey = `${location}-cell-col-${indexRow}-row-${indexNumberRow}`;
                 const isBottomBorder = (indexRow + 1) % PERIOD_OF_WIDE_TABLE_LINE === 0;
                 const isRightBorder =
                     (indexNumberRow + 1) % PERIOD_OF_WIDE_TABLE_LINE === 0;
-                const isNotCorrect =
-                    mistakes && mistakes[indexRow][indexNumberRow] === null;
+
+                const mistake = useAppSelector((state) => {
+                    if (state.game.present.incorrectCells) {
+                        return state.game.present.incorrectCells[indexRow][
+                            indexNumberRow
+                        ];
+                    }
+                    return null;
+                });
+                const isNotCorrect = mistake === null;
 
                 const handlerFillSquare = () => {
                     dispatch(

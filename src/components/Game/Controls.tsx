@@ -2,8 +2,6 @@ import { CheckButton } from './controlButtons/CheckButton';
 import { ClearButton } from './controlButtons/ClearButton';
 import { RestartButton } from './controlButtons/RestartButton';
 import { UndoButton } from './controlButtons/UndoButton';
-import './gameStyles/Controls.scss';
-import { NonogramRaw } from './gameUtils/types';
 
 // temp solution before getting file with all captions
 export const CAPTIONS = {

@@ -14,10 +14,10 @@ import {
 import { WinChecker } from './gameLogic/WinChecker';
 import { store } from '../store';
 
-const ID = 'aI7dRHAVG7gzTishlpjM'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
+const ID = 'bEfUePWLRweZpBmoiP0V'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
 // nsNWHaYMXSERIHX1juXN
 function Game(): JSX.Element {
-    const userGame = useAppSelector((state) => state.game.present.userGame);
+    // const userGame = useAppSelector((state) => state.game.present.userGame);
     const nonogramInStore = useAppSelector(selectNonogramRaw);
     const dispatch = useAppDispatch();
 
@@ -46,8 +46,8 @@ function Game(): JSX.Element {
     }, []);
 
     return (
-        <div className="container p-0 p-sm-1 d-flex flex-column gap-2">
-            {nonogramInStore && userGame && (
+        <div className="p-0 p-sm-1 d-flex flex-column gap-2">
+            {nonogramInStore && (
                 <>
                     <GameHeader />
                     <Chronometer />

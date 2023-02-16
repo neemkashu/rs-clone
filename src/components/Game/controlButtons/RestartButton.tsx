@@ -1,3 +1,4 @@
+import { ActionCreators } from 'redux-undo';
 import {
     changeGameStatus,
     clearMistakes,
@@ -21,6 +22,7 @@ export function RestartButton() {
             dispatch(updateUserGame(userGame));
             dispatch(clearMistakes());
             dispatch(changeGameStatus(GameStatus.INITIAL));
+            dispatch(ActionCreators.clearHistory());
         }
     };
     return <Button caption={caption} buttonClass={buttonClass} handler={handleClick} />;

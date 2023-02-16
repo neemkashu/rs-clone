@@ -5,6 +5,7 @@
 .square {
     width: var(--nonogram-square-width);
     height: var(--nonogram-square-width);
+    font-size: 0.9rem;
     &:hover {
         cursor: pointer;
     }

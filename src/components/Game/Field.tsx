@@ -4,6 +4,7 @@ import RowHints from './fieldParts/RowHints';
 import { NonogramRaw } from '../../utils/types';
 
 function Field(): JSX.Element {
+    console.warn('FIELD RERENDER');
     return (
         <div className="d-flex justify-content-center">
             <div className="d-flex flex-column align-items-end game-field">
