@@ -1,12 +1,13 @@
 import { CheckButton } from './controlButtons/CheckButton';
 import { ClearButton } from './controlButtons/ClearButton';
+// import { RedoButton } from './controlButtons/RedoButton';
 import { RestartButton } from './controlButtons/RestartButton';
 import { UndoButton } from './controlButtons/UndoButton';
 
 // temp solution before getting file with all captions
 export const CAPTIONS = {
-    stepBack: '↪',
-    stepForward: '↩',
+    stepBack: 'Undo ↪',
+    stepForward: 'Redo ↩',
     clear: 'Clear',
     restart: 'Restart',
     check: 'Check',
@@ -37,6 +38,9 @@ function Controls(): JSX.Element {
                 if (caption === CAPTIONS.stepBack) {
                     return <UndoButton key={caption} caption={caption} />;
                 }
+                // if (caption === CAPTIONS.stepForward) {
+                //     return <RedoButton key={caption} caption={caption} />;
+                // }
                 return (
                     <button
                         key={caption}

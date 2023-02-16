@@ -12,11 +12,18 @@ import { RootState } from '../store';
 import { getGameState } from './api/getGameState';
 import { getNonogramByID } from './api/getNonogramByID';
 import { sendGameToServer } from './api/saveGame';
-import { makeInitialSaveGame, unifyTwoDimensionalArray } from './gameUtils/helpers';
+// eslint-disable-next-line import/no-cycle
+import {
+    checkIsPainted,
+    makeHash,
+    makeInitialSaveGame,
+    unifyTwoDimensionalArray,
+} from './gameUtils/helpers';
 import {
     CellAreaState,
     CellAreaStateType,
     ClickType,
+    DragCellInfo,
     FieldPlace,
     fieldPlace,
     GameStatus,
@@ -26,11 +33,6 @@ import {
     UserGameData,
 } from './gameUtils/types';
 
-export type DragCellInfo = {
-    paint: CellAreaStateType;
-    indexRow: number;
-    indexNumberRow: number;
-};
 export enum LoadStatus {
     PENDING = 'LOADING',
     FULFILLED = 'READY',
@@ -43,7 +45,8 @@ export interface GameState {
     errorMessage: string;
     incorrectCells: UserFieldData['currentUserSolution'] | null;
     timers: ReturnType<typeof setTimeout>[];
-    paintCells: DragCellInfo[];
+    paintedCells: DragCellInfo[];
+    isPaintProcess: boolean;
 }
 
 const initialState: GameState = {
@@ -53,7 +56,8 @@ const initialState: GameState = {
     errorMessage: '',
     incorrectCells: null,
     timers: [],
-    paintCells: [],
+    paintedCells: [],
+    isPaintProcess: false,
 };
 
 export const loadNonogramByID = createAsyncThunk(
@@ -162,6 +166,7 @@ export const gameSlice = createSlice({
                 indexRow: number;
             }>
         ) {
+            console.log('update cell!', action.payload.indexRow);
             if (state.userGame) {
                 const { indexRow, indexNumberRow, clickType } = action.payload;
                 const cell = state.userGame.currentUserSolution[indexRow][indexNumberRow];
@@ -207,6 +212,25 @@ export const gameSlice = createSlice({
             state.timers.forEach((timer) => clearTimeout(timer));
             state.timers = [];
         },
+        updatePaintedCells(state, action: PayloadAction) {
+            const alreadyPainted = state.paintedCells;
+
+            alreadyPainted.forEach((cell) => {
+                // console.warn('updateAreaCell');
+                if (state.userGame) {
+                    const { indexRow, indexNumberRow, paint } = cell;
+                    state.userGame.currentUserSolution[indexRow][indexNumberRow] =
+                        CellAreaState.FILLED;
+                }
+            });
+            state.isPaintProcess = false;
+        },
+        updatePaintProcess(state, action: PayloadAction<boolean>) {
+            state.isPaintProcess = action.payload;
+        },
+        clearPainted(state, action: PayloadAction) {
+            state.paintedCells = [];
+        },
     },
     extraReducers(builder) {
         builder.addCase(loadNonogramByID.pending, (state, action) => {
@@ -243,7 +267,21 @@ export const gameSlice = createSlice({
         });
         builder.addCase(paintDrag, (state, action) => {
             const { paint, indexRow, indexNumberRow } = action.payload;
-            console.warn('paint type', paint, indexRow, indexNumberRow);
+            const alreadyPainted = state.paintedCells;
+            const isPainted = checkIsPainted({
+                indexRow,
+                indexNumberRow,
+                alreadyPainted,
+            });
+            if (!isPainted) {
+                console.warn('paint type', paint, indexRow, indexNumberRow);
+                state.paintedCells.push({
+                    paint,
+                    indexRow,
+                    indexNumberRow,
+                    hash: makeHash(indexRow, indexNumberRow),
+                });
+            }
         });
     },
 });
@@ -259,6 +297,9 @@ export const {
     updateMistakeData,
     addTimerId,
     clearTimers,
+    updatePaintedCells,
+    updatePaintProcess,
+    clearPainted,
 } = gameSlice.actions;
 
 export const selectUserState = (state: RootState) => state.game.present.userGame?.state;
@@ -272,4 +313,5 @@ export const ACTIONS_TO_INCLUDE = [
     // 'game/updateUserField',
     'game/updateHintCell',
     'game/updateAreaCell',
+    'game/updatePaintedCells',
 ];

@@ -1,6 +1,7 @@
 :root {
     --filled-square: rgba(0, 0, 0, 0.691);
     --wrong-square: rgba(255, 33, 33, 0.691);
+    --painted-square: rgb(36, 255, 218);
 }
 .square {
     width: var(--nonogram-square-width);
@@ -12,6 +13,9 @@
 }
 .filled-square {
     background-color: var(--filled-square);
+}
+.painted-square {
+    background-color: var(--painted-square);
 }
 .crossed-square {
     background-image: url("../../../image/cross.svg");

@@ -89,3 +89,10 @@ export const CellAreaState = {
 } as const;
 export type CellAreaStateType = (typeof CellAreaState)[keyof typeof CellAreaState];
 export type AreaCellStyle = Record<keyof typeof CellAreaState, string>;
+
+export type DragCellInfo = {
+    paint: CellAreaStateType;
+    indexRow: number;
+    indexNumberRow: number;
+    hash?: string;
+};

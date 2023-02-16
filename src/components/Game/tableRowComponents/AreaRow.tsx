@@ -1,4 +1,4 @@
-import { MouseEventHandler, DragEventHandler } from 'react';
+import { MouseEventHandler, DragEventHandler, useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { store } from '../../store';
 import AreaCell from '../fieldParts/AreaCell';
@@ -9,7 +9,10 @@ import {
     selectUserSolution,
     updateAreaCell,
     updateMistakeData,
+    updatePaintedCells,
+    updatePaintProcess,
 } from '../gameSlice';
+import { checkIsPainted } from '../gameUtils/helpers';
 import {
     AreaCellStyle,
     CellAreaState,
@@ -25,10 +28,12 @@ export interface AreaRowProps {
     indexRow: number;
 }
 const AREA_STYLES: AreaCellStyle = {
-    EMPTY: 'empty-square',
+    EMPTY: '',
     CROSSED: 'crossed-square',
     FILLED: 'filled-square',
 };
+const PAINT_STYLE = 'painted-square';
+
 const getAreaCellStyle = (userCell?: number | null): string => {
     switch (userCell) {
         case CellAreaState.CROSSED: {
@@ -48,6 +53,7 @@ const PERIOD_OF_WIDE_TABLE_LINE = 5;
 export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
     const location: fieldPlace = FieldPlace.AREA;
     const dispatch = useAppDispatch();
+    const isPaintProcess = useAppSelector((state) => state.game.present.isPaintProcess);
     return (
         <tr>
             {linesUnified[indexRow].map((cell, indexNumberRow) => {
@@ -59,7 +65,17 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                     }
                     return null;
                 });
+
                 const style = getAreaCellStyle(userCell);
+
+                const [paintStyle, setPaintStyle] = useState('');
+
+                useEffect(() => {
+                    if (!isPaintProcess) {
+                        setPaintStyle('');
+                    }
+                }, [isPaintProcess]);
+
                 const squareKey = `${location}-cell-col-${indexRow}-row-${indexNumberRow}`;
                 const isBottomBorder = (indexRow + 1) % PERIOD_OF_WIDE_TABLE_LINE === 0;
                 const isRightBorder =
@@ -102,6 +118,7 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                 };
 
                 const handleDrag: DragEventHandler = (event) => {
+                    console.error('event.button', event.button);
                     const dragCell = event.target;
                     if (dragCell instanceof HTMLElement) {
                         dragCell.style.opacity = '0';
@@ -109,9 +126,6 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                             dragCell.style.opacity = '1';
                         });
                     }
-                    // console.log('on drag start!', indexRow, indexNumberRow);
-                };
-                const handleDragEnter: MouseEventHandler = (event) => {
                     dispatch(
                         paintDrag({
                             paint: CellAreaState.FILLED,
@@ -119,17 +133,33 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                             indexNumberRow,
                         })
                     );
-                    // handlerFillSquare();
+                    setPaintStyle('painted-square');
+                    console.log('on drag start!', indexRow, indexNumberRow);
                 };
-                const handleDrop: MouseEventHandler = (event) => {
-                    // event.preventDefault();
-                    const touchedCell = event.target;
-                    if (touchedCell instanceof HTMLElement) {
-                        // touchedCell.style.background = '#ffff00';
-                    }
-                    // console.log('on drag drop!', indexRow, indexNumberRow);
+                const handleDragEnter: MouseEventHandler = (event) => {
+                    console.log('drag enter', indexRow, indexNumberRow);
+                    dispatch(
+                        paintDrag({
+                            paint: CellAreaState.FILLED,
+                            indexRow,
+                            indexNumberRow,
+                        })
+                    );
+                    setPaintStyle('painted-square');
                 };
-
+                const handleDragDrop: MouseEventHandler = (event) => {
+                    console.log('on drag drop!', indexRow, indexNumberRow);
+                    dispatch(updatePaintedCells());
+                    dispatch(updatePaintProcess(false));
+                };
+                // console.warn(
+                //     'style',
+                //     style,
+                //     'paintStyle',
+                //     paintStyle,
+                //     indexRow,
+                //     indexNumberRow
+                // );
                 return (
                     <AreaCell
                         key={squareKey}
@@ -137,8 +167,11 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                         handleContext={handleContext}
                         handleDrag={handleDrag}
                         handleDragEnter={handleDragEnter}
-                        // handleDragDrop={handleDragDrop}
-                        stateStyle={[style, isNotCorrect ? 'incorrect-fill' : '']}
+                        handleDragDrop={handleDragDrop}
+                        stateStyle={[
+                            style || paintStyle,
+                            isNotCorrect ? 'incorrect-fill' : '',
+                        ]}
                         styles={[
                             isBottomBorder ? 'border-bottom-plus' : '',
                             isRightBorder ? 'border-right-plus' : '',

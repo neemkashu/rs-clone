@@ -1,6 +1,8 @@
 import { StorageKeys } from './storage';
 import {
     CellAreaState,
+    CellAreaStateType,
+    DragCellInfo,
     GameStatus,
     NonogramRaw,
     NonogramTime,
@@ -152,4 +154,20 @@ export function getColumnFromMatrix<T>(
         column.push(row[indexColumn]);
         return [...column];
     }, []);
+}
+export function makeHash(indexRow: number, indexNumberRow: number): string {
+    return JSON.stringify({ indexRow, indexNumberRow });
+}
+export function checkIsPainted({
+    indexRow,
+    indexNumberRow,
+    alreadyPainted,
+}: {
+    indexRow: number;
+    indexNumberRow: number;
+    alreadyPainted: DragCellInfo[];
+}) {
+    const hash = makeHash(indexRow, indexNumberRow);
+    console.warn('check painted');
+    return alreadyPainted.some((cell) => cell.hash === hash);
 }
