@@ -35,7 +35,8 @@ export function CatalogItem({ catalogItem, cardNumber }: CatalogItemProps) {
                 <div>
                     <div className="text-truncate">{getNonogramTitle()}</div>
                     <div>
-                        Size: {catalogItem.nonogram.width}x{catalogItem.nonogram.height}
+                        {t('size')}: {catalogItem.nonogram.width}x
+                        {catalogItem.nonogram.height}
                     </div>
                     <div>
                         {t('difficulty')}: {catalogItem.nonogram.difficulty}

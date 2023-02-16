@@ -7,10 +7,12 @@ export function Catalog(): JSX.Element {
     const [catalogDB, setCatalogDB] = useState<NonogramObject[]>([]);
 
     useEffect(() => {
+        console.log('loading');
         getCatalogDB().then((data) => {
             if (data.length) {
                 setCatalogDB(data);
             }
+            console.log('loading ended');
         });
     }, []);
 

@@ -24,5 +24,6 @@
     "dot": "dot",
     "cross": "cross",
     "setAllToDefault": "Set all to default",
+    "size": "Size",
     "difficulty": "Difficulty"
 }
