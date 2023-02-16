@@ -23,3 +23,8 @@ export enum SettingsTimingsEnum {
     THIRTY_SEC = 'ThirtySec',
     FIVE_MIN = 'FiveMin',
 }
+
+export enum GameRadioSettingsCategories {
+    HIGHLIGHT = 'highlightRadio',
+    CROSS = 'crossOutRadio',
+}

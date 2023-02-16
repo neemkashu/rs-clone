@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { NonogramSettingsMainState } from '../../../../utils/types';
 import { useAppSelector, useAppDispatch } from '../../../hooks';
 import { changedMainSettings } from '../settingsSlice';
 
@@ -7,26 +8,30 @@ export function SettingsMainContent() {
     const settingsMain = useAppSelector((state) => state.settings.main);
     const dispatch = useAppDispatch();
 
-    function handleNonogramTitlesSettingChange() {
+    const handleChange = (isTitles: boolean) => {
+        const { showNonogramTitlesBeforeSolving, showNonogramThumbnailsBeforeSolving } =
+            settingsMain;
+        const showNonogramTitlesBeforeSolvingState = isTitles
+            ? !showNonogramTitlesBeforeSolving
+            : showNonogramTitlesBeforeSolving;
+        const showNonogramThumbnailsBeforeSolvingState = isTitles
+            ? showNonogramThumbnailsBeforeSolving
+            : !showNonogramThumbnailsBeforeSolving;
         dispatch(
             changedMainSettings({
-                showNonogramTitlesBeforeSolving:
-                    !settingsMain.showNonogramTitlesBeforeSolving,
+                showNonogramTitlesBeforeSolving: showNonogramTitlesBeforeSolvingState,
                 showNonogramThumbnailsBeforeSolving:
-                    settingsMain.showNonogramThumbnailsBeforeSolving,
+                    showNonogramThumbnailsBeforeSolvingState,
             })
         );
+    };
+
+    function handleNonogramTitlesSettingChange() {
+        handleChange(true);
     }
 
     function handleNonogramThumbnailsSettingChange() {
-        dispatch(
-            changedMainSettings({
-                showNonogramTitlesBeforeSolving:
-                    settingsMain.showNonogramTitlesBeforeSolving,
-                showNonogramThumbnailsBeforeSolving:
-                    !settingsMain.showNonogramThumbnailsBeforeSolving,
-            })
-        );
+        handleChange(false);
     }
 
     return (

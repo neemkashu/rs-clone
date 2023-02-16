@@ -1,21 +1,25 @@
 import { useTranslation } from 'react-i18next';
 import { useAppSelector, useAppDispatch } from '../../../hooks';
 import { changedGameSettings } from '../settingsSlice';
-import { SettingsTimingsEnum } from '../../../../utils/enums';
+import {
+    SettingsTimingsEnum,
+    GameRadioSettingsCategories,
+} from '../../../../utils/enums';
 import { FormCheckItem } from './FormCheckItem';
+
+const timingsStringValuesArray = [
+    SettingsTimingsEnum.NEVER,
+    SettingsTimingsEnum.ONE_SEC,
+    SettingsTimingsEnum.TWO_SEC,
+    SettingsTimingsEnum.TEN_SEC,
+    SettingsTimingsEnum.THIRTY_SEC,
+    SettingsTimingsEnum.FIVE_MIN,
+];
 
 export function SettingsGameContent() {
     const { t } = useTranslation();
     const settingsGame = useAppSelector((state) => state.settings.game);
     const dispatch = useAppDispatch();
-    const timingsStringValuesArray = [
-        SettingsTimingsEnum.NEVER,
-        SettingsTimingsEnum.ONE_SEC,
-        SettingsTimingsEnum.TWO_SEC,
-        SettingsTimingsEnum.TEN_SEC,
-        SettingsTimingsEnum.THIRTY_SEC,
-        SettingsTimingsEnum.FIVE_MIN,
-    ];
 
     function handleCrossedOutDigitFillsLineWithCrossesInput() {
         dispatch(
@@ -29,26 +33,22 @@ export function SettingsGameContent() {
     }
 
     function handleRadioButtonChange(category: string, item: SettingsTimingsEnum) {
-        if (category === 'highlightRadio') {
-            dispatch(
-                changedGameSettings({
-                    highlightCellsWithError: item,
-                    automaticallyCrossOutNumbers:
-                        settingsGame.automaticallyCrossOutNumbers,
-                    lastCrossedOutDigitFillsLineWithCrosses:
-                        settingsGame.lastCrossedOutDigitFillsLineWithCrosses,
-                })
-            );
-        } else {
-            dispatch(
-                changedGameSettings({
-                    highlightCellsWithError: settingsGame.highlightCellsWithError,
-                    automaticallyCrossOutNumbers: item,
-                    lastCrossedOutDigitFillsLineWithCrosses:
-                        settingsGame.lastCrossedOutDigitFillsLineWithCrosses,
-                })
-            );
-        }
+        const highlightCellsWithErrorState =
+            category === GameRadioSettingsCategories.HIGHLIGHT
+                ? item
+                : settingsGame.highlightCellsWithError;
+        const automaticallyCrossOutNumbersState =
+            category === GameRadioSettingsCategories.HIGHLIGHT
+                ? settingsGame.automaticallyCrossOutNumbers
+                : item;
+        dispatch(
+            changedGameSettings({
+                highlightCellsWithError: highlightCellsWithErrorState,
+                automaticallyCrossOutNumbers: automaticallyCrossOutNumbersState,
+                lastCrossedOutDigitFillsLineWithCrosses:
+                    settingsGame.lastCrossedOutDigitFillsLineWithCrosses,
+            })
+        );
     }
 
     return (
@@ -60,11 +60,14 @@ export function SettingsGameContent() {
                         <FormCheckItem
                             key={`${item}-highlightKey`}
                             value={t(`timing${item}`)}
-                            name="highlightRadio"
+                            name={GameRadioSettingsCategories.HIGHLIGHT}
                             id={`higlight${item}`}
                             isChecked={item === settingsGame.highlightCellsWithError}
                             handleRadioButtonClick={() =>
-                                handleRadioButtonChange('highlightRadio', item)
+                                handleRadioButtonChange(
+                                    GameRadioSettingsCategories.HIGHLIGHT,
+                                    item
+                                )
                             }
                         />
                     );
@@ -77,11 +80,14 @@ export function SettingsGameContent() {
                         <FormCheckItem
                             key={`${item}-crossOutKey`}
                             value={t(`timing${item}`)}
-                            name="crossOutRadio"
+                            name={GameRadioSettingsCategories.CROSS}
                             id={`cross${item}`}
                             isChecked={item === settingsGame.automaticallyCrossOutNumbers}
                             handleRadioButtonClick={() =>
-                                handleRadioButtonChange('crossOutRadio', item)
+                                handleRadioButtonChange(
+                                    GameRadioSettingsCategories.CROSS,
+                                    item
+                                )
                             }
                         />
                     );

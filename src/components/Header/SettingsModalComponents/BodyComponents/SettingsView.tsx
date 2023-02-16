@@ -7,27 +7,18 @@ export function SettingsViewContent() {
     const { t } = useTranslation();
     const settingsView = useAppSelector((state) => state.settings.view);
     const dispatch = useAppDispatch();
+    const isDot =
+        settingsView.markingAnEmptyCell === 'точка' ||
+        settingsView.markingAnEmptyCell === 'dot' ||
+        settingsView.markingAnEmptyCell === 'punkt';
 
     useEffect(() => {
-        if (
-            settingsView.markingAnEmptyCell === 'точка' ||
-            settingsView.markingAnEmptyCell === 'dot' ||
-            settingsView.markingAnEmptyCell === 'punkt'
-        ) {
-            dispatch(
-                changedViewSettings({
-                    markingAnEmptyCell: t('dot'),
-                    showGuessTime: settingsView.showGuessTime,
-                })
-            );
-        } else {
-            dispatch(
-                changedViewSettings({
-                    markingAnEmptyCell: t('cross'),
-                    showGuessTime: settingsView.showGuessTime,
-                })
-            );
-        }
+        dispatch(
+            changedViewSettings({
+                markingAnEmptyCell: t(isDot ? 'dot' : 'cross'),
+                showGuessTime: settingsView.showGuessTime,
+            })
+        );
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [t]);
 
