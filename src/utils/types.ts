@@ -8,6 +8,7 @@ export type NonogramObject = {
     nonogram: {
         height: number;
         width: number;
+        difficulty: number;
         title: {
             en: string;
             ru: string;

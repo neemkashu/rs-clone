@@ -23,5 +23,6 @@
     "showGuessTime": "Show guess time",
     "dot": "dot",
     "cross": "cross",
-    "setAllToDefault": "Set all to default"
+    "setAllToDefault": "Set all to default",
+    "difficulty": "Difficulty"
 }

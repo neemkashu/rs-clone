@@ -23,5 +23,6 @@
     "showGuessTime": "Schätzzeit anzeigen",
     "dot": "punkt",
     "cross": "kreuzen",
-    "setAllToDefault": "Alle auf Standard setzen"
+    "setAllToDefault": "Alle auf Standard setzen",
+    "difficulty": "Schwierigkeit"
 }

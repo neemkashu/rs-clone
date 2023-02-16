@@ -2,9 +2,12 @@ import { NonogramObject } from '../utils/types';
 
 export async function getCatalogDB(): Promise<NonogramObject[]> {
     try {
-        const response = await fetch('http://localhost:3000/nonograms', {
-            method: 'GET',
-        });
+        const response = await fetch(
+            'https://rs-clone-backend-1hqs.onrender.com/nonograms',
+            {
+                method: 'GET',
+            }
+        );
         if (!response.ok) {
             throw new Error('this error occurred while fetching the catalog database');
         }
