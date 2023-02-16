@@ -1,165 +1,109 @@
+import { useTranslation } from 'react-i18next';
+import { useAppSelector, useAppDispatch } from '../../../hooks';
+import { changedGameSettings } from '../settingsSlice';
+import {
+    SettingsTimingsEnum,
+    GameRadioSettingsCategories,
+} from '../../../../utils/enums';
+import { FormCheckItem } from './FormCheckItem';
+
+const timingsStringValuesArray = [
+    SettingsTimingsEnum.NEVER,
+    SettingsTimingsEnum.ONE_SEC,
+    SettingsTimingsEnum.TWO_SEC,
+    SettingsTimingsEnum.TEN_SEC,
+    SettingsTimingsEnum.THIRTY_SEC,
+    SettingsTimingsEnum.FIVE_MIN,
+];
+
 export function SettingsGameContent() {
+    const { t } = useTranslation();
+    const settingsGame = useAppSelector((state) => state.settings.game);
+    const dispatch = useAppDispatch();
+
+    function handleCrossedOutDigitFillsLineWithCrossesInput() {
+        dispatch(
+            changedGameSettings({
+                highlightCellsWithError: settingsGame.highlightCellsWithError,
+                automaticallyCrossOutNumbers: settingsGame.automaticallyCrossOutNumbers,
+                lastCrossedOutDigitFillsLineWithCrosses:
+                    !settingsGame.lastCrossedOutDigitFillsLineWithCrosses,
+            })
+        );
+    }
+
+    function handleRadioButtonChange(category: string, item: SettingsTimingsEnum) {
+        const highlightCellsWithErrorState =
+            category === GameRadioSettingsCategories.HIGHLIGHT
+                ? item
+                : settingsGame.highlightCellsWithError;
+        const automaticallyCrossOutNumbersState =
+            category === GameRadioSettingsCategories.HIGHLIGHT
+                ? settingsGame.automaticallyCrossOutNumbers
+                : item;
+        dispatch(
+            changedGameSettings({
+                highlightCellsWithError: highlightCellsWithErrorState,
+                automaticallyCrossOutNumbers: automaticallyCrossOutNumbersState,
+                lastCrossedOutDigitFillsLineWithCrosses:
+                    settingsGame.lastCrossedOutDigitFillsLineWithCrosses,
+            })
+        );
+    }
+
     return (
         <ul className="modal-body mb-0 py-1">
             <li className="ms-2">
-                Highlight cells with an error:
-                <div className="form-check">
-                    <label className="form-check-label" htmlFor="higlightNever">
-                        never
-                        <input
-                            role="button"
-                            className="form-check-input"
-                            type="radio"
-                            name="highlightRadio"
-                            id="higlightNever"
+                {t('highlightCellsWithError')}
+                {timingsStringValuesArray.map((item) => {
+                    return (
+                        <FormCheckItem
+                            key={`${item}-highlightKey`}
+                            value={t(`timing${item}`)}
+                            name={GameRadioSettingsCategories.HIGHLIGHT}
+                            id={`higlight${item}`}
+                            isChecked={item === settingsGame.highlightCellsWithError}
+                            handleRadioButtonClick={() =>
+                                handleRadioButtonChange(
+                                    GameRadioSettingsCategories.HIGHLIGHT,
+                                    item
+                                )
+                            }
                         />
-                    </label>
-                </div>
-                <div className="form-check">
-                    <label className="form-check-label" htmlFor="higlight1Sec">
-                        1 sec
-                        <input
-                            role="button"
-                            className="form-check-input"
-                            type="radio"
-                            name="highlightRadio"
-                            id="higlight1Sec"
-                        />
-                    </label>
-                </div>
-                <div className="form-check">
-                    <label className="form-check-label" htmlFor="higlight2Sec">
-                        2 sec
-                        <input
-                            role="button"
-                            className="form-check-input"
-                            type="radio"
-                            name="highlightRadio"
-                            id="higlight2Sec"
-                        />
-                    </label>
-                </div>
-                <div className="form-check">
-                    <label className="form-check-label" htmlFor="higlight10Sec">
-                        10 sec
-                        <input
-                            role="button"
-                            className="form-check-input"
-                            type="radio"
-                            name="highlightRadio"
-                            id="higlight10Sec"
-                        />
-                    </label>
-                </div>
-                <div className="form-check">
-                    <label className="form-check-label" htmlFor="higlight30Sec">
-                        30 sec
-                        <input
-                            role="button"
-                            className="form-check-input"
-                            type="radio"
-                            name="highlightRadio"
-                            id="higlight30Sec"
-                        />
-                    </label>
-                </div>
-                <div className="form-check">
-                    <label className="form-check-label" htmlFor="higlight5min">
-                        5 min
-                        <input
-                            role="button"
-                            className="form-check-input"
-                            type="radio"
-                            name="highlightRadio"
-                            id="higlight5min"
-                        />
-                    </label>
-                </div>
+                    );
+                })}
             </li>
             <li className="ms-2">
-                Automatically cross out numbers:
-                <div className="form-check">
-                    <label className="form-check-label" htmlFor="crossOutNever">
-                        never
-                        <input
-                            role="button"
-                            className="form-check-input"
-                            type="radio"
-                            name="crossOutRadio"
-                            id="crossOutNever"
+                {t('automaticallyCrossOutNumbers')}
+                {timingsStringValuesArray.map((item) => {
+                    return (
+                        <FormCheckItem
+                            key={`${item}-crossOutKey`}
+                            value={t(`timing${item}`)}
+                            name={GameRadioSettingsCategories.CROSS}
+                            id={`cross${item}`}
+                            isChecked={item === settingsGame.automaticallyCrossOutNumbers}
+                            handleRadioButtonClick={() =>
+                                handleRadioButtonChange(
+                                    GameRadioSettingsCategories.CROSS,
+                                    item
+                                )
+                            }
                         />
-                    </label>
-                </div>
-                <div className="form-check">
-                    <label className="form-check-label" htmlFor="crossOut1Sec">
-                        1 sec
-                        <input
-                            role="button"
-                            className="form-check-input"
-                            type="radio"
-                            name="crossOutRadio"
-                            id="crossOut1Sec"
-                        />
-                    </label>
-                </div>
-                <div className="form-check">
-                    <label className="form-check-label" htmlFor="crossOut2Sec">
-                        2 sec
-                        <input
-                            role="button"
-                            className="form-check-input"
-                            type="radio"
-                            name="crossOutRadio"
-                            id="crossOut2Sec"
-                        />
-                    </label>
-                </div>
-                <div className="form-check">
-                    <label className="form-check-label" htmlFor="crossOut10Sec">
-                        10 sec
-                        <input
-                            role="button"
-                            className="form-check-input"
-                            type="radio"
-                            name="crossOutRadio"
-                            id="crossOut10Sec"
-                        />
-                    </label>
-                </div>
-                <div className="form-check">
-                    <label className="form-check-label" htmlFor="crossOut30Sec">
-                        30 sec
-                        <input
-                            role="button"
-                            className="form-check-input"
-                            type="radio"
-                            name="crossOutRadio"
-                            id="crossOut30Sec"
-                        />
-                    </label>
-                </div>
-                <div className="form-check">
-                    <label className="form-check-label" htmlFor="crossOut5min">
-                        5 min
-                        <input
-                            role="button"
-                            className="form-check-input"
-                            type="radio"
-                            name="crossOutRadio"
-                            id="crossOut5min"
-                        />
-                    </label>
-                </div>
+                    );
+                })}
             </li>
             <li className="ms-2">
                 <div className="form-check form-switch">
                     <label className="form-check-label" htmlFor="flexSwitchCheckChecked">
-                        The last crossed out digit fills the line with crosses
+                        {t('lastCrossedOutDigitFillsLineWithCrosses')}
                         <input
                             role="button"
                             className="form-check-input"
                             type="checkbox"
                             id="flexSwitchCheckChecked"
+                            checked={settingsGame.lastCrossedOutDigitFillsLineWithCrosses}
+                            onChange={handleCrossedOutDigitFillsLineWithCrossesInput}
                         />
                     </label>
                 </div>

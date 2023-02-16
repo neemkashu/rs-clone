@@ -1,4 +1,5 @@
-import { MouseEventHandler } from 'react';
+import React, { MouseEventHandler } from 'react';
+import { SettingsTimingsEnum } from './enums';
 
 export type fieldPlace = 'header' | 'aside' | 'area' | 'miniature';
 
@@ -31,6 +32,50 @@ export type NonogramObject = {
         >;
     };
 };
+
+export type CatalogItemProps = {
+    catalogItem: NonogramObject;
+    cardNumber: number;
+};
+
+export type SpecificLanguageButtonPropsType = {
+    id: string;
+    svg: React.ReactNode;
+    active?: string;
+    handleLang: (e: React.MouseEvent) => void;
+};
+
+export type FormCheckItemPropsType = {
+    value: string;
+    name: string;
+    id: string;
+    isChecked?: boolean;
+    handleRadioButtonClick: (e: React.ChangeEvent) => void;
+};
+
+export type SettingsCategoryItemPropsType = {
+    name: string;
+    id: string;
+    active?: string;
+    handleSettingsCategorySelect: (e: React.MouseEvent) => void;
+};
+
+export type NonogramSettingsMainState = {
+    showNonogramTitlesBeforeSolving: boolean;
+    showNonogramThumbnailsBeforeSolving: boolean;
+};
+
+export type NonogramSettingsGameState = {
+    highlightCellsWithError: SettingsTimingsEnum;
+    automaticallyCrossOutNumbers: SettingsTimingsEnum;
+    lastCrossedOutDigitFillsLineWithCrosses: boolean;
+};
+
+export type NonogramSettingsViewState = {
+    markingAnEmptyCell: string;
+    showGuessTime: boolean;
+};
+
 export enum FieldPlace {
     HEADER = 'header',
     ASIDE = 'aside',

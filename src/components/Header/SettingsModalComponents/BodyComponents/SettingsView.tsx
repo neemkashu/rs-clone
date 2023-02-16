@@ -1,26 +1,73 @@
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useAppSelector, useAppDispatch } from '../../../hooks';
+import { changedViewSettings } from '../settingsSlice';
+
 export function SettingsViewContent() {
+    const { t } = useTranslation();
+    const settingsView = useAppSelector((state) => state.settings.view);
+    const dispatch = useAppDispatch();
+    const isDot =
+        settingsView.markingAnEmptyCell === 'точка' ||
+        settingsView.markingAnEmptyCell === 'dot' ||
+        settingsView.markingAnEmptyCell === 'punkt';
+
+    useEffect(() => {
+        dispatch(
+            changedViewSettings({
+                markingAnEmptyCell: t(isDot ? 'dot' : 'cross'),
+                showGuessTime: settingsView.showGuessTime,
+            })
+        );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [t]);
+
+    function returnEmptyCellStateInBoolean() {
+        if (settingsView.markingAnEmptyCell === t('dot')) return false;
+        return true;
+    }
+
+    function handleEmptyCellSettingChange() {
+        if (settingsView.markingAnEmptyCell === t('dot')) {
+            dispatch(
+                changedViewSettings({
+                    markingAnEmptyCell: t('cross'),
+                    showGuessTime: settingsView.showGuessTime,
+                })
+            );
+        } else {
+            dispatch(
+                changedViewSettings({
+                    markingAnEmptyCell: t('dot'),
+                    showGuessTime: settingsView.showGuessTime,
+                })
+            );
+        }
+    }
+
+    function handleGuessTimeChecked() {
+        dispatch(
+            changedViewSettings({
+                markingAnEmptyCell: settingsView.markingAnEmptyCell,
+                showGuessTime: !settingsView.showGuessTime,
+            })
+        );
+    }
+
     return (
         <ul className="modal-body mb-0 py-1">
             <li className="ms-2">
-                Marking an empty cell:
+                {t('markingEmptyCell')}
                 <div className="form-check form-switch">
                     <label className="form-check-label" htmlFor="emptyCell">
-                        <span id="emptyCellText">dot</span>
+                        {settingsView.markingAnEmptyCell}
                         <input
                             role="button"
-                            onClick={(e) => {
-                                const currentInput = e.target as HTMLInputElement;
-                                const textContainer = currentInput
-                                    .closest('label')
-                                    ?.querySelector('#emptyCellText') as HTMLSpanElement;
-                                // maybe I will use useRef here,
-                                // when I understand how to work with it
-                                textContainer.innerText =
-                                    textContainer.innerText === 'dot' ? 'cross' : 'dot';
-                            }}
                             className="form-check-input"
                             type="checkbox"
                             id="emptyCell"
+                            onChange={handleEmptyCellSettingChange}
+                            checked={returnEmptyCellStateInBoolean()}
                         />
                     </label>
                 </div>
@@ -28,12 +75,14 @@ export function SettingsViewContent() {
             <li className="ms-2">
                 <div className="form-check form-switch">
                     <label className="form-check-label" htmlFor="guessTime">
-                        Show guess time
+                        {t('showGuessTime')}
                         <input
                             role="button"
                             className="form-check-input"
                             type="checkbox"
                             id="guessTime"
+                            checked={settingsView.showGuessTime}
+                            onChange={handleGuessTimeChecked}
                         />
                     </label>
                 </div>
