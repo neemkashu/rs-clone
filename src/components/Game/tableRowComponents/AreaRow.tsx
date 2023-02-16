@@ -4,7 +4,12 @@ import { store } from '../../store';
 import AreaCell from '../fieldParts/AreaCell';
 import { filledLineHandler } from '../gameLogic/filledLineHandler';
 import { mistakesHandler } from '../gameLogic/mistakesHandler';
-import { selectUserSolution, updateAreaCell, updateMistakeData } from '../gameSlice';
+import {
+    paintDrag,
+    selectUserSolution,
+    updateAreaCell,
+    updateMistakeData,
+} from '../gameSlice';
 import {
     AreaCellStyle,
     CellAreaState,
@@ -107,7 +112,14 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                     // console.log('on drag start!', indexRow, indexNumberRow);
                 };
                 const handleDragEnter: MouseEventHandler = (event) => {
-                    handlerFillSquare();
+                    dispatch(
+                        paintDrag({
+                            paint: CellAreaState.FILLED,
+                            indexRow,
+                            indexNumberRow,
+                        })
+                    );
+                    // handlerFillSquare();
                 };
                 const handleDrop: MouseEventHandler = (event) => {
                     // event.preventDefault();

@@ -16,7 +16,6 @@ export function WinChecker(): JSX.Element {
     const [isWin, setIsWin] = useState(false);
 
     useEffect(() => {
-        console.warn('gameStatus', gameStatus);
         if (gameStatus && gameStatus !== GameStatus.FINISHED) {
             setIsWin(handleIsWinnerCheck(nonogramRaw, userSolution, gameStatus));
             if (isWin) {

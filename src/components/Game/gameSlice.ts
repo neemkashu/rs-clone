@@ -1,5 +1,10 @@
 /* eslint-disable no-param-reassign */
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+    createAction,
+    createAsyncThunk,
+    createSlice,
+    PayloadAction,
+} from '@reduxjs/toolkit';
 // eslint-disable-next-line import/no-cycle
 import undoable from 'redux-undo';
 // eslint-disable-next-line import/no-cycle
@@ -10,6 +15,7 @@ import { sendGameToServer } from './api/saveGame';
 import { makeInitialSaveGame, unifyTwoDimensionalArray } from './gameUtils/helpers';
 import {
     CellAreaState,
+    CellAreaStateType,
     ClickType,
     FieldPlace,
     fieldPlace,
@@ -20,8 +26,11 @@ import {
     UserGameData,
 } from './gameUtils/types';
 
-export const AREA_STATE_STYLES = ['crossed-square', 'empty-square', 'filled-square'];
-
+export type DragCellInfo = {
+    paint: CellAreaStateType;
+    indexRow: number;
+    indexNumberRow: number;
+};
 export enum LoadStatus {
     PENDING = 'LOADING',
     FULFILLED = 'READY',
@@ -34,6 +43,7 @@ export interface GameState {
     errorMessage: string;
     incorrectCells: UserFieldData['currentUserSolution'] | null;
     timers: ReturnType<typeof setTimeout>[];
+    paintCells: DragCellInfo[];
 }
 
 const initialState: GameState = {
@@ -43,6 +53,7 @@ const initialState: GameState = {
     errorMessage: '',
     incorrectCells: null,
     timers: [],
+    paintCells: [],
 };
 
 export const loadNonogramByID = createAsyncThunk(
@@ -63,7 +74,26 @@ export const saveUserGameByID = createAsyncThunk(
         return ResponseStatus.ERROR;
     }
 );
-
+export const paintDrag = createAction(
+    'game/drag',
+    ({
+        paint,
+        indexRow,
+        indexNumberRow,
+    }: {
+        paint: CellAreaStateType;
+        indexRow: number;
+        indexNumberRow: number;
+    }) => {
+        return {
+            payload: {
+                paint,
+                indexRow,
+                indexNumberRow,
+            },
+        };
+    }
+);
 // another slice needs different name field
 export const gameSlice = createSlice({
     name: 'game',
@@ -210,6 +240,10 @@ export const gameSlice = createSlice({
         builder.addCase(saveUserGameByID.rejected, (state, action) => {
             state.loadNonogramStatus = LoadStatus.REJECTED;
             state.errorMessage = action.error.message ?? 'error when loading nonogram';
+        });
+        builder.addCase(paintDrag, (state, action) => {
+            const { paint, indexRow, indexNumberRow } = action.payload;
+            console.warn('paint type', paint, indexRow, indexNumberRow);
         });
     },
 });
