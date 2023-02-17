@@ -168,6 +168,6 @@ export function checkIsPainted({
     alreadyPainted: DragCellInfo[];
 }) {
     const hash = makeHash(indexRow, indexNumberRow);
-    console.warn('check painted');
+    // console.warn('check painted');
     return alreadyPainted.some((cell) => cell.hash === hash);
 }

@@ -15,6 +15,15 @@ export interface CellProps {
     handleDragEnter?: MouseEventHandler;
     handleDragDrop?: MouseEventHandler;
 }
+
+function handleFirstClick(
+    dispatch: ReturnType<typeof useAppDispatch>,
+    gameStatus?: GameStatus
+): void {
+    if (gameStatus !== GameStatus.STARTED && gameStatus !== GameStatus.FINISHED) {
+        dispatch(changeGameStatus(GameStatus.STARTED));
+    }
+}
 export default function Cell({
     cellContent,
     styles,
@@ -33,19 +42,20 @@ export default function Cell({
         if (handleClick) {
             handleClick();
         }
-        if (gameStatus !== GameStatus.STARTED && gameStatus !== GameStatus.FINISHED) {
-            console.log('gameStatus', gameStatus);
-            dispatch(changeGameStatus(GameStatus.STARTED));
-        }
+        handleFirstClick(dispatch, gameStatus);
     }
     const handlersContextMouse: MouseEventHandler = (event?) => {
         event?.preventDefault();
         if (handleContext) {
             handleContext();
         }
-        if (gameStatus !== GameStatus.STARTED && gameStatus !== GameStatus.FINISHED) {
-            dispatch(changeGameStatus(GameStatus.STARTED));
+        handleFirstClick(dispatch, gameStatus);
+    };
+    const handlersDrag: DragEventHandler = (event) => {
+        if (handleDrag) {
+            handleDrag(event);
         }
+        handleFirstClick(dispatch, gameStatus);
     };
 
     return (
@@ -58,7 +68,7 @@ export default function Cell({
         >
             <div
                 draggable={isDraggable}
-                onDragStart={handleDrag}
+                onDragStart={handlersDrag}
                 onDragEnter={handleDragEnter}
                 onDrop={handleDragDrop}
                 className={`square lh-1 text-center ${stateStyle

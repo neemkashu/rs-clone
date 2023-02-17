@@ -25,6 +25,7 @@ export function RestartButton() {
             dispatch(updateUserTime(0));
             dispatch(clearMistakes());
             dispatch(ActionCreators.clearHistory());
+            dispatch(clearMistakes());
         }
     };
     return <Button caption={caption} buttonClass={buttonClass} handler={handleClick} />;

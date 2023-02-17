@@ -5,7 +5,9 @@ import { ACTIONS_TO_INCLUDE, gameSlice } from './Game/gameSlice';
 
 export const store = configureStore({
     reducer: {
-        game: undoable(gameSlice.reducer, { filter: includeAction(ACTIONS_TO_INCLUDE) }),
+        game: undoable(gameSlice.reducer, {
+            filter: includeAction(ACTIONS_TO_INCLUDE),
+        }),
         // ... reducers from other slices
     },
 });

@@ -133,7 +133,11 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                             indexNumberRow,
                         })
                     );
-                    setPaintStyle('painted-square');
+                    setTimeout(() => {
+                        console.error('UPDATE STYLE PAINTER');
+                        dispatch(updatePaintProcess(true));
+                    }, 0);
+                    setPaintStyle(() => 'painted-square');
                     console.log('on drag start!', indexRow, indexNumberRow);
                 };
                 const handleDragEnter: MouseEventHandler = (event) => {
@@ -145,7 +149,7 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                             indexNumberRow,
                         })
                     );
-                    setPaintStyle('painted-square');
+                    setPaintStyle(() => 'painted-square');
                 };
                 const handleDragDrop: MouseEventHandler = (event) => {
                     console.log('on drag drop!', indexRow, indexNumberRow);
@@ -169,7 +173,8 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                         handleDragEnter={handleDragEnter}
                         handleDragDrop={handleDragDrop}
                         stateStyle={[
-                            style || paintStyle,
+                            style,
+                            paintStyle,
                             isNotCorrect ? 'incorrect-fill' : '',
                         ]}
                         styles={[

@@ -62,10 +62,13 @@ const initialState: GameState = {
 
 export const loadNonogramByID = createAsyncThunk(
     'game/load/nonogram',
-    async (id: string) => {
-        const nonogram = await getNonogramByID(id);
-        const userGame = await getGameState(id);
-        return { nonogram, userGame };
+    async (id?: string) => {
+        if (id) {
+            const nonogram = await getNonogramByID(id);
+            const userGame = await getGameState(id);
+            return { nonogram, userGame };
+        }
+        return { nonogram: null, userGame: null };
     }
 );
 export const saveUserGameByID = createAsyncThunk(
@@ -166,7 +169,7 @@ export const gameSlice = createSlice({
                 indexRow: number;
             }>
         ) {
-            console.log('update cell!', action.payload.indexRow);
+            // console.log('update cell!', action.payload.indexRow);
             if (state.userGame) {
                 const { indexRow, indexNumberRow, clickType } = action.payload;
                 const cell = state.userGame.currentUserSolution[indexRow][indexNumberRow];
@@ -274,7 +277,7 @@ export const gameSlice = createSlice({
                 alreadyPainted,
             });
             if (!isPainted) {
-                console.warn('paint type', paint, indexRow, indexNumberRow);
+                // console.warn('paint type', paint, indexRow, indexNumberRow);
                 state.paintedCells.push({
                     paint,
                     indexRow,
@@ -314,4 +317,6 @@ export const ACTIONS_TO_INCLUDE = [
     'game/updateHintCell',
     'game/updateAreaCell',
     'game/updatePaintedCells',
+    'game/clearMistakes',
+    'game/load/nonogram/fulfilled',
 ];
