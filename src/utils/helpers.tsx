@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, ReactNode } from 'react';
 import { NonogramTime } from './types';
 import { StorageKeys } from './storage';
 
@@ -59,6 +59,36 @@ export function getEmptyCellSettingInCurrenLanguage() {
         return 'punkt';
     }
     return 'dot';
+}
+
+export function drawImageFromMatrix(matrix: Array<number[]>): string {
+    // Define your matrix here (in this example, it's a 2D array)
+    const properMatrix = matrix.map((item) =>
+        item.map((nestedItem) => (nestedItem === 0 ? 255 : 0))
+    );
+    // Get the canvas element
+    const canvas = document.createElement('canvas');
+
+    // Set the canvas dimensions to match the matrix size
+    canvas.width = properMatrix[0].length;
+    canvas.height = properMatrix.length;
+
+    // Get the canvas 2D context
+    const ctx = canvas.getContext('2d');
+
+    // Loop through each pixel in the matrix and draw it onto the canvas
+    for (let y = 0; y < properMatrix.length; y += 1) {
+        for (let x = 0; x < properMatrix[y].length; x += 1) {
+            const pixel = properMatrix[y][x];
+            if (ctx) {
+                ctx.fillStyle = `rgb(${pixel}, ${pixel}, ${pixel})`;
+                ctx.fillRect(x, y, 1, 1);
+            }
+        }
+    }
+
+    // Convert the canvas to a PNG image and set it as the src of an image element
+    return canvas.toDataURL('image/png');
 }
 
 export function getUserCurrentTimes(

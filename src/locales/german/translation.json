@@ -25,5 +25,6 @@
     "cross": "kreuzen",
     "setAllToDefault": "Alle auf Standard setzen",
     "size": "Größe",
-    "difficulty": "Schwierigkeit"
+    "difficulty": "Schwierigkeit",
+    "print": "Drucken"
 }

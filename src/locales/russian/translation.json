@@ -25,5 +25,6 @@
     "cross": "крестик",
     "setAllToDefault": "Установить всё по умолчанию",
     "size": "Размер",
-    "difficulty": "Сложность"
+    "difficulty": "Сложность",
+    "print": "Печать"
 }

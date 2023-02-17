@@ -3,7 +3,7 @@ import { NonogramObject } from '../utils/types';
 export async function getCatalogDB(): Promise<NonogramObject[]> {
     try {
         const response = await fetch(
-            'https://rs-clone-backend-1hqs.onrender.com/nonograms',
+            'https://rs-clone-backend-1hqs.onrender.com/nonograms?_limit=10',
             {
                 method: 'GET',
             }

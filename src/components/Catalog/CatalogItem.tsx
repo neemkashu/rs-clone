@@ -2,6 +2,7 @@ import './CatalogItem.scss';
 import { useTranslation } from 'react-i18next';
 import { CatalogItemProps } from '../../utils/types';
 import { LanguagesShortNamesEnum } from '../../utils/enums';
+import { drawImageFromMatrix } from '../../utils/helpers';
 
 export function CatalogItem({ catalogItem, cardNumber }: CatalogItemProps) {
     const { t, i18n } = useTranslation();
@@ -29,8 +30,18 @@ export function CatalogItem({ catalogItem, cardNumber }: CatalogItemProps) {
         <div className="catalog-item border border-secondary border-2 rounded">
             <div className="p-1">
                 <div className="">{cardNumber}</div>
-                <a href="/" className="catalog-item__image border border-2 rounded">
-                    Place for Image
+                <a
+                    href="/"
+                    className="catalog-item__image border border-2 rounded d-flex align-items-center p-1"
+                >
+                    <img
+                        src={drawImageFromMatrix(catalogItem.nonogram.goal)}
+                        alt="nonogram preview"
+                        style={{
+                            width: '100%',
+                            maxHeight: '100%',
+                        }}
+                    />
                 </a>
                 <div>
                     <div className="text-truncate">{getNonogramTitle()}</div>
@@ -41,7 +52,7 @@ export function CatalogItem({ catalogItem, cardNumber }: CatalogItemProps) {
                     <div>
                         {t('difficulty')}: {catalogItem.nonogram.difficulty}
                     </div>
-                    <div>Print</div>
+                    <div>{t('print')}</div>
                 </div>
             </div>
         </div>
