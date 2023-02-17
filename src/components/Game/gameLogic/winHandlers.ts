@@ -33,11 +33,9 @@ export function handleIsWinnerCheck(
     const puzzleSolution = nonogramRaw.nonogram.goal;
 
     if (userSolution && gameStatus !== GameStatus.FINISHED) {
-        const isWin = puzzleSolution.every((rowSolution, indexRow) => {
-            return rowSolution.every((cellSolution, indexColumn) => {
-                const userCell = userSolution[indexRow][indexColumn];
-                return checkCorrectCell(userCell, cellSolution);
-            });
+        const userSolutionFlat = userSolution.flat();
+        const isWin = puzzleSolution.flat().every((cell, indexRow) => {
+            return checkCorrectCell(userSolutionFlat[indexRow], cell);
         });
         return isWin;
     }

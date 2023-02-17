@@ -12,7 +12,7 @@ function ColumnHints(): JSX.Element {
     const columns = nonogramRaw?.nonogram.columns;
     const columnsUnified = unifyTwoDimensionalArray(columns);
     const columnsHeight = columnsUnified[0]?.length;
-    console.warn('coluymns hints rerender');
+    // console.warn('coluymns hints rerender');
     return (
         <table className="table table-bordered nonogram-hints-border">
             <tbody className="numbers-column-container">

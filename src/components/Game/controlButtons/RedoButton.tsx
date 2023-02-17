@@ -7,14 +7,13 @@ import { Button } from './Button';
 
 const buttonClass = '';
 
-export function UndoButton({ caption }: { caption: string }) {
+export function RedoButton({ caption }: { caption: string }) {
     const dispatch = useAppDispatch();
     const gameState = useAppSelector(selectUserState);
-    const canUndo = useAppSelector((state) => state.game.past.length > 1);
+    const canRedo = useAppSelector((state) => state.game.future.length > 0);
 
-    const isActive = canUndo && gameState !== GameStatus.FINISHED;
-
-    const handleClick = () => dispatch(ActionCreators.undo());
+    const isActive = canRedo && gameState !== GameStatus.FINISHED;
+    const handleClick = () => dispatch(ActionCreators.redo());
 
     return (
         <Button

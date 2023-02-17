@@ -33,7 +33,8 @@ export default function Cell({
         if (handleClick) {
             handleClick();
         }
-        if (!gameStatus) {
+        if (gameStatus !== GameStatus.STARTED && gameStatus !== GameStatus.FINISHED) {
+            console.log('gameStatus', gameStatus);
             dispatch(changeGameStatus(GameStatus.STARTED));
         }
     }
@@ -42,7 +43,7 @@ export default function Cell({
         if (handleContext) {
             handleContext();
         }
-        if (!store.getState().game.present.userGame?.state) {
+        if (gameStatus !== GameStatus.STARTED && gameStatus !== GameStatus.FINISHED) {
             dispatch(changeGameStatus(GameStatus.STARTED));
         }
     };
