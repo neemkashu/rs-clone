@@ -19,7 +19,7 @@ function DrawArea(): JSX.Element {
     const dispatch = useAppDispatch();
 
     const handleDrop = () => {
-        console.error('DRAW DROP');
+        console.log('%c DRAW DROP!', 'background: #eeeeff; color: #000');
         const alreadyPainted = store.getState().game.present.paintedCells;
         alreadyPainted.forEach((cell) => {
             const { indexRow, indexNumberRow } = cell;

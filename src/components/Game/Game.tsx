@@ -49,7 +49,7 @@ function Game({ id }: { id?: string } = { id: ID }): JSX.Element {
     }, []);
 
     return (
-        <div className="p-0 p-sm-1 d-flex flex-column gap-2">
+        <div className="p-0 mb-2 p-sm-1 d-flex flex-column gap-2">
             {nonogramInStore && (
                 <>
                     <GameHeader />

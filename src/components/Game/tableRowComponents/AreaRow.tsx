@@ -118,7 +118,6 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                 };
 
                 const handleDrag: DragEventHandler = (event) => {
-                    console.error('event.button', event.button);
                     const dragCell = event.target;
                     if (dragCell instanceof HTMLElement) {
                         dragCell.style.opacity = '0';
@@ -134,14 +133,17 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                         })
                     );
                     setTimeout(() => {
-                        console.error('UPDATE STYLE PAINTER');
+                        console.log(
+                            '%c UPDATE STYLE PAINTER',
+                            'background: #ddffff; color: #000'
+                        );
                         dispatch(updatePaintProcess(true));
                     }, 0);
                     setPaintStyle(() => 'painted-square');
-                    console.log('on drag start!', indexRow, indexNumberRow);
+                    // console.log('on drag start!', indexRow, indexNumberRow);
                 };
                 const handleDragEnter: MouseEventHandler = (event) => {
-                    console.log('drag enter', indexRow, indexNumberRow);
+                    // console.log('drag enter', indexRow, indexNumberRow);
                     dispatch(
                         paintDrag({
                             paint: CellAreaState.FILLED,
@@ -152,7 +154,7 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                     setPaintStyle(() => 'painted-square');
                 };
                 const handleDragDrop: MouseEventHandler = (event) => {
-                    console.log('on drag drop!', indexRow, indexNumberRow);
+                    // console.log('on drag drop!', indexRow, indexNumberRow);
                     dispatch(updatePaintedCells());
                     dispatch(updatePaintProcess(false));
                 };
