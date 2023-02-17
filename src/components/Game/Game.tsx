@@ -14,15 +14,18 @@ import {
 import { WinChecker } from './gameLogic/WinChecker';
 import { store } from '../store';
 
-const ID = 'nsNWHaYMXSERIHX1juXN'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
+const ID = 'aI7dRHAVG7gzTishlpjM'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
 // nsNWHaYMXSERIHX1juXN
-function Game(): JSX.Element {
+function Game({ id }: { id?: string } = { id: ID }): JSX.Element {
     // const userGame = useAppSelector((state) => state.game.present.userGame);
+    if (!id) {
+        // eslint-disable-next-line no-param-reassign
+        id = ID;
+    }
     const nonogramInStore = useAppSelector(selectNonogramRaw);
     const dispatch = useAppDispatch();
-
     useEffect(() => {
-        dispatch(loadNonogramByID(ID));
+        dispatch(loadNonogramByID(id));
 
         return () => {
             dispatch(
@@ -33,7 +36,7 @@ function Game(): JSX.Element {
             );
             dispatch(clearTimers());
         };
-    }, [dispatch]);
+    }, [dispatch, id]);
 
     useEffect(() => {
         const preventCursorMorphing = (event: Event) => {
