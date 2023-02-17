@@ -14,6 +14,7 @@ const USER_TIMEOUT = 2000;
 function DrawArea(): JSX.Element {
     // const rowsUnified = nonogramRaw?.nonogram.goal;
     const rowsUnified = store.getState().game.present.userGame?.currentUserSolution;
+    // console.warn('DrawArea rerender');
     const rowLinesAmount = rowsUnified?.length ?? 0;
     const dispatch = useAppDispatch();
 

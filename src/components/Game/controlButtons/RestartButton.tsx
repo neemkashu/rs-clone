@@ -4,6 +4,7 @@ import {
     clearMistakes,
     selectNonogramRaw,
     updateUserGame,
+    updateUserTime,
 } from '../gameSlice';
 import { makeInitialSaveGame, setTimeToStorage } from '../gameUtils/helpers';
 import { GameStatus, NonogramRaw } from '../gameUtils/types';
@@ -19,9 +20,10 @@ export function RestartButton() {
 
     const handleClick = () => {
         if (userGame) {
-            dispatch(updateUserGame(userGame));
-            dispatch(clearMistakes());
             dispatch(changeGameStatus(GameStatus.INITIAL));
+            dispatch(updateUserGame(userGame));
+            dispatch(updateUserTime(0));
+            dispatch(clearMistakes());
             dispatch(ActionCreators.clearHistory());
         }
     };

@@ -13,7 +13,6 @@ function fillRow(indexRow: number, dispatch: ReturnType<typeof useAppDispatch>) 
     const hintLine = store.getState().game.present.userGame?.currentUserRows[indexRow];
     const fieldLine =
         store.getState().game.present.userGame?.currentUserSolution[indexRow];
-    console.warn('hintLine', hintLine);
     hintLine?.forEach((hint, index) => {
         if (hint) {
             dispatch(
@@ -45,7 +44,6 @@ function fillColumn(indexNumberRow: number, dispatch: ReturnType<typeof useAppDi
         store.getState().game.present.userGame?.currentUserSolution ?? null,
         indexNumberRow
     );
-    console.warn('hintColumn', hintLine);
     hintLine?.forEach((hint, index) => {
         if (hint) {
             dispatch(

@@ -114,7 +114,7 @@ export const gameSlice = createSlice({
                 const columnsUnified = unifyTwoDimensionalArray(columns);
                 const rows = action.payload.currentUserRows;
                 const rowsUnified = unifyTwoDimensionalArray(rows);
-                console.warn('update user game!', rowsUnified);
+                console.warn('update user game!', action.payload.currentUserSolution);
                 state.userGame = {
                     state: action.payload.state,
                     currentUserSolution: action.payload.currentUserSolution,

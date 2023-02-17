@@ -23,7 +23,7 @@ function GameHeader(): JSX.Element {
     const nonogramData = useAppSelector(selectNonogramRaw);
     const { title, width, height } = nonogramData?.nonogram ?? {};
     const status = userNonogramData.data.currentGame.state;
-    const difficulty = getDifficulty();
+    const difficulty = nonogramData?.nonogram.difficulty;
     const showTitle = status === 'finished' ? title?.en : '*****';
     return (
         <div className="game-header">
