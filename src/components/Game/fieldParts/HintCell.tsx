@@ -16,7 +16,8 @@ export default function HintCell({
             handleClick={handler}
             handleContext={handler}
             cellContent={`${hint}`}
-            styles={[stateStyle, ...styles]}
+            stateStyle={[stateStyle]}
+            styles={[...styles]}
         />
     );
 }

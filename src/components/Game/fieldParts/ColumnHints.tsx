@@ -2,8 +2,6 @@ import { useContext } from 'react';
 import { unifyTwoDimensionalArray } from '../../../utils/helpers';
 import { FieldPlace, fieldPlace, GameStatus, NonogramRaw } from '../../../utils/types';
 import { useAppSelector } from '../../hooks';
-import { GameStatusContext } from '../contexts/context';
-import '../gameStyles/ColumnHints.scss';
 import TableAllRows from './TableAllRows';
 
 const location: fieldPlace = FieldPlace.HEADER;

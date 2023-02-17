@@ -1,4 +1,3 @@
-import './gameStyles/Field.scss';
 import ColumnHints from './fieldParts/ColumnHints';
 import DrawArea from './fieldParts/DrawArea';
 import RowHints from './fieldParts/RowHints';

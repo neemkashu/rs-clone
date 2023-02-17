@@ -5,7 +5,10 @@ import {
     NonogramRaw,
 } from '../gameUtils/types';
 
-const checkCorrectCell = (userCell: number | null, solutionCell: number): boolean => {
+export const checkCorrectCell = (
+    userCell: number | null,
+    solutionCell: number
+): boolean => {
     switch (solutionCell) {
         case CellAreaState.CROSSED: {
             return userCell === CellAreaState.EMPTY || userCell === CellAreaState.CROSSED;
@@ -19,22 +22,21 @@ const checkCorrectCell = (userCell: number | null, solutionCell: number): boolea
         }
     }
 };
-export function handleWinnerCheck(
+export function handleIsWinnerCheck(
     nonogramRaw: NonogramRaw,
     userSolution: (number | null)[][] | undefined,
     gameStatus: GameStatus | null
 ): boolean {
     const puzzleSolution = nonogramRaw.nonogram.goal;
 
-    let isWin = false;
-
     if (userSolution && gameStatus !== GameStatus.FINISHED) {
-        isWin = puzzleSolution.every((rowSolution, indexRow) => {
+        const isWin = puzzleSolution.every((rowSolution, indexRow) => {
             return rowSolution.every((cellSolution, indexColumn) => {
                 const userCell = userSolution[indexRow][indexColumn];
                 return checkCorrectCell(userCell, cellSolution);
             });
         });
+        return isWin;
     }
-    return isWin;
+    return false;
 }

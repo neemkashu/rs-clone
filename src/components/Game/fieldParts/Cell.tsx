@@ -6,6 +6,7 @@ import { store } from '../../store';
 
 export interface CellProps {
     cellContent: string;
+    stateStyle?: string[];
     styles?: string[];
     handleClick?: () => void;
     handleContext?: () => void;
@@ -13,11 +14,12 @@ export interface CellProps {
 export default function Cell({
     cellContent,
     styles,
+    stateStyle,
     handleClick,
     handleContext,
 }: CellProps): JSX.Element {
     const dispatch = useAppDispatch();
-    const gameStatus = useAppSelector((state) => state.game.status);
+    const gameStatus = useAppSelector((state) => state.game.userGame?.state);
 
     function handlersClickMouse() {
         if (handleClick) {
@@ -32,7 +34,7 @@ export default function Cell({
         if (handleContext) {
             handleContext();
         }
-        if (!gameStatus) {
+        if (!store.getState().game.userGame?.state) {
             dispatch(changeGameStatus(GameStatus.STARTED));
         }
     };
@@ -41,9 +43,9 @@ export default function Cell({
             role="presentation"
             onClick={handlersClickMouse}
             onContextMenu={handlersContextMouse}
-            className="cell-square"
+            className={`cell-square ${styles?.join(' ')}`}
         >
-            <div className={`square lh-1 text-center ${styles?.join(' ')}`}>
+            <div className={`square lh-1 text-center ${stateStyle?.join(' ')}`}>
                 {cellContent ?? ''}
             </div>
         </td>
