@@ -1,29 +1,41 @@
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeGameStatus } from '../gameSlice';
+import { store } from '../../store';
+import { changeGameStatus, selectNonogramRaw } from '../gameSlice';
 import { GameStatus, NonogramRaw } from '../gameUtils/types';
 import { WinComponent } from './WinComponent';
 import { handleIsWinnerCheck } from './winHandlers';
 
-export function WinChecker({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element {
+export function WinChecker(): JSX.Element {
     // console.warn('win checker is here!');
+    const nonogramRaw = useAppSelector(selectNonogramRaw);
     const dispatch = useAppDispatch();
     const userSolution = useAppSelector(
-        (state) => state.game.userGame?.currentUserSolution
+        (state) => state.game.present.userGame?.currentUserSolution
     );
-    const gameStatus = useAppSelector((state) => state.game.userGame?.state);
+    const gameStatus = useAppSelector((state) => state.game.present.userGame?.state);
     const [isWin, setIsWin] = useState(false);
 
     useEffect(() => {
-        // console.warn('gameStatus', gameStatus);
+        if (gameStatus === GameStatus.INITIAL) {
+            setIsWin(() => {
+                return false;
+            });
+        }
         if (gameStatus && gameStatus !== GameStatus.FINISHED) {
-            setIsWin(handleIsWinnerCheck(nonogramRaw, userSolution, gameStatus));
-            if (isWin) {
-                console.log('isWin', isWin);
+            setIsWin((previous) => {
+                const isActualWin = handleIsWinnerCheck(
+                    nonogramRaw,
+                    store.getState().game.present.userGame?.currentUserSolution,
+                    gameStatus
+                );
+                return isActualWin;
+            });
+            if (isWin && gameStatus !== GameStatus.INITIAL) {
                 dispatch(changeGameStatus(GameStatus.FINISHED));
             }
         }
     }, [nonogramRaw, userSolution, gameStatus, dispatch, isWin]);
 
-    return <div>{isWin && <WinComponent nonogramRaw={nonogramRaw} />}</div>;
+    return <div>{isWin && <WinComponent />}</div>;
 }

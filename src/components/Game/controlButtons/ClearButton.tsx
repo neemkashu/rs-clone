@@ -1,14 +1,23 @@
-import { clearMistakes, updateUserField } from '../gameSlice';
+import {
+    clearMistakes,
+    selectNonogramRaw,
+    selectUserState,
+    updateUserField,
+} from '../gameSlice';
 import { makeCleanField } from '../gameUtils/helpers';
-import { NonogramRaw } from '../gameUtils/types';
+import { GameStatus, NonogramRaw } from '../gameUtils/types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Button } from './Button';
 
-export function ClearButton({ nonogramRaw }: { nonogramRaw: NonogramRaw }) {
+export function ClearButton() {
+    const nonogramRaw = useAppSelector(selectNonogramRaw);
     const userGame = makeCleanField(nonogramRaw);
     const dispatch = useAppDispatch();
     const caption = 'Clear';
     const buttonClass = 'game-clear';
+
+    const gameState = useAppSelector(selectUserState);
+    const isActive = gameState !== GameStatus.FINISHED;
 
     const handleClick = () => {
         if (userGame) {
@@ -16,5 +25,12 @@ export function ClearButton({ nonogramRaw }: { nonogramRaw: NonogramRaw }) {
             dispatch(clearMistakes());
         }
     };
-    return <Button caption={caption} buttonClass={buttonClass} handler={handleClick} />;
+    return (
+        <Button
+            isActive={!isActive}
+            caption={caption}
+            buttonClass={buttonClass}
+            handler={handleClick}
+        />
+    );
 }
