@@ -1,7 +1,8 @@
 :root {
     --nonogram-square-width: 1rem;
-    --nonogram-number-width: calc(6px + var(--nonogram-square-width));
-    --cell-padding: 1px;
+    --nonogram-number-width: calc(2px + var(--nonogram-square-width));
+    --cell-padding: 0px;
+    --table-hover: rgba(63, 227, 96, 0.5);
 }
 .table {
     width: min-content;
@@ -12,7 +13,33 @@
 }
 .game-field {
     user-select: none;
+    position: relative;
+    overflow: hidden;
 }
 .chronometer {
     width: max-content;
+}
+.field-table > tbody > tr > td {
+    position: relative;
+}
+.field-table > tbody > tr > td:hover::after {
+    background-color: var(--table-hover);
+    content: '';
+    height: 200vh;
+    left: 0;
+    position: absolute;
+    top: -100vh;
+    width: var(--nonogram-square-width);
+    z-index: -1;
+}
+
+.field-table > tbody > tr > td:hover::before {
+    background-color: var(--table-hover);
+    content: '';
+    height: var(--nonogram-square-width);
+    left: -100vw;
+    position: absolute;
+    top: 0;
+    width: 200vw;
+    z-index: -2;
 }

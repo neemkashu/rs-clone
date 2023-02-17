@@ -2,14 +2,13 @@ import { NonogramRaw } from '../gameUtils/types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Button } from './Button';
 import { mistakesHandler } from '../gameLogic/mistakesHandler';
+import { selectUserSolution } from '../gameSlice';
 
 export function CheckButton() {
     const dispatch = useAppDispatch();
     const caption = 'Check';
     const buttonClass = '';
-    const userSolution = useAppSelector(
-        (state) => state.game.userGame?.currentUserSolution
-    );
+    const userSolution = useAppSelector(selectUserSolution);
 
     const handleClick = () => {
         if (userSolution) {

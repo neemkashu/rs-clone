@@ -1,10 +1,18 @@
-import { clearMistakes, updateUserGame } from '../gameSlice';
+import { ActionCreators } from 'redux-undo';
+import {
+    changeGameStatus,
+    clearMistakes,
+    selectNonogramRaw,
+    updateUserGame,
+    updateUserTime,
+} from '../gameSlice';
 import { makeInitialSaveGame, setTimeToStorage } from '../gameUtils/helpers';
-import { NonogramRaw } from '../gameUtils/types';
-import { useAppDispatch } from '../../hooks';
+import { GameStatus, NonogramRaw } from '../gameUtils/types';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Button } from './Button';
 
-export function RestartButton({ nonogramRaw }: { nonogramRaw: NonogramRaw }) {
+export function RestartButton() {
+    const nonogramRaw = useAppSelector(selectNonogramRaw);
     const userGame = makeInitialSaveGame(nonogramRaw);
     const dispatch = useAppDispatch();
     const caption = 'Restart';
@@ -12,7 +20,11 @@ export function RestartButton({ nonogramRaw }: { nonogramRaw: NonogramRaw }) {
 
     const handleClick = () => {
         if (userGame) {
+            dispatch(changeGameStatus(GameStatus.INITIAL));
             dispatch(updateUserGame(userGame));
+            dispatch(updateUserTime(0));
+            dispatch(clearMistakes());
+            dispatch(ActionCreators.clearHistory());
             dispatch(clearMistakes());
         }
     };

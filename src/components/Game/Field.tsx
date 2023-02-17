@@ -3,14 +3,15 @@ import DrawArea from './fieldParts/DrawArea';
 import RowHints from './fieldParts/RowHints';
 import { NonogramRaw } from '../../utils/types';
 
-function Field({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element {
+function Field(): JSX.Element {
+    // console.warn('FIELD RERENDER');
     return (
         <div className="d-flex justify-content-center">
             <div className="d-flex flex-column align-items-end game-field">
-                <ColumnHints nonogramRaw={nonogramRaw} />
+                <ColumnHints />
                 <div className="d-flex flex-nowrap">
-                    <RowHints nonogramRaw={nonogramRaw} />
-                    <DrawArea nonogramRaw={nonogramRaw} />
+                    <RowHints />
+                    <DrawArea />
                 </div>
             </div>
         </div>
