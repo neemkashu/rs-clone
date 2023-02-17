@@ -50,6 +50,7 @@ export interface NonogramHint {
 export interface Nonogram {
     height: number;
     width: number;
+    difficulty: number;
     title: Languages;
     colorMapping: { [key: number]: string };
     goal: number[][];
