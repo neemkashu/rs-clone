@@ -14,3 +14,9 @@ export async function getCatalogDB(): Promise<NonogramObject[]> {
         return [];
     }
 }
+
+// export async function registerUser(): Promise<NonogramObject[]> {
+//     try {
+//     } catch (e) {
+//     }
+// }

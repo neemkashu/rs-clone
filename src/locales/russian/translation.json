@@ -23,5 +23,16 @@
     "showGuessTime": "Показать время угадывания",
     "dot": "точка",
     "cross": "крестик",
-    "setAllToDefault": "Установить всё по умолчанию"
+    "setAllToDefault": "Установить всё по умолчанию",
+    "nameErrorTitle": "Неподходящее имя!",
+    "nameErrorBody": "Имя должно содержать слово не короче трёх букв латинского алфавита.",
+    "emailErrorTitle": "Неподходящий e-mail!",
+    "emailErrorBody": "E-mail должен содержать только цифры, буквы и знак подчёркивания.",
+    "passwordErrorTitle": "Неподходящий пароль!",
+    "passwordErrorBody": "Пароль должен быть не короче 8 символов и состоять только из цифр, букв или специальных символов (@$!%*#?&).",
+    "repeatPasswordErrorTitle": "Пароли не совпадают!",
+    "createAccountTitle": "Создать аккаунт",
+    "enterAccountTitle": "Войти в свой аккаунт",
+    "alreadyHaveAccount": "Уже есть аккаунт?",
+    "dontHaveAccount": "Ещё нет аккаунта?"
 }

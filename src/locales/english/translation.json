@@ -23,5 +23,16 @@
     "showGuessTime": "Show guess time",
     "dot": "dot",
     "cross": "cross",
-    "setAllToDefault": "Set all to default"
+    "setAllToDefault": "Set all to default",
+    "nameErrorTitle": "Incorrect name!",
+    "nameErrorBody": "The name must contain a word no shorter than three letters of the Latin alphabet.",
+    "emailErrorTitle": "Incorrect e-mail!",
+    "emailErrorBody": "Email must contain only numbers, letters and underscores.",
+    "passwordErrorTitle": "Incorrect password!",
+    "passwordErrorBody": "The password must be at least 8 characters long and contain only numbers, letters, or special characters (@$!%*#?&).",
+    "repeatPasswordErrorTitle": "Password mismatch!",
+    "createAccountTitle": "Create an account",
+    "enterAccountTitle": "Enter your account",
+    "alreadyHaveAccount": "Already have an account?",
+    "dontHaveAccount": "Don't have an account?"
 }

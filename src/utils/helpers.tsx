@@ -50,6 +50,70 @@ export function getInitialLanguage(): string {
     return 'en-EN';
 }
 
+export function validateUserNameInput(input: string): boolean {
+    if (input.match(/^([a-z]{3,})(\s{0,})$/gi)) return true;
+    return false;
+}
+
+export function validateUserEmailInput(input: string): boolean {
+    if (input.match(/^([\w]{3,})@([\w]+\.)([a-z]{2,5})$/gi)) return true;
+    return false;
+}
+
+export function validateUserPasswordInput(input: string): boolean {
+    if (input.match(/^[a-z\d@$!%*#?&]{8,}$/i)) return true;
+    return false;
+}
+
+export function validateUserRepeatPasswordInput(
+    input: string,
+    password: string
+): boolean {
+    if (input === password) return true;
+    return false;
+}
+
+export function checkUserNameInput(
+    name: string | undefined,
+    setIsUserNameNotValid: Dispatch<SetStateAction<boolean>>
+): void {
+    if (name && validateUserNameInput(name)) {
+        setIsUserNameNotValid(false);
+    } else setIsUserNameNotValid(true);
+}
+
+export function checkUserEmailInput(
+    email: string | undefined,
+    setIsUserEmailNotValid: Dispatch<SetStateAction<boolean>>
+): void {
+    if (email && validateUserEmailInput(email)) {
+        setIsUserEmailNotValid(false);
+    } else setIsUserEmailNotValid(true);
+}
+
+export function checkUserPasswordInput(
+    password: string | undefined,
+    setIsUserPasswordNotValid: Dispatch<SetStateAction<boolean>>
+): void {
+    if (password && validateUserPasswordInput(password)) {
+        setIsUserPasswordNotValid(false);
+    } else setIsUserPasswordNotValid(true);
+}
+
+export function checkUserRepeatPasswordInput(
+    password: string | undefined,
+    repeatPassword: string | undefined,
+    setIsUserRepeatPasswordNotValid: Dispatch<SetStateAction<boolean>>
+): void {
+    if (
+        password &&
+        repeatPassword &&
+        validateUserRepeatPasswordInput(repeatPassword, password)
+    ) {
+        setIsUserRepeatPasswordNotValid(false);
+    } else setIsUserRepeatPasswordNotValid(true);
+}
+
 export function getEmptyCellSettingInCurrenLanguage() {
     const initialLanguage = getInitialLanguage();
     if (initialLanguage === 'ru-RU') {

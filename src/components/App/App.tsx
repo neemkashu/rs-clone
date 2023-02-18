@@ -3,6 +3,8 @@ import { Route, Routes } from 'react-router-dom';
 import { Layout } from '../Layout/Layout';
 import { Main } from '../Main/Main';
 import { Catalog } from '../Catalog/Catalog';
+import { Register } from '../RegisterAuth/Register';
+import { Auth } from '../RegisterAuth/Auth';
 import Game from '../Game/Game';
 
 function App(): JSX.Element {
@@ -12,7 +14,8 @@ function App(): JSX.Element {
                 <Route index element={<Main />} />
                 <Route path="/catalog" element={<Catalog />} />
                 <Route path="/game" element={<Game />} />
-                <Route path="/game" element={<Catalog />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/auth" element={<Auth />} />
             </Route>
         </Routes>
     );
