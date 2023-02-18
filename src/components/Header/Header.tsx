@@ -25,7 +25,7 @@ export function Header(): JSX.Element {
     return (
         <>
             <SettingsModal />
-            <header className="container p-2 border-bottom border-start border-end border-3 rounded-bottom">
+            <header className="container p-2 border-secondary  border-3">
                 <div className="row flex-wrap">
                     <div className="col d-flex justify-content-between justify-content-sm-start gap-2 py-1">
                         {isBurgerBtnVisible && <AsideButton />}
@@ -41,10 +41,10 @@ export function Header(): JSX.Element {
                         <LanguageDropDownButton />
                     </div>
                     <div className="col d-flex justify-content-center justify-content-sm-end gap-2 py-1">
-                        <a href="/" className="btn btn-outline-success text-nowrap">
+                        <a href="/" className="btn btn-success text-nowrap">
                             {t('signIn')}
                         </a>
-                        <a href="/" className="btn btn-outline-primary text-nowrap">
+                        <a href="/" className="btn btn-primary text-nowrap">
                             {t('signUp')}
                         </a>
                     </div>
