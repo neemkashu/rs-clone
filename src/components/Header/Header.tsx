@@ -25,28 +25,30 @@ export function Header(): JSX.Element {
     return (
         <>
             <SettingsModal />
-            <header className="container p-2 border-secondary  border-3">
-                <div className="row flex-wrap">
-                    <div className="col d-flex justify-content-between justify-content-sm-start gap-2 py-1">
-                        {isBurgerBtnVisible && <AsideButton />}
-                        <button
-                            type="button"
-                            className="btn btn-outline-secondary"
-                            data-bs-toggle="modal"
-                            data-bs-target="#settingsModal"
-                        >
-                            ⚙
-                        </button>
-                        <ColorThemeButton />
-                        <LanguageDropDownButton />
-                    </div>
-                    <div className="col d-flex justify-content-center justify-content-sm-end gap-2 py-1">
-                        <a href="/" className="btn btn-success text-nowrap">
-                            {t('signIn')}
-                        </a>
-                        <a href="/" className="btn btn-primary text-nowrap">
-                            {t('signUp')}
-                        </a>
+            <header className="bg-dark">
+                <div className="header-container container p-2 border-secondary border-3">
+                    <div className="d-flex navbar bg-secondary flex-wrap px-3">
+                        <div className="col d-flex justify-content-between justify-content-sm-start gap-2 py-1">
+                            {isBurgerBtnVisible && <AsideButton />}
+                            <button
+                                type="button"
+                                className="btn btn-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#settingsModal"
+                            >
+                                ⚙
+                            </button>
+                            <ColorThemeButton />
+                            <LanguageDropDownButton />
+                        </div>
+                        <div className="col d-flex justify-content-center justify-content-sm-end gap-2 py-1">
+                            <a href="/" className="btn btn-success text-nowrap">
+                                {t('signIn')}
+                            </a>
+                            <a href="/" className="btn btn-primary text-nowrap">
+                                {t('signUp')}
+                            </a>
+                        </div>
                     </div>
                 </div>
             </header>

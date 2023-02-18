@@ -1,11 +1,20 @@
-$primary: #283618;
-$secondary: #606c38;
-$dark: #1b263b;
-$danger: #bb3e03;
-$warning: #dda15e;
-$body-bg: #fefae0;
-
+@import '../../theme/_variables_sketchy';
 @import '~bootstrap/scss/bootstrap';
+@import '../../theme/_bootswatch_sketchy';
+
+[data-bs-theme='dark'] {
+    // --bs-primary: #{$indigo};
+    // --bs-primary-bg-subtle: #{$indigo};
+    // --bs-primary-bg-subtle-dark: #{$indigo};
+
+    // .btn-primary {
+    //     --bs-btn-bg: #{$indigo};
+    // }
+    .bg-dark {
+        --bs-bg-opacity: 1;
+        background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
+    }
+}
 
 html {
     height: 100%;
@@ -20,6 +29,8 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    margin: 0 auto;
     padding: 0 1px;
+    width: 100%;
     height: 100%;
 }
