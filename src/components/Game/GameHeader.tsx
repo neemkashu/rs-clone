@@ -1,7 +1,6 @@
-import { userNonogramData } from '../../utils/mochas';
-import { NonogramRaw } from '../../utils/types';
+import { GameStatus, NonogramRaw } from '../../utils/types';
 import { useAppSelector } from '../hooks';
-import { selectNonogramRaw } from './gameSlice';
+import { selectNonogramRaw, selectUserState } from './gameSlice';
 import Progress from './Progress';
 
 // temp solution before getting file with all captions
@@ -10,8 +9,7 @@ const CAPTIONS = {
     difficulty: 'Difficulty',
     nonogram: 'Nonogram',
 };
-// temporary function before implementing the real one
-const getDifficulty = () => 0.24;
+const MAX_DIFFICULTY = 5;
 
 const {
     size: sizeCaption,
@@ -22,9 +20,13 @@ const {
 function GameHeader(): JSX.Element {
     const nonogramData = useAppSelector(selectNonogramRaw);
     const { title, width, height } = nonogramData?.nonogram ?? {};
-    const status = userNonogramData.data.currentGame.state;
+    const status = useAppSelector(selectUserState);
     const difficulty = nonogramData?.nonogram.difficulty;
-    const showTitle = status === 'finished' ? title?.en : '*****';
+    const isShowTitleBeforeSolve = useAppSelector(
+        (state) => state.settings.main.showNonogramTitlesBeforeSolving
+    );
+    const showTitle =
+        isShowTitleBeforeSolve || status === GameStatus.FINISHED ? title?.en : '*****';
     return (
         <div className="game-header">
             <h2>
@@ -34,9 +36,7 @@ function GameHeader(): JSX.Element {
                 <div>
                     {sizeCaption}: {width} ✖ {height}
                 </div>
-                <div>
-                    {difficultyCaption}: {difficulty}
-                </div>
+                <div>{`${difficultyCaption}: ${difficulty}/${MAX_DIFFICULTY}`}</div>
             </div>
             <Progress />
         </div>

@@ -6,6 +6,7 @@ import GameHeader from './GameHeader';
 import Chronometer from './Chronometer';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import {
+    clearGame,
     clearTimers,
     loadNonogramByID,
     saveUserGameByID,
@@ -14,27 +15,47 @@ import {
 import { WinChecker } from './gameLogic/WinChecker';
 import { store } from '../store';
 
-const ID = 'aI7dRHAVG7gzTishlpjM'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
-// nsNWHaYMXSERIHX1juXN
+function saveGameWhenInvisible(dispatch: ReturnType<typeof useAppDispatch>) {
+    const id = store.getState().game.present.currentNonogram?.id;
+    if (id) {
+        dispatch(
+            saveUserGameByID({
+                id,
+                userGame: store.getState().game.present.userGame,
+                bestTime: store.getState().game.present.bestTime,
+            })
+        );
+    }
+}
+const ID = 'nsNWHaYMXSERIHX1juXN'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
+// nsNWHaYMXSERIHX1juXN 6lMmepUH20vmUxvkuUEd
 function Game({ id }: { id?: string } = { id: ID }): JSX.Element {
-    // const userGame = useAppSelector((state) => state.game.present.userGame);
     if (!id) {
         // eslint-disable-next-line no-param-reassign
         id = ID;
     }
     const nonogramInStore = useAppSelector(selectNonogramRaw);
     const dispatch = useAppDispatch();
+
+    const handleVisibility = () => {
+        saveGameWhenInvisible(dispatch);
+    };
     useEffect(() => {
         dispatch(loadNonogramByID(id));
+
+        document.addEventListener('visibilitychange', handleVisibility);
 
         return () => {
             dispatch(
                 saveUserGameByID({
                     id: ID,
                     userGame: store.getState().game.present.userGame,
+                    bestTime: store.getState().game.present.bestTime,
                 })
             );
             dispatch(clearTimers());
+            dispatch(clearGame());
+            document.removeEventListener('visibilitychange', handleVisibility);
         };
     }, [dispatch, id]);
 

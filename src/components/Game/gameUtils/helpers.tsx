@@ -8,6 +8,7 @@ import {
     NonogramTime,
     UserFieldData,
     UserGameData,
+    UserGameForServer,
 } from './types';
 
 export function getUserCurrentTimes(
@@ -107,6 +108,7 @@ export function makeInitialSaveGame(nonogram: NonogramRaw | null): UserGameData 
 
     if (fieldData) {
         const initialGame: UserGameData = {
+            id: nonogram.id,
             state: GameStatus.INITIAL,
             currentTime: 0,
             ...fieldData,
@@ -170,4 +172,26 @@ export function checkIsPainted({
     const hash = makeHash(indexRow, indexNumberRow);
     // console.warn('check painted');
     return alreadyPainted.some((cell) => cell.hash === hash);
+}
+export function makeUserGameServerFormat(
+    userGame: UserGameData,
+    bestTime: number | null
+): UserGameForServer {
+    const serverFormatColumns = userGame.currentUserColumns.map((column) =>
+        column.filter((cell) => cell)
+    );
+    const serverFormatRows = userGame.currentUserRows.map((row) =>
+        row.filter((cell) => cell)
+    );
+    return {
+        bestTime,
+        currentGame: {
+            id: userGame.id,
+            state: userGame.state,
+            currentTime: userGame.currentTime,
+            currentUserColumns: serverFormatColumns,
+            currentUserRows: serverFormatRows,
+            currentUserSolution: userGame.currentUserSolution,
+        },
+    };
 }
