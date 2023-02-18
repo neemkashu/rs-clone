@@ -195,3 +195,53 @@ export function makeUserGameServerFormat(
         },
     };
 }
+export function increaseSmallMatrix(matrix: number[][]): number[][] {
+    const SMALL = 120;
+    const minSize = Math.min(matrix[0].length, matrix.length);
+
+    const coefficient = Math.ceil(SMALL / minSize);
+
+    if (coefficient > 1) {
+        const increasedRows = matrix.reduce<number[][]>((accum, row) => {
+            for (let i = 0; i < coefficient; i += 1) {
+                accum.push(row);
+            }
+            return accum;
+        }, []);
+        const increasedMatrix = increasedRows.map((row) => {
+            return row.reduce<number[]>((accum, cell) => {
+                for (let i = 0; i < coefficient; i += 1) {
+                    accum.push(cell);
+                }
+                return accum;
+            }, []);
+        });
+        return increasedMatrix;
+    }
+    return matrix;
+}
+export function getImageFromMatrix(matrix?: number[][]): string {
+    if (!matrix) {
+        return '';
+    }
+    const rgbMatrix = matrix.map((row) => row.map((cell) => (cell === 0 ? 255 : 0)));
+    const canvas = document.createElement('canvas');
+    const increasedMatrix = increaseSmallMatrix(rgbMatrix);
+
+    canvas.width = increasedMatrix[0].length;
+    canvas.height = increasedMatrix.length;
+
+    const context = canvas.getContext('2d');
+
+    for (let y = 0; y < increasedMatrix.length; y += 1) {
+        for (let x = 0; x < increasedMatrix[y].length; x += 1) {
+            const pixel = increasedMatrix[y][x];
+            if (context) {
+                context.fillStyle = `rgb(${pixel}, ${pixel}, ${pixel})`;
+                context.fillRect(x, y, 1, 1);
+            }
+        }
+    }
+
+    return canvas.toDataURL('image/png');
+}

@@ -7,6 +7,7 @@ import {
     unifyTwoDimensionalArray,
     makeInitialSaveGame,
     checkIsLineCompleted,
+    increaseSmallMatrix,
 } from './helpers';
 import { nonogram } from './mochas';
 
@@ -221,7 +222,7 @@ describe('Make initial saved game for new game', () => {
         const result = makeInitialSaveGame(nonogram);
         const isEveryHintFalse = result.currentUserRows
             .flat()
-            .every((cell) => cell.isCrossedOut === false);
+            .every((cell) => cell === null || cell.isCrossedOut === false);
 
         expect(isEveryHintFalse).toBeTruthy();
     });
@@ -229,7 +230,7 @@ describe('Make initial saved game for new game', () => {
         const result = makeInitialSaveGame(nonogram);
         const isEveryHintFalse = result.currentUserColumns
             .flat()
-            .every((cell) => cell.isCrossedOut === false);
+            .every((cell) => cell === null || cell.isCrossedOut === false);
 
         expect(isEveryHintFalse).toBeTruthy();
     });
@@ -288,5 +289,19 @@ describe('Checks that nonogram line is complted and without errors', () => {
         const desired = false;
 
         expect(result).toBe(desired);
+    });
+});
+describe('Increase small matrix in n factor', () => {
+    test('increases height by 2 matrix', () => {
+        const result = increaseSmallMatrix(nonogram.nonogram.goal);
+        const desiredWidth = nonogram.nonogram.goal.length * 2;
+
+        expect(result.length).toBe(desiredWidth);
+    });
+    test('increases width by 2 matrix', () => {
+        const result = increaseSmallMatrix(nonogram.nonogram.goal);
+        const desiredWidth = nonogram.nonogram.goal[0].length * 2;
+
+        expect(result[0].length).toBe(desiredWidth);
     });
 });

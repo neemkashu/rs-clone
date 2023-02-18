@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import { GamePopup } from '../modal/GamePopup';
 import { NonogramRaw } from '../gameUtils/types';
 import { WinContent } from './WinContent';
+import { getImageFromMatrix } from '../gameUtils/helpers';
+import { store } from '../../store';
 
 const WinModalCaptions = {
     modalTitle: "Hooray, you've solved the nonogram!",
