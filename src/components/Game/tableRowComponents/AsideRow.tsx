@@ -10,7 +10,9 @@ export interface AsideRowProps {
 }
 
 export function AsideRow({ linesUnified, indexRow }: AsideRowProps) {
-    const rowsUnified = useAppSelector((state) => state.game.userGame?.currentUserRows);
+    const rowsUnified = useAppSelector(
+        (state) => state.game.present.userGame?.currentUserRows
+    );
     const dispatch = useAppDispatch();
     const location: fieldPlace = FieldPlace.ASIDE;
 

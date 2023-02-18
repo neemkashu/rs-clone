@@ -1,43 +1,62 @@
 import './gameStyles/Game.scss';
-import { useEffect, useState } from 'react';
-import Controls from './Controls';
+import { useEffect } from 'react';
+import { Controls } from './Controls';
 import Field from './Field';
 import GameHeader from './GameHeader';
 import Chronometer from './Chronometer';
-import { NonogramRaw } from '../../utils/types';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { clearTimers, loadNonogramByID, saveUserGameByID } from './gameSlice';
+import {
+    clearTimers,
+    loadNonogramByID,
+    saveUserGameByID,
+    selectNonogramRaw,
+} from './gameSlice';
 import { WinChecker } from './gameLogic/WinChecker';
 import { store } from '../store';
-import { sendGameToServer } from './api/saveGame';
 
-const ID = 'nsNWHaYMXSERIHX1juXN'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
+const ID = 'aI7dRHAVG7gzTishlpjM'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
 // nsNWHaYMXSERIHX1juXN
-function Game(): JSX.Element {
-    const userGame = useAppSelector((state) => state.game.userGame);
-    const nonogramInStore = useAppSelector((state) => state.game.currentNonogram);
+function Game({ id }: { id?: string } = { id: ID }): JSX.Element {
+    // const userGame = useAppSelector((state) => state.game.present.userGame);
+    if (!id) {
+        // eslint-disable-next-line no-param-reassign
+        id = ID;
+    }
+    const nonogramInStore = useAppSelector(selectNonogramRaw);
     const dispatch = useAppDispatch();
-
     useEffect(() => {
-        dispatch(loadNonogramByID(ID));
+        dispatch(loadNonogramByID(id));
 
         return () => {
             dispatch(
-                saveUserGameByID({ id: ID, userGame: store.getState().game.userGame })
+                saveUserGameByID({
+                    id: ID,
+                    userGame: store.getState().game.present.userGame,
+                })
             );
             dispatch(clearTimers());
         };
-    }, [dispatch]);
+    }, [dispatch, id]);
+
+    useEffect(() => {
+        const preventCursorMorphing = (event: Event) => {
+            event.preventDefault();
+        };
+        document.addEventListener('dragover', preventCursorMorphing);
+        return () => {
+            document.removeEventListener('dragover', preventCursorMorphing);
+        };
+    }, []);
 
     return (
-        <div className="container p-0 p-sm-1 d-flex flex-column gap-2">
-            {nonogramInStore && userGame && (
+        <div className="p-0 mb-2 p-sm-1 d-flex flex-column gap-2">
+            {nonogramInStore && (
                 <>
-                    <GameHeader nonogramRaw={nonogramInStore} />
-                    <Chronometer nonogramRaw={nonogramInStore} />
-                    <Field nonogramRaw={nonogramInStore} />
-                    <WinChecker nonogramRaw={nonogramInStore} />
-                    <Controls nonogramRaw={nonogramInStore} />
+                    <GameHeader />
+                    <Chronometer />
+                    <Field />
+                    <WinChecker />
+                    <Controls />
                 </>
             )}
         </div>

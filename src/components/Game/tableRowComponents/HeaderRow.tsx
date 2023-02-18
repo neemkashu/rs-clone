@@ -12,7 +12,7 @@ export interface HeaderRowProps {
 export function HeaderRow({ linesUnified, indexRow }: HeaderRowProps) {
     const location: fieldPlace = FieldPlace.HEADER;
     const columnsUnified = useAppSelector(
-        (state) => state.game.userGame?.currentUserColumns
+        (state) => state.game.present.userGame?.currentUserColumns
     );
     const dispatch = useAppDispatch();
     return (
