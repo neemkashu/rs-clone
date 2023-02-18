@@ -72,14 +72,19 @@ export function filledLineHandler(
     indexRow: number,
     indexNumberRow: number,
     dispatch: ReturnType<typeof useAppDispatch>,
-    delay: number
+    delay: number | null
 ): void {
     const goalLine =
         store.getState().game.present.currentNonogram?.nonogram.goal[indexRow];
     const userLine =
         store.getState().game.present.userGame?.currentUserSolution[indexRow];
 
-    if (userLine && goalLine && checkIsLineCompleted(userLine, goalLine)) {
+    if (
+        delay !== null &&
+        userLine &&
+        goalLine &&
+        checkIsLineCompleted(userLine, goalLine)
+    ) {
         const complitedLineTimer = setTimeout(() => {
             const goalLineActual =
                 store.getState().game.present.currentNonogram?.nonogram.goal[indexRow];
@@ -105,7 +110,12 @@ export function filledLineHandler(
         indexNumberRow
     );
 
-    if (userColumn && goalColumn && checkIsLineCompleted(userColumn, goalColumn)) {
+    if (
+        delay !== null &&
+        userColumn &&
+        goalColumn &&
+        checkIsLineCompleted(userColumn, goalColumn)
+    ) {
         const complitedLineTimer = setTimeout(() => {
             const goalActualColumn = getColumnFromMatrix(
                 store.getState().game.present.currentNonogram?.nonogram.goal ?? null,

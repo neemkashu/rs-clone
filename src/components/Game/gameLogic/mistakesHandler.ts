@@ -14,7 +14,7 @@ export function mistakesHandler(
     indexRow: number,
     indexNumberRow: number,
     dispatch: ReturnType<typeof useAppDispatch>,
-    delay: number
+    delay: number | null
 ): void {
     const goalCell =
         store.getState().game.present.currentNonogram?.nonogram.goal[indexRow][
@@ -27,7 +27,7 @@ export function mistakesHandler(
     // console.warn('watch cell!', goalCell, gotCell);
     // console.warn('watch index!', indexRow, indexNumberRow);
 
-    if (!checkIsCellCorrect(gotCell, goalCell)) {
+    if (!checkIsCellCorrect(gotCell, goalCell) && delay !== null) {
         const mistakeTimer = setTimeout(() => {
             const actualCell =
                 store.getState().game.present.userGame?.currentUserSolution[indexRow][

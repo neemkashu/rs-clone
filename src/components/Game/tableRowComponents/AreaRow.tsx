@@ -1,4 +1,6 @@
 import { MouseEventHandler, DragEventHandler, useState, useEffect } from 'react';
+import { convertSettingToNumber } from '../../../utils/helpers';
+import { EmptyCellMark } from '../../../utils/types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { store } from '../../store';
 import AreaCell from '../fieldParts/AreaCell';
@@ -30,14 +32,20 @@ export interface AreaRowProps {
 const AREA_STYLES: AreaCellStyle = {
     EMPTY: '',
     CROSSED: 'crossed-square',
+    DOTTED: 'dotted-square',
     FILLED: 'filled-square',
 };
 const PAINT_STYLE = 'painted-square';
 
-const getAreaCellStyle = (userCell?: number | null): string => {
+const getAreaCellStyle = (
+    emptyCellMark: EmptyCellMark,
+    userCell?: number | null
+): string => {
     switch (userCell) {
         case CellAreaState.CROSSED: {
-            return AREA_STYLES.CROSSED;
+            return emptyCellMark === EmptyCellMark.CROSS
+                ? AREA_STYLES.CROSSED
+                : AREA_STYLES.DOTTED;
         }
         case CellAreaState.FILLED: {
             return AREA_STYLES.FILLED;
@@ -54,6 +62,21 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
     const location: fieldPlace = FieldPlace.AREA;
     const dispatch = useAppDispatch();
     const isPaintProcess = useAppSelector((state) => state.game.present.isPaintProcess);
+    const emptyCellMark = useAppSelector(
+        (state) => state.settings.view.markingAnEmptyCell.type
+    );
+    const delayMistakesFromSetting = useAppSelector(
+        (state) => state.settings.game.highlightCellsWithError
+    );
+    const delayMistakes = convertSettingToNumber(delayMistakesFromSetting);
+    const delayCompleteFromSetting = useAppSelector(
+        (state) => state.settings.game.automaticallyCrossOutNumbers
+    );
+    const isLastHintComplete = useAppSelector(
+        (state) => state.settings.game.lastCrossedOutDigitFillsLineWithCrosses
+    );
+    const delayComplete = convertSettingToNumber(delayCompleteFromSetting);
+
     return (
         <tr>
             {linesUnified[indexRow].map((cell, indexNumberRow) => {
@@ -66,7 +89,7 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                     return null;
                 });
 
-                const style = getAreaCellStyle(userCell);
+                const style = getAreaCellStyle(emptyCellMark, userCell);
 
                 const [paintStyle, setPaintStyle] = useState('');
 
@@ -99,8 +122,8 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                             indexNumberRow,
                         })
                     );
-                    mistakesHandler(indexRow, indexNumberRow, dispatch, USER_TIMEOUT);
-                    filledLineHandler(indexRow, indexNumberRow, dispatch, USER_TIMEOUT);
+                    mistakesHandler(indexRow, indexNumberRow, dispatch, delayMistakes);
+                    filledLineHandler(indexRow, indexNumberRow, dispatch, delayComplete);
                 };
                 const handleClick = () => {
                     handlerFillSquare();
@@ -113,8 +136,8 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                             indexNumberRow,
                         })
                     );
-                    mistakesHandler(indexRow, indexNumberRow, dispatch, USER_TIMEOUT);
-                    filledLineHandler(indexRow, indexNumberRow, dispatch, USER_TIMEOUT);
+                    mistakesHandler(indexRow, indexNumberRow, dispatch, delayMistakes);
+                    filledLineHandler(indexRow, indexNumberRow, dispatch, delayComplete);
                 };
 
                 const handleDrag: DragEventHandler = (event) => {
