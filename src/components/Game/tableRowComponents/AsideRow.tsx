@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import HintCell from '../fieldParts/HintCell';
+import { filledHintsHandler } from '../gameLogic/filledHintsHandler';
 import { updateHintCell } from '../gameSlice';
 import { HINT_STATE_STYLE } from '../gameUtils/constants';
 import { fieldPlace, FieldPlace, NonogramHint } from '../gameUtils/types';
@@ -39,6 +40,7 @@ export function AsideRow({ linesUnified, indexRow }: AsideRowProps) {
                             })
                         );
                     }
+                    filledHintsHandler(indexRow, dispatch, rowsUnified);
                 };
                 return (
                     <HintCell
