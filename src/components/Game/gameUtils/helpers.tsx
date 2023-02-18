@@ -4,6 +4,7 @@ import {
     CellAreaStateType,
     DragCellInfo,
     GameStatus,
+    Languages,
     NonogramRaw,
     NonogramTime,
     UserFieldData,
@@ -244,4 +245,12 @@ export function getImageFromMatrix(matrix?: number[][]): string {
     }
 
     return canvas.toDataURL('image/png');
+}
+export function getTranslatedTitle(title: Languages, currentLanguage: string): string {
+    const languageKey = currentLanguage.split('-')[0];
+    if (Object.hasOwn(title, languageKey)) {
+        const key = languageKey as keyof typeof title;
+        return title[key];
+    }
+    return title.en;
 }

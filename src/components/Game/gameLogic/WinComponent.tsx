@@ -1,16 +1,15 @@
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { GamePopup } from '../modal/GamePopup';
-import { NonogramRaw } from '../gameUtils/types';
 import { WinContent } from './WinContent';
-import { getImageFromMatrix } from '../gameUtils/helpers';
-import { store } from '../../store';
 
-const WinModalCaptions = {
-    modalTitle: "Hooray, you've solved the nonogram!",
-    modalDismissChoise: 'To Catalog',
-    modalAcceptChoice: 'Try Again',
-} as const;
 export function WinComponent(): JSX.Element {
+    const { t } = useTranslation();
+    const WinModalCaptions = {
+        modalTitle: t('gameCongrats'),
+        modalDismissChoise: t('gameToCatalog'),
+        modalAcceptChoice: '',
+    } as const;
     return (
         <GamePopup captions={WinModalCaptions}>
             <>
@@ -19,7 +18,7 @@ export function WinComponent(): JSX.Element {
                 </div>
                 <div className="modal-footer">
                     <Link to="/catalog" className="btn btn-outline-dark">
-                        {WinModalCaptions.modalDismissChoise}
+                        {t('gameToCatalog')}
                     </Link>
                 </div>
             </>

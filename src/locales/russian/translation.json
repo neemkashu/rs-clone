@@ -23,5 +23,17 @@
     "showGuessTime": "Показать время угадывания",
     "dot": "точка",
     "cross": "крестик",
-    "setAllToDefault": "Установить всё по умолчанию"
+    "setAllToDefault": "Установить всё по умолчанию",
+    "gameHeader": "Японский кроссворд",
+    "gameSize": "Размер",
+    "gameDifficulty": "Сложность",
+    "gameMarked": "Отмеченные клетки",
+    "gameUndo": "Отменить",
+    "gameRedo": "Повторить",
+    "gameClear": "Очистить",
+    "gameRestart": "Заново",
+    "gameCheck": "Проверить",
+    "gameHint": "Поздсказка",
+    "gameCongrats": "Поздравляем, Вы разгадали кроссворд!",
+    "gameToCatalog": "В каталог"
 }
