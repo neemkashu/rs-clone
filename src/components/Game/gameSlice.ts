@@ -86,8 +86,8 @@ export const saveUserGameByID = createAsyncThunk(
         bestTime: number | null;
     }) => {
         if (userGame) {
-            console.warn('SAVE GAME', userGame);
             const formattedUserGame = makeUserGameServerFormat(userGame, bestTime);
+            console.warn('SAVE GAME', formattedUserGame);
             const reponse = await sendGameToServer(formattedUserGame, id);
             return reponse;
         }
@@ -252,6 +252,12 @@ export const gameSlice = createSlice({
             console.warn('clear game state', initialState);
             state = initialState;
         },
+        updateBestTime(state, action: PayloadAction<number | null>) {
+            console.warn('best time', action.payload);
+            if (action.payload !== null) {
+                state.bestTime = action.payload;
+            }
+        },
     },
     extraReducers(builder) {
         builder.addCase(loadNonogramByID.pending, (state, action) => {
@@ -279,7 +285,11 @@ export const gameSlice = createSlice({
                     currentUserColumns: columnsUnified,
                     currentUserRows: rowsUnified,
                 };
-                console.warn('loadNonogramByID userGame', userData);
+                console.warn(
+                    'loadNonogramByID userGame',
+                    userGame,
+                    userGame.data.bestTime
+                );
                 state.bestTime = userGame.data.bestTime;
             } else {
                 state.userGame = gameToSet;
@@ -337,6 +347,7 @@ export const {
     updatePaintProcess,
     clearPainted,
     clearGame,
+    updateBestTime,
 } = gameSlice.actions;
 
 export const selectUserState = (state: RootState) => state.game.present.userGame?.state;
