@@ -13,6 +13,7 @@ export function Auth(): JSX.Element {
         logInWithEmailAndPassword('example@test.com', 'i love nonograms').then((token) => {
             console.log(token);
             /* save token to storage */
+            /* token can be null if email and password don't match */
         });
     }
 

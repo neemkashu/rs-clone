@@ -20,15 +20,15 @@ const auth = getAuth(app);
 export const logInWithEmailAndPassword: (
     email: string,
     password: string
-) => Promise<string | undefined> = async (email: string, password: string) => {
+) => Promise<string | null> = async (email: string, password: string) => {
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const { user } = userCredential;
-        const token = user.getIdToken();
-        return token || undefined;
+        const token = await user.getIdToken();
+        return token;
     } catch (err) {
         console.error(err);
-        return undefined;
+        return null;
     }
 };
 
@@ -36,7 +36,7 @@ export const registerWithEmailAndPassword: (
     login: string,
     email: string,
     password: string
-) => Promise<string | undefined> = async (
+) => Promise<string | null> = async (
     login: string,
     email: string,
     password: string
@@ -48,10 +48,10 @@ export const registerWithEmailAndPassword: (
             password
         );
         const { user } = userCredential;
-        const token = user.getIdToken();
-        return token || undefined;
+        const token = await user.getIdToken();
+        return token;
     } catch (err) {
         console.error(err);
-        return undefined;
+        return null;
     }
 };

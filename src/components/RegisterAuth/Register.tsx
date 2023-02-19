@@ -51,6 +51,7 @@ export function Register(): JSX.Element {
             registerWithEmailAndPassword(name, email, password).then((token) => {
                 console.log(token);
                 /* save token to storage */
+                /* token can be null if there was an error with bd */
             });
             console.log(`Login - ${name}`);
             console.log(`E-mail - ${email}`);
