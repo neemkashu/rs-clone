@@ -7,6 +7,7 @@ import GameHeader from './GameHeader';
 import Chronometer from './Chronometer';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import {
+    clearGame,
     clearTimers,
     loadNonogramByID,
     saveUserGameByID,
@@ -17,14 +18,7 @@ import { store } from '../store';
 
 const ID = 'aI7dRHAVG7gzTishlpjM'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
 // nsNWHaYMXSERIHX1juXN
-function Game(): JSX.Element {
-    let { id } = useParams();
-    // const userGame = useAppSelector((state) => state.game.present.userGame);
-    if (!id) {
-        // eslint-disable-next-line no-param-reassign
-        id = ID;
-    }
-
+function Game({ id }: { id: string }): JSX.Element {
     const nonogramInStore = useAppSelector(selectNonogramRaw);
     const dispatch = useAppDispatch();
     useEffect(() => {
@@ -33,7 +27,7 @@ function Game(): JSX.Element {
         return () => {
             dispatch(
                 saveUserGameByID({
-                    id: ID,
+                    id,
                     userGame: store.getState().game.present.userGame,
                 })
             );
@@ -48,6 +42,7 @@ function Game(): JSX.Element {
         document.addEventListener('dragover', preventCursorMorphing);
         return () => {
             document.removeEventListener('dragover', preventCursorMorphing);
+            dispatch(clearGame());
         };
     }, []);
 
