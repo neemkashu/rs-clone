@@ -1,7 +1,7 @@
 import { convertSettingToNumber } from '../../../utils/helpers';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import HintCell from '../fieldParts/HintCell';
-import { filledRowHintsHandler } from '../gameLogic/filledHintsHandler';
+import { filledHintsHandler } from '../gameLogic/filledHintsHandler';
 import { updateHintCell } from '../gameSlice';
 import { HINT_STATE_STYLE } from '../gameUtils/constants';
 import { fieldPlace, FieldPlace, NonogramHint } from '../gameUtils/types';
@@ -49,7 +49,12 @@ export function AsideRow({ linesUnified, indexRow }: AsideRowProps) {
                         );
                     }
                     if (isLastHintComplete) {
-                        filledRowHintsHandler(indexRow, dispatch, delayMistakes);
+                        filledHintsHandler(
+                            indexRow,
+                            dispatch,
+                            delayMistakes,
+                            FieldPlace.ASIDE
+                        );
                     }
                 };
                 return (

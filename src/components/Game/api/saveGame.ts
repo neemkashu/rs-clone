@@ -20,7 +20,7 @@ export const sendGameToServer = async (
         if (userGameData) {
             const response = await fetch(url, options);
             if (!response.ok) {
-                throw new Error('responce not ok!');
+                throw new Error('Response not ok while saving the game!');
             }
         }
         return ResponseStatus.SUCCESS;

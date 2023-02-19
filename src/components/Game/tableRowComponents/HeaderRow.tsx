@@ -1,7 +1,7 @@
 import { convertSettingToNumber } from '../../../utils/helpers';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import HintCell from '../fieldParts/HintCell';
-import { filledColumnHintsHandler } from '../gameLogic/filledHintsHandler';
+import { filledHintsHandler } from '../gameLogic/filledHintsHandler';
 import { mistakesHandler } from '../gameLogic/mistakesHandler';
 import { updateHintCell } from '../gameSlice';
 import { HINT_STATE_STYLE } from '../gameUtils/constants';
@@ -48,10 +48,11 @@ export function HeaderRow({ linesUnified, indexRow }: HeaderRowProps) {
                             })
                         );
                         if (isLastHintComplete) {
-                            filledColumnHintsHandler(
+                            filledHintsHandler(
                                 indexColumn,
                                 dispatch,
-                                delayMistakes
+                                delayMistakes,
+                                FieldPlace.HEADER
                             );
                         }
                     }

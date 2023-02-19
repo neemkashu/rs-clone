@@ -23,7 +23,6 @@ function Chronometer(): JSX.Element {
     const dispatch = useDispatch();
     const gameState = useAppSelector(selectUserState);
     const gameTime = useAppSelector(selectUserTime);
-    const isShowTime = useAppSelector((state) => state.settings.view.showGuessTime);
 
     const isGameStarted =
         getTimeFromStorage(nonogramID) > 0 &&
@@ -72,7 +71,7 @@ function Chronometer(): JSX.Element {
         setIsPageHidden(document.hidden);
     });
 
-    return <> {isShowTime && <Clock userTime={userTime} />} </>;
+    return <Clock userTime={userTime} />;
 }
 
 export default Chronometer;

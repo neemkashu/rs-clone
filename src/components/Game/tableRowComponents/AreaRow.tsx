@@ -178,14 +178,6 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
                     dispatch(updatePaintedCells());
                     dispatch(updatePaintProcess(false));
                 };
-                // console.warn(
-                //     'style',
-                //     style,
-                //     'paintStyle',
-                //     paintStyle,
-                //     indexRow,
-                //     indexNumberRow
-                // );
                 return (
                     <AreaCell
                         key={squareKey}

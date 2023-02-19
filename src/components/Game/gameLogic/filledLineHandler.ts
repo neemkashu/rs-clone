@@ -112,13 +112,11 @@ export function filledLineHandler(
         store.getState().game.present.userGame?.currentUserSolution ?? null,
         indexNumberRow
     );
+    const isCompleted =
+        userColumn && goalColumn && checkIsLineCompleted(userColumn, goalColumn);
+    const isToCross = delay !== null && isCompleted;
 
-    if (
-        delay !== null &&
-        userColumn &&
-        goalColumn &&
-        checkIsLineCompleted(userColumn, goalColumn)
-    ) {
+    if (isToCross) {
         const complitedLineTimer = setTimeout(() => {
             const goalActualColumn = getColumnFromMatrix(
                 store.getState().game.present.currentNonogram?.nonogram.goal ?? null,
