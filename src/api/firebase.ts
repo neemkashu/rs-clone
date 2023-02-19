@@ -17,19 +17,26 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-export const logInWithEmailAndPassword = async (email: string, password: string) => {
+export const logInWithEmailAndPassword: (
+    email: string,
+    password: string
+) => Promise<string | undefined> = async (email: string, password: string) => {
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const { user } = userCredential;
         const token = user.getIdToken();
-        return token;
+        return token || undefined;
     } catch (err) {
         console.error(err);
-        throw new Error(`Error while logging in ${err}`);
+        return undefined;
     }
 };
 
-export const registerWithEmailAndPassword = async (
+export const registerWithEmailAndPassword: (
+    login: string,
+    email: string,
+    password: string
+) => Promise<string | undefined> = async (
     login: string,
     email: string,
     password: string
@@ -42,9 +49,9 @@ export const registerWithEmailAndPassword = async (
         );
         const { user } = userCredential;
         const token = user.getIdToken();
-        return token;
+        return token || undefined;
     } catch (err) {
         console.error(err);
-        throw new Error(`Error while register ${err}`);
+        return undefined;
     }
 };
