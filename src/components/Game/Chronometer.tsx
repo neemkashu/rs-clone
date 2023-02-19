@@ -67,9 +67,9 @@ function Chronometer(): JSX.Element {
         };
     }, [userTime, isPageHidden, nonogramID, gameState, dispatch]);
 
-    document.onvisibilitychange = (event) => {
+    document.addEventListener('visibilitychange', (event) => {
         setIsPageHidden(document.hidden);
-    };
+    });
 
     return <Clock userTime={userTime} />;
 }

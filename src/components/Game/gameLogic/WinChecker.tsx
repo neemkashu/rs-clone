@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { store } from '../../store';
-import { changeGameStatus, selectNonogramRaw } from '../gameSlice';
+import {
+    changeGameStatus,
+    saveUserGameByID,
+    selectNonogramRaw,
+    updateBestTime,
+} from '../gameSlice';
 import { GameStatus, NonogramRaw } from '../gameUtils/types';
 import { WinComponent } from './WinComponent';
 import { handleIsWinnerCheck } from './winHandlers';
@@ -31,8 +36,25 @@ export function WinChecker(): JSX.Element {
                 );
                 return isActualWin;
             });
-            if (isWin && gameStatus !== GameStatus.INITIAL) {
+            if (isWin && gameStatus !== GameStatus.INITIAL && nonogramRaw) {
                 dispatch(changeGameStatus(GameStatus.FINISHED));
+                dispatch(
+                    updateBestTime(
+                        store.getState().game.present.userGame?.currentTime ?? null
+                    )
+                );
+                console.log(
+                    'store.getState().game.present.userGame?.currentTime',
+                    store.getState().game.present.userGame?.currentTime
+                );
+                dispatch(
+                    saveUserGameByID({
+                        id: nonogramRaw?.id,
+                        userGame: store.getState().game.present.userGame,
+                        bestTime:
+                            store.getState().game.present.userGame?.currentTime ?? 0,
+                    })
+                );
             }
         }
     }, [nonogramRaw, userSolution, gameStatus, dispatch, isWin]);

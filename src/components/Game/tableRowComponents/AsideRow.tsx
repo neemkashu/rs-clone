@@ -1,5 +1,7 @@
+import { convertSettingToNumber } from '../../../utils/helpers';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import HintCell from '../fieldParts/HintCell';
+import { filledHintsHandler } from '../gameLogic/filledHintsHandler';
 import { updateHintCell } from '../gameSlice';
 import { HINT_STATE_STYLE } from '../gameUtils/constants';
 import { fieldPlace, FieldPlace, NonogramHint } from '../gameUtils/types';
@@ -14,6 +16,13 @@ export function AsideRow({ linesUnified, indexRow }: AsideRowProps) {
         (state) => state.game.present.userGame?.currentUserRows
     );
     const dispatch = useAppDispatch();
+    const delayMistakesFromSetting = useAppSelector(
+        (state) => state.settings.game.highlightCellsWithError
+    );
+    const isLastHintComplete = useAppSelector(
+        (state) => state.settings.game.lastCrossedOutDigitFillsLineWithCrosses
+    );
+    const delayMistakes = convertSettingToNumber(delayMistakesFromSetting);
     const location: fieldPlace = FieldPlace.ASIDE;
 
     return (
@@ -37,6 +46,14 @@ export function AsideRow({ linesUnified, indexRow }: AsideRowProps) {
                                 indexColumn: indexNumberRow,
                                 location,
                             })
+                        );
+                    }
+                    if (isLastHintComplete) {
+                        filledHintsHandler(
+                            indexRow,
+                            dispatch,
+                            delayMistakes,
+                            FieldPlace.ASIDE
                         );
                     }
                 };

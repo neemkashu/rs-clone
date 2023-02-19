@@ -18,6 +18,10 @@
     background-image: url("../../../image/cross.svg");
     background-size: contain;
 }
+.dotted-square {
+    background-image: url("../../../image/dot.svg");
+    background-size: contain;
+}
 .painted-square {
     background-color: var(--painted-square);
 }

@@ -23,5 +23,17 @@
     "showGuessTime": "Show guess time",
     "dot": "dot",
     "cross": "cross",
-    "setAllToDefault": "Set all to default"
+    "setAllToDefault": "Set all to default",
+    "gameHeader": "Nonogram",
+    "gameSize": "Size",
+    "gameDifficulty": "Difficulty",
+    "gameMarked": "Marked cells",
+    "gameUndo": "Undo",
+    "gameRedo": "Redo",
+    "gameClear": "Clear",
+    "gameRestart": "Restart",
+    "gameCheck": "Check",
+    "gameHint": "Use hint",
+    "gameCongrats": "Hooray, you've solved the nonogram!",
+    "gameToCatalog": "To catalog"
 }

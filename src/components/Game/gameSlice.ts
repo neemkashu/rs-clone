@@ -17,6 +17,7 @@ import {
     checkIsPainted,
     makeHash,
     makeInitialSaveGame,
+    makeUserGameServerFormat,
     unifyTwoDimensionalArray,
 } from './gameUtils/helpers';
 import {
@@ -47,6 +48,7 @@ export interface GameState {
     timers: ReturnType<typeof setTimeout>[];
     paintedCells: DragCellInfo[];
     isPaintProcess: boolean;
+    bestTime: number | null;
 }
 
 const initialState: GameState = {
@@ -58,6 +60,7 @@ const initialState: GameState = {
     timers: [],
     paintedCells: [],
     isPaintProcess: false,
+    bestTime: null,
 };
 
 export const loadNonogramByID = createAsyncThunk(
@@ -73,9 +76,19 @@ export const loadNonogramByID = createAsyncThunk(
 );
 export const saveUserGameByID = createAsyncThunk(
     'game/save',
-    async ({ id, userGame }: { id: string; userGame: UserGameData | null }) => {
+    async ({
+        id,
+        userGame,
+        bestTime,
+    }: {
+        id: string;
+        userGame: UserGameData | null;
+        bestTime: number | null;
+    }) => {
         if (userGame) {
-            const reponse = await sendGameToServer(userGame, id);
+            const formattedUserGame = makeUserGameServerFormat(userGame, bestTime);
+            console.warn('SAVE GAME', formattedUserGame);
+            const reponse = await sendGameToServer(formattedUserGame, id);
             return reponse;
         }
         return ResponseStatus.ERROR;
@@ -119,6 +132,7 @@ export const gameSlice = createSlice({
                 const rowsUnified = unifyTwoDimensionalArray(rows);
                 // console.warn('update user game!', action.payload.currentUserSolution);
                 state.userGame = {
+                    id: action.payload.id,
                     state: action.payload.state,
                     currentUserSolution: action.payload.currentUserSolution,
                     currentTime: action.payload.currentTime,
@@ -150,14 +164,13 @@ export const gameSlice = createSlice({
             }>
         ) {
             if (state.userGame) {
-                const { indexRow, indexColumn, location } = action.payload;
-
+                const { isCrossedOut, indexRow, indexColumn, location } = action.payload;
                 const cell =
                     location === FieldPlace.ASIDE
                         ? state.userGame.currentUserRows[indexRow][indexColumn]
                         : state.userGame.currentUserColumns[indexColumn][indexRow];
                 if (cell) {
-                    cell.isCrossedOut = action.payload.isCrossedOut;
+                    cell.isCrossedOut = isCrossedOut;
                 }
             }
         },
@@ -234,6 +247,23 @@ export const gameSlice = createSlice({
         clearPainted(state, action: PayloadAction) {
             state.paintedCells = [];
         },
+        clearGame(state, action: PayloadAction) {
+            state.loadNonogramStatus = LoadStatus.PENDING;
+            state.userGame = null;
+            state.currentNonogram = null;
+            state.errorMessage = '';
+            state.incorrectCells = null;
+            state.timers = [];
+            state.paintedCells = [];
+            state.isPaintProcess = false;
+            state.bestTime = null;
+        },
+        updateBestTime(state, action: PayloadAction<number | null>) {
+            console.warn('best time', action.payload);
+            if (action.payload !== null) {
+                state.bestTime = action.payload;
+            }
+        },
     },
     extraReducers(builder) {
         builder.addCase(loadNonogramByID.pending, (state, action) => {
@@ -248,9 +278,28 @@ export const gameSlice = createSlice({
             }
             const gameToSet = makeInitialSaveGame(nonogram);
             if (userGame) {
-                state.userGame = userGame.data.currentGame;
+                const userData = userGame.data.currentGame;
+                const columns = userData.currentUserColumns;
+                const columnsUnified = unifyTwoDimensionalArray(columns);
+                const rows = userData.currentUserRows;
+                const rowsUnified = unifyTwoDimensionalArray(rows);
+                state.userGame = {
+                    id: userData.id,
+                    state: userData.state,
+                    currentUserSolution: userData.currentUserSolution,
+                    currentTime: userData.currentTime,
+                    currentUserColumns: columnsUnified,
+                    currentUserRows: rowsUnified,
+                };
+                console.warn(
+                    'loadNonogramByID userGame',
+                    userGame,
+                    userGame.data.bestTime
+                );
+                state.bestTime = userGame.data.bestTime;
             } else {
                 state.userGame = gameToSet;
+                state.bestTime = null;
             }
         });
         builder.addCase(loadNonogramByID.rejected, (state, action) => {
@@ -303,6 +352,8 @@ export const {
     updatePaintedCells,
     updatePaintProcess,
     clearPainted,
+    clearGame,
+    updateBestTime,
 } = gameSlice.actions;
 
 export const selectUserState = (state: RootState) => state.game.present.userGame?.state;

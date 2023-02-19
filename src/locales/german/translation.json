@@ -23,5 +23,17 @@
     "showGuessTime": "Schätzzeit anzeigen",
     "dot": "punkt",
     "cross": "kreuzen",
-    "setAllToDefault": "Alle auf Standard setzen"
+    "setAllToDefault": "Alle auf Standard setzen",
+    "gameHeader": "Nonogramm",
+    "gameSize": "Größe",
+    "gameDifficulty": "Schwierigkeit",
+    "gameMarked": "Markierte Zellen",
+    "gameUndo": "Rückgängig",
+    "gameRedo": "Wiederholen",
+    "gameClear": "Löschen",
+    "gameRestart": "Neu starten",
+    "gameCheck": "Überprüfen",
+    "gameHint": "Tipp",
+    "gameCongrats": "Hurra, du hast das Nonogramm gelöst!",
+    "gameToCatalog": "Zum Katalog"
 }
