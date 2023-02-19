@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { logInWithEmailAndPassword } from '../../api/firebase';
 
 export function Auth(): JSX.Element {
     const { t } = useTranslation();
@@ -9,6 +10,10 @@ export function Auth(): JSX.Element {
         e.preventDefault();
         // Здесь будет вызов асинхронной функции,
         // которая будет делать запрос и проверять логин и пароль
+        logInWithEmailAndPassword('example@test.com', 'i love nonograms').then((token) => {
+            console.log(token);
+            /* save token to storage */
+        });
     }
 
     return (
