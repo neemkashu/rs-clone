@@ -72,9 +72,6 @@ export function AreaRow({ linesUnified, indexRow }: AreaRowProps) {
     const delayCompleteFromSetting = useAppSelector(
         (state) => state.settings.game.automaticallyCrossOutNumbers
     );
-    const isLastHintComplete = useAppSelector(
-        (state) => state.settings.game.lastCrossedOutDigitFillsLineWithCrosses
-    );
     const delayComplete = convertSettingToNumber(delayCompleteFromSetting);
 
     return (

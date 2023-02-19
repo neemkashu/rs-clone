@@ -1,6 +1,8 @@
+import { convertSettingToNumber } from '../../../utils/helpers';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import HintCell from '../fieldParts/HintCell';
-import { filledHintsHandler } from '../gameLogic/filledHintsHandler';
+import { filledColumnHintsHandler } from '../gameLogic/filledHintsHandler';
+import { mistakesHandler } from '../gameLogic/mistakesHandler';
 import { updateHintCell } from '../gameSlice';
 import { HINT_STATE_STYLE } from '../gameUtils/constants';
 import { fieldPlace, FieldPlace, NonogramHint } from '../gameUtils/types';
@@ -15,6 +17,13 @@ export function HeaderRow({ linesUnified, indexRow }: HeaderRowProps) {
     const columnsUnified = useAppSelector(
         (state) => state.game.present.userGame?.currentUserColumns
     );
+    const delayMistakesFromSetting = useAppSelector(
+        (state) => state.settings.game.highlightCellsWithError
+    );
+    const isLastHintComplete = useAppSelector(
+        (state) => state.settings.game.lastCrossedOutDigitFillsLineWithCrosses
+    );
+    const delayMistakes = convertSettingToNumber(delayMistakesFromSetting);
     const dispatch = useAppDispatch();
     return (
         <tr>
@@ -30,7 +39,6 @@ export function HeaderRow({ linesUnified, indexRow }: HeaderRowProps) {
 
                 const handleClick = () => {
                     if (hint !== '') {
-                        // console.warn('handleClick isCrossed', isCrossed);
                         dispatch(
                             updateHintCell({
                                 isCrossedOut: !isCrossed,
@@ -39,7 +47,13 @@ export function HeaderRow({ linesUnified, indexRow }: HeaderRowProps) {
                                 location,
                             })
                         );
-                        filledHintsHandler(indexColumn, dispatch, columnsUnified);
+                        if (isLastHintComplete) {
+                            filledColumnHintsHandler(
+                                indexColumn,
+                                dispatch,
+                                delayMistakes
+                            );
+                        }
                     }
                 };
                 return (

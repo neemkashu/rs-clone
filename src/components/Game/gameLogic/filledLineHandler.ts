@@ -9,7 +9,7 @@ import {
 import { checkIsLineCompleted, getColumnFromMatrix } from '../gameUtils/helpers';
 import { CellAreaState, ClickType, FieldPlace } from '../gameUtils/types';
 
-function fillRow(indexRow: number, dispatch: ReturnType<typeof useAppDispatch>) {
+export function fillRow(indexRow: number, dispatch: ReturnType<typeof useAppDispatch>) {
     const hintLine = store.getState().game.present.userGame?.currentUserRows[indexRow];
     const fieldLine =
         store.getState().game.present.userGame?.currentUserSolution[indexRow];
@@ -37,7 +37,10 @@ function fillRow(indexRow: number, dispatch: ReturnType<typeof useAppDispatch>) 
         }
     });
 }
-function fillColumn(indexNumberRow: number, dispatch: ReturnType<typeof useAppDispatch>) {
+export function fillColumn(
+    indexNumberRow: number,
+    dispatch: ReturnType<typeof useAppDispatch>
+) {
     const hintLine =
         store.getState().game.present.userGame?.currentUserColumns[indexNumberRow];
     const fieldLine = getColumnFromMatrix(

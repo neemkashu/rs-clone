@@ -164,14 +164,13 @@ export const gameSlice = createSlice({
             }>
         ) {
             if (state.userGame) {
-                const { indexRow, indexColumn, location } = action.payload;
-
+                const { isCrossedOut, indexRow, indexColumn, location } = action.payload;
                 const cell =
                     location === FieldPlace.ASIDE
                         ? state.userGame.currentUserRows[indexRow][indexColumn]
                         : state.userGame.currentUserColumns[indexColumn][indexRow];
                 if (cell) {
-                    cell.isCrossedOut = action.payload.isCrossedOut;
+                    cell.isCrossedOut = isCrossedOut;
                 }
             }
         },
