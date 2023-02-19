@@ -22,6 +22,7 @@ function Game({ id }: { id: string }): JSX.Element {
     const nonogramInStore = useAppSelector(selectNonogramRaw);
     const dispatch = useAppDispatch();
     useEffect(() => {
+        console.log(id);
         dispatch(loadNonogramByID(id));
 
         return () => {
