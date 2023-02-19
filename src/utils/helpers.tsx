@@ -61,9 +61,35 @@ export function getEmptyCellSettingInCurrenLanguage() {
     return 'dot';
 }
 
+export function increaseSmallMatrix(matrix: number[][]): number[][] {
+    const SMALL = 60;
+    const minSize = Math.min(matrix[0].length, matrix.length);
+
+    const coefficient = Math.ceil(SMALL / minSize);
+
+    if (coefficient > 1) {
+        const increasedRows = matrix.reduce<number[][]>((accum, row) => {
+            for (let i = 0; i < coefficient; i += 1) {
+                accum.push(row);
+            }
+            return accum;
+        }, []);
+        const increasedMatrix = increasedRows.map((row) => {
+            return row.reduce<number[]>((accum, cell) => {
+                for (let i = 0; i < coefficient; i += 1) {
+                    accum.push(cell);
+                }
+                return accum;
+            }, []);
+        });
+        return increasedMatrix;
+    }
+    return matrix;
+}
+
 export function drawImageFromMatrix(matrix: Array<number[]>): string {
     // Define your matrix here (in this example, it's a 2D array)
-    const properMatrix = matrix.map((item) =>
+    const properMatrix = increaseSmallMatrix(matrix).map((item) =>
         item.map((nestedItem) => (nestedItem === 0 ? 255 : 0))
     );
     // Get the canvas element

@@ -1,9 +1,9 @@
-import { NonogramObject } from '../utils/types';
+import { NonogramObject, UserWinsObject } from '../utils/types';
 
 export async function getCatalogDB(): Promise<NonogramObject[]> {
     try {
         const response = await fetch(
-            'https://rs-clone-backend-1hqs.onrender.com/nonograms?_limit=10',
+            'https://rs-clone-backend-1hqs.onrender.com/nonograms',
             {
                 method: 'GET',
             }
@@ -15,5 +15,23 @@ export async function getCatalogDB(): Promise<NonogramObject[]> {
     } catch (e) {
         console.warn(e);
         return [];
+    }
+}
+
+export async function getSolvedGames(): Promise<UserWinsObject> {
+    try {
+        const response = await fetch(
+            'https://rs-clone-backend-1hqs.onrender.com/users-games',
+            {
+                method: 'GET',
+            }
+        );
+        if (!response.ok) {
+            throw new Error('this error occurred while fetching the catalog database');
+        }
+        return await response.json();
+    } catch (e) {
+        console.warn(e);
+        return { data: [] };
     }
 }

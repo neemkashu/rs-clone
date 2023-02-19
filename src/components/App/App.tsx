@@ -12,7 +12,7 @@ function App(): JSX.Element {
                 <Route index element={<Main />} />
                 <Route path="/catalog" element={<Catalog />} />
                 <Route path="/game" element={<Game />} />
-                <Route path="/game" element={<Catalog />} />
+                <Route path="/game/:id" element={<Game />} />
             </Route>
         </Routes>
     );

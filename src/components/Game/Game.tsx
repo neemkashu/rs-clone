@@ -1,5 +1,6 @@
 import './gameStyles/Game.scss';
 import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { Controls } from './Controls';
 import Field from './Field';
 import GameHeader from './GameHeader';
@@ -16,12 +17,14 @@ import { store } from '../store';
 
 const ID = 'aI7dRHAVG7gzTishlpjM'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
 // nsNWHaYMXSERIHX1juXN
-function Game({ id }: { id?: string } = { id: ID }): JSX.Element {
+function Game(): JSX.Element {
+    let { id } = useParams();
     // const userGame = useAppSelector((state) => state.game.present.userGame);
     if (!id) {
         // eslint-disable-next-line no-param-reassign
         id = ID;
     }
+
     const nonogramInStore = useAppSelector(selectNonogramRaw);
     const dispatch = useAppDispatch();
     useEffect(() => {
