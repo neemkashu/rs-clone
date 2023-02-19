@@ -36,11 +36,7 @@ export const registerWithEmailAndPassword: (
     login: string,
     email: string,
     password: string
-) => Promise<string | null> = async (
-    login: string,
-    email: string,
-    password: string
-) => {
+) => Promise<string | null> = async (login: string, email: string, password: string) => {
     try {
         const userCredential = await createUserWithEmailAndPassword(
             auth,
