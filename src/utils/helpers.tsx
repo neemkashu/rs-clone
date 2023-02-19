@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, ReactNode } from 'react';
-import { NonogramTime } from './types';
+import { NonogramObject, NonogramTime } from './types';
+import { LanguagesShortNamesEnum } from './enums';
 import { StorageKeys } from './storage';
 
 export const a = 10;
@@ -59,6 +60,16 @@ export function getEmptyCellSettingInCurrenLanguage() {
         return 'punkt';
     }
     return 'dot';
+}
+
+export function getNonogramTitle(currentLang: string, catalogItem: NonogramObject) {
+    if (currentLang === LanguagesShortNamesEnum.EN_VALUE)
+        return catalogItem.nonogram.title.en;
+    if (currentLang === LanguagesShortNamesEnum.DE_VALUE)
+        return catalogItem.nonogram.title.de;
+    if (currentLang === LanguagesShortNamesEnum.RU_VALUE)
+        return catalogItem.nonogram.title.ru;
+    return catalogItem.nonogram.title.en;
 }
 
 export function increaseSmallMatrix(matrix: number[][]): number[][] {

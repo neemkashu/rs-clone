@@ -1,26 +1,32 @@
 import './CatalogItem.scss';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useAppSelector } from '../hooks';
 import { CatalogItemProps } from '../../utils/types';
-import { LanguagesShortNamesEnum } from '../../utils/enums';
-import { drawImageFromMatrix } from '../../utils/helpers';
+import { drawImageFromMatrix, getNonogramTitle } from '../../utils/helpers';
 
 export function CatalogItem({ catalogItem, cardNumber, solvedGames }: CatalogItemProps) {
     const { t, i18n } = useTranslation();
+    const settingsMain = useAppSelector((state) => state.settings.main);
 
-    function getNonogramTitle() {
-        const currentLang = i18n.language;
-        if (currentLang === LanguagesShortNamesEnum.EN_VALUE)
-            return catalogItem.nonogram.title.en;
-        if (currentLang === LanguagesShortNamesEnum.DE_VALUE)
-            return catalogItem.nonogram.title.de;
-        if (currentLang === LanguagesShortNamesEnum.RU_VALUE)
-            return catalogItem.nonogram.title.ru;
-        return catalogItem.nonogram.title.en;
+    function getNonogramTitleDependingOnSettings(): string {
+        if (!settingsMain.showNonogramTitlesBeforeSolving) {
+            if (solvedGames.includes(catalogItem.id)) {
+                return getNonogramTitle(i18n.language, catalogItem);
+            }
+            return '#####';
+        }
+        return getNonogramTitle(i18n.language, catalogItem);
     }
 
-    function isCurrentNonogramSolved() {
-        return solvedGames.includes(catalogItem.id);
+    function getNonogramImageSrcDependingOnSettings() {
+        if (!settingsMain.showNonogramThumbnailsBeforeSolving) {
+            if (solvedGames.includes(catalogItem.id)) {
+                return drawImageFromMatrix(catalogItem.nonogram.goal);
+            }
+            return 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930';
+        }
+        return drawImageFromMatrix(catalogItem.nonogram.goal);
     }
 
     return (
@@ -32,11 +38,7 @@ export function CatalogItem({ catalogItem, cardNumber, solvedGames }: CatalogIte
                     className="catalog-item__image border border-2 rounded d-flex align-items-center p-1"
                 >
                     <img
-                        src={
-                            isCurrentNonogramSolved()
-                                ? drawImageFromMatrix(catalogItem.nonogram.goal)
-                                : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930'
-                        }
+                        src={getNonogramImageSrcDependingOnSettings()}
                         alt="nonogram preview"
                         style={{
                             width: '100%',
@@ -46,7 +48,7 @@ export function CatalogItem({ catalogItem, cardNumber, solvedGames }: CatalogIte
                 </Link>
                 <div>
                     <div className="text-truncate">
-                        {isCurrentNonogramSolved() ? getNonogramTitle() : '#####'}
+                        {getNonogramTitleDependingOnSettings()}
                     </div>
                     <div>
                         {t('size')}: {catalogItem.nonogram.width}x
