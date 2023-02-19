@@ -248,8 +248,15 @@ export const gameSlice = createSlice({
             state.paintedCells = [];
         },
         clearGame(state, action: PayloadAction) {
-            console.warn('clear game state', initialState);
-            state = initialState;
+            state.loadNonogramStatus = LoadStatus.PENDING;
+            state.userGame = null;
+            state.currentNonogram = null;
+            state.errorMessage = '';
+            state.incorrectCells = null;
+            state.timers = [];
+            state.paintedCells = [];
+            state.isPaintProcess = false;
+            state.bestTime = null;
         },
         updateBestTime(state, action: PayloadAction<number | null>) {
             console.warn('best time', action.payload);
