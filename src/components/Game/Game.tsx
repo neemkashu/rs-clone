@@ -34,7 +34,7 @@ function Game({ id }: { id: string }): JSX.Element {
             );
             dispatch(clearTimers());
         };
-    }, [dispatch, id]);
+    }, [dispatch]);
 
     useEffect(() => {
         const preventCursorMorphing = (event: Event) => {

@@ -7,15 +7,17 @@ import { getNonogramByID } from './api/getNonogramByID';
 
 export function GameWrapper(): JSX.Element {
     const { id } = useParams();
-    console.log('useParams', id);
     const dispatch = useAppDispatch();
     const [trueId, setTrueId] = useState<string>();
 
     useEffect(() => {
         dispatch(clearGame());
-        if (id) getNonogramByID(id).then((data) => setTrueId(data?.id));
-    }, []);
-    console.log('trueID after use', trueId);
+        if (id === 'random') {
+            getNonogramByID(id).then((data) => {
+                setTrueId(data?.id);
+            });
+        } else setTrueId(id);
+    }, [dispatch]);
 
-    return trueId ? <Game id={trueId} /> : <div />;
+    return <div>{trueId && <Game id={trueId} />}</div>;
 }
