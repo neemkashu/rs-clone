@@ -20,7 +20,7 @@ const auth = getAuth(app);
 export const logInWithEmailAndPassword: (
     email: string,
     password: string
-) => Promise<string | null> = async (email: string, password: string) => {
+) => Promise<string | null> = async (email, password) => {
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const { user } = userCredential;
@@ -32,11 +32,11 @@ export const logInWithEmailAndPassword: (
     }
 };
 
-export const registerWithEmailAndPassword: (
+export const registerWithEmailAndPassword = async (
     login: string,
     email: string,
     password: string
-) => Promise<string | null> = async (login: string, email: string, password: string) => {
+): Promise<string | null> => {
     try {
         const userCredential = await createUserWithEmailAndPassword(
             auth,
