@@ -47,7 +47,7 @@ export interface GameState {
     errorMessage: string;
     incorrectCells: UserFieldData['currentUserSolution'] | null;
     timers: ReturnType<typeof setTimeout>[];
-    paintedCells: DragCellInfo[];
+    paintedCells: (number | null)[][] | null;
     isPaintProcess: boolean;
     bestTime: number | null;
 }
@@ -59,7 +59,7 @@ const initialState: GameState = {
     errorMessage: '',
     incorrectCells: null,
     timers: [],
-    paintedCells: [],
+    paintedCells: null,
     isPaintProcess: false,
     bestTime: null,
 };
@@ -198,6 +198,20 @@ export const gameSlice = createSlice({
                     : CellAreaState.EMPTY;
             }
         },
+        updateAreaCellRepaint(
+            state,
+            action: PayloadAction<{
+                paint: CellAreaStateType;
+                indexNumberRow: number;
+                indexRow: number;
+            }>
+        ) {
+            console.log('update cell!', action.payload);
+            if (state.userGame) {
+                const { indexRow, indexNumberRow, paint } = action.payload;
+                state.userGame.currentUserSolution[indexRow][indexNumberRow] = paint;
+            }
+        },
         updateUserTime(state, action: PayloadAction<number>) {
             if (state.userGame) {
                 state.userGame.currentTime = action.payload;
@@ -229,24 +243,26 @@ export const gameSlice = createSlice({
             state.timers.forEach((timer) => clearTimeout(timer));
             state.timers = [];
         },
-        updatePaintedCells(state, action: PayloadAction) {
-            const alreadyPainted = state.paintedCells;
-
-            alreadyPainted.forEach((cell) => {
-                // console.warn('updateAreaCell');
-                if (state.userGame) {
-                    const { indexRow, indexNumberRow, paint } = cell;
-                    state.userGame.currentUserSolution[indexRow][indexNumberRow] =
-                        CellAreaState.FILLED;
-                }
-            });
-            state.isPaintProcess = false;
+        updatePaintedCells(state, action: PayloadAction<DragCellInfo>) {
+            const { paint, indexRow, indexNumberRow } = action.payload;
+            if (state.paintedCells) {
+                const isPainted = state.paintedCells[indexRow][indexNumberRow];
+                state.paintedCells[indexRow][indexNumberRow] = paint;
+            }
         },
-        updatePaintProcess(state, action: PayloadAction<boolean>) {
-            state.isPaintProcess = action.payload;
+        updatePaintProcessStart(state) {
+            // state.isPaintProcess = action.payload;
+        },
+        updatePaintProcessEnd(state) {
+            // state.isPaintProcess = action.payload;
         },
         clearPainted(state, action: PayloadAction) {
-            state.paintedCells = [];
+            state.paintedCells =
+                state.currentNonogram?.nonogram.goal.map((row, indexRow) => {
+                    return row.map((cell, indexNumberRow) => {
+                        return null;
+                    });
+                }) ?? null;
         },
         clearGame(state, action: PayloadAction) {
             Object.keys(initialState).forEach((keyInit) => {
@@ -271,6 +287,11 @@ export const gameSlice = createSlice({
             state.currentNonogram = nonogram;
             if (nonogram) {
                 state.incorrectCells = nonogram.nonogram.goal;
+                state.paintedCells = nonogram.nonogram.goal.map((row, indexRow) => {
+                    return row.map((cell, indexNumberRow) => {
+                        return null;
+                    });
+                });
             }
             const gameToSet = makeInitialSaveGame(nonogram);
             if (userGame) {
@@ -313,24 +334,6 @@ export const gameSlice = createSlice({
             state.loadNonogramStatus = LoadStatus.REJECTED;
             state.errorMessage = action.error.message ?? 'error when loading nonogram';
         });
-        builder.addCase(paintDrag, (state, action) => {
-            const { paint, indexRow, indexNumberRow } = action.payload;
-            const alreadyPainted = state.paintedCells;
-            const isPainted = checkIsPainted({
-                indexRow,
-                indexNumberRow,
-                alreadyPainted,
-            });
-            if (!isPainted) {
-                // console.warn('paint type', paint, indexRow, indexNumberRow);
-                state.paintedCells.push({
-                    paint,
-                    indexRow,
-                    indexNumberRow,
-                    hash: makeHash(indexRow, indexNumberRow),
-                });
-            }
-        });
     },
 });
 
@@ -346,10 +349,12 @@ export const {
     addTimerId,
     clearTimers,
     updatePaintedCells,
-    updatePaintProcess,
+    updatePaintProcessStart,
+    updatePaintProcessEnd,
     clearPainted,
     clearGame,
     updateBestTime,
+    updateAreaCellRepaint,
 } = gameSlice.actions;
 
 export const selectUserState = (state: RootState) => state.game.present.userGame?.state;
@@ -363,7 +368,8 @@ export const ACTIONS_TO_INCLUDE = [
     // 'game/updateUserField',
     'game/updateHintCell',
     'game/updateAreaCell',
-    'game/updatePaintedCells',
+    'game/updatePaintProcessStart',
+    'game/updatePaintProcessEnd',
     'game/clearMistakes',
     'game/load/nonogram/fulfilled',
 ];

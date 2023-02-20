@@ -3,8 +3,15 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { store } from '../../store';
 import { filledLineHandler } from '../gameLogic/filledLineHandler';
 import { mistakesHandler } from '../gameLogic/mistakesHandler';
-import { clearPainted, selectUserSolution, updatePaintProcess } from '../gameSlice';
+import {
+    clearPainted,
+    selectUserSolution,
+    updateAreaCell,
+    updateAreaCellRepaint,
+    updatePaintProcessEnd,
+} from '../gameSlice';
 import '../gameStyles/DrawArea.scss';
+import { CellAreaState, ClickType } from '../gameUtils/types';
 import TableAllRows from './TableAllRows';
 
 const location: fieldPlace = FieldPlace.AREA;
@@ -21,12 +28,23 @@ function DrawArea(): JSX.Element {
     const handleDrop = () => {
         console.log('%c DRAW DROP!', 'background: #eeeeff; color: #000');
         const alreadyPainted = store.getState().game.present.paintedCells;
-        alreadyPainted.forEach((cell) => {
-            const { indexRow, indexNumberRow } = cell;
-            mistakesHandler(indexRow, indexNumberRow, dispatch, USER_TIMEOUT);
-            filledLineHandler(indexRow, indexNumberRow, dispatch, USER_TIMEOUT);
+        alreadyPainted?.forEach((row, indexRow) => {
+            row.forEach((cell, indexNumberRow) => {
+                if (cell === 1) {
+                    console.log('cell in painted matrix', cell);
+                    dispatch(
+                        updateAreaCellRepaint({
+                            paint: CellAreaState.FILLED,
+                            indexRow,
+                            indexNumberRow,
+                        })
+                    );
+                    mistakesHandler(indexRow, indexNumberRow, dispatch, USER_TIMEOUT);
+                    filledLineHandler(indexRow, indexNumberRow, dispatch, USER_TIMEOUT);
+                }
+            });
         });
-        dispatch(updatePaintProcess(false));
+        dispatch(updatePaintProcessEnd());
         dispatch(clearPainted());
     };
     return (

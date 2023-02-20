@@ -22,7 +22,7 @@
     background-image: url("../../../image/dot.svg");
     background-size: contain;
 }
-.painted-square {
+div.painted-square {
     background-color: var(--painted-square);
 }
 .hint-crossed {
@@ -35,7 +35,7 @@
 .cell-square {
     padding: var(--cell-padding) !important;
 }
-div.incorrect-fill {
+.incorrect-fill {
     background-color: var(--wrong-square);
     opacity: 1;
 }

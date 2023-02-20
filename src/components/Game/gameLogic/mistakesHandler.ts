@@ -3,7 +3,10 @@ import { store } from '../../store';
 import { addTimerId, updateMistakeData } from '../gameSlice';
 import { CellAreaState } from '../gameUtils/types';
 
-const checkIsCellCorrect = (userCell?: number | null, goalCell?: number): boolean => {
+export const checkIsCellCorrect = (
+    userCell?: number | null,
+    goalCell?: number
+): boolean => {
     if (userCell === CellAreaState.CROSSED || userCell === CellAreaState.FILLED) {
         return userCell === goalCell;
     }

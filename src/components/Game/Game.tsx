@@ -27,7 +27,13 @@ function saveGameWhenInvisible(dispatch: ReturnType<typeof useAppDispatch>) {
         );
     }
 }
-const ID = 'aI7dRHAVG7gzTishlpjM'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
+const nono = {
+    n10p10: 'E7UMxLSZv31q5m4RwLG4',
+    n20p20: '6lMmepUH20vmUxvkuUEd',
+    n30p35: 'aI7dRHAVG7gzTishlpjM',
+    n50p70: 'bEfUePWLRweZpBmoiP0V',
+};
+const ID = nono.n30p35; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
 // nsNWHaYMXSERIHX1juXN 6lMmepUH20vmUxvkuUEd uGURDew01W6reyMLJctH bEfUePWLRweZpBmoiP0V
 function Game({ id }: { id?: string } = { id: ID }): JSX.Element {
     if (!id) {

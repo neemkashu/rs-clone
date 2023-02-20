@@ -1,5 +1,7 @@
+import { EmptyCellMark } from '../../../utils/types';
 import { StorageKeys } from './storage';
 import {
+    AreaCellStyle,
     CellAreaState,
     CellAreaStateType,
     DragCellInfo,
@@ -258,3 +260,28 @@ export function setProperty<T, K extends keyof T>(obj: T, key: K, value: T[K]) {
     // eslint-disable-next-line no-param-reassign
     obj[key] = value;
 }
+export const AREA_STYLES: AreaCellStyle = {
+    EMPTY: '',
+    CROSSED: 'crossed-square',
+    DOTTED: 'dotted-square',
+    FILLED: 'filled-square',
+};
+
+export const getAreaCellStyle = (
+    emptyCellMark: EmptyCellMark,
+    userCell?: number | null
+): string => {
+    switch (userCell) {
+        case CellAreaState.CROSSED: {
+            return emptyCellMark === EmptyCellMark.CROSS
+                ? AREA_STYLES.CROSSED
+                : AREA_STYLES.DOTTED;
+        }
+        case CellAreaState.FILLED: {
+            return AREA_STYLES.FILLED;
+        }
+        default: {
+            return AREA_STYLES.EMPTY;
+        }
+    }
+};

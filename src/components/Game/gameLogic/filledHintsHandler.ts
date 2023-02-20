@@ -57,39 +57,3 @@ export function filledHintsHandler(
         });
     }
 }
-const filledItemHintsHandler = (
-    itemIndex: number,
-    dispatch: ReturnType<typeof useAppDispatch>,
-    delayMistakesFromSetting: number | null,
-    item = 'column'
-): void => {
-    const isColumn = item === 'column';
-    const { userGame } = store.getState().game.present;
-    const itemsUnified = isColumn
-        ? userGame?.currentUserColumns
-        : userGame?.currentUserRows;
-    if (itemsUnified) {
-        const isLineCrossed = itemsUnified[itemIndex].every((cell) => {
-            return cell?.isCrossedOut || cell === null;
-        });
-        if (!isLineCrossed) {
-            return;
-        }
-        const fieldLine = isColumn
-            ? getColumnFromMatrix(userGame?.currentUserSolution ?? null, itemIndex)
-            : userGame?.currentUserSolution[itemIndex];
-
-        fieldLine?.forEach((cell, index) => {
-            if (cell === null) {
-                dispatch(
-                    updateAreaCell({
-                        clickType: ClickType.MOUSE_CONTEXT,
-                        indexRow: isColumn ? index : itemIndex,
-                        indexNumberRow: isColumn ? itemIndex : index,
-                    })
-                );
-            }
-            mistakesHandler(index, itemIndex, dispatch, delayMistakesFromSetting);
-        });
-    }
-};
