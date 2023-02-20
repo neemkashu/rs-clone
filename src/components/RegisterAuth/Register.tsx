@@ -9,6 +9,7 @@ import {
     checkUserRepeatPasswordInput,
 } from '../../utils/helpers';
 import { ErrorItem } from './ErrorItem';
+import { registerWithEmailAndPassword } from '../../api/firebase';
 
 export function Register(): JSX.Element {
     const { t } = useTranslation();
@@ -47,6 +48,11 @@ export function Register(): JSX.Element {
             repeatPassword
         ) {
             // Тут асинхронная функция будет делать запрос на сервер
+            registerWithEmailAndPassword(name, email, password).then((token) => {
+                console.log(token);
+                /* save token to storage */
+                /* token can be null if there was an error with bd */
+            });
             console.log(`Login - ${name}`);
             console.log(`E-mail - ${email}`);
             console.log(`Password - ${password}`);
