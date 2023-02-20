@@ -234,6 +234,17 @@ export const gameSlice = createSlice({
         clearPainted(state, action: PayloadAction) {
             state.paintedCells = [];
         },
+        clearGame(state, action: PayloadAction) {
+            state.loadNonogramStatus = LoadStatus.PENDING;
+            state.loadNonogramStatus = LoadStatus.PENDING;
+            state.userGame = null;
+            state.currentNonogram = null;
+            state.errorMessage = '';
+            state.incorrectCells = null;
+            state.timers = [];
+            state.paintedCells = [];
+            state.isPaintProcess = false;
+        },
     },
     extraReducers(builder) {
         builder.addCase(loadNonogramByID.pending, (state, action) => {
@@ -303,6 +314,7 @@ export const {
     updatePaintedCells,
     updatePaintProcess,
     clearPainted,
+    clearGame,
 } = gameSlice.actions;
 
 export const selectUserState = (state: RootState) => state.game.present.userGame?.state;
