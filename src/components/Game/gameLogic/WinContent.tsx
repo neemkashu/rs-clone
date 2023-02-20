@@ -1,10 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { Clock } from '../../Clock';
 import { useAppSelector } from '../../hooks';
-import { store } from '../../store';
 import { selectNonogramRaw, selectUserTime } from '../gameSlice';
 import { getImageFromMatrix, getTranslatedTitle } from '../gameUtils/helpers';
-import { NonogramRaw } from '../gameUtils/types';
 
 const imageWrapperStyle = {
     maxWidth: '100px',

@@ -14,7 +14,7 @@ import {
 import { Clock } from '../Clock';
 import { store } from '../store';
 
-const REFRESH_PERIOD = 1000;
+const REFRESH_PERIOD = 20000;
 const isUserLogged = true;
 
 function Chronometer(): JSX.Element {

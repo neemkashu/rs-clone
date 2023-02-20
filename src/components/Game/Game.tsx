@@ -27,8 +27,8 @@ function saveGameWhenInvisible(dispatch: ReturnType<typeof useAppDispatch>) {
         );
     }
 }
-const ID = 'E7UMxLSZv31q5m4RwLG4'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
-// nsNWHaYMXSERIHX1juXN 6lMmepUH20vmUxvkuUEd uGURDew01W6reyMLJctH
+const ID = 'aI7dRHAVG7gzTishlpjM'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
+// nsNWHaYMXSERIHX1juXN 6lMmepUH20vmUxvkuUEd uGURDew01W6reyMLJctH bEfUePWLRweZpBmoiP0V
 function Game({ id }: { id?: string } = { id: ID }): JSX.Element {
     if (!id) {
         // eslint-disable-next-line no-param-reassign
@@ -57,7 +57,7 @@ function Game({ id }: { id?: string } = { id: ID }): JSX.Element {
             dispatch(clearGame());
             document.removeEventListener('visibilitychange', handleVisibility);
         };
-    }, [dispatch, id]);
+    }, [dispatch]);
 
     useEffect(() => {
         const preventCursorMorphing = (event: Event) => {

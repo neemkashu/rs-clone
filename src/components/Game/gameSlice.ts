@@ -18,6 +18,7 @@ import {
     makeHash,
     makeInitialSaveGame,
     makeUserGameServerFormat,
+    setProperty,
     unifyTwoDimensionalArray,
 } from './gameUtils/helpers';
 import {
@@ -248,15 +249,10 @@ export const gameSlice = createSlice({
             state.paintedCells = [];
         },
         clearGame(state, action: PayloadAction) {
-            state.loadNonogramStatus = LoadStatus.PENDING;
-            state.userGame = null;
-            state.currentNonogram = null;
-            state.errorMessage = '';
-            state.incorrectCells = null;
-            state.timers = [];
-            state.paintedCells = [];
-            state.isPaintProcess = false;
-            state.bestTime = null;
+            Object.keys(initialState).forEach((keyInit) => {
+                const key = keyInit as keyof GameState;
+                setProperty(state, key, initialState[key]);
+            });
         },
         updateBestTime(state, action: PayloadAction<number | null>) {
             console.warn('best time', action.payload);

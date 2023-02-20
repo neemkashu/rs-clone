@@ -12,7 +12,7 @@ export function filledHintsHandler(
     location?: fieldPlace
 ): void {
     const { userGame } = store.getState().game.present;
-    const solution = store.getState().game.present.userGame?.currentUserSolution;
+    const solution = userGame?.currentUserSolution;
     const isInHeader = location === FieldPlace.HEADER;
 
     const hintLinesUnified = isInHeader

@@ -254,3 +254,7 @@ export function getTranslatedTitle(title: Languages, currentLanguage: string): s
     }
     return title.en;
 }
+export function setProperty<T, K extends keyof T>(obj: T, key: K, value: T[K]) {
+    // eslint-disable-next-line no-param-reassign
+    obj[key] = value;
+}
