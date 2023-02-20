@@ -3,6 +3,7 @@ import {
     getAuth,
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
+    signOut,
 } from 'firebase/auth';
 
 const firebaseConfig = {
@@ -17,26 +18,25 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-export const logInWithEmailAndPassword: (
+export async function logInWithEmailAndPassword(
     email: string,
     password: string
-) => Promise<string | null> = async (email, password) => {
+): Promise<void> {
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const { user } = userCredential;
         const token = await user.getIdToken();
-        return token;
+        document.cookie = `jwt=${token}; path=/; secure; sameSite=none`;
     } catch (err) {
         console.error(err);
-        return null;
     }
-};
+}
 
-export const registerWithEmailAndPassword = async (
+export async function registerWithEmailAndPassword(
     login: string,
     email: string,
     password: string
-): Promise<string | null> => {
+): Promise<void> {
     try {
         const userCredential = await createUserWithEmailAndPassword(
             auth,
@@ -45,9 +45,17 @@ export const registerWithEmailAndPassword = async (
         );
         const { user } = userCredential;
         const token = await user.getIdToken();
-        return token;
+        document.cookie = `jwt=${token}; path=/; secure; sameSite=none`;
     } catch (err) {
         console.error(err);
-        return null;
     }
-};
+}
+
+export async function logout(): Promise<void> {
+    try {
+        document.cookie = `jwt=0; max-age=0`;
+        signOut(auth);
+    } catch (err) {
+        console.error(err);
+    }
+}
