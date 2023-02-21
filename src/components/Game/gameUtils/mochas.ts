@@ -2,6 +2,7 @@ import { GameStatus, UserGameData, UserGameDataRaw } from './types';
 
 export const userNonogramData = {
     data: {
+        bestTime: null,
         currentGame: {
             state: 'started',
             currentUserSolution: [
@@ -1241,7 +1242,9 @@ export const Cat = {
 };
 export const userCat: UserGameDataRaw = {
     data: {
+        bestTime: null,
         currentGame: {
+            id: 'nsNWHaYMXSERIHX1juXN',
             state: GameStatus.STARTED,
             currentUserSolution: [
                 [null, null, null, null, null],

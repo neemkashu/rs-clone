@@ -1,6 +1,5 @@
 import './gameStyles/Game.scss';
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { Controls } from './Controls';
 import Field from './Field';
 import GameHeader from './GameHeader';
@@ -16,25 +15,56 @@ import {
 import { WinChecker } from './gameLogic/WinChecker';
 import { store } from '../store';
 
-const ID = 'aI7dRHAVG7gzTishlpjM'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
-// nsNWHaYMXSERIHX1juXN
+function saveGameWhenInvisible(dispatch: ReturnType<typeof useAppDispatch>) {
+    const id = store.getState().game.present.currentNonogram?.id;
+    if (id) {
+        dispatch(
+            saveUserGameByID({
+                id,
+                userGame: store.getState().game.present.userGame,
+                bestTime: store.getState().game.present.bestTime,
+            })
+        );
+    }
+}
+const nono = {
+    n5p3: 'nsNWHaYMXSERIHX1juXN',
+    n10p10: 'E7UMxLSZv31q5m4RwLG4',
+    n20p20: '6lMmepUH20vmUxvkuUEd',
+    n30p35: 'aI7dRHAVG7gzTishlpjM',
+    n50p70: 'bEfUePWLRweZpBmoiP0V',
+};
+const ID = nono.n10p10; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
+// nsNWHaYMXSERIHX1juXN 6lMmepUH20vmUxvkuUEd uGURDew01W6reyMLJctH bEfUePWLRweZpBmoiP0V
 function Game({ id }: { id: string }): JSX.Element {
+    if (!id) {
+        // eslint-disable-next-line no-param-reassign
+        id = ID;
+    }
     const nonogramInStore = useAppSelector(selectNonogramRaw);
     const dispatch = useAppDispatch();
+
     useEffect(() => {
-        console.log('id in game', id);
+        const handleVisibility = () => {
+            saveGameWhenInvisible(dispatch);
+        };
         dispatch(loadNonogramByID(id));
+
+        document.addEventListener('visibilitychange', handleVisibility);
 
         return () => {
             dispatch(
                 saveUserGameByID({
                     id,
                     userGame: store.getState().game.present.userGame,
+                    bestTime: store.getState().game.present.bestTime,
                 })
             );
             dispatch(clearTimers());
+            dispatch(clearGame());
+            document.removeEventListener('visibilitychange', handleVisibility);
         };
-    }, [dispatch]);
+    }, [dispatch, id]);
 
     useEffect(() => {
         const preventCursorMorphing = (event: Event) => {

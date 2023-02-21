@@ -1,4 +1,4 @@
-import { NonogramRaw } from '../gameUtils/types';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Button } from './Button';
 import { mistakesHandler } from '../gameLogic/mistakesHandler';
@@ -6,7 +6,7 @@ import { selectUserSolution } from '../gameSlice';
 
 export function CheckButton() {
     const dispatch = useAppDispatch();
-    const caption = 'Check';
+    const { t } = useTranslation();
     const buttonClass = '';
     const userSolution = useAppSelector(selectUserSolution);
 
@@ -19,5 +19,11 @@ export function CheckButton() {
             });
         }
     };
-    return <Button caption={caption} buttonClass={buttonClass} handler={handleClick} />;
+    return (
+        <Button
+            caption={t('gameCheck')}
+            buttonClass={buttonClass}
+            handler={handleClick}
+        />
+    );
 }

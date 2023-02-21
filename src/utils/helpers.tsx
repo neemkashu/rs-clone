@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, ReactNode } from 'react';
-import { NonogramObject, NonogramTime } from './types';
-import { LanguagesShortNamesEnum } from './enums';
+import { NonogramObject, NonogramTime, EmptyCellMark } from './types';
+import { LanguagesShortNamesEnum, SettingsTimingsEnum } from './enums';
 import { StorageKeys } from './storage';
 
 export const a = 10;
@@ -51,15 +51,23 @@ export function getInitialLanguage(): string {
     return 'en-EN';
 }
 
-export function getEmptyCellSettingInCurrenLanguage() {
+export function getEmptyCellSettingInCurrenLanguage(): {
+    caption: string;
+    type: EmptyCellMark;
+} {
+    let caption = 'dot';
     const initialLanguage = getInitialLanguage();
+
     if (initialLanguage === 'ru-RU') {
-        return 'точка';
+        caption = 'точка';
     }
     if (initialLanguage === 'de-DE') {
-        return 'punkt';
+        caption = 'punkt';
     }
-    return 'dot';
+    return {
+        caption,
+        type: EmptyCellMark.DOT,
+    };
 }
 
 export function getNonogramTitle(currentLang: string, catalogItem: NonogramObject) {
@@ -173,4 +181,29 @@ export function unifyTwoDimensionalArray<T>(arr?: T[][]): (T | null)[][] {
         }
     });
     return arrUnified;
+}
+export function convertSettingToNumber(delay: SettingsTimingsEnum): number | null {
+    switch (delay) {
+        case SettingsTimingsEnum.NEVER: {
+            return null;
+        }
+        case SettingsTimingsEnum.ONE_SEC: {
+            return 1000;
+        }
+        case SettingsTimingsEnum.TWO_SEC: {
+            return 2000;
+        }
+        case SettingsTimingsEnum.TEN_SEC: {
+            return 10000;
+        }
+        case SettingsTimingsEnum.THIRTY_SEC: {
+            return 30000;
+        }
+        case SettingsTimingsEnum.FIVE_MIN: {
+            return 5 * 60 * 1000;
+        }
+        default: {
+            return null;
+        }
+    }
 }

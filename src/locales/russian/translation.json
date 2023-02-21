@@ -26,5 +26,17 @@
     "setAllToDefault": "Установить всё по умолчанию",
     "size": "Размер",
     "difficulty": "Сложность",
-    "print": "Печать"
+    "print": "Печать",
+    "gameHeader": "Японский кроссворд",
+    "gameSize": "Размер",
+    "gameDifficulty": "Сложность",
+    "gameMarked": "Отмеченные клетки",
+    "gameUndo": "Отменить",
+    "gameRedo": "Повторить",
+    "gameClear": "Очистить",
+    "gameRestart": "Заново",
+    "gameCheck": "Проверить",
+    "gameHint": "Подсказка",
+    "gameCongrats": "Поздравляем, Вы разгадали кроссворд!",
+    "gameToCatalog": "В каталог"
 }

@@ -82,8 +82,15 @@ export type NonogramSettingsGameState = {
     lastCrossedOutDigitFillsLineWithCrosses: boolean;
 };
 
+export const enum EmptyCellMark {
+    CROSS = 'cross-style',
+    DOT = 'dot-style',
+}
 export type NonogramSettingsViewState = {
-    markingAnEmptyCell: string;
+    markingAnEmptyCell: {
+        caption: string;
+        type: EmptyCellMark;
+    };
     showGuessTime: boolean;
 };
 

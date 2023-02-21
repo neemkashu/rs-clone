@@ -26,5 +26,17 @@
     "setAllToDefault": "Set all to default",
     "size": "Size",
     "difficulty": "Difficulty",
-    "print": "Print"
+    "print": "Print",
+    "gameHeader": "Nonogram",
+    "gameSize": "Size",
+    "gameDifficulty": "Difficulty",
+    "gameMarked": "Marked cells",
+    "gameUndo": "Undo",
+    "gameRedo": "Redo",
+    "gameClear": "Clear",
+    "gameRestart": "Restart",
+    "gameCheck": "Check",
+    "gameHint": "Use hint",
+    "gameCongrats": "Hooray, you've solved the nonogram!",
+    "gameToCatalog": "To catalog"
 }
