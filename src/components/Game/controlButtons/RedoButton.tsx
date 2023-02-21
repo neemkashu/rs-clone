@@ -14,11 +14,6 @@ export function RedoButton({ caption }: { caption: string }) {
 
     const isActive = canRedo && gameState !== GameStatus.FINISHED;
     const handleClick = () => {
-        const pastLength = store.getState().game.past.length;
-        console.log('HISTORY length: ', pastLength);
-        console.log('PAST: ', store.getState().game.past[pastLength - 1].lastAction);
-        console.log('PRESENT: ', store.getState().game.present.lastAction);
-
         const isLongAction =
             store.getState().game.future[0].lastAction === HugeActionList.DRAG_START &&
             store.getState().game.present.lastAction === HugeActionList.DRAG_END;
@@ -31,7 +26,6 @@ export function RedoButton({ caption }: { caption: string }) {
         if (isLongAction || isOneBeforeLong) {
             dispatch(ActionCreators.jump(2));
         } else {
-            console.log('one cell change!');
             dispatch(ActionCreators.redo());
         }
     };

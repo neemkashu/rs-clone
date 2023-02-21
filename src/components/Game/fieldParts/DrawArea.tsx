@@ -1,3 +1,4 @@
+import { convertSettingToNumber } from '../../../utils/helpers';
 import { FieldPlace, fieldPlace, NonogramRaw } from '../../../utils/types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { store } from '../../store';
@@ -17,8 +18,6 @@ import { CellAreaState, ClickType } from '../gameUtils/types';
 import TableAllRows from './TableAllRows';
 
 const location: fieldPlace = FieldPlace.AREA;
-// const rowLinesAmount = rowsUnified.length;
-const USER_TIMEOUT = 2000;
 
 function DrawArea(): JSX.Element {
     // const rowsUnified = nonogramRaw?.nonogram.goal;
@@ -26,6 +25,14 @@ function DrawArea(): JSX.Element {
     // console.warn('DrawArea rerender');
     const rowLinesAmount = rowsUnified?.length ?? 0;
     const dispatch = useAppDispatch();
+    const delayMistakesFromSetting = useAppSelector(
+        (state) => state.settings.game.highlightCellsWithError
+    );
+    const delayMistakes = convertSettingToNumber(delayMistakesFromSetting);
+    const delayCompleteFromSetting = useAppSelector(
+        (state) => state.settings.game.automaticallyCrossOutNumbers
+    );
+    const delayComplete = convertSettingToNumber(delayCompleteFromSetting);
 
     const handleDrop = () => {
         // console.log('%c DRAW DROP!', 'background: #eeeeff; color: #000');
@@ -40,8 +47,8 @@ function DrawArea(): JSX.Element {
                             indexNumberRow,
                         })
                     );
-                    mistakesHandler(indexRow, indexNumberRow, dispatch, USER_TIMEOUT);
-                    filledLineHandler(indexRow, indexNumberRow, dispatch, USER_TIMEOUT);
+                    mistakesHandler(indexRow, indexNumberRow, dispatch, delayMistakes);
+                    filledLineHandler(indexRow, indexNumberRow, dispatch, delayComplete);
                 }
             });
         });
