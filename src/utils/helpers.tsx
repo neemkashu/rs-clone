@@ -1,5 +1,6 @@
-import { Dispatch, SetStateAction } from 'react';
-import { NonogramTime } from './types';
+import { Dispatch, SetStateAction, ReactNode } from 'react';
+import { NonogramObject, NonogramTime } from './types';
+import { LanguagesShortNamesEnum } from './enums';
 import { StorageKeys } from './storage';
 
 export const a = 10;
@@ -59,6 +60,48 @@ export function getEmptyCellSettingInCurrenLanguage() {
         return 'punkt';
     }
     return 'dot';
+}
+
+export function getNonogramTitle(currentLang: string, catalogItem: NonogramObject) {
+    if (currentLang === LanguagesShortNamesEnum.EN_VALUE)
+        return catalogItem.nonogram.title.en;
+    if (currentLang === LanguagesShortNamesEnum.DE_VALUE)
+        return catalogItem.nonogram.title.de;
+    if (currentLang === LanguagesShortNamesEnum.RU_VALUE)
+        return catalogItem.nonogram.title.ru;
+    return catalogItem.nonogram.title.en;
+}
+
+export function getImageFromMatrix(matrix?: number[][]): string {
+    if (!matrix) {
+        return '';
+    }
+    const rgbMatrix = matrix.map((row) => row.map((cell) => (cell === 0 ? 255 : 0)));
+    const canvas = document.createElement('canvas');
+
+    const increaseFactor = Math.ceil(60 / rgbMatrix.length);
+
+    canvas.width = rgbMatrix[0].length * increaseFactor;
+    canvas.height = rgbMatrix.length * increaseFactor;
+
+    const context = canvas.getContext('2d');
+
+    for (let y = 0; y < rgbMatrix.length; y += 1) {
+        for (let x = 0; x < rgbMatrix[y].length; x += 1) {
+            const pixel = rgbMatrix[y][x];
+            if (context) {
+                context.fillStyle = `rgb(${pixel}, ${pixel}, ${pixel})`;
+                context.fillRect(
+                    x * increaseFactor,
+                    y * increaseFactor,
+                    increaseFactor,
+                    increaseFactor
+                );
+            }
+        }
+    }
+
+    return canvas.toDataURL('image/png');
 }
 
 export function getUserCurrentTimes(

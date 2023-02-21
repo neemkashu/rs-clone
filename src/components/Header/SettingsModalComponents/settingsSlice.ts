@@ -16,17 +16,17 @@ function getInitialSettingsState(): {
     const savedInLocalStorageSettings = localStorage.getItem('nonogramSettings');
     const initialSettingsState = {
         main: {
-            showNonogramTitlesBeforeSolving: true,
-            showNonogramThumbnailsBeforeSolving: true,
+            showNonogramTitlesBeforeSolving: false,
+            showNonogramThumbnailsBeforeSolving: false,
         },
         game: {
             highlightCellsWithError: SettingsTimingsEnum.NEVER,
-            automaticallyCrossOutNumbers: SettingsTimingsEnum.ONE_SEC,
-            lastCrossedOutDigitFillsLineWithCrosses: true,
+            automaticallyCrossOutNumbers: SettingsTimingsEnum.NEVER,
+            lastCrossedOutDigitFillsLineWithCrosses: false,
         },
         view: {
             markingAnEmptyCell: getEmptyCellSettingInCurrenLanguage(),
-            showGuessTime: true,
+            showGuessTime: false,
         },
     };
     if (savedInLocalStorageSettings) {

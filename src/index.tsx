@@ -3,9 +3,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import App from './components/App/App';
-import { store } from './components/store';
 import './i18n';
+import { store } from './components/store';
+import App from './components/App/App';
 
 const rootDiv = document.getElementById('root');
 if (!rootDiv) {

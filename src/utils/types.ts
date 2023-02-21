@@ -8,6 +8,7 @@ export type NonogramObject = {
     nonogram: {
         height: number;
         width: number;
+        difficulty: number;
         title: {
             en: string;
             ru: string;
@@ -33,9 +34,19 @@ export type NonogramObject = {
     };
 };
 
+export type GameStateType = {
+    id: string;
+    state: string;
+};
+
+export type UserWinsObject = {
+    data: { currentGame: UserGameData; bestTime: number }[];
+};
+
 export type CatalogItemProps = {
     catalogItem: NonogramObject;
     cardNumber: number;
+    solvedGames: string[];
 };
 
 export type SpecificLanguageButtonPropsType = {
@@ -132,6 +143,7 @@ export interface NonogramRaw {
     nonogram: Nonogram;
 }
 export interface UserGameData {
+    id: string;
     state: GameStatus;
     currentUserSolution: (null | number)[][];
     currentTime: number;
