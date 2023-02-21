@@ -14,8 +14,7 @@ import {
 import { Clock } from '../Clock';
 import { store } from '../store';
 
-const REFRESH_PERIOD = 20000;
-const isUserLogged = true;
+const REFRESH_PERIOD = 1000;
 
 function Chronometer(): JSX.Element {
     const nonogramRaw = useAppSelector(selectNonogramRaw);
@@ -24,30 +23,22 @@ function Chronometer(): JSX.Element {
     const gameState = useAppSelector(selectUserState);
     const gameTime = useAppSelector(selectUserTime);
 
+    const [userTime, setUserTime] = useState(
+        store.getState().game.present.userGame?.currentTime ?? 0
+    );
     const isGameStarted =
-        getTimeFromStorage(nonogramID) > 0 &&
-        gameTime > 0 &&
-        (gameState === GameStatus.INITIAL || gameState === null);
+        gameTime > 0 && (gameState === GameStatus.INITIAL || gameState === null);
 
     if (isGameStarted) {
         dispatch(changeGameStatus(GameStatus.STARTED));
     }
 
-    const [userTime, setUserTime] = useState(
-        isUserLogged
-            ? store.getState().game.present.userGame?.currentTime ?? 0
-            : getTimeFromStorage(nonogramID)
-    );
     const [isPageHidden, setIsPageHidden] = useState(false);
 
     useEffect(() => {
         const timeStoreAndRefresh = () => {
             const currentTime = userTime + REFRESH_PERIOD;
             setUserTime(currentTime);
-
-            if (!isUserLogged) {
-                setTimeToStorage(currentTime, nonogramID);
-            }
             dispatch(updateUserTime(currentTime));
         };
 

@@ -28,19 +28,6 @@ export function RedoButton({ caption }: { caption: string }) {
             store.getState().game.present.lastAction === HugeActionList.REGULAR &&
             store.getState().game.future.length >= 2;
 
-        // console.log(
-        //     'isLongAction:',
-        //     isLongAction,
-        //     'future length: ',
-        //     store.getState().game.future.length,
-        //     'prevoius action',
-        //     store.getState().game.past[pastLength - 1].lastAction,
-        //     'last action',
-        //     store.getState().game.present.lastAction,
-        //     store.getState().game.future.length > 1
-        //         ? store.getState().game.future
-        //         : 'future'
-        // );
         if (isLongAction || isOneBeforeLong) {
             dispatch(ActionCreators.jump(2));
         } else {

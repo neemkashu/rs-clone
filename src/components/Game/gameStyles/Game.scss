@@ -10,6 +10,8 @@
     &:hover {
         cursor: pointer;
     }
+    -webkit-user-drag: none;
+
 }
 .game-field {
     user-select: none;
