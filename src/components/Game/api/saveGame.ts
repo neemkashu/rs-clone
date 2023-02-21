@@ -17,12 +17,12 @@ export const sendGameToServer = async (
             body: JSON.stringify(userGameData),
             headers: { 'Content-type': 'application/json' },
         };
-        if (userGameData) {
-            const response = await fetch(url, options);
-            if (!response.ok) {
-                throw new Error('Response not ok while saving the game!');
-            }
-        }
+        // if (userGameData) {
+        //     const response = await fetch(url, options);
+        //     if (!response.ok) {
+        //         throw new Error('Response not ok while saving the game!');
+        //     }
+        // }
         return ResponseStatus.SUCCESS;
     } catch (error) {
         console.warn('error when fetching user game', id);

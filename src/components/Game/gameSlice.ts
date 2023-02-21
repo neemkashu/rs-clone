@@ -40,6 +40,7 @@ export enum LoadStatus {
     FULFILLED = 'READY',
     REJECTED = 'ERROR',
 }
+
 export interface GameState {
     loadNonogramStatus: LoadStatus;
     userGame: UserGameData | null;
@@ -50,6 +51,7 @@ export interface GameState {
     paintedCells: (number | null)[][] | null;
     isPaintProcess: boolean;
     bestTime: number | null;
+    lastAction: HugeActionList | null;
 }
 
 const initialState: GameState = {
@@ -62,8 +64,14 @@ const initialState: GameState = {
     paintedCells: null,
     isPaintProcess: false,
     bestTime: null,
+    lastAction: null,
 };
-
+export const enum HugeActionList {
+    AUTOCROSS = 'updatePaintProcessEnd',
+    DRAG_END = 'updatePaintProcessEnd',
+    DRAG_START = 'updatePaintProcessStart',
+    REGULAR = 'handleOneCell',
+}
 export const loadNonogramByID = createAsyncThunk(
     'game/load/nonogram',
     async (id?: string) => {
@@ -206,7 +214,6 @@ export const gameSlice = createSlice({
                 indexRow: number;
             }>
         ) {
-            console.log('update cell!', action.payload);
             if (state.userGame) {
                 const { indexRow, indexNumberRow, paint } = action.payload;
                 state.userGame.currentUserSolution[indexRow][indexNumberRow] = paint;
@@ -250,8 +257,8 @@ export const gameSlice = createSlice({
                 state.paintedCells[indexRow][indexNumberRow] = paint;
             }
         },
-        updatePaintProcessStart(state) {
-            // state.isPaintProcess = action.payload;
+        updatePaintProcess(state, action: PayloadAction<HugeActionList>) {
+            state.lastAction = action.payload;
         },
         updatePaintProcessEnd(state) {
             // state.isPaintProcess = action.payload;
@@ -275,6 +282,9 @@ export const gameSlice = createSlice({
             if (action.payload !== null) {
                 state.bestTime = action.payload;
             }
+        },
+        changeLastAction(state, action: PayloadAction<HugeActionList>) {
+            state.lastAction = action.payload;
         },
     },
     extraReducers(builder) {
@@ -349,12 +359,13 @@ export const {
     addTimerId,
     clearTimers,
     updatePaintedCells,
-    updatePaintProcessStart,
+    updatePaintProcess,
     updatePaintProcessEnd,
     clearPainted,
     clearGame,
     updateBestTime,
     updateAreaCellRepaint,
+    changeLastAction,
 } = gameSlice.actions;
 
 export const selectUserState = (state: RootState) => state.game.present.userGame?.state;
@@ -368,8 +379,9 @@ export const ACTIONS_TO_INCLUDE = [
     // 'game/updateUserField',
     'game/updateHintCell',
     'game/updateAreaCell',
-    'game/updatePaintProcessStart',
-    'game/updatePaintProcessEnd',
+    'game/updatePaintProcess',
+    // 'game/updatePaintProcessEnd',
+    // 'game/changeLastAction',
     'game/clearMistakes',
     'game/load/nonogram/fulfilled',
 ];

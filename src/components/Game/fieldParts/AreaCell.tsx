@@ -5,10 +5,12 @@ import { store } from '../../store';
 import { filledLineHandler } from '../gameLogic/filledLineHandler';
 import { checkIsCellCorrect, mistakesHandler } from '../gameLogic/mistakesHandler';
 import {
+    changeLastAction,
+    HugeActionList,
     paintDrag,
     updateAreaCell,
     updatePaintedCells,
-    updatePaintProcessStart,
+    updatePaintProcess,
 } from '../gameSlice';
 import { AREA_STYLES, getAreaCellStyle } from '../gameUtils/helpers';
 import { CellAreaState, ClickType } from '../gameUtils/types';
@@ -40,10 +42,6 @@ export default function AreaCell({
         (state) => state.settings.game.automaticallyCrossOutNumbers
     );
     const delayComplete = convertSettingToNumber(delayCompleteFromSetting);
-    // const goalCell =
-    //     store.getState().game.present.currentNonogram?.nonogram.goal[indexRow][
-    //         indexNumberRow
-    //     ];
 
     const userCell = useAppSelector((state) => {
         if (state.game.present.userGame?.currentUserSolution) {
@@ -53,9 +51,7 @@ export default function AreaCell({
         }
         return null;
     });
-    // console.log('AREA CELL');
 
-    // const isNotCorrect = !checkIsCellCorrect(userCell, goalCell);
     const mistake = useAppSelector((state) => {
         if (state.game.present.incorrectCells) {
             return state.game.present.incorrectCells[indexRow][indexNumberRow];
@@ -73,9 +69,8 @@ export default function AreaCell({
         return null;
     });
 
-    // const [paintStyle, setPaintStyle] = useState('');
-
-    const handlerFillSquare = () => {
+    const handleClick = () => {
+        dispatch(changeLastAction(HugeActionList.REGULAR));
         dispatch(
             updateAreaCell({
                 clickType: ClickType.MOUSE_CLICK,
@@ -86,10 +81,8 @@ export default function AreaCell({
         mistakesHandler(indexRow, indexNumberRow, dispatch, delayMistakes);
         filledLineHandler(indexRow, indexNumberRow, dispatch, delayComplete);
     };
-    const handleClick = () => {
-        handlerFillSquare();
-    };
     const handleContext = () => {
+        dispatch(changeLastAction(HugeActionList.REGULAR));
         dispatch(
             updateAreaCell({
                 clickType: ClickType.MOUSE_CONTEXT,
@@ -98,7 +91,7 @@ export default function AreaCell({
             })
         );
         mistakesHandler(indexRow, indexNumberRow, dispatch, delayMistakes);
-        filledLineHandler(indexRow, indexNumberRow, dispatch, delayComplete);
+        // filledLineHandler(indexRow, indexNumberRow, dispatch, delayComplete);
     };
 
     const handleDrag: DragEventHandler = (event) => {
@@ -109,7 +102,8 @@ export default function AreaCell({
                 dragCell.style.opacity = '1';
             });
         }
-        dispatch(updatePaintProcessStart());
+        dispatch(updatePaintProcess(HugeActionList.DRAG_START));
+        // dispatch(updatePaintProcessStart());
         dispatch(
             updatePaintedCells({
                 paint: CellAreaState.FILLED,
@@ -117,16 +111,9 @@ export default function AreaCell({
                 indexNumberRow,
             })
         );
-        setTimeout(() => {
-            console.log('%c UPDATE STYLE PAINTER', 'background: #ddffff; color: #000');
-            // dispatch(updatePaintProcess(true));
-        }, 0);
-        // setPaintStyle(() => 'painted-square');
-        // console.log('on drag start!', indexRow, indexNumberRow);
     };
 
     const handleDragEnter: MouseEventHandler = (event) => {
-        console.log('drag enter', indexRow, indexNumberRow);
         dispatch(
             updatePaintedCells({
                 paint: CellAreaState.FILLED,
@@ -134,35 +121,21 @@ export default function AreaCell({
                 indexNumberRow,
             })
         );
-        // setPaintStyle(() => 'painted-square');
-        //     dispatch(
-        //         updateAreaCell({
-        //             clickType: ClickType.MOUSE_CLICK,
-        //             indexRow,
-        //             indexNumberRow,
-        //         })
-        //     );
     };
-    const handleDragDrop: MouseEventHandler = (event) => {
-        // console.log('on drag drop!', indexRow, indexNumberRow);
-        dispatch(
-            updatePaintedCells({ paint: CellAreaState.FILLED, indexRow, indexNumberRow })
-        );
-    };
+
     return (
         <Cell
             handleClick={handleClick}
             handleContext={handleContext}
             handleDrag={handleDrag}
             handleDragEnter={handleDragEnter}
-            handleDragDrop={handleDragDrop}
             cellContent=""
             isDraggable
             styles={[...styles]}
             stateStyle={[
                 style,
                 isNotCorrect ? AreaStylesExtra.INCORRECT : '',
-                isPaint === 1 ? AreaStylesExtra.PAINTED : '',
+                isPaint === CellAreaState.FILLED ? AreaStylesExtra.PAINTED : '',
             ]}
         />
     );

@@ -4,11 +4,14 @@ import { store } from '../../store';
 import { filledLineHandler } from '../gameLogic/filledLineHandler';
 import { mistakesHandler } from '../gameLogic/mistakesHandler';
 import {
+    changeLastAction,
     clearPainted,
+    HugeActionList,
     selectUserSolution,
     updateAreaCell,
     updateAreaCellRepaint,
     updatePaintProcessEnd,
+    updatePaintProcess,
 } from '../gameSlice';
 import '../gameStyles/DrawArea.scss';
 import { CellAreaState, ClickType } from '../gameUtils/types';
@@ -31,7 +34,6 @@ function DrawArea(): JSX.Element {
         alreadyPainted?.forEach((row, indexRow) => {
             row.forEach((cell, indexNumberRow) => {
                 if (cell === 1) {
-                    console.log('cell in painted matrix', cell);
                     dispatch(
                         updateAreaCellRepaint({
                             paint: CellAreaState.FILLED,
@@ -44,8 +46,9 @@ function DrawArea(): JSX.Element {
                 }
             });
         });
-        dispatch(updatePaintProcessEnd());
+        // dispatch(updatePaintProcessEnd());
         dispatch(clearPainted());
+        dispatch(updatePaintProcess(HugeActionList.DRAG_END));
     };
     return (
         <table

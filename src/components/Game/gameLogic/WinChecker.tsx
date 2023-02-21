@@ -23,19 +23,15 @@ export function WinChecker(): JSX.Element {
 
     useEffect(() => {
         if (gameStatus === GameStatus.INITIAL) {
-            setIsWin(() => {
-                return false;
-            });
+            setIsWin(false);
         }
         if (gameStatus && gameStatus !== GameStatus.FINISHED) {
-            setIsWin((previous) => {
-                const isActualWin = handleIsWinnerCheck(
-                    nonogramRaw,
-                    store.getState().game.present.userGame?.currentUserSolution,
-                    gameStatus
-                );
-                return isActualWin;
-            });
+            const isActualWin = handleIsWinnerCheck(
+                nonogramRaw,
+                store.getState().game.present.userGame?.currentUserSolution,
+                gameStatus
+            );
+            setIsWin(isActualWin);
             if (isWin && gameStatus !== GameStatus.INITIAL && nonogramRaw) {
                 dispatch(changeGameStatus(GameStatus.FINISHED));
                 dispatch(
@@ -57,7 +53,7 @@ export function WinChecker(): JSX.Element {
                 );
             }
         }
-    }, [nonogramRaw, userSolution, gameStatus, dispatch, isWin]);
+    }, [nonogramRaw, gameStatus, dispatch, isWin]); // userSolution
 
     return <div>{isWin && <WinComponent />}</div>;
 }

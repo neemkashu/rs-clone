@@ -2,7 +2,7 @@ import { convertSettingToNumber } from '../../../utils/helpers';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { store } from '../../store';
 import { filledHintsHandler } from '../gameLogic/filledHintsHandler';
-import { updateHintCell } from '../gameSlice';
+import { changeLastAction, HugeActionList, updateHintCell } from '../gameSlice';
 import { HINT_STATE_STYLE } from '../gameUtils/constants';
 import { FieldPlace, fieldPlace } from '../gameUtils/types';
 import Cell from './Cell';
@@ -37,6 +37,7 @@ export default function HintHeaderCell({
 
     const handleClick = () => {
         if (hint !== '') {
+            dispatch(changeLastAction(HugeActionList.REGULAR));
             dispatch(
                 updateHintCell({
                     isCrossedOut: !isCrossed,

@@ -229,19 +229,25 @@ export function getImageFromMatrix(matrix?: number[][]): string {
     }
     const rgbMatrix = matrix.map((row) => row.map((cell) => (cell === 0 ? 255 : 0)));
     const canvas = document.createElement('canvas');
-    const increasedMatrix = increaseSmallMatrix(rgbMatrix);
 
-    canvas.width = increasedMatrix[0].length;
-    canvas.height = increasedMatrix.length;
+    const increaseFactor = Math.ceil(60 / rgbMatrix.length);
+
+    canvas.width = rgbMatrix[0].length * increaseFactor;
+    canvas.height = rgbMatrix.length * increaseFactor;
 
     const context = canvas.getContext('2d');
 
-    for (let y = 0; y < increasedMatrix.length; y += 1) {
-        for (let x = 0; x < increasedMatrix[y].length; x += 1) {
-            const pixel = increasedMatrix[y][x];
+    for (let y = 0; y < rgbMatrix.length; y += 1) {
+        for (let x = 0; x < rgbMatrix[y].length; x += 1) {
+            const pixel = rgbMatrix[y][x];
             if (context) {
                 context.fillStyle = `rgb(${pixel}, ${pixel}, ${pixel})`;
-                context.fillRect(x, y, 1, 1);
+                context.fillRect(
+                    x * increaseFactor,
+                    y * increaseFactor,
+                    1 * increaseFactor,
+                    1 * increaseFactor
+                );
             }
         }
     }

@@ -1,5 +1,5 @@
 import './gameStyles/Game.scss';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Controls } from './Controls';
 import Field from './Field';
 import GameHeader from './GameHeader';
@@ -28,12 +28,13 @@ function saveGameWhenInvisible(dispatch: ReturnType<typeof useAppDispatch>) {
     }
 }
 const nono = {
+    n5p3: 'nsNWHaYMXSERIHX1juXN',
     n10p10: 'E7UMxLSZv31q5m4RwLG4',
     n20p20: '6lMmepUH20vmUxvkuUEd',
     n30p35: 'aI7dRHAVG7gzTishlpjM',
     n50p70: 'bEfUePWLRweZpBmoiP0V',
 };
-const ID = nono.n30p35; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
+const ID = nono.n10p10; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
 // nsNWHaYMXSERIHX1juXN 6lMmepUH20vmUxvkuUEd uGURDew01W6reyMLJctH bEfUePWLRweZpBmoiP0V
 function Game({ id }: { id?: string } = { id: ID }): JSX.Element {
     if (!id) {
@@ -43,10 +44,10 @@ function Game({ id }: { id?: string } = { id: ID }): JSX.Element {
     const nonogramInStore = useAppSelector(selectNonogramRaw);
     const dispatch = useAppDispatch();
 
-    const handleVisibility = () => {
-        saveGameWhenInvisible(dispatch);
-    };
     useEffect(() => {
+        const handleVisibility = () => {
+            saveGameWhenInvisible(dispatch);
+        };
         dispatch(loadNonogramByID(id));
 
         document.addEventListener('visibilitychange', handleVisibility);
@@ -63,7 +64,7 @@ function Game({ id }: { id?: string } = { id: ID }): JSX.Element {
             dispatch(clearGame());
             document.removeEventListener('visibilitychange', handleVisibility);
         };
-    }, [dispatch]);
+    }, [dispatch, id]);
 
     useEffect(() => {
         const preventCursorMorphing = (event: Event) => {

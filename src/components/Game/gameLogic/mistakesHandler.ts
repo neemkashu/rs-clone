@@ -29,6 +29,12 @@ export function mistakesHandler(
         ];
     // console.warn('watch cell!', goalCell, gotCell);
     // console.warn('watch index!', indexRow, indexNumberRow);
+    if (delay === 0) {
+        if (!checkIsCellCorrect(gotCell, goalCell)) {
+            dispatch(updateMistakeData({ indexRow, indexNumberRow, isCorrect: false }));
+        }
+        return;
+    }
 
     if (!checkIsCellCorrect(gotCell, goalCell) && delay !== null) {
         const mistakeTimer = setTimeout(() => {

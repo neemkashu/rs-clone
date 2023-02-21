@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import HintAsideCell from '../fieldParts/HintAsideCell';
 import { fieldPlace, FieldPlace, NonogramHint } from '../gameUtils/types';
 
