@@ -2,9 +2,10 @@ import './Aside.scss';
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { handleAsideCloseBtnClick } from '../../utils/helpers';
+import { getRandomNonogramId } from '../../api/requests';
 
 export function Aside(): JSX.Element {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     return (
         <aside id="aside" className="border-3 border-end">
@@ -23,7 +24,7 @@ export function Aside(): JSX.Element {
                 <NavLink to="/catalog" className="btn btn-outline-dark">
                     {t('catalogCatalog')}
                 </NavLink>
-                <NavLink to="/game/random" className="btn btn-outline-dark">
+                <NavLink to="/random-game" className="btn btn-outline-dark">
                     {t('catalogRandomGame')}
                 </NavLink>
                 <NavLink to="/help" className="btn btn-outline-dark">
