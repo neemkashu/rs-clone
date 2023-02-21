@@ -35,5 +35,8 @@
     "gameCheck": "Проверить",
     "gameHint": "Подсказка",
     "gameCongrats": "Поздравляем, Вы разгадали кроссворд!",
-    "gameToCatalog": "В каталог"
+    "gameToCatalog": "В каталог",
+    "size": "Размер",
+    "difficulty": "Сложность",
+    "print": "Печать"
 }

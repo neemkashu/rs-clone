@@ -45,6 +45,8 @@
   },
   "devDependencies": {
     "@reduxjs/toolkit": "^1.9.2",
+    "@types/bootstrap": "^5.2.6",
+    "@types/pngjs": "^6.0.1",
     "@types/react-redux": "^7.1.25",
     "@types/redux": "^3.6.0",
     "@types/redux-thunk": "^2.1.0",
@@ -55,6 +57,7 @@
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "pngjs": "^6.0.0",
     "prettier": "^2.8.3",
     "sass": "^1.58.0",
     "sass-loader": "^13.2.0",

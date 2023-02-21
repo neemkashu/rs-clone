@@ -35,5 +35,8 @@
     "gameCheck": "Überprüfen",
     "gameHint": "Tipp",
     "gameCongrats": "Hurra, du hast das Nonogramm gelöst!",
-    "gameToCatalog": "Zum Katalog"
+    "gameToCatalog": "Zum Katalog",
+    "size": "Größe",
+    "difficulty": "Schwierigkeit",
+    "print": "Drucken"
 }

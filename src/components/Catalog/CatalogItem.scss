@@ -1,7 +1,7 @@
 .catalog-item {
     width: 128px;
     &__image {
-        display: block;
         height: 96px;
+        overflow: hidden;
     }
 }

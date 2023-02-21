@@ -1,5 +1,6 @@
 import './gameStyles/Game.scss';
 import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { Controls } from './Controls';
 import Field from './Field';
 import GameHeader from './GameHeader';
@@ -29,7 +30,7 @@ function saveGameWhenInvisible(dispatch: ReturnType<typeof useAppDispatch>) {
 }
 const ID = 'E7UMxLSZv31q5m4RwLG4'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
 // nsNWHaYMXSERIHX1juXN 6lMmepUH20vmUxvkuUEd uGURDew01W6reyMLJctH
-function Game({ id }: { id?: string } = { id: ID }): JSX.Element {
+function Game({ id }: { id: string } = { id: ID }): JSX.Element {
     if (!id) {
         // eslint-disable-next-line no-param-reassign
         id = ID;
@@ -37,10 +38,11 @@ function Game({ id }: { id?: string } = { id: ID }): JSX.Element {
     const nonogramInStore = useAppSelector(selectNonogramRaw);
     const dispatch = useAppDispatch();
 
-    const handleVisibility = () => {
-        saveGameWhenInvisible(dispatch);
-    };
     useEffect(() => {
+        const handleVisibility = () => {
+            saveGameWhenInvisible(dispatch);
+        };
+        console.log('id in game', id);
         dispatch(loadNonogramByID(id));
 
         document.addEventListener('visibilitychange', handleVisibility);
@@ -48,7 +50,7 @@ function Game({ id }: { id?: string } = { id: ID }): JSX.Element {
         return () => {
             dispatch(
                 saveUserGameByID({
-                    id: ID,
+                    id,
                     userGame: store.getState().game.present.userGame,
                     bestTime: store.getState().game.present.bestTime,
                 })
@@ -66,6 +68,7 @@ function Game({ id }: { id?: string } = { id: ID }): JSX.Element {
         document.addEventListener('dragover', preventCursorMorphing);
         return () => {
             document.removeEventListener('dragover', preventCursorMorphing);
+            dispatch(clearGame());
         };
     }, []);
 

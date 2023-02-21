@@ -35,5 +35,8 @@
     "gameCheck": "Check",
     "gameHint": "Use hint",
     "gameCongrats": "Hooray, you've solved the nonogram!",
-    "gameToCatalog": "To catalog"
+    "gameToCatalog": "To catalog",
+    "size": "Size",
+    "difficulty": "Difficulty",
+    "print": "Print"
 }
