@@ -72,59 +72,35 @@ export function getNonogramTitle(currentLang: string, catalogItem: NonogramObjec
     return catalogItem.nonogram.title.en;
 }
 
-export function increaseSmallMatrix(matrix: number[][]): number[][] {
-    const SMALL = 60;
-    const minSize = Math.min(matrix[0].length, matrix.length);
-
-    const coefficient = Math.ceil(SMALL / minSize);
-
-    if (coefficient > 1) {
-        const increasedRows = matrix.reduce<number[][]>((accum, row) => {
-            for (let i = 0; i < coefficient; i += 1) {
-                accum.push(row);
-            }
-            return accum;
-        }, []);
-        const increasedMatrix = increasedRows.map((row) => {
-            return row.reduce<number[]>((accum, cell) => {
-                for (let i = 0; i < coefficient; i += 1) {
-                    accum.push(cell);
-                }
-                return accum;
-            }, []);
-        });
-        return increasedMatrix;
+export function getImageFromMatrix(matrix?: number[][]): string {
+    if (!matrix) {
+        return '';
     }
-    return matrix;
-}
-
-export function drawImageFromMatrix(matrix: Array<number[]>): string {
-    // Define your matrix here (in this example, it's a 2D array)
-    const properMatrix = increaseSmallMatrix(matrix).map((item) =>
-        item.map((nestedItem) => (nestedItem === 0 ? 255 : 0))
-    );
-    // Get the canvas element
+    const rgbMatrix = matrix.map((row) => row.map((cell) => (cell === 0 ? 255 : 0)));
     const canvas = document.createElement('canvas');
 
-    // Set the canvas dimensions to match the matrix size
-    canvas.width = properMatrix[0].length;
-    canvas.height = properMatrix.length;
+    const increaseFactor = Math.ceil(60 / rgbMatrix.length);
 
-    // Get the canvas 2D context
-    const ctx = canvas.getContext('2d');
+    canvas.width = rgbMatrix[0].length * increaseFactor;
+    canvas.height = rgbMatrix.length * increaseFactor;
 
-    // Loop through each pixel in the matrix and draw it onto the canvas
-    for (let y = 0; y < properMatrix.length; y += 1) {
-        for (let x = 0; x < properMatrix[y].length; x += 1) {
-            const pixel = properMatrix[y][x];
-            if (ctx) {
-                ctx.fillStyle = `rgb(${pixel}, ${pixel}, ${pixel})`;
-                ctx.fillRect(x, y, 1, 1);
+    const context = canvas.getContext('2d');
+
+    for (let y = 0; y < rgbMatrix.length; y += 1) {
+        for (let x = 0; x < rgbMatrix[y].length; x += 1) {
+            const pixel = rgbMatrix[y][x];
+            if (context) {
+                context.fillStyle = `rgb(${pixel}, ${pixel}, ${pixel})`;
+                context.fillRect(
+                    x * increaseFactor,
+                    y * increaseFactor,
+                    increaseFactor,
+                    increaseFactor
+                );
             }
         }
     }
 
-    // Convert the canvas to a PNG image and set it as the src of an image element
     return canvas.toDataURL('image/png');
 }
 

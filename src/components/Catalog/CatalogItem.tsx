@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../hooks';
 import { CatalogItemProps } from '../../utils/types';
-import { drawImageFromMatrix, getNonogramTitle } from '../../utils/helpers';
+import { getImageFromMatrix, getNonogramTitle } from '../../utils/helpers';
 
 export function CatalogItem({ catalogItem, cardNumber, solvedGames }: CatalogItemProps) {
     const { t, i18n } = useTranslation();
@@ -22,11 +22,11 @@ export function CatalogItem({ catalogItem, cardNumber, solvedGames }: CatalogIte
     function getNonogramImageSrcDependingOnSettings() {
         if (!settingsMain.showNonogramThumbnailsBeforeSolving) {
             if (solvedGames.includes(catalogItem.id)) {
-                return drawImageFromMatrix(catalogItem.nonogram.goal);
+                return getImageFromMatrix(catalogItem.nonogram.goal);
             }
             return 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930';
         }
-        return drawImageFromMatrix(catalogItem.nonogram.goal);
+        return getImageFromMatrix(catalogItem.nonogram.goal);
     }
 
     return (
