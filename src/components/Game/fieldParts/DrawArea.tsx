@@ -9,8 +9,7 @@ import {
     HugeActionList,
     selectUserSolution,
     updateAreaCell,
-    updateAreaCellRepaint,
-    updatePaintProcessEnd,
+    updateAreaCellAuto,
     updatePaintProcess,
 } from '../gameSlice';
 import '../gameStyles/DrawArea.scss';
@@ -35,7 +34,7 @@ function DrawArea(): JSX.Element {
             row.forEach((cell, indexNumberRow) => {
                 if (cell === 1) {
                     dispatch(
-                        updateAreaCellRepaint({
+                        updateAreaCellAuto({
                             paint: CellAreaState.FILLED,
                             indexRow,
                             indexNumberRow,
@@ -46,7 +45,6 @@ function DrawArea(): JSX.Element {
                 }
             });
         });
-        // dispatch(updatePaintProcessEnd());
         dispatch(clearPainted());
         dispatch(updatePaintProcess(HugeActionList.DRAG_END));
     };

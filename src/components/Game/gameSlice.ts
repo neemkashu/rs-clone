@@ -183,6 +183,26 @@ export const gameSlice = createSlice({
                 }
             }
         },
+        updateHintCellAuto(
+            state,
+            action: PayloadAction<{
+                isCrossedOut: boolean;
+                indexColumn: number;
+                indexRow: number;
+                location: fieldPlace;
+            }>
+        ) {
+            if (state.userGame) {
+                const { isCrossedOut, indexRow, indexColumn, location } = action.payload;
+                const cell =
+                    location === FieldPlace.ASIDE
+                        ? state.userGame.currentUserRows[indexRow][indexColumn]
+                        : state.userGame.currentUserColumns[indexColumn][indexRow];
+                if (cell) {
+                    cell.isCrossedOut = isCrossedOut;
+                }
+            }
+        },
         updateAreaCell(
             state,
             action: PayloadAction<{
@@ -206,7 +226,7 @@ export const gameSlice = createSlice({
                     : CellAreaState.EMPTY;
             }
         },
-        updateAreaCellRepaint(
+        updateAreaCellAuto(
             state,
             action: PayloadAction<{
                 paint: CellAreaStateType;
@@ -259,9 +279,6 @@ export const gameSlice = createSlice({
         },
         updatePaintProcess(state, action: PayloadAction<HugeActionList>) {
             state.lastAction = action.payload;
-        },
-        updatePaintProcessEnd(state) {
-            // state.isPaintProcess = action.payload;
         },
         clearPainted(state, action: PayloadAction) {
             state.paintedCells =
@@ -360,11 +377,11 @@ export const {
     clearTimers,
     updatePaintedCells,
     updatePaintProcess,
-    updatePaintProcessEnd,
     clearPainted,
     clearGame,
     updateBestTime,
-    updateAreaCellRepaint,
+    updateHintCellAuto,
+    updateAreaCellAuto,
     changeLastAction,
 } = gameSlice.actions;
 
@@ -380,8 +397,6 @@ export const ACTIONS_TO_INCLUDE = [
     'game/updateHintCell',
     'game/updateAreaCell',
     'game/updatePaintProcess',
-    // 'game/updatePaintProcessEnd',
-    // 'game/changeLastAction',
     'game/clearMistakes',
     'game/load/nonogram/fulfilled',
 ];

@@ -14,12 +14,6 @@ export function Controls(): JSX.Element {
             <ClearButton />
             <RestartButton />
             <CheckButton />
-            <button
-                type="button"
-                className="btn btn-toolbar btn-outline-primary btn-outline-danger"
-            >
-                {t('gameHint')}
-            </button>
         </div>
     );
 }
