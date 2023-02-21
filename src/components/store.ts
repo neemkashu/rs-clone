@@ -8,10 +8,6 @@ export const store = configureStore({
     reducer: {
         game: undoable(gameSlice.reducer, {
             filter: includeAction(ACTIONS_TO_INCLUDE),
-            // groupBy: groupByActionTypes([
-            //     'game/updatePaintProcessStart',
-            //     'game/updatePaintProcessEnd',
-            // ]),
         }),
         settings: settingsSlice.reducer,
     },

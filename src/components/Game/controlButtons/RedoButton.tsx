@@ -20,28 +20,29 @@ export function RedoButton({ caption }: { caption: string }) {
         console.log('PRESENT: ', store.getState().game.present.lastAction);
 
         const isLongAction =
-            store.getState().game.past[pastLength - 1].lastAction ===
-                HugeActionList.DRAG_END &&
-            store.getState().game.present.lastAction === HugeActionList.DRAG_START;
+            store.getState().game.future[0].lastAction === HugeActionList.DRAG_START &&
+            store.getState().game.present.lastAction === HugeActionList.DRAG_END;
 
         const isOneBeforeLong =
-            store.getState().game.past[pastLength - 1].lastAction ===
-                HugeActionList.REGULAR &&
-            store.getState().game.present.lastAction === HugeActionList.DRAG_START &&
-            store.getState().game.future.length !== 0;
+            store.getState().game.future[0].lastAction === HugeActionList.DRAG_START &&
+            store.getState().game.present.lastAction === HugeActionList.REGULAR &&
+            store.getState().game.future.length >= 2;
 
-        console.log(
-            'isLongAction:',
-            isLongAction,
-            'future length: ',
-            store.getState().game.future.length,
-            'prevoius action',
-            store.getState().game.past[pastLength - 1].lastAction,
-            'last action',
-            store.getState().game.present.lastAction
-        );
+        // console.log(
+        //     'isLongAction:',
+        //     isLongAction,
+        //     'future length: ',
+        //     store.getState().game.future.length,
+        //     'prevoius action',
+        //     store.getState().game.past[pastLength - 1].lastAction,
+        //     'last action',
+        //     store.getState().game.present.lastAction,
+        //     store.getState().game.future.length > 1
+        //         ? store.getState().game.future
+        //         : 'future'
+        // );
         if (isLongAction || isOneBeforeLong) {
-            dispatch(ActionCreators.jump(1));
+            dispatch(ActionCreators.jump(2));
         } else {
             console.log('one cell change!');
             dispatch(ActionCreators.redo());
