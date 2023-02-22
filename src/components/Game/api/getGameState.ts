@@ -1,11 +1,15 @@
 import { NonogramRaw, UserGameDataRaw } from '../gameUtils/types';
 import { SERVER_ADDRESS } from './getNonogramByID';
 
-export async function getGameState(id: string): Promise<UserGameDataRaw | null> {
+export async function getGameState(
+    id: string,
+    signal: AbortSignal
+): Promise<UserGameDataRaw | null> {
     try {
         const url = `${SERVER_ADDRESS}users-games/${id}`;
         const options = {
             method: 'GET',
+            signal,
         };
         const response = await fetch(url, options);
         if (!response.ok) {

@@ -74,13 +74,10 @@ export const enum HugeActionList {
 }
 export const loadNonogramByID = createAsyncThunk(
     'game/load/nonogram',
-    async (id?: string) => {
-        if (id) {
-            const nonogram = await getNonogramByID(id);
-            const userGame = await getGameState(id);
-            return { nonogram, userGame };
-        }
-        return { nonogram: null, userGame: null };
+    async ({ id, signal }: { id: string; signal: AbortSignal }) => {
+        const nonogram = await getNonogramByID(id, signal);
+        const userGame = await getGameState(id, signal);
+        return { nonogram, userGame };
     }
 );
 export const saveUserGameByID = createAsyncThunk(
