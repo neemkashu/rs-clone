@@ -19,7 +19,7 @@ export function Auth(): JSX.Element {
         const emailInput = userEmailInput.current?.value;
         const passwordInput = userPasswordInput.current?.value;
         if (emailInput && passwordInput) {
-            logInWithEmailAndPassword(userEmailInput?.current?.value, passwordInput)
+            logInWithEmailAndPassword(emailInput, passwordInput)
                 .then(() => {
                     // successful log in
                     console.log('log in');
