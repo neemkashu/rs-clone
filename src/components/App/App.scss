@@ -2,17 +2,18 @@
 @import '~bootstrap/scss/bootstrap';
 @import '../../theme/_bootswatch_sketchy';
 
+:root {
+    --dark-background: rgba(0, 0, 0, 0.189);
+}
 [data-bs-theme='dark'] {
-    // --bs-primary: #{$indigo};
-    // --bs-primary-bg-subtle: #{$indigo};
-    // --bs-primary-bg-subtle-dark: #{$indigo};
-
-    // .btn-primary {
-    //     --bs-btn-bg: #{$indigo};
-    // }
     .bg-dark {
         --bs-bg-opacity: 1;
         background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
+    }
+}
+[data-bs-theme='light'] {
+    body {
+        background-image: url('../../image/kiwihug-qv05FvdE26k-unsplash.jpg');
     }
 }
 
