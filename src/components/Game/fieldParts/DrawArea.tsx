@@ -56,7 +56,10 @@ function DrawArea(): JSX.Element {
         dispatch(updatePaintProcess(HugeActionList.DRAG_END));
     };
     return (
-        <table onDrop={handleDrop} className="table field-table m-0 table-bordered">
+        <table
+            onDragEndCapture={handleDrop}
+            className="table field-table m-0 table-bordered"
+        >
             <tbody>
                 {rowsUnified ? (
                     <TableAllRows
