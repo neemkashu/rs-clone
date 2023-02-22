@@ -1,22 +1,33 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { logInWithEmailAndPassword } from '../../api/firebase';
+import { InputItem } from './InputItem';
 
 export function Auth(): JSX.Element {
     const { t } = useTranslation();
+    const userEmailInput = useRef<HTMLInputElement>(null);
+    const userPasswordInput = useRef<HTMLInputElement>(null);
 
     function handleSignInSubmit(e: React.FormEvent) {
         e.preventDefault();
         // Здесь будет вызов асинхронной функции,
         // которая будет делать запрос и проверять логин и пароль
-        logInWithEmailAndPassword('example@test.com', 'i love nonograms')
-            .then(() => {
-                // successful log in
-            })
-            .catch
-            // unsuccessful log in
-            ();
+        const emailInput = userEmailInput.current?.value;
+        const passwordInput = userPasswordInput.current?.value;
+        if (emailInput && passwordInput) {
+            logInWithEmailAndPassword(userEmailInput?.current?.value, passwordInput)
+                .catch((err) => {
+                    // unsuccessful log in
+                    console.log(err);
+                })
+                .then(() => {
+                    // successful log in
+                    console.log('log in');
+                });
+        } else {
+            console.log('no email or input');
+        }
     }
 
     return (
@@ -32,21 +43,17 @@ export function Auth(): JSX.Element {
                 onSubmit={handleSignInSubmit}
             >
                 <div className="input py-2">
-                    <input
-                        type="text"
-                        className="form-control my-1"
-                        placeholder="Login or e-mail"
-                        aria-label="Login or e-mail"
-                        autoComplete="on"
+                    <InputItem
+                        reference={userEmailInput}
+                        type="e-mail"
+                        placeholder="E-mail"
                     />
                 </div>
                 <div className="input py-2">
-                    <input
-                        type="text"
-                        className="form-control my-1"
+                    <InputItem
+                        reference={userPasswordInput}
+                        type="password"
                         placeholder="Password"
-                        aria-label="Password"
-                        autoComplete="on"
                     />
                 </div>
                 <button type="submit" className="btn btn-primary my-2">

@@ -9,7 +9,7 @@ export function InputItem({
     reference: React.RefObject<HTMLInputElement>;
     type: string;
     placeholder: string;
-    onInput: () => void;
+    onInput?: () => void;
 }) {
     return (
         <input

@@ -26,7 +26,9 @@ export async function logInWithEmailAndPassword(
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const { user } = userCredential;
         const token = await user.getIdToken();
+        const currentUser = userCredential?.user?.email;
         document.cookie = `jwt=${token}; path=/; secure; sameSite=none`;
+        if (currentUser) localStorage.setItem('currentUser', currentUser);
     } catch (err) {
         console.error(err);
     }
@@ -45,7 +47,9 @@ export async function registerWithEmailAndPassword(
         );
         const { user } = userCredential;
         const token = await user.getIdToken();
+        const currentUser = userCredential?.user?.email;
         document.cookie = `jwt=${token}; path=/; secure; sameSite=none`;
+        if (currentUser) localStorage.setItem('currentUser', currentUser);
     } catch (err) {
         console.error(err);
     }
@@ -55,6 +59,7 @@ export async function logout(): Promise<void> {
     try {
         document.cookie = `jwt=0; max-age=0`;
         signOut(auth);
+        localStorage.removeItem('currentUser');
     } catch (err) {
         console.error(err);
     }

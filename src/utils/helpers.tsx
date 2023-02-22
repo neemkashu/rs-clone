@@ -61,7 +61,7 @@ export function validateUserEmailInput(input: string): boolean {
 }
 
 export function validateUserPasswordInput(input: string): boolean {
-    if (input.match(/^[a-z\d@$!%*#?&]{8,}$/i)) return true;
+    if (input.match(/^[\w\s\d@$!%*#?&]{8,}$/i)) return true;
     return false;
 }
 

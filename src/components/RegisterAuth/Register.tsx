@@ -51,13 +51,13 @@ export function Register(): JSX.Element {
             registerWithEmailAndPassword(name, email, repeatPassword)
                 .then(() => {
                     // successful sign up
+                    console.log('registered');
                 })
-                .catch(() => {
+                .catch((e) => {
                     // unsuccessful sign up
+                    console.log('error with register');
+                    console.log(e);
                 });
-            console.log(`Login - ${name}`);
-            console.log(`E-mail - ${email}`);
-            console.log(`Password - ${password}`);
             userNameInput.current.value = '';
             userEmailInput.current.value = '';
             userPasswordInput.current.value = '';
