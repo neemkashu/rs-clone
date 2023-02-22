@@ -269,15 +269,18 @@ export const gameSlice = createSlice({
         },
         updatePaintedCells(state, action: PayloadAction<DragCellInfo>) {
             const { paint, indexRow, indexNumberRow } = action.payload;
+            console.log('updatePaintedCells', indexRow, indexNumberRow);
             if (state.paintedCells) {
                 const isPainted = state.paintedCells[indexRow][indexNumberRow];
                 state.paintedCells[indexRow][indexNumberRow] = paint;
             }
         },
         updatePaintProcess(state, action: PayloadAction<HugeActionList>) {
+            console.log('DRAG END event! call updatePaintProcess', action.payload);
             state.lastAction = action.payload;
         },
         clearPainted(state, action: PayloadAction) {
+            console.log('%c clear painted!', 'background: #ffddff; color: #000');
             state.paintedCells =
                 state.currentNonogram?.nonogram.goal.map((row, indexRow) => {
                     return row.map((cell, indexNumberRow) => {
