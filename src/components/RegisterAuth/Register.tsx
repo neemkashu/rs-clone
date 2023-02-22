@@ -48,11 +48,13 @@ export function Register(): JSX.Element {
             repeatPassword
         ) {
             // Тут асинхронная функция будет делать запрос на сервер
-            registerWithEmailAndPassword(name, email, repeatPassword).then((token) => {
-                console.log(token);
-                /* save token to storage */
-                /* token can be null if there was an error with bd */
-            });
+            registerWithEmailAndPassword(name, email, repeatPassword)
+                .then(() => {
+                    // successful sign up
+                })
+                .catch(() => {
+                    // unsuccessful sign up
+                });
             console.log(`Login - ${name}`);
             console.log(`E-mail - ${email}`);
             console.log(`Password - ${password}`);

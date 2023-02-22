@@ -10,13 +10,13 @@ export function Auth(): JSX.Element {
         e.preventDefault();
         // Здесь будет вызов асинхронной функции,
         // которая будет делать запрос и проверять логин и пароль
-        logInWithEmailAndPassword('example@test.com', 'i love nonograms').then(
-            (token) => {
-                console.log(token);
-                /* save token to storage */
-                /* token can be null if email and password don't match */
-            }
-        );
+        logInWithEmailAndPassword('example@test.com', 'i love nonograms')
+            .then(() => {
+                // successful log in
+            })
+            .catch
+            // unsuccessful log in
+            ();
     }
 
     return (
