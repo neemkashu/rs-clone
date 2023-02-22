@@ -24,7 +24,7 @@ export function LanguageDropDownButton(): JSX.Element {
     return (
         <div className="dropdown d-flex align-items-center">
             <button
-                className="btn btn-outline-secondary dropdown-toggle"
+                className="btn btn-primary dropdown-toggle"
                 type="button"
                 id="dropdownLangButton"
                 data-bs-toggle="dropdown"

@@ -9,7 +9,7 @@ export function AsideButton(): JSX.Element {
             type="button"
             onClick={handleBurgerBtnClick}
             id="burgerButton"
-            className="btn btn-outline-secondary"
+            className="btn btn-primary"
         >
             ☰
         </button>
