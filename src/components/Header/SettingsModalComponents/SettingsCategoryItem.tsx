@@ -7,7 +7,7 @@ export function SettingsCategoryItem({
     handleSettingsCategorySelect,
 }: SettingsCategoryItemPropsType) {
     return (
-        <label className={`btn btn-outline-dark btn-sm ${active}`} htmlFor={id}>
+        <label className={`btn btn-primary ${active}`} htmlFor={id}>
             {name}
             <input
                 type="radio"

@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-import { NonogramSettingsMainState } from '../../../../utils/types';
 import { useAppSelector, useAppDispatch } from '../../../hooks';
 import { changedMainSettings } from '../settingsSlice';
 
@@ -36,10 +35,9 @@ export function SettingsMainContent() {
 
     return (
         <ul className="modal-body mb-0 py-1">
-            <li className="ms-2">
-                <div className="form-check form-switch">
+            <li className="ms-2 py-2">
+                <div className="form-check form-switch d-flex align-items-center">
                     <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
-                        {t('showNonogramsTitlesBeforeSolving')}
                         <input
                             role="button"
                             className="form-check-input"
@@ -49,12 +47,12 @@ export function SettingsMainContent() {
                             onChange={handleNonogramTitlesSettingChange}
                         />
                     </label>
+                    <div>{t('showNonogramsTitlesBeforeSolving')}</div>
                 </div>
             </li>
-            <li className="ms-2">
-                <div className="form-check form-switch">
+            <li className="ms-2 py-2">
+                <div className="form-check form-switch d-flex align-items-center">
                     <label className="form-check-label" htmlFor="flexSwitchCheckChecked">
-                        {t('showNonogramsThumbnailsBeforeSolving')}
                         <input
                             role="button"
                             className="form-check-input"
@@ -64,6 +62,7 @@ export function SettingsMainContent() {
                             onChange={handleNonogramThumbnailsSettingChange}
                         />
                     </label>
+                    <div>{t('showNonogramsThumbnailsBeforeSolving')}</div>
                 </div>
             </li>
         </ul>
