@@ -22,16 +22,12 @@ export async function logInWithEmailAndPassword(
     email: string,
     password: string
 ): Promise<void> {
-    try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const { user } = userCredential;
-        const token = await user.getIdToken();
-        const currentUser = userCredential?.user?.email;
-        document.cookie = `jwt=${token}; path=/; secure; sameSite=none`;
-        if (currentUser) localStorage.setItem('currentUser', currentUser);
-    } catch (err) {
-        console.error(err);
-    }
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const { user } = userCredential;
+    const token = await user.getIdToken();
+    const currentUser = userCredential?.user?.email;
+    document.cookie = `jwt=${token}; path=/; secure; sameSite=none`;
+    if (currentUser) localStorage.setItem('currentUser', currentUser);
 }
 
 export async function registerWithEmailAndPassword(
@@ -39,28 +35,15 @@ export async function registerWithEmailAndPassword(
     email: string,
     password: string
 ): Promise<void> {
-    try {
-        const userCredential = await createUserWithEmailAndPassword(
-            auth,
-            email,
-            password
-        );
-        const { user } = userCredential;
-        const token = await user.getIdToken();
-        const currentUser = userCredential?.user?.email;
-        document.cookie = `jwt=${token}; path=/; secure; sameSite=none`;
-        if (currentUser) localStorage.setItem('currentUser', currentUser);
-    } catch (err) {
-        console.error(err);
-    }
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const { user } = userCredential;
+    const token = await user.getIdToken();
+    const currentUser = userCredential?.user?.email;
+    document.cookie = `jwt=${token}; path=/; secure; sameSite=none`;
+    if (currentUser) localStorage.setItem('currentUser', currentUser);
 }
 
 export async function logout(): Promise<void> {
-    try {
-        document.cookie = `jwt=0; max-age=0`;
-        signOut(auth);
-        localStorage.removeItem('currentUser');
-    } catch (err) {
-        console.error(err);
-    }
+    document.cookie = `jwt=0; max-age=0`;
+    signOut(auth);
 }

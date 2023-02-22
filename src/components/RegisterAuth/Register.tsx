@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { useAppDispatch } from '../hooks';
 import { InputItem } from './InputItem';
 import {
     checkUserNameInput,
@@ -10,9 +11,11 @@ import {
 } from '../../utils/helpers';
 import { ErrorItem } from './ErrorItem';
 import { registerWithEmailAndPassword } from '../../api/firebase';
+import { changedCurrentUser } from './userSlice';
 
 export function Register(): JSX.Element {
     const { t } = useTranslation();
+    const dispatch = useAppDispatch();
     const [isUserNameNotValid, setIsUserNameNotValid] = useState<boolean>(false);
     const [isUserEmailNotValid, setIsUserEmailNotValid] = useState<boolean>(false);
     const [isUserPasswordNotValid, setIsUserPasswordNotValid] = useState<boolean>(false);
@@ -51,13 +54,15 @@ export function Register(): JSX.Element {
             registerWithEmailAndPassword(name, email, repeatPassword)
                 .then(() => {
                     // successful sign up
+                    dispatch(changedCurrentUser(email));
                     console.log('registered');
                 })
                 .catch((e) => {
                     // unsuccessful sign up
-                    console.log('error with register');
                     console.log(e);
+                    console.log('error with register');
                 });
+
             userNameInput.current.value = '';
             userEmailInput.current.value = '';
             userPasswordInput.current.value = '';

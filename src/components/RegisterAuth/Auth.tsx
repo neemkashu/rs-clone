@@ -1,11 +1,14 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { useAppDispatch } from '../hooks';
 import { logInWithEmailAndPassword } from '../../api/firebase';
 import { InputItem } from './InputItem';
+import { changedCurrentUser } from './userSlice';
 
 export function Auth(): JSX.Element {
     const { t } = useTranslation();
+    const dispatch = useAppDispatch();
     const userEmailInput = useRef<HTMLInputElement>(null);
     const userPasswordInput = useRef<HTMLInputElement>(null);
 
@@ -17,14 +20,18 @@ export function Auth(): JSX.Element {
         const passwordInput = userPasswordInput.current?.value;
         if (emailInput && passwordInput) {
             logInWithEmailAndPassword(userEmailInput?.current?.value, passwordInput)
-                .catch((err) => {
-                    // unsuccessful log in
-                    console.log(err);
-                })
                 .then(() => {
                     // successful log in
                     console.log('log in');
+                    dispatch(changedCurrentUser(emailInput));
+                })
+                .catch((err) => {
+                    // unsuccessful log in
+                    console.warn(err);
+                    console.log('error with log in');
                 });
+            userEmailInput.current.value = '';
+            userPasswordInput.current.value = '';
         } else {
             console.log('no email or input');
         }
