@@ -6,7 +6,6 @@
 .square {
     width: var(--nonogram-square-width);
     height: var(--nonogram-square-width);
-    color: var(--bs-gray-700);
     &:hover {
         cursor: pointer;
     }

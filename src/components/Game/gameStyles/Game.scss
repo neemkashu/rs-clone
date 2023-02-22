@@ -11,6 +11,7 @@
     --nonogram-hints-color: #61626c;
     --nonogram-hints-dark-color: #252525;
 }
+
 [data-bs-theme='dark'] {
     .table {
         background-color: var(--nonogram-body-color) !important;
@@ -57,6 +58,7 @@
 }
 .chronometer {
     width: max-content;
+    border-radius: 255px 25px 225px 25px / 25px 225px 25px 255px;
 }
 .field-table > tbody > tr > td {
     position: relative;

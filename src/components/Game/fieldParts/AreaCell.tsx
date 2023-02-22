@@ -114,6 +114,7 @@ export default function AreaCell({
     };
 
     const handleDragEnter: MouseEventHandler = (event) => {
+        event.preventDefault();
         dispatch(
             updatePaintedCells({
                 paint: CellAreaState.FILLED,
