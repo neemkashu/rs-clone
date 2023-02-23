@@ -24,7 +24,7 @@ export async function logInWithEmailAndPassword(
 ): Promise<void> {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const { user } = userCredential;
-    const token = await user.getIdToken();
+    const token = await user.getIdToken(true);
     const currentUser = userCredential?.user?.email;
     document.cookie = `jwt=${token}; path=/; secure; sameSite=none`;
     if (currentUser) localStorage.setItem('currentUser', currentUser);
@@ -37,7 +37,7 @@ export async function registerWithEmailAndPassword(
 ): Promise<void> {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const { user } = userCredential;
-    const token = await user.getIdToken();
+    const token = await user.getIdToken(true);
     const currentUser = userCredential?.user?.email;
     document.cookie = `jwt=${token}; path=/; secure; sameSite=none`;
     if (currentUser) localStorage.setItem('currentUser', currentUser);
