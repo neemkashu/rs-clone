@@ -1,3 +1,5 @@
+export const currentUserString = 'currentUser';
+
 export enum LanguagesEnum {
     EN = 'dropdownEnLang',
     RU = 'dropdownRuLang',

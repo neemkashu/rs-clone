@@ -47,3 +47,11 @@ export async function getRandomNonogramId(): Promise<string | null> {
         return null;
     }
 }
+// to enable details for the logged in user you should use
+// ! `credentials: 'include'`
+// in fetch
+
+// fetch('http://localhost:3000/users-games', {
+//     method: 'GET',
+//     credentials: 'include',
+// });

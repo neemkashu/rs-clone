@@ -3,6 +3,7 @@ import undoable, { excludeAction, groupByActionTypes, includeAction } from 'redu
 import { configureStore } from '@reduxjs/toolkit';
 import { ACTIONS_TO_INCLUDE, gameSlice } from './Game/gameSlice';
 import { settingsSlice } from './Header/SettingsModalComponents/settingsSlice';
+import { userSlice } from './RegisterAuth/userSlice';
 
 export const store = configureStore({
     reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
             // ]),
         }),
         settings: settingsSlice.reducer,
+        currentUser: userSlice.reducer,
     },
 });
 export type RootState = ReturnType<typeof store.getState>;

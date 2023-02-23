@@ -1,9 +1,11 @@
 import './Header.scss';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { AsideButton } from './AsideButton/AsideButton';
 import { ColorThemeButton } from './ColorThemeButton/ColorThemeButton';
 import { LanguageDropDownButton } from './LanguageButton/LanguageDropdownButton';
+import { AuthMenu } from './AuthMenu';
 import { matchSmWindowSize, handleAsideAfterWindowResize } from '../../utils/helpers';
 import SettingsModal from './SettingsModalComponents/SettingsModal';
 
@@ -40,14 +42,7 @@ export function Header(): JSX.Element {
                         <ColorThemeButton />
                         <LanguageDropDownButton />
                     </div>
-                    <div className="col d-flex justify-content-center justify-content-sm-end gap-2 py-1">
-                        <a href="/" className="btn btn-outline-success text-nowrap">
-                            {t('signIn')}
-                        </a>
-                        <a href="/" className="btn btn-outline-primary text-nowrap">
-                            {t('signUp')}
-                        </a>
-                    </div>
+                    <AuthMenu />
                 </div>
             </header>
         </>
