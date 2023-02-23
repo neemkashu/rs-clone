@@ -5,6 +5,7 @@ import {
     createUserWithEmailAndPassword,
     signOut,
 } from 'firebase/auth';
+import { currentUserToken } from '../utils/enums';
 
 const firebaseConfig = {
     apiKey: 'AIzaSyBpJ41vU5nqaB0nZx0IAklPDRqu1zOSTHM',
@@ -26,7 +27,7 @@ export async function logInWithEmailAndPassword(
     const { user } = userCredential;
     const token = await user.getIdToken(true);
     const currentUser = userCredential?.user?.email;
-    document.cookie = `jwt=${token}; path=/; secure; sameSite=none`;
+    localStorage.setItem(currentUserToken, token);
     if (currentUser) localStorage.setItem('currentUser', currentUser);
 }
 
@@ -39,11 +40,11 @@ export async function registerWithEmailAndPassword(
     const { user } = userCredential;
     const token = await user.getIdToken(true);
     const currentUser = userCredential?.user?.email;
-    document.cookie = `jwt=${token}; path=/; secure; sameSite=none`;
+    localStorage.setItem(currentUserToken, token);
     if (currentUser) localStorage.setItem('currentUser', currentUser);
 }
 
 export async function logout(): Promise<void> {
-    document.cookie = `jwt=0; max-age=0`;
+    localStorage.removeItem(currentUserToken);
     signOut(auth);
 }
