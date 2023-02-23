@@ -10,9 +10,22 @@ const buttonClass = '';
 export function UndoButton({ caption }: { caption: string }) {
     const dispatch = useAppDispatch();
     const gameState = useAppSelector(selectUserState);
-    const canUndo = useAppSelector((state) => state.game.past.length > 1);
+    const historyLength = useAppSelector((state) => state.game.past.length);
+    const isLongHistory = historyLength > 1;
+    const lastAction = useAppSelector((state) => state.game.present.lastAction);
+    const preLastAction = useAppSelector(
+        (state) => state.game.past[historyLength - 1].lastAction
+    );
 
-    const isActive = canUndo && gameState !== GameStatus.FINISHED;
+    const isFirstActionDrag =
+        preLastAction === HugeActionList.LOADED &&
+        lastAction === HugeActionList.DRAG_START;
+
+    const isActive =
+        isLongHistory &&
+        gameState !== GameStatus.FINISHED &&
+        lastAction !== HugeActionList.LOADED &&
+        !isFirstActionDrag;
 
     const handleClick = () => {
         const pastLength = store.getState().game.past.length;

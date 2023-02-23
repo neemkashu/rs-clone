@@ -71,6 +71,7 @@ export const enum HugeActionList {
     DRAG_END = 'updatePaintProcessEnd',
     DRAG_START = 'updatePaintProcessStart',
     REGULAR = 'handleOneCell',
+    LOADED = 'loadNonogram',
 }
 export const loadNonogramByID = createAsyncThunk(
     'game/load/nonogram',
@@ -345,6 +346,7 @@ export const gameSlice = createSlice({
                 state.userGame = gameToSet;
                 state.bestTime = null;
             }
+            state.lastAction = HugeActionList.LOADED;
         });
         builder.addCase(loadNonogramByID.rejected, (state, action) => {
             state.loadNonogramStatus = LoadStatus.REJECTED;
