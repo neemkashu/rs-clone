@@ -4,7 +4,7 @@
     "catalogMainPage": "Main Page",
     "catalogCatalog": "Catalog",
     "catalogRandomGame": "Random Game",
-    "catalogHelp": "Help",
+    "catalogHelp": "How to solve",
     "settingsMainCategoryName": "Main",
     "settingsGameCategoryName": "Game",
     "settingsViewCategoryName": "View",
@@ -38,5 +38,9 @@
     "gameCheck": "Check",
     "gameHint": "Use hint",
     "gameCongrats": "Hooray, you've solved the nonogram!",
-    "gameToCatalog": "To catalog"
+    "gameToCatalog": "To catalog",
+    "mainHeader": "Nonograms",
+    "mainGreeting": "Welcome to the website entirely dedicated to nonograms!",
+    "mainAbout": "Here you will find a catalog of several dozen crosswords with different levels of difficulty, both for beginners and advanced ones. We are especially proud of our small but challenging nonograms. Don't be fooled by the size 15 × 15, and sometimes even 10 × 10!",
+    "mainAppeal": "If you're just getting started with nonograms, or if you're stuck with one of our puzzles, check out section \"How to Solve\""
 }

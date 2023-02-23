@@ -4,7 +4,7 @@
     "catalogMainPage": "Hauptseite",
     "catalogCatalog": "Katalog",
     "catalogRandomGame": "Zufallsspiel",
-    "catalogHelp": "Hilfe",
+    "catalogHelp": "Wie zu lösen",
     "settingsMainCategoryName": "Hauptsächlich",
     "settingsGameCategoryName": "Spiel",
     "settingsViewCategoryName": "Sicht",
@@ -38,5 +38,9 @@
     "gameCheck": "Überprüfen",
     "gameHint": "Tipp",
     "gameCongrats": "Hurra, du hast das Nonogramm gelöst!",
-    "gameToCatalog": "Zum Katalog"
+    "gameToCatalog": "Zum Katalog",
+    "mainHeader": "Nonogramme",
+    "mainGreeting": "Willkommen auf der Website, die ausschließlich den Nonogrammen gewidmet ist!",
+    "mainAbout": "Hier finden Sie einen Katalog mit mehreren Dutzend Rätseln mit unterschiedlichem Schwierigkeitsgrad, sowohl für Anfänger als auch für Fortgeschrittene. Besonders stolz sind wir auf unsere kleine, aber komplizierte Nonogramme. Lassen Sie sich nicht von der Größe 15×15 täuschen , und manchmal sogar 10 × 10!",
+    "mainAppeal": "Wenn Sie gerade erst mit Nonogrammen anfangen oder bei einem unserer Rätsel nicht weiterkommen, sehen Sie sich den Abschnitt \"Wie lösen\" an."
 }
