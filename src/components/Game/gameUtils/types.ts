@@ -50,6 +50,7 @@ export interface NonogramHint {
 export interface Nonogram {
     height: number;
     width: number;
+    difficulty: number;
     title: Languages;
     colorMapping: { [key: number]: string };
     goal: number[][];
@@ -66,14 +67,18 @@ export interface UserFieldData {
     currentUserColumns: ({ isCrossedOut: boolean } | null)[][];
 }
 export interface UserGameData extends UserFieldData {
+    id: string;
     state: GameStatus;
     currentTime: number;
 }
 export interface UserGameDataRaw {
     data: {
+        bestTime: null | number;
         currentGame: UserGameData;
     };
 }
+export type UserGameForServer = UserGameDataRaw['data'];
+
 export enum ResponseStatus {
     SUCCESS = 'successful',
     ERROR = 'failed',
@@ -85,7 +90,15 @@ export enum ClickType {
 export const CellAreaState = {
     EMPTY: null,
     CROSSED: 0,
+    DOTTED: 0,
     FILLED: 1,
 } as const;
 export type CellAreaStateType = (typeof CellAreaState)[keyof typeof CellAreaState];
 export type AreaCellStyle = Record<keyof typeof CellAreaState, string>;
+
+export type DragCellInfo = {
+    paint: CellAreaStateType;
+    indexRow: number;
+    indexNumberRow: number;
+    hash?: string;
+};

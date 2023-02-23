@@ -8,6 +8,7 @@ export type NonogramObject = {
     nonogram: {
         height: number;
         width: number;
+        difficulty: number;
         title: {
             en: string;
             ru: string;
@@ -33,9 +34,19 @@ export type NonogramObject = {
     };
 };
 
+export type GameStateType = {
+    id: string;
+    state: string;
+};
+
+export type UserWinsObject = {
+    data: { currentGame: UserGameData; bestTime: number }[];
+};
+
 export type CatalogItemProps = {
     catalogItem: NonogramObject;
     cardNumber: number;
+    solvedGames: string[];
 };
 
 export type SpecificLanguageButtonPropsType = {
@@ -71,8 +82,15 @@ export type NonogramSettingsGameState = {
     lastCrossedOutDigitFillsLineWithCrosses: boolean;
 };
 
+export const enum EmptyCellMark {
+    CROSS = 'cross-style',
+    DOT = 'dot-style',
+}
 export type NonogramSettingsViewState = {
-    markingAnEmptyCell: string;
+    markingAnEmptyCell: {
+        caption: string;
+        type: EmptyCellMark;
+    };
     showGuessTime: boolean;
 };
 
@@ -132,6 +150,7 @@ export interface NonogramRaw {
     nonogram: Nonogram;
 }
 export interface UserGameData {
+    id: string;
     state: GameStatus;
     currentUserSolution: (null | number)[][];
     currentTime: number;

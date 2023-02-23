@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { EmptyCellMark } from '../../../../utils/types';
 import { useAppSelector, useAppDispatch } from '../../../hooks';
 import { changedViewSettings } from '../settingsSlice';
 
@@ -8,14 +9,17 @@ export function SettingsViewContent() {
     const settingsView = useAppSelector((state) => state.settings.view);
     const dispatch = useAppDispatch();
     const isDot =
-        settingsView.markingAnEmptyCell === 'точка' ||
-        settingsView.markingAnEmptyCell === 'dot' ||
-        settingsView.markingAnEmptyCell === 'punkt';
+        settingsView.markingAnEmptyCell.caption === 'точка' ||
+        settingsView.markingAnEmptyCell.caption === 'dot' ||
+        settingsView.markingAnEmptyCell.caption === 'punkt';
 
     useEffect(() => {
         dispatch(
             changedViewSettings({
-                markingAnEmptyCell: t(isDot ? 'dot' : 'cross'),
+                markingAnEmptyCell: {
+                    caption: t(isDot ? 'dot' : 'cross'),
+                    type: isDot ? EmptyCellMark.DOT : EmptyCellMark.CROSS,
+                },
                 showGuessTime: settingsView.showGuessTime,
             })
         );
@@ -23,22 +27,28 @@ export function SettingsViewContent() {
     }, [t]);
 
     function returnEmptyCellStateInBoolean() {
-        if (settingsView.markingAnEmptyCell === t('dot')) return false;
+        if (settingsView.markingAnEmptyCell.caption === t('dot')) return false;
         return true;
     }
 
     function handleEmptyCellSettingChange() {
-        if (settingsView.markingAnEmptyCell === t('dot')) {
+        if (settingsView.markingAnEmptyCell.caption === t('dot')) {
             dispatch(
                 changedViewSettings({
-                    markingAnEmptyCell: t('cross'),
+                    markingAnEmptyCell: {
+                        caption: t('cross'),
+                        type: EmptyCellMark.CROSS,
+                    },
                     showGuessTime: settingsView.showGuessTime,
                 })
             );
         } else {
             dispatch(
                 changedViewSettings({
-                    markingAnEmptyCell: t('dot'),
+                    markingAnEmptyCell: {
+                        caption: t('dot'),
+                        type: EmptyCellMark.DOT,
+                    },
                     showGuessTime: settingsView.showGuessTime,
                 })
             );
@@ -60,7 +70,7 @@ export function SettingsViewContent() {
                 {t('markingEmptyCell')}
                 <div className="form-check form-switch">
                     <label className="form-check-label" htmlFor="emptyCell">
-                        {settingsView.markingAnEmptyCell}
+                        {settingsView.markingAnEmptyCell.caption}
                         <input
                             role="button"
                             className="form-check-input"

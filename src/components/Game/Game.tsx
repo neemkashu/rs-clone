@@ -1,43 +1,91 @@
 import './gameStyles/Game.scss';
 import { useEffect, useState } from 'react';
-import Controls from './Controls';
+import { Controls } from './Controls';
 import Field from './Field';
 import GameHeader from './GameHeader';
 import Chronometer from './Chronometer';
-import { NonogramRaw } from '../../utils/types';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { clearTimers, loadNonogramByID, saveUserGameByID } from './gameSlice';
+import {
+    clearGame,
+    clearTimers,
+    loadNonogramByID,
+    saveUserGameByID,
+    selectNonogramRaw,
+} from './gameSlice';
 import { WinChecker } from './gameLogic/WinChecker';
 import { store } from '../store';
-import { sendGameToServer } from './api/saveGame';
 
-const ID = 'nsNWHaYMXSERIHX1juXN'; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
-// nsNWHaYMXSERIHX1juXN
-function Game(): JSX.Element {
-    const userGame = useAppSelector((state) => state.game.userGame);
-    const nonogramInStore = useAppSelector((state) => state.game.currentNonogram);
+function saveGameWhenInvisible(dispatch: ReturnType<typeof useAppDispatch>) {
+    const id = store.getState().game.present.currentNonogram?.id;
+    if (id) {
+        dispatch(
+            saveUserGameByID({
+                id,
+                userGame: store.getState().game.present.userGame,
+                bestTime: store.getState().game.present.bestTime,
+            })
+        );
+    }
+}
+const nono = {
+    n5p3: 'nsNWHaYMXSERIHX1juXN',
+    n10p10: 'E7UMxLSZv31q5m4RwLG4',
+    n20p20: '6lMmepUH20vmUxvkuUEd',
+    n30p35: 'aI7dRHAVG7gzTishlpjM',
+    n50p70: 'bEfUePWLRweZpBmoiP0V',
+};
+const ID = nono.n10p10; // aI7dRHAVG7gzTishlpjM E7UMxLSZv31q5m4RwLG4
+// nsNWHaYMXSERIHX1juXN 6lMmepUH20vmUxvkuUEd uGURDew01W6reyMLJctH bEfUePWLRweZpBmoiP0V
+function Game({ id }: { id: string }): JSX.Element {
+    if (!id) {
+        // eslint-disable-next-line no-param-reassign
+        id = ID;
+    }
+    const nonogramInStore = useAppSelector(selectNonogramRaw);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(loadNonogramByID(ID));
+        const handleVisibility = () => {
+            saveGameWhenInvisible(dispatch);
+        };
+        dispatch(loadNonogramByID(id));
+
+        document.addEventListener('visibilitychange', handleVisibility);
 
         return () => {
             dispatch(
-                saveUserGameByID({ id: ID, userGame: store.getState().game.userGame })
+                saveUserGameByID({
+                    id,
+                    userGame: store.getState().game.present.userGame,
+                    bestTime: store.getState().game.present.bestTime,
+                })
             );
             dispatch(clearTimers());
+            dispatch(clearGame());
+            document.removeEventListener('visibilitychange', handleVisibility);
         };
-    }, [dispatch]);
+    }, [dispatch, id]);
+
+    useEffect(() => {
+        const preventCursorMorphing = (event: Event) => {
+            event.preventDefault();
+        };
+        document.addEventListener('dragover', preventCursorMorphing);
+        return () => {
+            document.removeEventListener('dragover', preventCursorMorphing);
+            dispatch(clearGame());
+        };
+    }, []);
 
     return (
-        <div className="container p-0 p-sm-1 d-flex flex-column gap-2">
-            {nonogramInStore && userGame && (
+        <div className="p-0 mb-2 p-sm-1 d-flex flex-column gap-2">
+            {nonogramInStore && (
                 <>
-                    <GameHeader nonogramRaw={nonogramInStore} />
-                    <Chronometer nonogramRaw={nonogramInStore} />
-                    <Field nonogramRaw={nonogramInStore} />
-                    <WinChecker nonogramRaw={nonogramInStore} />
-                    <Controls nonogramRaw={nonogramInStore} />
+                    <GameHeader />
+                    <Chronometer />
+                    <Field />
+                    <WinChecker />
+                    <Controls />
                 </>
             )}
         </div>

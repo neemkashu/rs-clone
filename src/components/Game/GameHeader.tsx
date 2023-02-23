@@ -1,5 +1,11 @@
-import { userNonogramData } from '../../utils/mochas';
-import { NonogramRaw } from '../../utils/types';
+import { timeEnd } from 'console';
+import { useTranslation } from 'react-i18next';
+import { LanguagesShortNamesEnum } from '../../utils/enums';
+import { GameStatus, NonogramRaw } from '../../utils/types';
+import { useAppSelector } from '../hooks';
+import { selectNonogramRaw, selectUserState } from './gameSlice';
+import { getTranslatedTitle } from './gameUtils/helpers';
+import { Languages } from './gameUtils/types';
 import Progress from './Progress';
 
 // temp solution before getting file with all captions
@@ -8,33 +14,35 @@ const CAPTIONS = {
     difficulty: 'Difficulty',
     nonogram: 'Nonogram',
 };
-// temporary function before implementing the real one
-const getDifficulty = () => 0.24;
+const MAX_DIFFICULTY = 5;
+const TITLE_PLACEHOLDER = '*****';
 
-const {
-    size: sizeCaption,
-    difficulty: difficultyCaption,
-    nonogram: nonogramCaption,
-} = CAPTIONS;
+function GameHeader(): JSX.Element {
+    const nonogramData = useAppSelector(selectNonogramRaw);
+    const { title, width, height } = nonogramData?.nonogram ?? {};
+    const status = useAppSelector(selectUserState);
+    const { t, i18n } = useTranslation();
+    const difficulty = nonogramData?.nonogram.difficulty;
+    const isShowTitleBeforeSolve = useAppSelector(
+        (state) => state.settings.main.showNonogramTitlesBeforeSolving
+    );
+    const currentLanguage = i18n.language;
 
-function GameHeader({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element {
-    const nonogramData = nonogramRaw?.nonogram;
-    const { title, width, height } = nonogramData ?? {};
-    const status = userNonogramData.data.currentGame.state;
-    const difficulty = getDifficulty();
-    const showTitle = status === 'finished' ? title?.en : '*****';
+    const showTitle =
+        isShowTitleBeforeSolve || status === GameStatus.FINISHED
+            ? title && getTranslatedTitle(title, currentLanguage)
+            : TITLE_PLACEHOLDER;
+
     return (
         <div className="game-header">
             <h2>
-                {nonogramCaption} {showTitle}
+                {t('gameHeader')} {showTitle}
             </h2>
             <div className="d-flex gap-2">
                 <div>
-                    {sizeCaption}: {width} ✖ {height}
+                    {t('gameSize')}: {width} ✖ {height}
                 </div>
-                <div>
-                    {difficultyCaption}: {difficulty}
-                </div>
+                <div>{`${t('gameDifficulty')}: ${difficulty}/${MAX_DIFFICULTY}`}</div>
             </div>
             <Progress />
         </div>

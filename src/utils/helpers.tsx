@@ -1,5 +1,6 @@
-import { Dispatch, SetStateAction } from 'react';
-import { NonogramTime } from './types';
+import { Dispatch, SetStateAction, ReactNode } from 'react';
+import { NonogramObject, NonogramTime, EmptyCellMark } from './types';
+import { LanguagesShortNamesEnum, SettingsTimingsEnum } from './enums';
 import { StorageKeys } from './storage';
 
 export const a = 10;
@@ -114,15 +115,65 @@ export function checkUserRepeatPasswordInput(
     } else setIsUserRepeatPasswordNotValid(true);
 }
 
-export function getEmptyCellSettingInCurrenLanguage() {
+export function getEmptyCellSettingInCurrenLanguage(): {
+    caption: string;
+    type: EmptyCellMark;
+} {
+    let caption = 'dot';
     const initialLanguage = getInitialLanguage();
+
     if (initialLanguage === 'ru-RU') {
-        return 'точка';
+        caption = 'точка';
     }
     if (initialLanguage === 'de-DE') {
-        return 'punkt';
+        caption = 'punkt';
     }
-    return 'dot';
+    return {
+        caption,
+        type: EmptyCellMark.DOT,
+    };
+}
+
+export function getNonogramTitle(currentLang: string, catalogItem: NonogramObject) {
+    if (currentLang === LanguagesShortNamesEnum.EN_VALUE)
+        return catalogItem.nonogram.title.en;
+    if (currentLang === LanguagesShortNamesEnum.DE_VALUE)
+        return catalogItem.nonogram.title.de;
+    if (currentLang === LanguagesShortNamesEnum.RU_VALUE)
+        return catalogItem.nonogram.title.ru;
+    return catalogItem.nonogram.title.en;
+}
+
+export function getImageFromMatrix(matrix?: number[][]): string {
+    if (!matrix) {
+        return '';
+    }
+    const rgbMatrix = matrix.map((row) => row.map((cell) => (cell === 0 ? 255 : 0)));
+    const canvas = document.createElement('canvas');
+
+    const increaseFactor = Math.ceil(60 / rgbMatrix.length);
+
+    canvas.width = rgbMatrix[0].length * increaseFactor;
+    canvas.height = rgbMatrix.length * increaseFactor;
+
+    const context = canvas.getContext('2d');
+
+    for (let y = 0; y < rgbMatrix.length; y += 1) {
+        for (let x = 0; x < rgbMatrix[y].length; x += 1) {
+            const pixel = rgbMatrix[y][x];
+            if (context) {
+                context.fillStyle = `rgb(${pixel}, ${pixel}, ${pixel})`;
+                context.fillRect(
+                    x * increaseFactor,
+                    y * increaseFactor,
+                    increaseFactor,
+                    increaseFactor
+                );
+            }
+        }
+    }
+
+    return canvas.toDataURL('image/png');
 }
 
 export function getUserCurrentTimes(
@@ -194,4 +245,29 @@ export function unifyTwoDimensionalArray<T>(arr?: T[][]): (T | null)[][] {
         }
     });
     return arrUnified;
+}
+export function convertSettingToNumber(delay: SettingsTimingsEnum): number | null {
+    switch (delay) {
+        case SettingsTimingsEnum.NEVER: {
+            return null;
+        }
+        case SettingsTimingsEnum.ONE_SEC: {
+            return 1000;
+        }
+        case SettingsTimingsEnum.TWO_SEC: {
+            return 2000;
+        }
+        case SettingsTimingsEnum.TEN_SEC: {
+            return 10000;
+        }
+        case SettingsTimingsEnum.THIRTY_SEC: {
+            return 30000;
+        }
+        case SettingsTimingsEnum.FIVE_MIN: {
+            return 5 * 60 * 1000;
+        }
+        default: {
+            return null;
+        }
+    }
 }

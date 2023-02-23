@@ -1,52 +1,25 @@
+import { useTranslation } from 'react-i18next';
 import { CheckButton } from './controlButtons/CheckButton';
 import { ClearButton } from './controlButtons/ClearButton';
+import { RedoButton } from './controlButtons/RedoButton';
 import { RestartButton } from './controlButtons/RestartButton';
-import './gameStyles/Controls.scss';
-import { NonogramRaw } from './gameUtils/types';
+import { UndoButton } from './controlButtons/UndoButton';
 
-// temp solution before getting file with all captions
-const CAPTIONS = {
-    stepBack: '↪',
-    stepForward: '↩',
-    clear: 'Clear',
-    restart: 'Restart',
-    check: 'Check',
-    hint: 'Use hint',
-};
-const classNames = [
-    'game-undo',
-    'game-redo',
-    'game-clear',
-    'game-clear btn-outline-danger',
-    'game-clear',
-    'game-clear btn-outline-danger',
-];
-
-function Controls({ nonogramRaw }: { nonogramRaw: NonogramRaw }): JSX.Element {
+export function Controls(): JSX.Element {
+    const { t } = useTranslation();
     return (
         <div className="btn-group btn-group-sm game-controls">
-            {Object.values(CAPTIONS).map((caption, index) => {
-                if (caption === CAPTIONS.clear) {
-                    return <ClearButton key={caption} nonogramRaw={nonogramRaw} />;
-                }
-                if (caption === CAPTIONS.restart) {
-                    return <RestartButton key={caption} nonogramRaw={nonogramRaw} />;
-                }
-                if (caption === CAPTIONS.check) {
-                    return <CheckButton key={caption} />;
-                }
-                return (
-                    <button
-                        key={caption}
-                        type="button"
-                        className={`btn btn-toolbar btn-outline-primary ${classNames[index]}`}
-                    >
-                        {caption}
-                    </button>
-                );
-            })}
+            <UndoButton caption={`${t('gameUndo')} ↪`} />
+            <RedoButton caption={`${t('gameRedo')} ↩`} />
+            <ClearButton />
+            <RestartButton />
+            <CheckButton />
+            <button
+                type="button"
+                className="btn btn-toolbar btn-outline-primary btn-outline-danger"
+            >
+                {t('gameHint')}
+            </button>
         </div>
     );
 }
-
-export default Controls;
