@@ -22,7 +22,7 @@ export function Catalog(): JSX.Element {
     useEffect(() => {
         if (fetching) {
             console.log('fetching');
-            getCatalogDB(15, lastId)
+            getCatalogDB(30, lastId)
                 .then((data) => {
                     const nonogramsDB = data[1];
                     if (nonogramsDB.length) {

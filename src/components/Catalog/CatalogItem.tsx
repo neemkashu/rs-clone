@@ -1,4 +1,5 @@
 import './CatalogItem.scss';
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../hooks';
@@ -8,6 +9,7 @@ import { getImageFromMatrix, getNonogramTitle } from '../../utils/helpers';
 export function CatalogItem({ catalogItem, cardNumber, solvedGames }: CatalogItemProps) {
     const { t, i18n } = useTranslation();
     const settingsMain = useAppSelector((state) => state.settings.main);
+    const imageToPrint = useRef(null);
 
     function getNonogramTitleDependingOnSettings(): string {
         if (!settingsMain.showNonogramTitlesBeforeSolving) {
@@ -38,6 +40,7 @@ export function CatalogItem({ catalogItem, cardNumber, solvedGames }: CatalogIte
                     className="catalog-item__image border border-2 rounded d-flex align-items-center p-1"
                 >
                     <img
+                        ref={imageToPrint}
                         src={getNonogramImageSrcDependingOnSettings()}
                         alt="nonogram preview"
                         style={{
@@ -57,7 +60,13 @@ export function CatalogItem({ catalogItem, cardNumber, solvedGames }: CatalogIte
                     <div>
                         {t('difficulty')}: {catalogItem.nonogram.difficulty}
                     </div>
-                    <div>{t('print')}</div>
+                    <Link
+                        to={`/print/${catalogItem.id}`}
+                        type="button"
+                        className="btn btn-outline-secondary rounded"
+                    >
+                        {t('print')}
+                    </Link>
                 </div>
             </div>
         </div>

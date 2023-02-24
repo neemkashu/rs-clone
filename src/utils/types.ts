@@ -33,6 +33,8 @@ export type NonogramObject = {
     };
 };
 
+export type NonogramMatrix = Array<number[]>;
+
 export type GameStateType = {
     id: string;
     state: string;

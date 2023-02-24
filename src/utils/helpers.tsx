@@ -31,6 +31,31 @@ export function handleAsideAfterWindowResize(
     }
 }
 
+export function printElem(src: string, width: string): void {
+    const mywindow = window.open('', 'PRINT', 'height=720, width=1280');
+    console.log(width);
+    mywindow?.document.write(
+        `<html>
+            <head>
+                <title>${document.title}</title>
+            </head>
+            <body>
+                <div style="width: ${width}; height: 100%">
+                    <img
+                        src=${src}
+                        alt="nonogram preview"
+                        style="width: 100%; maxHeight: 100%"
+                    />
+                </div>
+            </body>
+        </html>`
+    );
+    mywindow?.document.close();
+    mywindow?.focus();
+    mywindow?.print();
+    mywindow?.close();
+}
+
 export function handleAsideCloseBtnClick(): void {
     const aside = document.body.querySelector('#aside') as HTMLDivElement;
     aside.style.left = '-170px';

@@ -1,4 +1,4 @@
-import { NonogramObject, UserWinsObject } from '../utils/types';
+import { NonogramMatrix, NonogramObject, UserWinsObject } from '../utils/types';
 
 const SERVER = 'https://rs-clone-backend-1hqs.onrender.com';
 const LOCAL_SERVER = 'http://localhost:3000';
@@ -37,6 +37,22 @@ export async function getSolvedGames(): Promise<UserWinsObject> {
     } catch (e) {
         console.warn(e);
         return { data: [] };
+    }
+}
+
+export async function getNonogramMatrixForImage(id: string): Promise<NonogramMatrix> {
+    try {
+        const response = await fetch(`${LOCAL_SERVER}/nonograms/${id}`, {
+            method: 'GET',
+        });
+        if (!response.ok) {
+            throw new Error('this error occurred while fetching user games');
+        }
+        const data: NonogramObject = await response.json();
+        return data.nonogram.goal;
+    } catch (e) {
+        console.warn(e);
+        return [];
     }
 }
 
