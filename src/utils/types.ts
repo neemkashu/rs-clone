@@ -16,7 +16,6 @@ export type NonogramObject = {
         };
         colorMapping: {
             1: string;
-            2: string;
         };
         goal: Array<number[]>;
         rows: Array<
