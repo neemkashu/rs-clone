@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
+import { TFunction } from 'i18next';
+import { CSSProperties, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RedoButton } from '../Game/controlButtons/RedoButton';
-import { UndoButton } from '../Game/controlButtons/UndoButton';
 import Field from '../Game/Field';
 import {
     clearGame,
@@ -9,10 +8,11 @@ import {
     loadNonogramByID,
     selectNonogramRaw,
 } from '../Game/gameSlice';
-import { UMRELLA } from '../Game/gameUtils/mochas';
-import { NonogramRaw } from '../Game/gameUtils/types';
 import { useAppDispatch, useAppSelector } from '../hooks';
+import { GuideNotesOrder } from './constants';
+import { GuideRedo } from './GuideRedo';
 import { makeGuideSteps } from './guideSteps';
+import { GuideUndo } from './GuideUndo';
 
 const controllerNonogram = new AbortController();
 const { signal } = controllerNonogram;
@@ -22,44 +22,69 @@ const UmbrellaHeight = '191px';
 const style = {
     height: UmbrellaHeight,
 };
+const styleComment: CSSProperties = {
+    height: 'calc(4rem * var(--bs-body-line-height))',
+};
+const getTranslatedStepByIndex = (
+    t: TFunction<'translation', undefined, 'translation'>,
+    index: number
+) => {
+    const JSONkey = `guide${GuideNotesOrder[index]}`;
+    return t(JSONkey);
+};
+
 export function Guide(): JSX.Element {
     const dispatch = useAppDispatch();
     const { t } = useTranslation();
     const nonogramInStore = useAppSelector(selectNonogramRaw);
 
     console.log('too mush guide rerender!');
+    const [commentIndex, setCommentIndex] = useState(0);
+
     useEffect(() => {
         dispatch(loadNonogramByID({ id: GUIDE_ID, signal }));
 
         return () => {
             dispatch(clearGame());
         };
-    }, []);
+    }, [dispatch]);
     useEffect(() => {
         if (nonogramInStore) {
             makeGuideSteps(dispatch);
         }
-    }, [nonogramInStore]);
+    }, [nonogramInStore, dispatch]);
+
+    const handleRedo = () => {
+        setCommentIndex((previous) => previous + 1);
+    };
+    const handleUndo = () => {
+        setCommentIndex((previous) => previous - 1);
+    };
 
     return (
         <div className="d-flex flex-nowrap flex-column">
-            <h1>How to solve a nonogram?</h1>
+            <h1>{t('guideHeader')}</h1>
             <div className="position-relative">
-                <div className="p-0 mb-2 p-sm-1 d-flex flex-column gap-2">
+                <p className="fs-5">{t('guideAppeal')}</p>
+                <div className="d-flex flex-column gap-2">
                     {nonogramInStore && (
                         <>
                             <div
                                 className="position-absolute w-100 z-1"
                                 onClickCapture={(event) => event.stopPropagation()}
                                 style={style}
-                            >
-                                Solution Process Demo
-                            </div>
-                            <Field />
+                            />
+                            <div className="d-flex gap-2 flex-column">
+                                <Field />
 
-                            <div className="btn-group game-controls">
-                                <UndoButton caption={`${t('gameUndo')} ↪`} />
-                                <RedoButton caption={`${t('gameRedo')} ↩`} />
+                                <p style={styleComment}>
+                                    {getTranslatedStepByIndex(t, commentIndex)}
+                                </p>
+                            </div>
+
+                            <div className="btn-group game-controls gap-2">
+                                <GuideUndo handleClick={handleUndo} />
+                                <GuideRedo handleClick={handleRedo} />
                             </div>
                         </>
                     )}
