@@ -1,3 +1,4 @@
+import { currentUserToken } from '../../../utils/enums';
 import { NonogramRaw, UserGameDataRaw } from '../gameUtils/types';
 import { SERVER_ADDRESS } from './getNonogramByID';
 
@@ -10,6 +11,9 @@ export async function getGameState(
         const options = {
             method: 'GET',
             signal,
+            headers: {
+                token: localStorage.getItem(currentUserToken) || '',
+            },
         };
         const response = await fetch(url, options);
         if (!response.ok) {

@@ -1,9 +1,11 @@
 import './Header.scss';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { AsideButton } from './AsideButton/AsideButton';
 import { ColorThemeButton } from './ColorThemeButton/ColorThemeButton';
 import { LanguageDropDownButton } from './LanguageButton/LanguageDropdownButton';
+import { AuthMenu } from './AuthMenu';
 import { matchSmWindowSize, handleAsideAfterWindowResize } from '../../utils/helpers';
 import SettingsModal from './SettingsModalComponents/SettingsModal';
 
@@ -25,31 +27,22 @@ export function Header(): JSX.Element {
     return (
         <>
             <SettingsModal />
-            <header className="bg-dark">
-                <div className="header-container container p-2 border-secondary border-3">
-                    <div className="d-flex navbar bg-secondary flex-wrap px-3">
-                        <div className="col d-flex justify-content-between justify-content-sm-start gap-2 py-1">
-                            {isBurgerBtnVisible && <AsideButton />}
-                            <button
-                                type="button"
-                                className="btn btn-primary"
-                                data-bs-toggle="modal"
-                                data-bs-target="#settingsModal"
-                            >
-                                ⚙
-                            </button>
-                            <ColorThemeButton />
-                            <LanguageDropDownButton />
-                        </div>
-                        <div className="col d-flex justify-content-center justify-content-sm-end gap-2 py-1">
-                            <a href="/" className="btn btn-success text-nowrap">
-                                {t('signIn')}
-                            </a>
-                            <a href="/" className="btn btn-primary text-nowrap">
-                                {t('signUp')}
-                            </a>
-                        </div>
+            <header className="container p-2 border-bottom border-start border-end border-3 rounded-bottom">
+                <div className="row flex-wrap">
+                    <div className="col d-flex justify-content-between justify-content-sm-start gap-2 py-1">
+                        {isBurgerBtnVisible && <AsideButton />}
+                        <button
+                            type="button"
+                            className="btn btn-outline-secondary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#settingsModal"
+                        >
+                            ⚙
+                        </button>
+                        <ColorThemeButton />
+                        <LanguageDropDownButton />
                     </div>
+                    <AuthMenu />
                 </div>
             </header>
         </>

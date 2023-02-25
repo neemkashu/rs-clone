@@ -1,6 +1,7 @@
 {
     "signIn": "Sich Eintragen",
     "signUp": "Sich Einschreiben",
+    "signOut": "Sich Austragen",
     "catalogMainPage": "Hauptseite",
     "catalogCatalog": "Katalog",
     "catalogRandomGame": "Zufallsspiel",
@@ -42,5 +43,16 @@
     "mainHeader": "Nonogramme",
     "mainGreeting": "Willkommen auf der Website, die ausschließlich den Nonogrammen gewidmet ist!",
     "mainAbout": "Hier finden Sie einen Katalog mit mehreren Dutzend Rätseln mit unterschiedlichem Schwierigkeitsgrad, sowohl für Anfänger als auch für Fortgeschrittene. Besonders stolz sind wir auf unsere kleine, aber komplizierte Nonogramme. Lassen Sie sich nicht von der Größe 15×15 täuschen , und manchmal sogar 10 × 10!",
-    "mainAppeal": "Wenn Sie gerade erst mit Nonogrammen anfangen oder bei einem unserer Rätsel nicht weiterkommen, sehen Sie sich den Abschnitt \"Wie lösen\" an."
+    "mainAppeal": "Wenn Sie gerade erst mit Nonogrammen anfangen oder bei einem unserer Rätsel nicht weiterkommen, sehen Sie sich den Abschnitt \"Wie lösen\" an.",
+    "nameErrorTitle": "Falscher Name!",
+    "nameErrorBody": "Der Name muss ein Wort enthalten, das nicht kürzer als drei Buchstaben des lateinischen Alphabets ist.",
+    "emailErrorTitle": "Falsche E-mail!",
+    "emailErrorBody": "E-Mail darf nur Zahlen, Buchstaben und Unterstriche enthalten.",
+    "passwordErrorTitle": "Falsches Passwort!",
+    "passwordErrorBody": "Das Passwort muss mindestens 8 Zeichen lang sein und darf nur Zahlen, Buchstaben oder Sonderzeichen (@$!%*#?&) enthalten.",
+    "repeatPasswordErrorTitle": "Die Passwörter stimmen nicht überein!",
+    "createAccountTitle": "Ein Konto erstellen",
+    "enterAccountTitle": "Geben Sie Ihr Konto ein",
+    "alreadyHaveAccount": "Sie haben bereits ein Konto?",
+    "dontHaveAccount": "Sie haben kein Konto?"
 }
