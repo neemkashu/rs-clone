@@ -21,6 +21,7 @@ import {
     setProperty,
     unifyTwoDimensionalArray,
 } from './gameUtils/helpers';
+import { UMRELLA } from './gameUtils/mochas';
 import {
     CellAreaState,
     CellAreaStateType,
@@ -73,9 +74,13 @@ export const enum HugeActionList {
     REGULAR = 'handleOneCell',
     LOADED = 'loadNonogram',
 }
+export const GUIDE_ID = 'umbrella';
 export const loadNonogramByID = createAsyncThunk(
     'game/load/nonogram',
     async ({ id, signal }: { id: string; signal: AbortSignal }) => {
+        if (id === GUIDE_ID) {
+            return { nonogram: UMRELLA, userGame: null };
+        }
         const nonogram = await getNonogramByID(id, signal);
         const userGame = await getGameState(id, signal);
         return { nonogram, userGame };
