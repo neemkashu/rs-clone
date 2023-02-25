@@ -17,10 +17,10 @@ import { GuideUndo } from './GuideUndo';
 const controllerNonogram = new AbortController();
 const { signal } = controllerNonogram;
 
-const UmbrellaHeight = '191px';
+const UMBRELLA_HEIGHT = '191px';
 
 const style = {
-    height: UmbrellaHeight,
+    height: UMBRELLA_HEIGHT,
 };
 const styleComment: CSSProperties = {
     height: 'calc(4rem * var(--bs-body-line-height))',
@@ -38,7 +38,6 @@ export function Guide(): JSX.Element {
     const { t } = useTranslation();
     const nonogramInStore = useAppSelector(selectNonogramRaw);
 
-    console.log('too mush guide rerender!');
     const [commentIndex, setCommentIndex] = useState(0);
 
     useEffect(() => {
@@ -62,7 +61,7 @@ export function Guide(): JSX.Element {
     };
 
     return (
-        <div className="d-flex flex-nowrap flex-column">
+        <div className="d-flex flex-nowrap flex-column w-100">
             <h1>{t('guideHeader')}</h1>
             <div className="position-relative">
                 <p className="fs-5">{t('guideAppeal')}</p>

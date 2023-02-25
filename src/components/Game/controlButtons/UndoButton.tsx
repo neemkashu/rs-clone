@@ -13,7 +13,6 @@ export function UndoButton({ caption }: { caption: string }) {
     const historyLength = useAppSelector((state) => state.game.past.length);
     const isLongHistory = historyLength > 1;
     const lastAction = useAppSelector((state) => state.game.present.lastAction);
-    console.warn('pastLength - 1', historyLength - 1, 'lastAction', lastAction);
     const preLastAction = useAppSelector((state) => {
         if (historyLength < 1) {
             return null;

@@ -27,7 +27,7 @@ export function Aside(): JSX.Element {
                 <NavLink to="/random-game" className="btn btn-outline-dark">
                     {t('catalogRandomGame')}
                 </NavLink>
-                <NavLink to="/help" className="btn btn-outline-dark">
+                <NavLink to="/how-to-solve" className="btn btn-outline-dark">
                     {t('catalogHelp')}
                 </NavLink>
             </div>

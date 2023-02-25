@@ -5,6 +5,7 @@ import { Main } from '../Main/Main';
 import { Catalog } from '../Catalog/Catalog';
 import { GameWrapper } from '../Game/GameWrapper';
 import { RandomGameWrapper } from '../Game/RandomGameWrapper';
+import { Guide } from '../Guide/Guide';
 
 function App(): JSX.Element {
     return (
@@ -14,6 +15,7 @@ function App(): JSX.Element {
                 <Route path="/catalog" element={<Catalog />} />
                 <Route path="/game/:id" element={<GameWrapper />} />
                 <Route path="/random-game" element={<RandomGameWrapper />} />
+                <Route path="/how-to-solve" element={<Guide />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
             </Route>
         </Routes>

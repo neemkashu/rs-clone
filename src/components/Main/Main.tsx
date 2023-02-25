@@ -12,7 +12,6 @@ export function Main(): JSX.Element {
                 <p>{t('mainAbout')}</p>
                 <p>{t('mainAppeal')}</p>
             </div>
-            <Guide />
         </div>
     );
 }

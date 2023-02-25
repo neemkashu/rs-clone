@@ -142,7 +142,6 @@ export const gameSlice = createSlice({
                 const columnsUnified = unifyTwoDimensionalArray(columns);
                 const rows = action.payload.currentUserRows;
                 const rowsUnified = unifyTwoDimensionalArray(rows);
-                // console.warn('update user game!', action.payload.currentUserSolution);
                 state.userGame = {
                     id: action.payload.id,
                     state: action.payload.state,
@@ -158,7 +157,6 @@ export const gameSlice = createSlice({
                 const columns = action.payload.currentUserColumns;
                 const rows = action.payload.currentUserRows;
                 const solution = action.payload.currentUserSolution;
-                // console.warn('clear user game!');
                 if (state.userGame) {
                     state.userGame.currentUserColumns = columns;
                     state.userGame.currentUserRows = rows;
@@ -214,7 +212,6 @@ export const gameSlice = createSlice({
                 indexRow: number;
             }>
         ) {
-            // console.log('update cell!', action.payload.indexRow);
             if (state.userGame) {
                 const { indexRow, indexNumberRow, clickType } = action.payload;
                 const cell = state.userGame.currentUserSolution[indexRow][indexNumberRow];
@@ -275,18 +272,15 @@ export const gameSlice = createSlice({
         },
         updatePaintedCells(state, action: PayloadAction<DragCellInfo>) {
             const { paint, indexRow, indexNumberRow } = action.payload;
-            console.log('updatePaintedCells', indexRow, indexNumberRow);
             if (state.paintedCells) {
                 const isPainted = state.paintedCells[indexRow][indexNumberRow];
                 state.paintedCells[indexRow][indexNumberRow] = paint;
             }
         },
         updatePaintProcess(state, action: PayloadAction<HugeActionList>) {
-            console.log('DRAG END event! call updatePaintProcess', action.payload);
             state.lastAction = action.payload;
         },
         clearPainted(state, action: PayloadAction) {
-            console.log('%c clear painted!', 'background: #ffddff; color: #000');
             state.paintedCells =
                 state.currentNonogram?.nonogram.goal.map((row, indexRow) => {
                     return row.map((cell, indexNumberRow) => {
@@ -341,11 +335,6 @@ export const gameSlice = createSlice({
                     currentUserColumns: columnsUnified,
                     currentUserRows: rowsUnified,
                 };
-                console.warn(
-                    'loadNonogramByID userGame',
-                    userGame,
-                    userGame.data.bestTime
-                );
                 state.bestTime = userGame.data.bestTime;
             } else {
                 state.userGame = gameToSet;
