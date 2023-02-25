@@ -176,6 +176,11 @@ export function getImageFromMatrix(matrix?: number[][]): string {
     return canvas.toDataURL('image/png');
 }
 
+export function changeColorTheme(isLightTheme: boolean) {
+    const color = isLightTheme ? 'light' : 'dark';
+    document.querySelector('html')?.setAttribute('data-bs-theme', color);
+}
+
 export function getUserCurrentTimes(
     currentTimesInfo: string | null
 ): NonogramTime[] | null {

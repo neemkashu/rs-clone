@@ -8,12 +8,12 @@ export function Aside(): JSX.Element {
     const { t } = useTranslation();
 
     return (
-        <aside id="aside" className="border-3 border-end">
+        <aside id="aside" className="border-3 border-secondary border-end">
             <button
                 type="button"
                 onClick={handleAsideCloseBtnClick}
                 id="asideCloseBtn"
-                className="btn btn-outline-secondary my-1"
+                className="btn btn-primary my-1"
             >
                 ✕
             </button>
