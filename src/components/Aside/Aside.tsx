@@ -21,13 +21,13 @@ export function Aside(): JSX.Element {
                 <NavLink to="/" className="btn btn-outline-primary">
                     {t('catalogMainPage')}
                 </NavLink>
-                <NavLink to="/catalog" className="btn btn-outline-dark">
+                <NavLink to="/catalog" className="btn btn-outline-primary">
                     {t('catalogCatalog')}
                 </NavLink>
-                <NavLink to="/random-game" className="btn btn-outline-dark">
+                <NavLink to="/random-game" className="btn btn-outline-primary">
                     {t('catalogRandomGame')}
                 </NavLink>
-                <NavLink to="/how-to-solve" className="btn btn-outline-dark">
+                <NavLink to="/how-to-solve" className="btn btn-outline-primary">
                     {t('catalogHelp')}
                 </NavLink>
             </div>

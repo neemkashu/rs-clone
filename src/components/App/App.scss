@@ -4,8 +4,67 @@
 
 :root {
     --dark-background: rgba(0, 0, 0, 0.189);
+    --bs-body-font-size: 1.2rem !important;
+    --bs-btn-font-size: 1.2rem !important;
 }
+
 [data-bs-theme='dark'] {
+    // --bs-primary: #{$indigo};
+    // --bs-primary-bg-subtle: #{$indigo};
+    // --bs-primary-bg-subtle-dark: #{$indigo};
+
+    // .btn-primary {
+    //     --bs-btn-bg: #{$indigo};
+    // }
+    // [type='checkbox']::after {
+    //     left: -8px !important;
+    // }
+
+    // [type='checkbox']:checked::after {
+    //     left: 10px !important;
+    // }
+
+    // [type='checkbox']::before {
+    //     left: -8px !important;
+    // }
+
+    // .form-check-input:active {
+    //     filter: none !important;
+    // }
+
+    --bs-body-color: #cfcfcf;
+
+    .form-check-input::before {
+        border: 2px solid white;
+    }
+
+    [type='checkbox']::before {
+        border: 2px solid rgb(160, 160, 160);
+    }
+
+    [type='checkbox']:checked::after {
+        background-color: white;
+        border: 2px solid rgb(255, 255, 255);
+    }
+
+    [type='checkbox']:checked::before {
+        border: 2px solid rgb(255, 255, 255);
+    }
+
+    [type='checkbox']::after {
+        background-color: rgb(160, 160, 160);
+        border: 2px solid rgb(160, 160, 160);
+    }
+
+    [type='radio']:checked::before {
+        border: 2px solid white;
+        background-color: white;
+    }
+
+    [type='radio']::before {
+        border: 2px solid rgb(160, 160, 160);
+    }
+
     .bg-dark {
         --bs-bg-opacity: 1;
         background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
@@ -13,7 +72,10 @@
 }
 [data-bs-theme='light'] {
     body {
-        background-image: url('../../image/kiwihug-qv05FvdE26k-unsplash.jpg');
+        // margin: 0;
+        background-image: url('https://photoshop-kopona.com/uploads/posts/2018-02/1519121065_paper-texture-1.jpg');
+        background-repeat: repeat;
+        // height: 100%;
     }
 }
 
@@ -23,6 +85,8 @@ html {
 
 body {
     margin: 0;
+    // background-image: url('https://photoshop-kopona.com/uploads/posts/2018-02/1519121065_paper-texture-1.jpg');
+    // background-repeat: repeat;
     height: 100%;
 }
 
@@ -34,4 +98,5 @@ body {
     padding: 0 1px;
     width: 100%;
     height: 100%;
+    letter-spacing: 2px;
 }
