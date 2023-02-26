@@ -41,3 +41,5 @@ export const standardSettingsState = {
         showGuessTime: false,
     },
 };
+
+export const catalogDBLength = 75;

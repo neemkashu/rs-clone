@@ -3,6 +3,7 @@ import { CatalogItem } from './CatalogItem';
 import { NonogramObject, UserGameObject } from '../../utils/types';
 import { getCatalogDB, getSolvedGames } from '../../api/requests';
 import { Loading } from '../Loading/Loading';
+import { catalogDBLength } from '../../utils/constants';
 
 export function Catalog(): JSX.Element {
     const [catalogDB, setCatalogDB] = useState<NonogramObject[]>([]);
@@ -10,7 +11,6 @@ export function Catalog(): JSX.Element {
     const [lastId, setLastId] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [fetching, setFetching] = useState<boolean>(true);
-    const container = useRef<HTMLDivElement>(document.querySelector('#catalogContainer'));
 
     function scrollHandler(e: Event) {
         const elem = e.target as HTMLElement;
@@ -20,7 +20,7 @@ export function Catalog(): JSX.Element {
     }
 
     useEffect(() => {
-        if (fetching) {
+        if (fetching && catalogDB.length < catalogDBLength) {
             console.log('fetching');
             getCatalogDB(20, lastId)
                 .then((data) => {
@@ -39,31 +39,25 @@ export function Catalog(): JSX.Element {
     }, [fetching]);
 
     useEffect(() => {
-        const catalogContainer = container.current;
-        catalogContainer?.addEventListener('scroll', scrollHandler);
-        return () => catalogContainer?.addEventListener('scroll', scrollHandler);
+        const container = document.querySelector('.section-container');
+        container?.addEventListener('scroll', scrollHandler);
+        return () => container?.addEventListener('scroll', scrollHandler);
     }, []);
 
-    return (
-        <div
-            ref={container}
-            className="p-2 d-flex flex-wrap gap-2 catalog"
-            id="catalogContainer"
-        >
-            {isLoading ? (
-                <Loading />
-            ) : (
-                catalogDB.map((item, index) => {
-                    return (
-                        <CatalogItem
-                            key={item.id}
-                            catalogItem={item}
-                            cardNumber={index + 1}
-                            solvedGames={solvedGamesArr}
-                        />
-                    );
-                })
-            )}
+    return isLoading ? (
+        <Loading />
+    ) : (
+        <div className="p-2 d-flex flex-wrap gap-2">
+            {catalogDB.map((item, index) => {
+                return (
+                    <CatalogItem
+                        key={item.id}
+                        catalogItem={item}
+                        cardNumber={index + 1}
+                        solvedGames={solvedGamesArr}
+                    />
+                );
+            })}
         </div>
     );
 }
