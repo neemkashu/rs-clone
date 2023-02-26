@@ -12,7 +12,7 @@ export function Button({
     return (
         <button
             type="button"
-            className={`btn btn-toolbar btn-outline-primary ${buttonClass}`}
+            className={`btn btn-primary ${buttonClass}`}
             onClick={handler}
             disabled={isActive}
         >

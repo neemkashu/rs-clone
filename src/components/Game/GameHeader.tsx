@@ -15,7 +15,7 @@ const CAPTIONS = {
     nonogram: 'Nonogram',
 };
 const MAX_DIFFICULTY = 5;
-const TITLE_PLACEHOLDER = '*****';
+const TITLE_PLACEHOLDER = '#####';
 
 function GameHeader(): JSX.Element {
     const nonogramData = useAppSelector(selectNonogramRaw);
