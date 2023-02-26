@@ -1,0 +1,96 @@
+{
+  "name": "nonogram",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.11",
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "i18next": "^22.4.10",
+    "firebase": "^9.17.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-i18next": "^12.1.5",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.8.0",
+    "react-scripts": "5.0.1",
+    "redux": "^4.2.1",
+    "redux-thunk": "^2.4.2",
+    "redux-undo": "^1.0.1",
+    "typescript": "^4.9.5",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "set PORT=3006 && react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "lint": "eslint --fix",
+    "deploy-bash": "react-scripts build && git stash && git checkout deploy-neemkashu && cp -r ./build/* ./nonograms && git add -A && git commit -m \"feat: update deploy-neemkashu\" && git push && git checkout - && git stash pop",
+    "deploy-win": "react-scripts build && git stash && git checkout deploy && xcopy build nonograms\\ /E/Y && git add -A && git commit -m \"feat: update deploy\" && git push && git checkout - && git stash pop"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@reduxjs/toolkit": "^1.9.2",
+    "@types/bootstrap": "^5.2.6",
+    "@types/pngjs": "^6.0.1",
+    "@types/react-redux": "^7.1.25",
+    "@types/redux": "^3.6.0",
+    "@types/redux-thunk": "^2.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.50.0",
+    "@typescript-eslint/parser": "^5.50.0",
+    "bootstrap": "^5.3.0-alpha1",
+    "eslint": "^8.33.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "pngjs": "^6.0.0",
+    "prettier": "^2.8.3",
+    "sass": "^1.58.0",
+    "sass-loader": "^13.2.0",
+    "style-loader": "^3.3.1",
+    "svg-url-loader": "^8.0.0",
+    "ts-jest": "^29.0.5",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.ts?(x)"
+        ],
+        "rules": {
+          "@typescript-eslint/no-unused-vars": "off",
+          "max-len": [
+            "error",
+            {
+              "code": 90,
+              "ignoreStrings": true,
+              "ignoreUrls": true,
+              "ignoreTemplateLiterals": true
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

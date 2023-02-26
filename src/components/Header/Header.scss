@@ -1,0 +1,16 @@
+#dropdownLangButton::after {
+    display: none;
+}
+
+.dropdown-menu {
+    --bs-dropdown-min-width: fit-content !important;
+}
+
+.dropdown-item {
+    width: fit-content;
+    cursor: pointer;
+}
+
+.header-container {
+    transition: 0.2s;
+}

@@ -1,0 +1,50 @@
+:root {
+    --filled-square: rgba(0, 0, 0, 0.691);
+    --wrong-square: rgba(255, 33, 33, 0.691);
+    --painted-square: rgba(0, 0, 0, 0.702);
+}
+.square {
+    width: var(--nonogram-square-width);
+    height: var(--nonogram-square-width);
+    font-size: 0.9rem;
+    &:hover {
+        cursor: pointer;
+    }
+}
+.filled-square {
+    background-color: var(--filled-square);
+}
+.crossed-square {
+    background-image: url("../../../image/cross.svg");
+    background-size: contain;
+}
+.dotted-square {
+    background-image: url("../../../image/dot.svg");
+    background-size: contain;
+}
+div.painted-square {
+    background-color: var(--painted-square);
+}
+.hint-crossed {
+    background-image: url("../../../image/line.svg");
+    background-size: contain;
+}
+.nonogram-border {
+    border: 1px solid var(--bs-teal);
+}
+.cell-square {
+    padding: var(--cell-padding) !important;
+}
+.incorrect-fill {
+    background-color: var(--wrong-square);
+    opacity: 1;
+}
+.border-right-plus {
+    border-right-width: 3px !important;
+}
+.border-bottom-plus {
+    border-bottom-width: 3px !important;
+}
+.nonogram-hints-border {
+    border: 1px solid var(--bs-cyan);
+}

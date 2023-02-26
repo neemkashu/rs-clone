@@ -1,0 +1,50 @@
+import './Header.scss';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { AsideButton } from './AsideButton/AsideButton';
+import { ColorThemeButton } from './ColorThemeButton/ColorThemeButton';
+import { LanguageDropDownButton } from './LanguageButton/LanguageDropdownButton';
+import { AuthMenu } from './AuthMenu';
+import { matchSmWindowSize, handleAsideAfterWindowResize } from '../../utils/helpers';
+import SettingsModal from './SettingsModalComponents/SettingsModal';
+
+export function Header(): JSX.Element {
+    const { t } = useTranslation();
+    const [isBurgerBtnVisible, setIsBurgerBtnVisible] = useState(false);
+
+    useEffect(() => {
+        function helperFunction(e: MediaQueryList | MediaQueryListEvent) {
+            handleAsideAfterWindowResize(e, setIsBurgerBtnVisible);
+        }
+        matchSmWindowSize.addEventListener('change', helperFunction);
+        handleAsideAfterWindowResize(matchSmWindowSize, setIsBurgerBtnVisible);
+        return () => {
+            matchSmWindowSize.removeEventListener('change', helperFunction);
+        };
+    }, []);
+
+    return (
+        <>
+            <SettingsModal />
+            <header className="container p-2 border-bottom border-start border-end border-3 rounded-bottom">
+                <div className="row flex-wrap">
+                    <div className="col d-flex justify-content-between justify-content-sm-start gap-2 py-1">
+                        {isBurgerBtnVisible && <AsideButton />}
+                        <button
+                            type="button"
+                            className="btn btn-outline-secondary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#settingsModal"
+                        >
+                            ⚙
+                        </button>
+                        <ColorThemeButton />
+                        <LanguageDropDownButton />
+                    </div>
+                    <AuthMenu />
+                </div>
+            </header>
+        </>
+    );
+}
