@@ -76,5 +76,7 @@
     "guide14": "Sieben hat keine Standortoptionen mehr.",
     "guide15": "Nonogramm ist gelöst!",
     "guideRedirect": "Für fortgeschrittenere Lösungstechniken siehe hier",
-    "guideLink": "Link"
+    "guideLink": "Link",
+    "noInput": "Bitte e-mail und Passwort eingeben",
+    "incorrectInput": "Falsche e-mail oder Passwort"
 }

@@ -1,10 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../hooks';
 import { InputItem } from './InputItem';
 import {
-    checkUserNameInput,
     checkUserEmailInput,
     checkUserPasswordInput,
     checkUserRepeatPasswordInput,
@@ -16,22 +15,19 @@ import { changedCurrentUser } from './userSlice';
 export function Register(): JSX.Element {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
-    const [isUserNameNotValid, setIsUserNameNotValid] = useState<boolean>(false);
+    const navigate = useNavigate();
     const [isUserEmailNotValid, setIsUserEmailNotValid] = useState<boolean>(false);
     const [isUserPasswordNotValid, setIsUserPasswordNotValid] = useState<boolean>(false);
     const [isUserRepeatPasswordNotValid, setIsUserRepeatPasswordNotValid] =
         useState<boolean>(false);
-    const userNameInput = useRef<HTMLInputElement>(null);
     const userEmailInput = useRef<HTMLInputElement>(null);
     const userPasswordInput = useRef<HTMLInputElement>(null);
     const userRepeatPasswordInput = useRef<HTMLInputElement>(null);
 
     function checkFormValidation() {
-        const name = userNameInput.current?.value;
         const email = userEmailInput.current?.value;
         const password = userPasswordInput.current?.value;
         const repeatPassword = userRepeatPasswordInput.current?.value;
-        checkUserNameInput(name, setIsUserNameNotValid);
         checkUserEmailInput(email, setIsUserEmailNotValid);
         checkUserPasswordInput(password, setIsUserPasswordNotValid);
         checkUserRepeatPasswordInput(
@@ -41,29 +37,23 @@ export function Register(): JSX.Element {
         );
 
         if (
-            !isUserNameNotValid &&
             !isUserEmailNotValid &&
             !isUserPasswordNotValid &&
             !isUserRepeatPasswordNotValid &&
-            name &&
             email &&
             password &&
             repeatPassword
         ) {
-            // Тут асинхронная функция будет делать запрос на сервер
-            registerWithEmailAndPassword(name, email, repeatPassword)
+            registerWithEmailAndPassword(email, repeatPassword)
                 .then(() => {
-                    // successful sign up
-                    dispatch(changedCurrentUser(email));
                     console.log('registered');
+                    dispatch(changedCurrentUser(email));
+                    navigate('/catalog');
                 })
-                .catch((e) => {
-                    // unsuccessful sign up
-                    console.log(e);
+                .catch(() => {
                     console.log('error with register');
                 });
 
-            userNameInput.current.value = '';
             userEmailInput.current.value = '';
             userPasswordInput.current.value = '';
             userRepeatPasswordInput.current.value = '';
@@ -87,25 +77,6 @@ export function Register(): JSX.Element {
                 className="d-flex flex-column align-items-center"
                 onSubmit={handleSignUpSubmit}
             >
-                <div className="input py-2">
-                    <InputItem
-                        reference={userNameInput}
-                        type="text"
-                        placeholder="Login"
-                        onInput={() =>
-                            checkUserNameInput(
-                                userNameInput.current?.value,
-                                setIsUserNameNotValid
-                            )
-                        }
-                    />
-                </div>
-                {isUserNameNotValid && (
-                    <ErrorItem
-                        messageTitle={t('nameErrorTitle')}
-                        messageBody={t('nameErrorBody')}
-                    />
-                )}
                 <div className="input py-2">
                     <InputItem
                         reference={userEmailInput}

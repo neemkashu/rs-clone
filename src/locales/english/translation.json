@@ -76,5 +76,7 @@
     "createAccountTitle": "Create an account",
     "enterAccountTitle": "Enter your account",
     "alreadyHaveAccount": "Already have an account?",
-    "dontHaveAccount": "Don't have an account?"
+    "dontHaveAccount": "Don't have an account?",
+    "noInput": "Please enter e-mail and password",
+    "incorrectInput": "Incorrect e-mail or password"
 }

@@ -5,7 +5,7 @@ const SERVER = 'https://rs-clone-backend-1hqs.onrender.com';
 const LOCAL_SERVER = 'http://localhost:3000';
 
 export async function getCatalogDB(
-    signal: AbortSignal,
+    // signal: AbortSignal,
     limit = 10,
     lastId = ''
 ): Promise<[string, NonogramObject[]]> {

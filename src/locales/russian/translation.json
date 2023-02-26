@@ -76,5 +76,7 @@
     "createAccountTitle": "Создать аккаунт",
     "enterAccountTitle": "Войти в свой аккаунт",
     "alreadyHaveAccount": "Уже есть аккаунт?",
-    "dontHaveAccount": "Ещё нет аккаунта?"
+    "dontHaveAccount": "Ещё нет аккаунта?",
+    "noInput": "Пожалуйста введите e-mail и пароль",
+    "incorrectInput": "Неверный e-mail или пароль"
 }

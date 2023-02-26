@@ -2,7 +2,6 @@ import './Aside.scss';
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { handleAsideCloseBtnClick } from '../../utils/helpers';
-import { getRandomNonogramId } from '../../api/requests';
 
 export function Aside(): JSX.Element {
     const { t } = useTranslation();
