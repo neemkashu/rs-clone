@@ -9,7 +9,7 @@ export async function getCatalogDB(
 ): Promise<[string, NonogramObject[]]> {
     try {
         const response = await fetch(
-            `${LOCAL_SERVER}/nonograms?limit=${limit}&lastId=${lastId}`,
+            `${SERVER}/nonograms?limit=${limit}&lastId=${lastId}`,
             {
                 method: 'GET',
             }
@@ -27,7 +27,7 @@ export async function getCatalogDB(
 
 export async function getSolvedGames(): Promise<UserWinsObject> {
     try {
-        const response = await fetch(`${LOCAL_SERVER}/users-games`, {
+        const response = await fetch(`${SERVER}/users-games`, {
             method: 'GET',
         });
         if (!response.ok) {
@@ -42,7 +42,7 @@ export async function getSolvedGames(): Promise<UserWinsObject> {
 
 export async function getNonogramMatrixForImage(id: string): Promise<NonogramMatrix> {
     try {
-        const response = await fetch(`${LOCAL_SERVER}/nonograms/${id}`, {
+        const response = await fetch(`${SERVER}/nonograms/${id}`, {
             method: 'GET',
         });
         if (!response.ok) {
@@ -58,7 +58,7 @@ export async function getNonogramMatrixForImage(id: string): Promise<NonogramMat
 
 export async function getRandomNonogramId(): Promise<string | null> {
     try {
-        const response = await fetch(`${LOCAL_SERVER}/nonograms/random`, {
+        const response = await fetch(`${SERVER}/nonograms/random`, {
             method: 'GET',
         });
         if (!response.ok) {
