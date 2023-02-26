@@ -1,12 +1,11 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { SettingsTimingsEnum } from '../../../utils/enums';
 import {
     NonogramSettingsMainState,
     NonogramSettingsGameState,
     NonogramSettingsViewState,
 } from '../../../utils/types';
-import { getEmptyCellSettingInCurrenLanguage } from '../../../utils/helpers';
+import { standardSettingsState } from '../../../utils/constants';
 
 function getInitialSettingsState(): {
     main: NonogramSettingsMainState;
@@ -14,21 +13,7 @@ function getInitialSettingsState(): {
     view: NonogramSettingsViewState;
 } {
     const savedInLocalStorageSettings = localStorage.getItem('nonogramSettings');
-    const initialSettingsState = {
-        main: {
-            showNonogramTitlesBeforeSolving: false,
-            showNonogramThumbnailsBeforeSolving: false,
-        },
-        game: {
-            highlightCellsWithError: SettingsTimingsEnum.NEVER,
-            automaticallyCrossOutNumbers: SettingsTimingsEnum.NEVER,
-            lastCrossedOutDigitFillsLineWithCrosses: false,
-        },
-        view: {
-            markingAnEmptyCell: getEmptyCellSettingInCurrenLanguage(),
-            showGuessTime: false,
-        },
-    };
+    const initialSettingsState = standardSettingsState;
     if (savedInLocalStorageSettings) {
         return JSON.parse(savedInLocalStorageSettings);
     }
@@ -60,8 +45,20 @@ export const settingsSlice = createSlice({
             state.view = settingsView;
             localStorage.setItem('nonogramSettings', JSON.stringify(state));
         },
+        changeSettingsToDefault(state) {
+            const defaultSettings = standardSettingsState;
+            state.main = defaultSettings.main;
+            state.game = defaultSettings.game;
+            state.view = defaultSettings.view;
+            localStorage.setItem('nonogramSettings', JSON.stringify(state));
+            console.log('settings default');
+        },
     },
 });
 
-export const { changedMainSettings, changedGameSettings, changedViewSettings } =
-    settingsSlice.actions;
+export const {
+    changedMainSettings,
+    changedGameSettings,
+    changedViewSettings,
+    changeSettingsToDefault,
+} = settingsSlice.actions;

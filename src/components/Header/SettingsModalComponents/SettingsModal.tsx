@@ -1,20 +1,28 @@
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import { SettingsMainContent } from './BodyComponents/SettingsMain';
 import { SettingsGameContent } from './BodyComponents/SettingsGame';
 import { SettingsViewContent } from './BodyComponents/SettingsView';
 import { SettingsCategoryItem } from './SettingsCategoryItem';
 import { SettingsCategoryEnum } from '../../../utils/enums';
+import { changeSettingsToDefault } from './settingsSlice';
+import { standardSettingsState } from '../../../utils/constants';
 
 export default function SettingsModal(): JSX.Element {
     const [selectedCategory, setSelectedCategory] = useState<SettingsCategoryEnum>(
         SettingsCategoryEnum.NAME_MAIN
     );
     const { t } = useTranslation();
+    const dispatch = useAppDispatch();
     const isMainCategorySelected = selectedCategory === SettingsCategoryEnum.NAME_MAIN;
     const isGameCategorySelected = selectedCategory === SettingsCategoryEnum.NAME_GAME;
     const isViewCategorySelected = selectedCategory === SettingsCategoryEnum.NAME_VIEW;
     const categoryNames = Object.values(SettingsCategoryEnum);
+
+    function handleDefaultSettingsClick() {
+        dispatch(changeSettingsToDefault());
+    }
 
     return (
         <div id="settingsModal" className="modal fade">
@@ -59,7 +67,11 @@ export default function SettingsModal(): JSX.Element {
                     {isGameCategorySelected && <SettingsGameContent />}
                     {isViewCategorySelected && <SettingsViewContent />}
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-danger btn-sm">
+                        <button
+                            onClick={handleDefaultSettingsClick}
+                            type="button"
+                            className="btn btn-primary btn-sm"
+                        >
                             {t('setAllToDefault')}
                         </button>
                     </div>
