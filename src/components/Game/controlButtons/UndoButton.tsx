@@ -2,6 +2,7 @@ import { ActionCreators } from 'redux-undo';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { store } from '../../store';
 import { HugeActionList, LoadStatus, selectUserState } from '../gameSlice';
+import { useUndoActive } from '../gameUtils/hooks';
 import { GameStatus } from '../gameUtils/types';
 import { Button } from './Button';
 
@@ -9,26 +10,8 @@ const buttonClass = '';
 
 export function UndoButton({ caption }: { caption: string }) {
     const dispatch = useAppDispatch();
-    const gameState = useAppSelector(selectUserState);
-    const historyLength = useAppSelector((state) => state.game.past.length);
-    const isLongHistory = historyLength > 1;
-    const lastAction = useAppSelector((state) => state.game.present.lastAction);
-    const preLastAction = useAppSelector((state) => {
-        if (historyLength < 1) {
-            return null;
-        }
-        return state.game.past[historyLength - 1].lastAction;
-    });
 
-    const isFirstActionDrag =
-        preLastAction === HugeActionList.LOADED &&
-        lastAction === HugeActionList.DRAG_START;
-
-    const isActive =
-        isLongHistory &&
-        gameState !== GameStatus.FINISHED &&
-        lastAction !== HugeActionList.LOADED &&
-        !isFirstActionDrag;
+    const isActive = useUndoActive();
 
     const handleClick = () => {
         const pastLength = store.getState().game.past.length;
