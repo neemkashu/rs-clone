@@ -1267,3 +1267,171 @@ export const userCat: UserGameDataRaw = {
         },
     },
 };
+
+export const UMRELLA = {
+    id: '',
+    nonogram: {
+        height: 10,
+        width: 10,
+        difficulty: 1,
+        title: {
+            en: 'string',
+            de: 'string',
+            ru: 'string',
+        },
+        colorMapping: {
+            '1': '#000000',
+        },
+        goal: [
+            [0, 0, 0, 0, 1, 0, 0, 0, 0],
+            [0, 0, 1, 1, 1, 1, 1, 0, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 0],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 0, 1, 0, 1, 0, 1, 0, 1],
+            [0, 0, 0, 0, 1, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0, 0],
+            [0, 0, 1, 0, 1, 0, 0, 0, 0],
+            [0, 0, 1, 1, 1, 0, 0, 0, 0],
+        ],
+        rows: [
+            [
+                {
+                    hint: 1,
+                    color: 1,
+                },
+            ],
+            [
+                {
+                    hint: 5,
+                    color: 1,
+                },
+            ],
+            [
+                {
+                    hint: 7,
+                    color: 1,
+                },
+            ],
+            [
+                {
+                    hint: 9,
+                    color: 1,
+                },
+            ],
+            [
+                {
+                    hint: 1,
+                    color: 1,
+                },
+                {
+                    hint: 1,
+                    color: 1,
+                },
+                {
+                    hint: 1,
+                    color: 1,
+                },
+                {
+                    hint: 1,
+                    color: 1,
+                },
+                {
+                    hint: 1,
+                    color: 1,
+                },
+            ],
+            [
+                {
+                    hint: 1,
+                    color: 1,
+                },
+            ],
+            [
+                {
+                    hint: 1,
+                    color: 1,
+                },
+            ],
+            [
+                {
+                    hint: 1,
+                    color: 1,
+                },
+                {
+                    hint: 1,
+                    color: 1,
+                },
+            ],
+            [
+                {
+                    hint: 3,
+                    color: 1,
+                },
+            ],
+        ],
+        columns: [
+            [
+                {
+                    hint: 2,
+                    color: 1,
+                },
+            ],
+            [
+                {
+                    hint: 2,
+                    color: 1,
+                },
+            ],
+            [
+                {
+                    hint: 4,
+                    color: 1,
+                },
+                {
+                    hint: 2,
+                    color: 1,
+                },
+            ],
+            [
+                {
+                    hint: 3,
+                    color: 1,
+                },
+                {
+                    hint: 1,
+                    color: 1,
+                },
+            ],
+            [
+                {
+                    hint: 9,
+                    color: 1,
+                },
+            ],
+            [
+                {
+                    hint: 3,
+                    color: 1,
+                },
+            ],
+            [
+                {
+                    hint: 4,
+                    color: 1,
+                },
+            ],
+            [
+                {
+                    hint: 2,
+                    color: 1,
+                },
+            ],
+            [
+                {
+                    hint: 2,
+                    color: 1,
+                },
+            ],
+        ],
+    },
+};

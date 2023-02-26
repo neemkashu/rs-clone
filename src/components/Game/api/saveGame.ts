@@ -1,3 +1,4 @@
+import { currentUserToken } from '../../../utils/enums';
 import {
     ResponseStatus,
     UserGameData,
@@ -15,14 +16,17 @@ export const sendGameToServer = async (
         const options = {
             method: 'POST',
             body: JSON.stringify(userGameData),
-            headers: { 'Content-type': 'application/json' },
+            headers: {
+                'Content-type': 'application/json',
+                token: localStorage.getItem(currentUserToken) || '',
+            },
         };
-        // if (userGameData) {
-        //     const response = await fetch(url, options);
-        //     if (!response.ok) {
-        //         throw new Error('Response not ok while saving the game!');
-        //     }
-        // }
+        if (userGameData) {
+            const response = await fetch(url, options);
+            if (!response.ok) {
+                throw new Error('Response not ok while saving the game!');
+            }
+        }
         return ResponseStatus.SUCCESS;
     } catch (error) {
         console.warn('error when fetching user game', id);

@@ -12,7 +12,7 @@ import { GameStatus, NonogramRaw } from '../gameUtils/types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Button } from './Button';
 
-const buttonClass = 'btn-outline-danger';
+const buttonClass = 'btn-danger';
 
 export function RestartButton() {
     const { t } = useTranslation();

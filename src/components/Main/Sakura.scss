@@ -1,0 +1,54 @@
+.sakura {
+    position:absolute;
+    display: flex;
+    justify-content: space-evenly;
+    top:-100px;
+    width:100%;
+    height: calc(100% + 100px);
+    text-align: right;
+    overflow: hidden;
+}
+
+.sakura div {
+    display: inline-block;
+    background: linear-gradient(to bottom right, #fffcff, #f489bf);
+    border-radius: 20% 70% 50%;
+    box-shadow: inset 0px 0px 2px #f489bf;
+}
+
+@keyframes falling1 {
+    0% {
+        transform:
+            translate(random(100), 0) rotate(0deg) rotateY(20deg);
+    }
+
+    100% {
+        transform:
+            translate(-50px, 600px) rotate(180deg) rotateY(-20deg);
+        opacity: 0;
+    }
+}
+@keyframes falling2 {
+    0% {
+        transform:
+        translate(0, 0) rotate(-120deg) rotateX(20deg);
+    }
+
+    100% {
+        transform:
+        translate(-20px, 500px)  rotate(90deg) rotateX(180deg);
+        opacity: 0;
+    }
+}
+@keyframes falling3 {
+    0% {
+        transform:
+        translate(0, 0)  rotate(20deg);
+    }
+
+    100% {
+        transform:
+        translate(-100px, 700px)   rotate(-180deg);
+        opacity: 0;
+    }
+}

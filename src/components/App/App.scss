@@ -2,23 +2,8 @@
 @import '~bootstrap/scss/bootstrap';
 @import '../../theme/_bootswatch_sketchy';
 
-[type='checkbox']::after {
-    left: -8px !important;
-}
-
-[type='checkbox']:checked::after {
-    left: 10px !important;
-}
-
-[type='checkbox']::before {
-    left: -8px !important;
-}
-
-.form-check-input:active {
-    filter: none !important;
-}
-
 :root {
+    --dark-background: rgba(0, 0, 0, 0.189);
     --bs-body-font-size: 1.2rem !important;
     --bs-btn-font-size: 1.2rem !important;
 }
@@ -31,13 +16,21 @@
     // .btn-primary {
     //     --bs-btn-bg: #{$indigo};
     // }
+    // [type='checkbox']::after {
+    //     left: -8px !important;
+    // }
 
-    body {
-        // margin: 0;
-        background-image: url('https://photoshop-kopona.com/uploads/posts/2018-02/1519121065_paper-texture-1.jpg');
-        background-repeat: repeat;
-        // height: 100%;
-    }
+    // [type='checkbox']:checked::after {
+    //     left: 10px !important;
+    // }
+
+    // [type='checkbox']::before {
+    //     left: -8px !important;
+    // }
+
+    // .form-check-input:active {
+    //     filter: none !important;
+    // }
 
     --bs-body-color: #cfcfcf;
 
@@ -75,6 +68,13 @@
     .bg-dark {
         --bs-bg-opacity: 1;
         background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
+    }
+}
+[data-bs-theme='light'] {
+    body {
+        background-image: url('../../image/5c6fbcc18371616914795402.jpg');
+        background-repeat: repeat;
+        background-size: 100vw 100vh;
     }
 }
 

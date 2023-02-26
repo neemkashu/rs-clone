@@ -16,7 +16,7 @@ import { AREA_STYLES, getAreaCellStyle } from '../gameUtils/helpers';
 import { CellAreaState, ClickType } from '../gameUtils/types';
 import Cell from './Cell';
 
-const AreaStylesExtra = {
+export const AreaStylesExtra = {
     INCORRECT: 'incorrect-fill',
     PAINTED: 'painted-square',
 } as const;
@@ -114,6 +114,7 @@ export default function AreaCell({
     };
 
     const handleDragEnter: MouseEventHandler = (event) => {
+        event.preventDefault();
         dispatch(
             updatePaintedCells({
                 paint: CellAreaState.FILLED,

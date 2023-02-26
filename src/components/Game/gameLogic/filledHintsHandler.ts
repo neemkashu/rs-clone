@@ -1,8 +1,19 @@
 import { useAppDispatch } from '../../hooks';
 import { store } from '../../store';
-import { updateAreaCell } from '../gameSlice';
+import {
+    HugeActionList,
+    updateAreaCell,
+    updateAreaCellAuto,
+    updatePaintProcess,
+} from '../gameSlice';
 import { getColumnFromMatrix } from '../gameUtils/helpers';
-import { ClickType, FieldPlace, fieldPlace, NonogramHint } from '../gameUtils/types';
+import {
+    CellAreaState,
+    ClickType,
+    FieldPlace,
+    fieldPlace,
+    NonogramHint,
+} from '../gameUtils/types';
 import { mistakesHandler } from './mistakesHandler';
 
 export function filledHintsHandler(
@@ -42,8 +53,8 @@ export function filledHintsHandler(
                   };
             if (cell === null) {
                 dispatch(
-                    updateAreaCell({
-                        clickType: ClickType.MOUSE_CONTEXT,
+                    updateAreaCellAuto({
+                        paint: CellAreaState.CROSSED,
                         ...indexes,
                     })
                 );
@@ -55,5 +66,6 @@ export function filledHintsHandler(
                 delayMistakesFromSetting
             );
         });
+        dispatch(updatePaintProcess(HugeActionList.AUTOCROSS));
     }
 }
