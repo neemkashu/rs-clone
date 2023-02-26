@@ -24,7 +24,6 @@ export default function TableRow({
             const linesUnifiedArea = linesUnified as (number | null)[][];
             return <AreaRow linesUnified={linesUnifiedArea} indexRow={indexRow} />;
         }
-
         default: {
             return <tr />;
         }

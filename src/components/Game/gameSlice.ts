@@ -21,6 +21,7 @@ import {
     setProperty,
     unifyTwoDimensionalArray,
 } from './gameUtils/helpers';
+import { UMRELLA } from './gameUtils/mochas';
 import {
     CellAreaState,
     CellAreaStateType,
@@ -71,16 +72,18 @@ export const enum HugeActionList {
     DRAG_END = 'updatePaintProcessEnd',
     DRAG_START = 'updatePaintProcessStart',
     REGULAR = 'handleOneCell',
+    LOADED = 'loadNonogram',
 }
+export const GUIDE_ID = 'umbrella';
 export const loadNonogramByID = createAsyncThunk(
     'game/load/nonogram',
-    async (id?: string) => {
-        if (id) {
-            const nonogram = await getNonogramByID(id);
-            const userGame = await getGameState(id);
-            return { nonogram, userGame };
+    async ({ id, signal }: { id: string; signal: AbortSignal }) => {
+        if (id === GUIDE_ID) {
+            return { nonogram: UMRELLA, userGame: null };
         }
-        return { nonogram: null, userGame: null };
+        const nonogram = await getNonogramByID(id, signal);
+        const userGame = await getGameState(id, signal);
+        return { nonogram, userGame };
     }
 );
 export const saveUserGameByID = createAsyncThunk(
@@ -139,7 +142,6 @@ export const gameSlice = createSlice({
                 const columnsUnified = unifyTwoDimensionalArray(columns);
                 const rows = action.payload.currentUserRows;
                 const rowsUnified = unifyTwoDimensionalArray(rows);
-                // console.warn('update user game!', action.payload.currentUserSolution);
                 state.userGame = {
                     id: action.payload.id,
                     state: action.payload.state,
@@ -155,7 +157,6 @@ export const gameSlice = createSlice({
                 const columns = action.payload.currentUserColumns;
                 const rows = action.payload.currentUserRows;
                 const solution = action.payload.currentUserSolution;
-                // console.warn('clear user game!');
                 if (state.userGame) {
                     state.userGame.currentUserColumns = columns;
                     state.userGame.currentUserRows = rows;
@@ -183,6 +184,26 @@ export const gameSlice = createSlice({
                 }
             }
         },
+        updateHintCellAuto(
+            state,
+            action: PayloadAction<{
+                isCrossedOut: boolean;
+                indexColumn: number;
+                indexRow: number;
+                location: fieldPlace;
+            }>
+        ) {
+            if (state.userGame) {
+                const { isCrossedOut, indexRow, indexColumn, location } = action.payload;
+                const cell =
+                    location === FieldPlace.ASIDE
+                        ? state.userGame.currentUserRows[indexRow][indexColumn]
+                        : state.userGame.currentUserColumns[indexColumn][indexRow];
+                if (cell) {
+                    cell.isCrossedOut = isCrossedOut;
+                }
+            }
+        },
         updateAreaCell(
             state,
             action: PayloadAction<{
@@ -191,7 +212,6 @@ export const gameSlice = createSlice({
                 indexRow: number;
             }>
         ) {
-            // console.log('update cell!', action.payload.indexRow);
             if (state.userGame) {
                 const { indexRow, indexNumberRow, clickType } = action.payload;
                 const cell = state.userGame.currentUserSolution[indexRow][indexNumberRow];
@@ -206,7 +226,7 @@ export const gameSlice = createSlice({
                     : CellAreaState.EMPTY;
             }
         },
-        updateAreaCellRepaint(
+        updateAreaCellAuto(
             state,
             action: PayloadAction<{
                 paint: CellAreaStateType;
@@ -259,9 +279,6 @@ export const gameSlice = createSlice({
         },
         updatePaintProcess(state, action: PayloadAction<HugeActionList>) {
             state.lastAction = action.payload;
-        },
-        updatePaintProcessEnd(state) {
-            // state.isPaintProcess = action.payload;
         },
         clearPainted(state, action: PayloadAction) {
             state.paintedCells =
@@ -318,16 +335,12 @@ export const gameSlice = createSlice({
                     currentUserColumns: columnsUnified,
                     currentUserRows: rowsUnified,
                 };
-                console.warn(
-                    'loadNonogramByID userGame',
-                    userGame,
-                    userGame.data.bestTime
-                );
                 state.bestTime = userGame.data.bestTime;
             } else {
                 state.userGame = gameToSet;
                 state.bestTime = null;
             }
+            state.lastAction = HugeActionList.LOADED;
         });
         builder.addCase(loadNonogramByID.rejected, (state, action) => {
             state.loadNonogramStatus = LoadStatus.REJECTED;
@@ -360,11 +373,11 @@ export const {
     clearTimers,
     updatePaintedCells,
     updatePaintProcess,
-    updatePaintProcessEnd,
     clearPainted,
     clearGame,
     updateBestTime,
-    updateAreaCellRepaint,
+    updateHintCellAuto,
+    updateAreaCellAuto,
     changeLastAction,
 } = gameSlice.actions;
 
@@ -380,8 +393,6 @@ export const ACTIONS_TO_INCLUDE = [
     'game/updateHintCell',
     'game/updateAreaCell',
     'game/updatePaintProcess',
-    // 'game/updatePaintProcessEnd',
-    // 'game/changeLastAction',
     'game/clearMistakes',
     'game/load/nonogram/fulfilled',
 ];

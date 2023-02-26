@@ -2,14 +2,54 @@
     --nonogram-square-width: 1rem;
     --nonogram-number-width: calc(2px + var(--nonogram-square-width));
     --cell-padding: 0px;
-    --table-hover: rgba(63, 227, 96, 0.5);
+    --table-header-border: rgb(69, 186, 92);
+    --table-header-border-dark: rgb(35, 127, 54);
+    --nonogram-body-color: #e6e4e48c;
+    --nonogram-body-light-color: #ffffff84;
+    --nonogram-border-color: #828499;
+    --nonogram-border-dark-color: #504f4f;
+    --nonogram-hints-color: #61626c;
+    --nonogram-hints-dark-color: #252525;
 }
+
+[data-bs-theme='dark'] {
+    .table {
+        background-color: var(--nonogram-body-color) !important;
+    }
+    .field-table  {
+        border-color: var(--nonogram-border-dark-color) !important;
+    }
+    .nonogram-hints-border {
+        border-color: var(--table-header-border-dark);
+        border-width: 0 1px 1px 0 !important;
+    }
+    .square {
+        color: var(--nonogram-hints-dark-color);
+    }
+}
+[data-bs-theme='light'] {
+    .table {
+        background-color: var(--nonogram-body-light-color) !important;
+    }
+    .field-table  {
+        border-color: var(--nonogram-border-color) !important;
+    }
+    .nonogram-hints-border {
+        border-color: var(--table-header-border);
+        border-width: 0 1px 1px 0 !important;
+    }
+    .square {
+        color: var(--nonogram-hints-color);
+    }
+}
+
 .table {
     width: min-content;
     margin: 0;
     &:hover {
         cursor: pointer;
     }
+    -webkit-user-drag: none;
 }
 .game-field {
     user-select: none;
@@ -18,12 +58,13 @@
 }
 .chronometer {
     width: max-content;
+    border-radius: 255px 25px 225px 25px / 25px 225px 25px 255px;
 }
 .field-table > tbody > tr > td {
     position: relative;
 }
 .field-table > tbody > tr > td:hover::after {
-    background-color: var(--table-hover);
+    background-color: var(--bs-teal);
     content: '';
     height: 200vh;
     left: 0;
@@ -34,7 +75,7 @@
 }
 
 .field-table > tbody > tr > td:hover::before {
-    background-color: var(--table-hover);
+    background-color: var(--bs-teal);
     content: '';
     height: var(--nonogram-square-width);
     left: -100vw;

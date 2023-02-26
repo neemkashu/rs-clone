@@ -1,3 +1,4 @@
+import { convertSettingToNumber } from '../../../utils/helpers';
 import { FieldPlace, fieldPlace, NonogramRaw } from '../../../utils/types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { store } from '../../store';
@@ -9,8 +10,7 @@ import {
     HugeActionList,
     selectUserSolution,
     updateAreaCell,
-    updateAreaCellRepaint,
-    updatePaintProcessEnd,
+    updateAreaCellAuto,
     updatePaintProcess,
 } from '../gameSlice';
 import '../gameStyles/DrawArea.scss';
@@ -18,8 +18,6 @@ import { CellAreaState, ClickType } from '../gameUtils/types';
 import TableAllRows from './TableAllRows';
 
 const location: fieldPlace = FieldPlace.AREA;
-// const rowLinesAmount = rowsUnified.length;
-const USER_TIMEOUT = 2000;
 
 function DrawArea(): JSX.Element {
     // const rowsUnified = nonogramRaw?.nonogram.goal;
@@ -27,6 +25,14 @@ function DrawArea(): JSX.Element {
     // console.warn('DrawArea rerender');
     const rowLinesAmount = rowsUnified?.length ?? 0;
     const dispatch = useAppDispatch();
+    const delayMistakesFromSetting = useAppSelector(
+        (state) => state.settings.game.highlightCellsWithError
+    );
+    const delayMistakes = convertSettingToNumber(delayMistakesFromSetting);
+    const delayCompleteFromSetting = useAppSelector(
+        (state) => state.settings.game.automaticallyCrossOutNumbers
+    );
+    const delayComplete = convertSettingToNumber(delayCompleteFromSetting);
 
     const handleDrop = () => {
         console.log('%c DRAW DROP!', 'background: #eeeeff; color: #000');
@@ -35,25 +41,24 @@ function DrawArea(): JSX.Element {
             row.forEach((cell, indexNumberRow) => {
                 if (cell === 1) {
                     dispatch(
-                        updateAreaCellRepaint({
+                        updateAreaCellAuto({
                             paint: CellAreaState.FILLED,
                             indexRow,
                             indexNumberRow,
                         })
                     );
-                    mistakesHandler(indexRow, indexNumberRow, dispatch, USER_TIMEOUT);
-                    filledLineHandler(indexRow, indexNumberRow, dispatch, USER_TIMEOUT);
+                    mistakesHandler(indexRow, indexNumberRow, dispatch, delayMistakes);
+                    filledLineHandler(indexRow, indexNumberRow, dispatch, delayComplete);
                 }
             });
         });
-        // dispatch(updatePaintProcessEnd());
         dispatch(clearPainted());
         dispatch(updatePaintProcess(HugeActionList.DRAG_END));
     };
     return (
         <table
-            onDrop={handleDrop}
-            className="table field-table m-0 table-bordered border-success"
+            onDragEndCapture={handleDrop}
+            className="table field-table m-0 table-bordered"
         >
             <tbody>
                 {rowsUnified ? (

@@ -15,7 +15,7 @@ export function Clock({ userTime }: { userTime: number }): JSX.Element {
 
     const component = isVisible ? (
         <div className="p-1 border border-success chronometer">
-            {hours}:{minutes}:{seconds}
+            {hours} : {minutes} : {seconds}
         </div>
     ) : (
         <div />

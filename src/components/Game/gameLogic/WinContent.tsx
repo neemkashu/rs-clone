@@ -24,7 +24,10 @@ export function WinContent(): JSX.Element {
     return (
         <div className="d-flex flex-column align-items-center gap-2">
             <div>{titleTranslated}</div>
-            <div className="border border-2 rounded w-50 p-1" style={imageWrapperStyle}>
+            <div
+                className="border border-2 overflow-hidden rounded-1 w-50 p-1"
+                style={imageWrapperStyle}
+            >
                 <img src={getImageFromMatrix(goal)} alt="" style={imageStyle} />
             </div>
             <Clock userTime={gameTime ?? 0} />
