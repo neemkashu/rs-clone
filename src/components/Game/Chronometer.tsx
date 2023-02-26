@@ -14,7 +14,7 @@ import {
 import { Clock } from '../Clock';
 import { store } from '../store';
 
-const REFRESH_PERIOD = 1000;
+const REFRESH_PERIOD = 20000;
 const isUserLogged = true;
 
 function Chronometer(): JSX.Element {
@@ -67,9 +67,9 @@ function Chronometer(): JSX.Element {
         };
     }, [userTime, isPageHidden, nonogramID, gameState, dispatch]);
 
-    document.onvisibilitychange = (event) => {
+    document.addEventListener('visibilitychange', (event) => {
         setIsPageHidden(document.hidden);
-    };
+    });
 
     return <Clock userTime={userTime} />;
 }

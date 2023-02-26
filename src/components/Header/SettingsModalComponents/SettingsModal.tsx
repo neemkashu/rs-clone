@@ -19,7 +19,7 @@ export default function SettingsModal(): JSX.Element {
     return (
         <div id="settingsModal" className="modal fade">
             <div className="modal-dialog modal-dialog-scrollable">
-                <div className="modal-content">
+                <div className="modal-content bg-body">
                     <div className="modal-header d-flex flex-column px-2 py-1">
                         <div className="container d-flex justify-content-between p-0">
                             <h4 className="my-2">Setting</h4>

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { ActionCreators } from 'redux-undo';
 import {
     changeGameStatus,
@@ -11,12 +12,13 @@ import { GameStatus, NonogramRaw } from '../gameUtils/types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Button } from './Button';
 
+const buttonClass = 'btn-outline-danger';
+
 export function RestartButton() {
+    const { t } = useTranslation();
     const nonogramRaw = useAppSelector(selectNonogramRaw);
     const userGame = makeInitialSaveGame(nonogramRaw);
     const dispatch = useAppDispatch();
-    const caption = 'Restart';
-    const buttonClass = 'btn-outline-danger';
 
     const handleClick = () => {
         if (userGame) {
@@ -28,5 +30,11 @@ export function RestartButton() {
             dispatch(clearMistakes());
         }
     };
-    return <Button caption={caption} buttonClass={buttonClass} handler={handleClick} />;
+    return (
+        <Button
+            caption={t('gameRestart')}
+            buttonClass={buttonClass}
+            handler={handleClick}
+        />
+    );
 }

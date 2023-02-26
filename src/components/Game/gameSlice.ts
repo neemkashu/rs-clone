@@ -17,6 +17,8 @@ import {
     checkIsPainted,
     makeHash,
     makeInitialSaveGame,
+    makeUserGameServerFormat,
+    setProperty,
     unifyTwoDimensionalArray,
 } from './gameUtils/helpers';
 import {
@@ -38,6 +40,7 @@ export enum LoadStatus {
     FULFILLED = 'READY',
     REJECTED = 'ERROR',
 }
+
 export interface GameState {
     loadNonogramStatus: LoadStatus;
     userGame: UserGameData | null;
@@ -45,8 +48,10 @@ export interface GameState {
     errorMessage: string;
     incorrectCells: UserFieldData['currentUserSolution'] | null;
     timers: ReturnType<typeof setTimeout>[];
-    paintedCells: DragCellInfo[];
+    paintedCells: (number | null)[][] | null;
     isPaintProcess: boolean;
+    bestTime: number | null;
+    lastAction: HugeActionList | null;
 }
 
 const initialState: GameState = {
@@ -56,10 +61,17 @@ const initialState: GameState = {
     errorMessage: '',
     incorrectCells: null,
     timers: [],
-    paintedCells: [],
+    paintedCells: null,
     isPaintProcess: false,
+    bestTime: null,
+    lastAction: null,
 };
-
+export const enum HugeActionList {
+    AUTOCROSS = 'updatePaintProcessEnd',
+    DRAG_END = 'updatePaintProcessEnd',
+    DRAG_START = 'updatePaintProcessStart',
+    REGULAR = 'handleOneCell',
+}
 export const loadNonogramByID = createAsyncThunk(
     'game/load/nonogram',
     async (id?: string) => {
@@ -73,9 +85,19 @@ export const loadNonogramByID = createAsyncThunk(
 );
 export const saveUserGameByID = createAsyncThunk(
     'game/save',
-    async ({ id, userGame }: { id: string; userGame: UserGameData | null }) => {
+    async ({
+        id,
+        userGame,
+        bestTime,
+    }: {
+        id: string;
+        userGame: UserGameData | null;
+        bestTime: number | null;
+    }) => {
         if (userGame) {
-            const reponse = await sendGameToServer(userGame, id);
+            const formattedUserGame = makeUserGameServerFormat(userGame, bestTime);
+            console.warn('SAVE GAME', formattedUserGame);
+            const reponse = await sendGameToServer(formattedUserGame, id);
             return reponse;
         }
         return ResponseStatus.ERROR;
@@ -119,6 +141,7 @@ export const gameSlice = createSlice({
                 const rowsUnified = unifyTwoDimensionalArray(rows);
                 // console.warn('update user game!', action.payload.currentUserSolution);
                 state.userGame = {
+                    id: action.payload.id,
                     state: action.payload.state,
                     currentUserSolution: action.payload.currentUserSolution,
                     currentTime: action.payload.currentTime,
@@ -150,14 +173,13 @@ export const gameSlice = createSlice({
             }>
         ) {
             if (state.userGame) {
-                const { indexRow, indexColumn, location } = action.payload;
-
+                const { isCrossedOut, indexRow, indexColumn, location } = action.payload;
                 const cell =
                     location === FieldPlace.ASIDE
                         ? state.userGame.currentUserRows[indexRow][indexColumn]
                         : state.userGame.currentUserColumns[indexColumn][indexRow];
                 if (cell) {
-                    cell.isCrossedOut = action.payload.isCrossedOut;
+                    cell.isCrossedOut = isCrossedOut;
                 }
             }
         },
@@ -182,6 +204,19 @@ export const gameSlice = createSlice({
                 state.userGame.currentUserSolution[indexRow][indexNumberRow] = isCellEmpty
                     ? crossOrFill
                     : CellAreaState.EMPTY;
+            }
+        },
+        updateAreaCellRepaint(
+            state,
+            action: PayloadAction<{
+                paint: CellAreaStateType;
+                indexNumberRow: number;
+                indexRow: number;
+            }>
+        ) {
+            if (state.userGame) {
+                const { indexRow, indexNumberRow, paint } = action.payload;
+                state.userGame.currentUserSolution[indexRow][indexNumberRow] = paint;
             }
         },
         updateUserTime(state, action: PayloadAction<number>) {
@@ -215,35 +250,41 @@ export const gameSlice = createSlice({
             state.timers.forEach((timer) => clearTimeout(timer));
             state.timers = [];
         },
-        updatePaintedCells(state, action: PayloadAction) {
-            const alreadyPainted = state.paintedCells;
-
-            alreadyPainted.forEach((cell) => {
-                // console.warn('updateAreaCell');
-                if (state.userGame) {
-                    const { indexRow, indexNumberRow, paint } = cell;
-                    state.userGame.currentUserSolution[indexRow][indexNumberRow] =
-                        CellAreaState.FILLED;
-                }
-            });
-            state.isPaintProcess = false;
+        updatePaintedCells(state, action: PayloadAction<DragCellInfo>) {
+            const { paint, indexRow, indexNumberRow } = action.payload;
+            if (state.paintedCells) {
+                const isPainted = state.paintedCells[indexRow][indexNumberRow];
+                state.paintedCells[indexRow][indexNumberRow] = paint;
+            }
         },
-        updatePaintProcess(state, action: PayloadAction<boolean>) {
-            state.isPaintProcess = action.payload;
+        updatePaintProcess(state, action: PayloadAction<HugeActionList>) {
+            state.lastAction = action.payload;
+        },
+        updatePaintProcessEnd(state) {
+            // state.isPaintProcess = action.payload;
         },
         clearPainted(state, action: PayloadAction) {
-            state.paintedCells = [];
+            state.paintedCells =
+                state.currentNonogram?.nonogram.goal.map((row, indexRow) => {
+                    return row.map((cell, indexNumberRow) => {
+                        return null;
+                    });
+                }) ?? null;
         },
         clearGame(state, action: PayloadAction) {
-            state.loadNonogramStatus = LoadStatus.PENDING;
-            state.loadNonogramStatus = LoadStatus.PENDING;
-            state.userGame = null;
-            state.currentNonogram = null;
-            state.errorMessage = '';
-            state.incorrectCells = null;
-            state.timers = [];
-            state.paintedCells = [];
-            state.isPaintProcess = false;
+            Object.keys(initialState).forEach((keyInit) => {
+                const key = keyInit as keyof GameState;
+                setProperty(state, key, initialState[key]);
+            });
+        },
+        updateBestTime(state, action: PayloadAction<number | null>) {
+            console.warn('best time', action.payload);
+            if (action.payload !== null) {
+                state.bestTime = action.payload;
+            }
+        },
+        changeLastAction(state, action: PayloadAction<HugeActionList>) {
+            state.lastAction = action.payload;
         },
     },
     extraReducers(builder) {
@@ -256,12 +297,36 @@ export const gameSlice = createSlice({
             state.currentNonogram = nonogram;
             if (nonogram) {
                 state.incorrectCells = nonogram.nonogram.goal;
+                state.paintedCells = nonogram.nonogram.goal.map((row, indexRow) => {
+                    return row.map((cell, indexNumberRow) => {
+                        return null;
+                    });
+                });
             }
             const gameToSet = makeInitialSaveGame(nonogram);
             if (userGame) {
-                state.userGame = userGame.data.currentGame;
+                const userData = userGame.data.currentGame;
+                const columns = userData.currentUserColumns;
+                const columnsUnified = unifyTwoDimensionalArray(columns);
+                const rows = userData.currentUserRows;
+                const rowsUnified = unifyTwoDimensionalArray(rows);
+                state.userGame = {
+                    id: userData.id,
+                    state: userData.state,
+                    currentUserSolution: userData.currentUserSolution,
+                    currentTime: userData.currentTime,
+                    currentUserColumns: columnsUnified,
+                    currentUserRows: rowsUnified,
+                };
+                console.warn(
+                    'loadNonogramByID userGame',
+                    userGame,
+                    userGame.data.bestTime
+                );
+                state.bestTime = userGame.data.bestTime;
             } else {
                 state.userGame = gameToSet;
+                state.bestTime = null;
             }
         });
         builder.addCase(loadNonogramByID.rejected, (state, action) => {
@@ -279,24 +344,6 @@ export const gameSlice = createSlice({
             state.loadNonogramStatus = LoadStatus.REJECTED;
             state.errorMessage = action.error.message ?? 'error when loading nonogram';
         });
-        builder.addCase(paintDrag, (state, action) => {
-            const { paint, indexRow, indexNumberRow } = action.payload;
-            const alreadyPainted = state.paintedCells;
-            const isPainted = checkIsPainted({
-                indexRow,
-                indexNumberRow,
-                alreadyPainted,
-            });
-            if (!isPainted) {
-                // console.warn('paint type', paint, indexRow, indexNumberRow);
-                state.paintedCells.push({
-                    paint,
-                    indexRow,
-                    indexNumberRow,
-                    hash: makeHash(indexRow, indexNumberRow),
-                });
-            }
-        });
     },
 });
 
@@ -313,8 +360,12 @@ export const {
     clearTimers,
     updatePaintedCells,
     updatePaintProcess,
+    updatePaintProcessEnd,
     clearPainted,
     clearGame,
+    updateBestTime,
+    updateAreaCellRepaint,
+    changeLastAction,
 } = gameSlice.actions;
 
 export const selectUserState = (state: RootState) => state.game.present.userGame?.state;
@@ -328,7 +379,9 @@ export const ACTIONS_TO_INCLUDE = [
     // 'game/updateUserField',
     'game/updateHintCell',
     'game/updateAreaCell',
-    'game/updatePaintedCells',
+    'game/updatePaintProcess',
+    // 'game/updatePaintProcessEnd',
+    // 'game/changeLastAction',
     'game/clearMistakes',
     'game/load/nonogram/fulfilled',
 ];

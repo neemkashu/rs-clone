@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, ReactNode } from 'react';
-import { NonogramObject, NonogramTime } from './types';
-import { LanguagesShortNamesEnum } from './enums';
+import { NonogramObject, NonogramTime, EmptyCellMark } from './types';
+import { LanguagesShortNamesEnum, SettingsTimingsEnum } from './enums';
 import { StorageKeys } from './storage';
 
 export const a = 10;
@@ -76,15 +76,87 @@ export function getInitialLanguage(): string {
     return 'en-EN';
 }
 
-export function getEmptyCellSettingInCurrenLanguage() {
+export function validateUserNameInput(input: string): boolean {
+    if (input.match(/^([a-z]{3,})(\s{0,})$/gi)) return true;
+    return false;
+}
+
+export function validateUserEmailInput(input: string): boolean {
+    if (input.match(/^([\w]{3,})@([\w]+\.)([a-z]{2,5})$/gi)) return true;
+    return false;
+}
+
+export function validateUserPasswordInput(input: string): boolean {
+    if (input.match(/^[\w\s\d@$!%*#?&]{8,}$/i)) return true;
+    return false;
+}
+
+export function validateUserRepeatPasswordInput(
+    input: string,
+    password: string
+): boolean {
+    if (input === password) return true;
+    return false;
+}
+
+export function checkUserNameInput(
+    name: string | undefined,
+    setIsUserNameNotValid: Dispatch<SetStateAction<boolean>>
+): void {
+    if (name && validateUserNameInput(name)) {
+        setIsUserNameNotValid(false);
+    } else setIsUserNameNotValid(true);
+}
+
+export function checkUserEmailInput(
+    email: string | undefined,
+    setIsUserEmailNotValid: Dispatch<SetStateAction<boolean>>
+): void {
+    if (email && validateUserEmailInput(email)) {
+        setIsUserEmailNotValid(false);
+    } else setIsUserEmailNotValid(true);
+}
+
+export function checkUserPasswordInput(
+    password: string | undefined,
+    setIsUserPasswordNotValid: Dispatch<SetStateAction<boolean>>
+): void {
+    if (password && validateUserPasswordInput(password)) {
+        setIsUserPasswordNotValid(false);
+    } else setIsUserPasswordNotValid(true);
+}
+
+export function checkUserRepeatPasswordInput(
+    password: string | undefined,
+    repeatPassword: string | undefined,
+    setIsUserRepeatPasswordNotValid: Dispatch<SetStateAction<boolean>>
+): void {
+    if (
+        password &&
+        repeatPassword &&
+        validateUserRepeatPasswordInput(repeatPassword, password)
+    ) {
+        setIsUserRepeatPasswordNotValid(false);
+    } else setIsUserRepeatPasswordNotValid(true);
+}
+
+export function getEmptyCellSettingInCurrenLanguage(): {
+    caption: string;
+    type: EmptyCellMark;
+} {
+    let caption = 'dot';
     const initialLanguage = getInitialLanguage();
+
     if (initialLanguage === 'ru-RU') {
-        return 'точка';
+        caption = 'точка';
     }
     if (initialLanguage === 'de-DE') {
-        return 'punkt';
+        caption = 'punkt';
     }
-    return 'dot';
+    return {
+        caption,
+        type: EmptyCellMark.DOT,
+    };
 }
 
 export function getNonogramTitle(currentLang: string, catalogItem: NonogramObject) {
@@ -127,6 +199,11 @@ export function getImageFromMatrix(matrix?: number[][]): string {
     }
 
     return canvas.toDataURL('image/png');
+}
+
+export function changeColorTheme(isLightTheme: boolean) {
+    const color = isLightTheme ? 'light' : 'dark';
+    document.querySelector('html')?.setAttribute('data-bs-theme', color);
 }
 
 export function getUserCurrentTimes(
@@ -198,4 +275,29 @@ export function unifyTwoDimensionalArray<T>(arr?: T[][]): (T | null)[][] {
         }
     });
     return arrUnified;
+}
+export function convertSettingToNumber(delay: SettingsTimingsEnum): number | null {
+    switch (delay) {
+        case SettingsTimingsEnum.NEVER: {
+            return null;
+        }
+        case SettingsTimingsEnum.ONE_SEC: {
+            return 1000;
+        }
+        case SettingsTimingsEnum.TWO_SEC: {
+            return 2000;
+        }
+        case SettingsTimingsEnum.TEN_SEC: {
+            return 10000;
+        }
+        case SettingsTimingsEnum.THIRTY_SEC: {
+            return 30000;
+        }
+        case SettingsTimingsEnum.FIVE_MIN: {
+            return 5 * 60 * 1000;
+        }
+        default: {
+            return null;
+        }
+    }
 }

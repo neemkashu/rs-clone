@@ -1,17 +1,24 @@
-import { userCat, userNonogramData } from '../gameUtils/mochas';
-import { UserGameDataRaw } from '../gameUtils/types';
+import { currentUserToken } from '../../../utils/enums';
+import { NonogramRaw, UserGameDataRaw } from '../gameUtils/types';
+import { SERVER_ADDRESS } from './getNonogramByID';
 
 export async function getGameState(id: string): Promise<UserGameDataRaw | null> {
-    // mocha before implementing request
-
-    return new Promise((resolve) => {
-        const data = null;
-        // const data = userCat;
-        resolve(data);
-    });
-
-    // return new Promise((resolve, reject) => {
-    //     const data = userNonogramData as UserGameDataRaw;
-    //     reject(new Error('no data'));
-    // });
+    try {
+        const url = `${SERVER_ADDRESS}users-games/${id}`;
+        const options = {
+            method: 'GET',
+            headers: {
+                token: localStorage.getItem(currentUserToken) || '',
+            },
+        };
+        const response = await fetch(url, options);
+        if (!response.ok) {
+            throw new Error('responce not ok!');
+        }
+        const userGame: UserGameDataRaw = await response.json();
+        return userGame;
+    } catch (error) {
+        console.warn('error when fetching user game', id);
+        return null;
+    }
 }

@@ -1,13 +1,17 @@
+import { EmptyCellMark } from '../../../utils/types';
 import { StorageKeys } from './storage';
 import {
+    AreaCellStyle,
     CellAreaState,
     CellAreaStateType,
     DragCellInfo,
     GameStatus,
+    Languages,
     NonogramRaw,
     NonogramTime,
     UserFieldData,
     UserGameData,
+    UserGameForServer,
 } from './types';
 
 export function getUserCurrentTimes(
@@ -107,6 +111,7 @@ export function makeInitialSaveGame(nonogram: NonogramRaw | null): UserGameData 
 
     if (fieldData) {
         const initialGame: UserGameData = {
+            id: nonogram.id,
             state: GameStatus.INITIAL,
             currentTime: 0,
             ...fieldData,
@@ -171,3 +176,118 @@ export function checkIsPainted({
     // console.warn('check painted');
     return alreadyPainted.some((cell) => cell.hash === hash);
 }
+export function makeUserGameServerFormat(
+    userGame: UserGameData,
+    bestTime: number | null
+): UserGameForServer {
+    const serverFormatColumns = userGame.currentUserColumns.map((column) =>
+        column.filter((cell) => cell)
+    );
+    const serverFormatRows = userGame.currentUserRows.map((row) =>
+        row.filter((cell) => cell)
+    );
+    return {
+        bestTime,
+        currentGame: {
+            id: userGame.id,
+            state: userGame.state,
+            currentTime: userGame.currentTime,
+            currentUserColumns: serverFormatColumns,
+            currentUserRows: serverFormatRows,
+            currentUserSolution: userGame.currentUserSolution,
+        },
+    };
+}
+export function increaseSmallMatrix(matrix: number[][]): number[][] {
+    const SMALL = 120;
+    const minSize = Math.min(matrix[0].length, matrix.length);
+
+    const coefficient = Math.ceil(SMALL / minSize);
+
+    if (coefficient > 1) {
+        const increasedRows = matrix.reduce<number[][]>((accum, row) => {
+            for (let i = 0; i < coefficient; i += 1) {
+                accum.push(row);
+            }
+            return accum;
+        }, []);
+        const increasedMatrix = increasedRows.map((row) => {
+            return row.reduce<number[]>((accum, cell) => {
+                for (let i = 0; i < coefficient; i += 1) {
+                    accum.push(cell);
+                }
+                return accum;
+            }, []);
+        });
+        return increasedMatrix;
+    }
+    return matrix;
+}
+export function getImageFromMatrix(matrix?: number[][]): string {
+    if (!matrix) {
+        return '';
+    }
+    const rgbMatrix = matrix.map((row) => row.map((cell) => (cell === 0 ? 255 : 0)));
+    const canvas = document.createElement('canvas');
+
+    const increaseFactor = Math.ceil(60 / rgbMatrix.length);
+
+    canvas.width = rgbMatrix[0].length * increaseFactor;
+    canvas.height = rgbMatrix.length * increaseFactor;
+
+    const context = canvas.getContext('2d');
+
+    for (let y = 0; y < rgbMatrix.length; y += 1) {
+        for (let x = 0; x < rgbMatrix[y].length; x += 1) {
+            const pixel = rgbMatrix[y][x];
+            if (context) {
+                context.fillStyle = `rgb(${pixel}, ${pixel}, ${pixel})`;
+                context.fillRect(
+                    x * increaseFactor,
+                    y * increaseFactor,
+                    1 * increaseFactor,
+                    1 * increaseFactor
+                );
+            }
+        }
+    }
+
+    return canvas.toDataURL('image/png');
+}
+export function getTranslatedTitle(title: Languages, currentLanguage: string): string {
+    const languageKey = currentLanguage.split('-')[0];
+    if (Object.hasOwn(title, languageKey)) {
+        const key = languageKey as keyof typeof title;
+        return title[key];
+    }
+    return title.en;
+}
+export function setProperty<T, K extends keyof T>(obj: T, key: K, value: T[K]) {
+    // eslint-disable-next-line no-param-reassign
+    obj[key] = value;
+}
+export const AREA_STYLES: AreaCellStyle = {
+    EMPTY: '',
+    CROSSED: 'crossed-square',
+    DOTTED: 'dotted-square',
+    FILLED: 'filled-square',
+};
+
+export const getAreaCellStyle = (
+    emptyCellMark: EmptyCellMark,
+    userCell?: number | null
+): string => {
+    switch (userCell) {
+        case CellAreaState.CROSSED: {
+            return emptyCellMark === EmptyCellMark.CROSS
+                ? AREA_STYLES.CROSSED
+                : AREA_STYLES.DOTTED;
+        }
+        case CellAreaState.FILLED: {
+            return AREA_STYLES.FILLED;
+        }
+        default: {
+            return AREA_STYLES.EMPTY;
+        }
+    }
+};
