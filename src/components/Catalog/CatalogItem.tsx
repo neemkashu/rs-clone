@@ -10,10 +10,14 @@ export function CatalogItem({ catalogItem, cardNumber, solvedGames }: CatalogIte
     const { t, i18n } = useTranslation();
     const settingsMain = useAppSelector((state) => state.settings.main);
     const imageToPrint = useRef(null);
+    const startedGamesIdArr = solvedGames.map((item) => item.currentGame.id);
+    const solvedGamesIdArr = solvedGames
+        .filter((elem) => elem.bestTime > 0)
+        .map((item) => item.currentGame.id);
 
     function getNonogramTitleDependingOnSettings(): string {
         if (!settingsMain.showNonogramTitlesBeforeSolving) {
-            if (solvedGames.includes(catalogItem.id)) {
+            if (solvedGamesIdArr.includes(catalogItem.id)) {
                 return getNonogramTitle(i18n.language, catalogItem);
             }
             return '#####';
@@ -22,9 +26,19 @@ export function CatalogItem({ catalogItem, cardNumber, solvedGames }: CatalogIte
     }
 
     function getNonogramImageSrcDependingOnSettings() {
+        const currentGameState = solvedGames.find(
+            (elem) => elem.currentGame.id === catalogItem.id
+        );
+        const currentGameStateWithoutNull =
+            currentGameState?.currentGame.currentUserSolution.map((item) =>
+                item.map((value) => Number(value))
+            );
         if (!settingsMain.showNonogramThumbnailsBeforeSolving) {
-            if (solvedGames.includes(catalogItem.id)) {
+            if (solvedGamesIdArr.includes(catalogItem.id)) {
                 return getImageFromMatrix(catalogItem.nonogram.goal);
+            }
+            if (startedGamesIdArr.includes(catalogItem.id)) {
+                return getImageFromMatrix(currentGameStateWithoutNull);
             }
             return 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930';
         }
@@ -37,7 +51,7 @@ export function CatalogItem({ catalogItem, cardNumber, solvedGames }: CatalogIte
                 <div className="">{cardNumber}</div>
                 <Link
                     to={`/game/${catalogItem.id}`}
-                    className="catalog-item__image border border-2 rounded d-flex align-items-center p-1"
+                    className="catalog-item__image d-flex align-items-center p-1"
                 >
                     <img
                         ref={imageToPrint}

@@ -1,12 +1,12 @@
 import { useEffect, useState, useRef } from 'react';
 import { CatalogItem } from './CatalogItem';
-import { NonogramObject } from '../../utils/types';
+import { NonogramObject, UserGameObject } from '../../utils/types';
 import { getCatalogDB, getSolvedGames } from '../../api/requests';
 import { Loading } from '../Loading/Loading';
 
 export function Catalog(): JSX.Element {
     const [catalogDB, setCatalogDB] = useState<NonogramObject[]>([]);
-    const [solvedGamesArr, setSolvedGamesArr] = useState<string[]>([]);
+    const [solvedGamesArr, setSolvedGamesArr] = useState<UserGameObject[]>([]);
     const [lastId, setLastId] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [fetching, setFetching] = useState<boolean>(true);
@@ -22,7 +22,7 @@ export function Catalog(): JSX.Element {
     useEffect(() => {
         if (fetching) {
             console.log('fetching');
-            getCatalogDB(3, lastId)
+            getCatalogDB(20, lastId)
                 .then((data) => {
                     const nonogramsDB = data[1];
                     if (nonogramsDB.length) {
@@ -32,9 +32,9 @@ export function Catalog(): JSX.Element {
                     }
                 })
                 .finally(() => setFetching(false));
-            // getSolvedGames().then((data) =>
-            //     setSolvedGamesArr(data.data.map((item) => item.currentGame.id))
-            // );
+            getSolvedGames().then((data) => {
+                setSolvedGamesArr(data.data);
+            });
         }
     }, [fetching]);
 

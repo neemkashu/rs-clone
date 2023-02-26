@@ -40,14 +40,19 @@ export type GameStateType = {
     state: string;
 };
 
+export type UserGameObject = {
+    currentGame: UserGameData;
+    bestTime: number;
+};
+
 export type UserWinsObject = {
-    data: { currentGame: UserGameData; bestTime: number }[];
+    data: UserGameObject[];
 };
 
 export type CatalogItemProps = {
     catalogItem: NonogramObject;
     cardNumber: number;
-    solvedGames: string[];
+    solvedGames: UserGameObject[];
 };
 
 export type SpecificLanguageButtonPropsType = {
