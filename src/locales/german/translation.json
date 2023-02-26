@@ -74,5 +74,7 @@
     "guide12": "In einer Zeile mit einige Einsen gibt es keine weiteren Möglichkeiten, sie zu positionieren.",
     "guide13": "Die Zwei wurden von selbst gefunden, streichen wir die Zahlen aus.",
     "guide14": "Sieben hat keine Standortoptionen mehr.",
-    "guide15": "Nonogramm ist gelöst!"
+    "guide15": "Nonogramm ist gelöst!",
+    "guideRedirect": "Für fortgeschrittenere Lösungstechniken siehe hier",
+    "guideLink": "Link"
 }

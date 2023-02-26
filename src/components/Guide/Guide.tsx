@@ -41,6 +41,7 @@ export function Guide(): JSX.Element {
     const [commentIndex, setCommentIndex] = useState(0);
 
     useEffect(() => {
+        dispatch(clearGame());
         dispatch(loadNonogramByID({ id: GUIDE_ID, signal }));
 
         return () => {
