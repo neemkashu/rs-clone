@@ -16,7 +16,6 @@ export type NonogramObject = {
         };
         colorMapping: {
             1: string;
-            2: string;
         };
         goal: Array<number[]>;
         rows: Array<
@@ -34,19 +33,26 @@ export type NonogramObject = {
     };
 };
 
+export type NonogramMatrix = Array<number[]>;
+
 export type GameStateType = {
     id: string;
     state: string;
 };
 
+export type UserGameObject = {
+    currentGame: UserGameData;
+    bestTime: number;
+};
+
 export type UserWinsObject = {
-    data: { currentGame: UserGameData; bestTime: number }[];
+    data: UserGameObject[];
 };
 
 export type CatalogItemProps = {
     catalogItem: NonogramObject;
     cardNumber: number;
-    solvedGames: string[];
+    solvedGames: UserGameObject[];
 };
 
 export type SpecificLanguageButtonPropsType = {

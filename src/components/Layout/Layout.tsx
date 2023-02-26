@@ -11,7 +11,7 @@ export function Layout(): JSX.Element {
             <main className="main-container container">
                 <div className="main-container-content">
                     <Aside />
-                    <section className="ps-2 d-flex flex-grow-1">
+                    <section className="ps-2 d-flex flex-grow-1 section-container overflow-auto">
                         <Outlet />
                     </section>
                 </div>

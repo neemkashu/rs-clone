@@ -1,4 +1,6 @@
-/* eslint-disable import/prefer-default-export */
+import { SettingsTimingsEnum } from './enums';
+import { getEmptyCellSettingInCurrenLanguage } from './helpers';
+
 export const NONOGRAM_INFO = {
     // temp const before getting info from back-end
     id: 234,
@@ -23,3 +25,21 @@ export const cellClass = {
     empty: '',
     crossed: 'crossed-square',
 };
+
+export const standardSettingsState = {
+    main: {
+        showNonogramTitlesBeforeSolving: false,
+        showNonogramThumbnailsBeforeSolving: false,
+    },
+    game: {
+        highlightCellsWithError: SettingsTimingsEnum.NEVER,
+        automaticallyCrossOutNumbers: SettingsTimingsEnum.NEVER,
+        lastCrossedOutDigitFillsLineWithCrosses: false,
+    },
+    view: {
+        markingAnEmptyCell: getEmptyCellSettingInCurrenLanguage(),
+        showGuessTime: false,
+    },
+};
+
+export const catalogDBLength = 75;

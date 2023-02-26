@@ -1,20 +1,28 @@
+import { NonogramMatrix, NonogramObject, UserWinsObject } from '../utils/types';
 import { currentUserToken } from '../utils/enums';
-import { NonogramObject, UserWinsObject } from '../utils/types';
 
 const SERVER = 'https://rs-clone-backend-1hqs.onrender.com';
+const LOCAL_SERVER = 'http://localhost:3000';
 
-export async function getCatalogDB(): Promise<NonogramObject[]> {
+export async function getCatalogDB(
+    limit = 10,
+    lastId = ''
+): Promise<[string, NonogramObject[]]> {
     try {
-        const response = await fetch(`${SERVER}/nonograms`, {
-            method: 'GET',
-        });
+        const response = await fetch(
+            `${SERVER}/nonograms?limit=${limit}&lastId=${lastId}`,
+            {
+                method: 'GET',
+            }
+        );
         if (!response.ok) {
             throw new Error('this error occurred while fetching the catalog database');
         }
-        return await response.json();
+        const returnedLastId = response.headers.get('lastId');
+        return [returnedLastId || '', await response.json()];
     } catch (e) {
         console.warn(e);
-        return [];
+        return ['', []];
     }
 }
 
@@ -33,6 +41,22 @@ export async function getSolvedGames(): Promise<UserWinsObject> {
     } catch (e) {
         console.warn(e);
         return { data: [] };
+    }
+}
+
+export async function getNonogramMatrixForImage(id: string): Promise<NonogramMatrix> {
+    try {
+        const response = await fetch(`${SERVER}/nonograms/${id}`, {
+            method: 'GET',
+        });
+        if (!response.ok) {
+            throw new Error('this error occurred while fetching user games');
+        }
+        const data: NonogramObject = await response.json();
+        return data.nonogram.goal;
+    } catch (e) {
+        console.warn(e);
+        return [];
     }
 }
 
