@@ -64,13 +64,14 @@ export default function Cell({
             onClick={handlersClickMouse}
             onContextMenu={handlersContextMouse}
             onDragEnter={(event) => event.preventDefault()}
+            onDrop={handleDragDrop}
+            onDragStart={handlersDrag}
             className={`cell-square ${styles?.filter((item) => item)?.join(' ')}`}
+            draggable={isDraggable}
+            onDragOver={(event) => event.preventDefault()}
         >
             <div
-                draggable={isDraggable}
-                onDragStart={handlersDrag}
                 onDragEnter={handleDragEnter}
-                onDrop={handleDragDrop}
                 className={`square lh-1 text-center ${stateStyle
                     ?.filter((item) => item)
                     ?.join(' ')}`}

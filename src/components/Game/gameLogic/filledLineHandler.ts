@@ -2,9 +2,13 @@ import { useAppDispatch } from '../../hooks';
 import { store } from '../../store';
 import {
     addTimerId,
+    HugeActionList,
     updateAreaCell,
+    updateAreaCellAuto,
     updateHintCell,
+    updateHintCellAuto,
     updateMistakeData,
+    updatePaintProcess,
 } from '../gameSlice';
 import { checkIsLineCompleted, getColumnFromMatrix } from '../gameUtils/helpers';
 import { CellAreaState, ClickType, FieldPlace } from '../gameUtils/types';
@@ -16,7 +20,7 @@ export function fillRow(indexRow: number, dispatch: ReturnType<typeof useAppDisp
     hintLine?.forEach((hint, index) => {
         if (hint) {
             dispatch(
-                updateHintCell({
+                updateHintCellAuto({
                     isCrossedOut: true,
                     indexColumn: index,
                     indexRow,
@@ -28,14 +32,15 @@ export function fillRow(indexRow: number, dispatch: ReturnType<typeof useAppDisp
     fieldLine?.forEach((cell, index) => {
         if (cell === null) {
             dispatch(
-                updateAreaCell({
-                    clickType: ClickType.MOUSE_CONTEXT,
+                updateAreaCellAuto({
+                    paint: CellAreaState.CROSSED,
                     indexNumberRow: index,
                     indexRow,
                 })
             );
         }
     });
+    dispatch(updatePaintProcess(HugeActionList.AUTOCROSS));
 }
 export function fillColumn(
     indexNumberRow: number,
@@ -50,7 +55,7 @@ export function fillColumn(
     hintLine?.forEach((hint, index) => {
         if (hint) {
             dispatch(
-                updateHintCell({
+                updateHintCellAuto({
                     isCrossedOut: true,
                     indexColumn: indexNumberRow,
                     indexRow: index,
@@ -62,14 +67,15 @@ export function fillColumn(
     fieldLine?.forEach((cell, index) => {
         if (cell === null) {
             dispatch(
-                updateAreaCell({
-                    clickType: ClickType.MOUSE_CONTEXT,
+                updateAreaCellAuto({
+                    paint: CellAreaState.CROSSED,
                     indexNumberRow,
                     indexRow: index,
                 })
             );
         }
     });
+    dispatch(updatePaintProcess(HugeActionList.AUTOCROSS));
 }
 export function filledLineHandler(
     indexRow: number,
