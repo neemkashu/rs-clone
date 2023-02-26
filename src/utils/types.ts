@@ -1,7 +1,7 @@
 import React, { MouseEventHandler } from 'react';
 import { SettingsTimingsEnum } from './enums';
 
-export type fieldPlace = 'header' | 'aside' | 'area' | 'miniature';
+export type fieldPlace = 'header' | 'aside' | 'area' | 'miniature' | 'guide';
 
 export type NonogramObject = {
     id: string;
@@ -99,6 +99,7 @@ export enum FieldPlace {
     ASIDE = 'aside',
     AREA = 'area',
     MINIATURE = 'miniature',
+    GUIDE = 'guide',
 }
 export interface NonogramTime {
     id: string;

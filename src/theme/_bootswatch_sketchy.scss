@@ -95,63 +95,64 @@ table {
   }
 }
 
-.table-bordered {
-  overflow: hidden;
-  border-spacing: 0;
-  border-collapse: separate;
-  background-color: $gray-800;
-  border-radius: 5px 25px 5px 25px/25px 5px 25px 5px;
+// .table-bordered {
+//   // overflow: hidden;
+//   border-spacing: 0;
+//   border-collapse: separate;
+//   background-color: $gray-800;
+//   border-radius: 5px 25px 5px 25px/25px 5px 25px 5px;
 
-  th,
-  td {
-    border-radius: 5px 5px 25px 4px/5px 4px 3px 5px;
-  }
+//   th,
+//   td {
+//     border-radius: 0;
+//     border-width: 0 1px 1px 0;
+//   }
 
-  .table-success,
-  .table-success:hover {
-    td,
-    th {
-      color: $white;
-      background-color: $success;
-    }
-  }
+//   .table-success,
+//   .table-success:hover {
+//     td,
+//     th {
+//       color: $white;
+//       background-color: $success;
+//     }
+//   }
 
-  .table-info,
-  .table-info:hover {
-    td,
-    th {
-      color: $white;
-      background-color: $info;
-    }
-  }
+//   .table-info,
+//   .table-info:hover {
+//     td,
+//     th {
+//       color: $white;
+//       background-color: $info;
+//     }
+//   }
 
-  .table-warning,
-  .table-warning:hover {
-    td,
-    th {
-      color: $white;
-      background-color: $warning;
-    }
-  }
+//   .table-warning,
+//   .table-warning:hover {
+//     td,
+//     th {
+//       color: $white;
+//       background-color: $warning;
+//     }
+//   }
 
-  .table-danger,
-  .table-danger:hover {
-    td,
-    th {
-      color: $white;
-      background-color: $danger;
-    }
-  }
-}
+//   .table-danger,
+//   .table-danger:hover {
+//     td,
+//     th {
+//       color: $white;
+//       background-color: $danger;
+//     }
+//   }
+// }
 
-.table-dark {
-  th,
-  td,
-  &.table-hover .table-active:hover > th,
-  &.table-hover .table-active:hover > td {
-    background-color: $gray-800;
-  }
-}
+// .table-dark {
+//   th,
+//   td,
+//   &.table-hover .table-active:hover > th,
+//   &.table-hover .table-active:hover > td {
+//     background-color: $gray-800;
+//   }
+// }
 
 
 // Forms

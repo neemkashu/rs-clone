@@ -48,7 +48,9 @@ function Game({ id }: { id: string }): JSX.Element {
         const handleVisibility = () => {
             saveGameWhenInvisible(dispatch);
         };
-        dispatch(loadNonogramByID(id));
+        const controllerNonogram = new AbortController();
+        const { signal } = controllerNonogram;
+        dispatch(loadNonogramByID({ id, signal }));
 
         document.addEventListener('visibilitychange', handleVisibility);
 
@@ -60,6 +62,7 @@ function Game({ id }: { id: string }): JSX.Element {
                     bestTime: store.getState().game.present.bestTime,
                 })
             );
+            controllerNonogram.abort();
             dispatch(clearTimers());
             dispatch(clearGame());
             document.removeEventListener('visibilitychange', handleVisibility);
