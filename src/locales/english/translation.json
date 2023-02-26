@@ -64,6 +64,8 @@
     "guide13": "The twos were found by themselves, let's cross out the clues.",
     "guide14": "Seven has no more location options.",
     "guide15": "Nonogram solved!",
+    "guideRedirect": "For more advanced solution techniques, see this",
+    "guideLink": "link",
     "nameErrorTitle": "Incorrect name!",
     "nameErrorBody": "The name must contain a word no shorter than three letters of the Latin alphabet.",
     "emailErrorTitle": "Incorrect e-mail!",

@@ -23,7 +23,7 @@ const style = {
     height: UMBRELLA_HEIGHT,
 };
 const styleComment: CSSProperties = {
-    height: 'calc(4rem * var(--bs-body-line-height))',
+    minHeight: 'calc(4rem * var(--bs-body-line-height))',
 };
 const getTranslatedStepByIndex = (
     t: TFunction<'translation', undefined, 'translation'>,
@@ -89,6 +89,10 @@ export function Guide(): JSX.Element {
                     )}
                 </div>
             </div>
+            <p className="pt-3">
+                {t('guideRedirect')}{' '}
+                <a href="https://www.nonograms.ru/methods">{t('guideLink')}</a>.
+            </p>
         </div>
     );
 }
