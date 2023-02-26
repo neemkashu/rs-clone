@@ -5,6 +5,7 @@ const SERVER = 'https://rs-clone-backend-1hqs.onrender.com';
 const LOCAL_SERVER = 'http://localhost:3000';
 
 export async function getCatalogDB(
+    signal: AbortSignal,
     limit = 10,
     lastId = ''
 ): Promise<[string, NonogramObject[]]> {
@@ -68,6 +69,7 @@ export async function getRandomNonogramId(): Promise<string | null> {
                 token: localStorage.getItem(currentUserToken) || '',
             },
         });
+        console.log(response);
         if (!response.ok) {
             throw new Error('this error occurred while fetching user games');
         }

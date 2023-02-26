@@ -5,6 +5,9 @@ import { getCatalogDB, getSolvedGames } from '../../api/requests';
 import { Loading } from '../Loading/Loading';
 import { catalogDBLength } from '../../utils/constants';
 
+const controllerNonogram = new AbortController();
+const { signal } = controllerNonogram;
+
 export function Catalog(): JSX.Element {
     const [catalogDB, setCatalogDB] = useState<NonogramObject[]>([]);
     const [solvedGamesArr, setSolvedGamesArr] = useState<UserGameObject[]>([]);
@@ -22,7 +25,7 @@ export function Catalog(): JSX.Element {
     useEffect(() => {
         if (fetching && catalogDB.length < catalogDBLength) {
             console.log('fetching');
-            getCatalogDB(20, lastId)
+            getCatalogDB(signal, 20, lastId)
                 .then((data) => {
                     const nonogramsDB = data[1];
                     if (nonogramsDB.length) {
@@ -37,6 +40,13 @@ export function Catalog(): JSX.Element {
             });
         }
     }, [fetching]);
+
+    useEffect(() => {
+        return () => {
+            console.log('unmount');
+            controllerNonogram.abort();
+        };
+    }, []);
 
     useEffect(() => {
         const container = document.querySelector('.section-container');
