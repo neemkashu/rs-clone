@@ -83,5 +83,10 @@
     "errorWithRegisterBody": "Perhaps this e-mail already exists",
     "clearPrintImage": "Clear nonongram",
     "printImage": "Print nonogram",
-    "pageSize": "Size on paper"
+    "pageSize": "Size on paper",
+    "passwordPlaceholder": "Enter password",
+    "repeatPasswordPlaceholder": "Repeat password",
+    "full": "Full",
+    "half": "Half",
+    "small": "Small"
 }

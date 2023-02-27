@@ -111,7 +111,7 @@ export function Register(): JSX.Element {
                     <InputItem
                         reference={userPasswordInput}
                         type="password"
-                        placeholder="Enter password"
+                        placeholder={t('passwordPlaceholder')}
                         onInput={() =>
                             checkUserPasswordInput(
                                 userPasswordInput.current?.value,
@@ -131,7 +131,7 @@ export function Register(): JSX.Element {
                     <InputItem
                         reference={userRepeatPasswordInput}
                         type="password"
-                        placeholder="Repeat password"
+                        placeholder={t('repeatPasswordPlaceholder')}
                         onInput={() =>
                             checkUserRepeatPasswordInput(
                                 userPasswordInput.current?.value,

@@ -69,7 +69,7 @@ export function Auth(): JSX.Element {
                     <InputItem
                         reference={userPasswordInput}
                         type="password"
-                        placeholder="Password"
+                        placeholder={t('passwordPlaceholder')}
                     />
                 </div>
                 {isLoading ? (

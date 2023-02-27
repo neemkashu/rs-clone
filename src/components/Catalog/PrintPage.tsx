@@ -86,21 +86,21 @@ export function PrintPage(): JSX.Element {
                         type="button"
                         className="btn btn-primary"
                     >
-                        Full
+                        {t('full')}
                     </button>
                     <button
                         onClick={handlePrintClick}
                         type="button"
                         className="btn btn-primary"
                     >
-                        Half
+                        {t('half')}
                     </button>
                     <button
                         onClick={handlePrintClick}
                         type="button"
                         className="btn btn-primary"
                     >
-                        Small
+                        {t('small')}
                     </button>
                 </div>
             </div>

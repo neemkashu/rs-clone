@@ -83,5 +83,10 @@
     "errorWithRegisterBody": "Возможно такой e-mail уже существует",
     "clearPrintImage": "Очистить кроссворд",
     "printImage": "Печать кроссворда",
-    "pageSize": "Размер на бумаге"
+    "pageSize": "Размер на бумаге",
+    "passwordPlaceholder": "Введите пароль",
+    "repeatPasswordPlaceholder": "Повторите пароль",
+    "full": "Полностью",
+    "half": "Половина",
+    "small": "Маленький"
 }
