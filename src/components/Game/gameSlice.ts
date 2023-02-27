@@ -303,6 +303,9 @@ export const gameSlice = createSlice({
         changeLastAction(state, action: PayloadAction<HugeActionList>) {
             state.lastAction = action.payload;
         },
+        writeNonogramForPrint(state, action: PayloadAction<NonogramRaw>) {
+            state.currentNonogram = action.payload;
+        },
     },
     extraReducers(builder) {
         builder.addCase(loadNonogramByID.pending, (state, action) => {
@@ -379,6 +382,7 @@ export const {
     updateHintCellAuto,
     updateAreaCellAuto,
     changeLastAction,
+    writeNonogramForPrint,
 } = gameSlice.actions;
 
 export const selectUserState = (state: RootState) => state.game.present.userGame?.state;

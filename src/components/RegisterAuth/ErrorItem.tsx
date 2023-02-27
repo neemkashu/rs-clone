@@ -6,7 +6,7 @@ export function ErrorItem({
     messageBody: string;
 }): JSX.Element {
     return (
-        <div className="border border-danger border-2 rounded p-1 text-danger">
+        <div className="border border-danger border-2 rounded p-1 text-danger text-center">
             {messageTitle}
             <br />
             {messageBody}

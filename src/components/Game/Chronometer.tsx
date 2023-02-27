@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getTimeFromStorage, setTimeToStorage } from '../../utils/helpers';
-import { NonogramRaw } from '../../utils/types';
 import { useAppSelector } from '../hooks';
-import { GameStatus, UserGameData } from './gameUtils/types';
+import { GameStatus, UserGameData, NonogramRaw } from './gameUtils/types';
 import {
     changeGameStatus,
     selectNonogramRaw,

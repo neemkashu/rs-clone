@@ -20,6 +20,7 @@ function App(): JSX.Element {
                 <Route path="/random-game" element={<RandomGameWrapper />} />
                 <Route path="/how-to-solve" element={<Guide />} />
                 <Route path="/print/:id" element={<PrintPage />} />
+                <Route path="/how-to-solve" element={<Guide />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="*" element={<Navigate to="/" replace />} />

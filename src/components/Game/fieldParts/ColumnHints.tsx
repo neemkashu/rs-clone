@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { unifyTwoDimensionalArray } from '../../../utils/helpers';
-import { FieldPlace, fieldPlace, GameStatus, NonogramRaw } from '../../../utils/types';
+import { FieldPlace, fieldPlace, GameStatus } from '../../../utils/types';
 import { useAppSelector } from '../../hooks';
 import { selectNonogramRaw } from '../gameSlice';
 import TableAllRows from './TableAllRows';

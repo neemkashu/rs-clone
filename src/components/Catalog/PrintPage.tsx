@@ -1,49 +1,107 @@
-import React, { useState, useEffect } from 'react';
+import './PrintPage.scss';
+import React, { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { getNonogramMatrixForImage } from '../../api/requests';
-import { getImageFromMatrix, printElem } from '../../utils/helpers';
+import { useTranslation } from 'react-i18next';
+import html2canvas from 'html2canvas';
+import {
+    clearGame,
+    loadNonogramByID,
+    selectNonogramRaw,
+    updateUserGame,
+} from '../Game/gameSlice';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import Field from '../Game/Field';
+import { printElem } from '../../utils/helpers';
+import { makeInitialSaveGame } from '../Game/gameUtils/helpers';
+
+const controllerNonogram = new AbortController();
+const { signal } = controllerNonogram;
 
 export function PrintPage(): JSX.Element {
+    const { t } = useTranslation();
     const { id } = useParams();
-    const [imageSrc, setImageSrc] = useState<string>('');
+    const dispatch = useAppDispatch();
+    const imageContainer = useRef(null);
+    const nonogramInStore = useAppSelector(selectNonogramRaw);
+    const userGame = makeInitialSaveGame(nonogramInStore);
+
+    function handleClearClick() {
+        if (userGame) {
+            dispatch(updateUserGame(userGame));
+        }
+    }
 
     function handlePrintClick(e: React.MouseEvent) {
         const targetButton = e.target as HTMLButtonElement;
         const widthValue = targetButton.innerText;
-        printElem(imageSrc, widthValue);
+        const image = imageContainer.current;
+        if (image) {
+            const printContent = (image as HTMLDivElement).querySelector(
+                '.game-field'
+            ) as HTMLDivElement;
+            if (printContent) {
+                html2canvas(printContent, { scale: 10 }).then((canvas) => {
+                    const canvasImageSrc = canvas.toDataURL('image/png');
+                    if (widthValue === 'Full') printElem(canvasImageSrc, '100%');
+                    if (widthValue === 'Half') printElem(canvasImageSrc, '50%');
+                    if (widthValue === 'Small') printElem(canvasImageSrc, '25%');
+                });
+            }
+        }
     }
 
     useEffect(() => {
-        if (id)
-            getNonogramMatrixForImage(id).then((data) =>
-                setImageSrc(getImageFromMatrix(data))
-            );
-    }, [id]);
+        if (id) {
+            dispatch(clearGame());
+            dispatch(loadNonogramByID({ id, signal }));
+        }
+
+        return () => {
+            dispatch(clearGame());
+        };
+    }, [dispatch, id]);
 
     return (
-        <div className="container py-3">
-            <h5>Печать изображения</h5>
-            <div className="w-25">
-                <img
-                    src={imageSrc}
-                    alt="nonogram preview"
-                    style={{
-                        width: '100%',
-                        maxHeight: '100%',
-                    }}
-                />
+        <div className="py-3">
+            <div className="h4 text-center">{t('printImage')}</div>
+            <div className="image-for-print-container" ref={imageContainer}>
+                {nonogramInStore && <Field />}
             </div>
-            <div>Размер на странице</div>
-            <div>
-                <button onClick={handlePrintClick} type="button">
-                    100%
+            <div className="text-center my-2">
+                <button
+                    type="button"
+                    onClick={handleClearClick}
+                    className="btn btn-primary"
+                >
+                    {t('clearPrintImage')}
                 </button>
-                <button onClick={handlePrintClick} type="button">
-                    50%
-                </button>
-                <button onClick={handlePrintClick} type="button">
-                    25%
-                </button>
+            </div>
+            <div className="text-center my-2">{t('pageSize')}</div>
+            <div className="d-flex justify-content-center">
+                <div className="btn-group">
+                    {' '}
+                    <button
+                        onClick={handlePrintClick}
+                        type="button"
+                        className="btn btn-primary"
+                    >
+                        Full
+                    </button>
+                    <button
+                        onClick={handlePrintClick}
+                        type="button"
+                        className="btn btn-primary"
+                    >
+                        Half
+                    </button>
+                    <button
+                        onClick={handlePrintClick}
+                        type="button"
+                        className="btn btn-primary"
+                    >
+                        Small
+                    </button>
+                </div>
             </div>
         </div>
     );

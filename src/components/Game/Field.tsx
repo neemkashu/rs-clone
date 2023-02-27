@@ -1,7 +1,6 @@
 import ColumnHints from './fieldParts/ColumnHints';
 import DrawArea from './fieldParts/DrawArea';
 import RowHints from './fieldParts/RowHints';
-import { NonogramRaw } from '../../utils/types';
 
 function Field(): JSX.Element {
     // console.warn('FIELD RERENDER');
