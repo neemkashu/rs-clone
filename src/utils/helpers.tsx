@@ -31,7 +31,7 @@ export function handleAsideAfterWindowResize(
     }
 }
 
-export function printElem(src: string, width: string): void {
+export function printElem(src: HTMLDivElement, width: string): void {
     const mywindow = window.open('', 'PRINT', 'height=720, width=1280');
     console.log(width);
     mywindow?.document.write(
@@ -41,11 +41,7 @@ export function printElem(src: string, width: string): void {
             </head>
             <body>
                 <div style="width: ${width}; height: 100%">
-                    <img
-                        src=${src}
-                        alt="nonogram preview"
-                        style="width: 100%; maxHeight: 100%"
-                    />
+                    ${src.innerHTML}
                 </div>
             </body>
         </html>`
