@@ -78,7 +78,7 @@ export function validateUserNameInput(input: string): boolean {
 }
 
 export function validateUserEmailInput(input: string): boolean {
-    if (input.match(/^([\w]{3,})@([\w]+\.)([a-z]{2,5})$/gi)) return true;
+    if (input.match(/^(([\w]{1,}.[\w]{0,}){1,})@([\w]+\.)([a-z]{2,5})$/gi)) return true;
     return false;
 }
 
@@ -97,35 +97,48 @@ export function validateUserRepeatPasswordInput(
 
 export function checkUserNameInput(
     name: string | undefined,
-    setIsUserNameNotValid: Dispatch<SetStateAction<boolean>>
+    setIsUserNameNotValid: Dispatch<SetStateAction<boolean>>,
+    setIsErrorWithRegister: Dispatch<SetStateAction<boolean>>
 ): void {
     if (name && validateUserNameInput(name)) {
         setIsUserNameNotValid(false);
-    } else setIsUserNameNotValid(true);
+    } else {
+        setIsUserNameNotValid(true);
+        setIsErrorWithRegister(false);
+    }
 }
 
 export function checkUserEmailInput(
     email: string | undefined,
-    setIsUserEmailNotValid: Dispatch<SetStateAction<boolean>>
+    setIsUserEmailNotValid: Dispatch<SetStateAction<boolean>>,
+    setIsErrorWithRegister: Dispatch<SetStateAction<boolean>>
 ): void {
     if (email && validateUserEmailInput(email)) {
         setIsUserEmailNotValid(false);
-    } else setIsUserEmailNotValid(true);
+    } else {
+        setIsUserEmailNotValid(true);
+        setIsErrorWithRegister(false);
+    }
 }
 
 export function checkUserPasswordInput(
     password: string | undefined,
-    setIsUserPasswordNotValid: Dispatch<SetStateAction<boolean>>
+    setIsUserPasswordNotValid: Dispatch<SetStateAction<boolean>>,
+    setIsErrorWithRegister: Dispatch<SetStateAction<boolean>>
 ): void {
     if (password && validateUserPasswordInput(password)) {
         setIsUserPasswordNotValid(false);
-    } else setIsUserPasswordNotValid(true);
+    } else {
+        setIsUserPasswordNotValid(true);
+        setIsErrorWithRegister(false);
+    }
 }
 
 export function checkUserRepeatPasswordInput(
     password: string | undefined,
     repeatPassword: string | undefined,
-    setIsUserRepeatPasswordNotValid: Dispatch<SetStateAction<boolean>>
+    setIsUserRepeatPasswordNotValid: Dispatch<SetStateAction<boolean>>,
+    setIsErrorWithRegister: Dispatch<SetStateAction<boolean>>
 ): void {
     if (
         password &&
@@ -133,7 +146,10 @@ export function checkUserRepeatPasswordInput(
         validateUserRepeatPasswordInput(repeatPassword, password)
     ) {
         setIsUserRepeatPasswordNotValid(false);
-    } else setIsUserRepeatPasswordNotValid(true);
+    } else {
+        setIsUserRepeatPasswordNotValid(true);
+        setIsErrorWithRegister(false);
+    }
 }
 
 export function getEmptyCellSettingInCurrenLanguage(): {

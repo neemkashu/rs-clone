@@ -78,5 +78,7 @@
     "alreadyHaveAccount": "Уже есть аккаунт?",
     "dontHaveAccount": "Ещё нет аккаунта?",
     "noInput": "Пожалуйста введите e-mail и пароль",
-    "incorrectInput": "Неверный e-mail или пароль"
+    "incorrectInput": "Неверный e-mail или пароль",
+    "errorWithRegister": "Ошибка при регистрации",
+    "errorWithRegisterBody": "Возможно такой e-mail уже существует"
 }

@@ -78,5 +78,7 @@
     "alreadyHaveAccount": "Already have an account?",
     "dontHaveAccount": "Don't have an account?",
     "noInput": "Please enter e-mail and password",
-    "incorrectInput": "Incorrect e-mail or password"
+    "incorrectInput": "Incorrect e-mail or password",
+    "errorWithRegister": "Error with registration",
+    "errorWithRegisterBody": "Perhaps this e-mail already exists"
 }

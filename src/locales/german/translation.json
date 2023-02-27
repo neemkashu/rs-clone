@@ -78,5 +78,7 @@
     "guideRedirect": "Für fortgeschrittenere Lösungstechniken siehe hier",
     "guideLink": "Link",
     "noInput": "Bitte e-mail und Passwort eingeben",
-    "incorrectInput": "Falsche e-mail oder Passwort"
+    "incorrectInput": "Falsche e-mail oder Passwort",
+    "errorWithRegister": "Fehler bei der Registrierung",
+    "errorWithRegisterBody": "Möglicherweise existiert diese E-Mail bereits"
 }

@@ -6,13 +6,15 @@ import { logInWithEmailAndPassword } from '../../api/firebase';
 import { InputItem } from './InputItem';
 import { changedCurrentUser } from './userSlice';
 import { ErrorItem } from './ErrorItem';
+import { Loading } from '../Loading/Loading';
 
 export function Auth(): JSX.Element {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [isInputs, setIsInputs] = useState(true);
-    const [isInputsCorrect, setIsInputsCorrect] = useState(true);
+    const [clearInputs, setClearInputs] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const userEmailInput = useRef<HTMLInputElement>(null);
     const userPasswordInput = useRef<HTMLInputElement>(null);
 
@@ -21,25 +23,25 @@ export function Auth(): JSX.Element {
         const emailInput = userEmailInput.current?.value;
         const passwordInput = userPasswordInput.current?.value;
         if (emailInput && passwordInput) {
+            setIsLoading(true);
             logInWithEmailAndPassword(emailInput, passwordInput)
                 .then(() => {
                     console.log('log in');
-                    setIsInputsCorrect(true);
-                    setIsInputs(true);
                     dispatch(changedCurrentUser(emailInput));
                     navigate('/catalog');
                 })
                 .catch(() => {
                     console.log('error with log in');
-                    setIsInputsCorrect(false);
+                    setIsLoading(false);
+                    setClearInputs(false);
                     setIsInputs(true);
                 });
             userEmailInput.current.value = '';
             userPasswordInput.current.value = '';
-            setIsInputsCorrect(true);
+            setClearInputs(true);
         } else {
             console.log('no email or input');
-            setIsInputsCorrect(true);
+            setClearInputs(true);
             setIsInputs(false);
         }
     }
@@ -70,13 +72,24 @@ export function Auth(): JSX.Element {
                         placeholder="Password"
                     />
                 </div>
-                {!isInputs && <ErrorItem messageTitle={t('noInput')} messageBody="" />}
-                {!isInputsCorrect && (
-                    <ErrorItem messageTitle={t('incorrectInput')} messageBody="" />
+                {isLoading ? (
+                    <Loading />
+                ) : (
+                    <>
+                        {!isInputs && (
+                            <ErrorItem messageTitle={t('noInput')} messageBody="" />
+                        )}
+                        {!clearInputs && (
+                            <ErrorItem
+                                messageTitle={t('incorrectInput')}
+                                messageBody=""
+                            />
+                        )}
+                        <button type="submit" className="btn btn-primary my-2">
+                            {t('signIn')}
+                        </button>
+                    </>
                 )}
-                <button type="submit" className="btn btn-primary my-2">
-                    {t('signIn')}
-                </button>
             </form>
         </div>
     );

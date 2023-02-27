@@ -1,16 +1,22 @@
 import './CatalogItem.scss';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../hooks';
 import { CatalogItemProps } from '../../utils/types';
 import { getImageFromMatrix, getNonogramTitle } from '../../utils/helpers';
+import { Loading } from '../Loading/Loading';
 
 export function CatalogItem({ catalogItem, cardNumber, solvedGames }: CatalogItemProps) {
     const { t, i18n } = useTranslation();
     const settingsMain = useAppSelector((state) => state.settings.main);
     const imageToPrint = useRef(null);
-    const startedGamesIdArr = solvedGames.map((item) => item.currentGame.id);
+    const startedGamesArr = solvedGames.filter((item) => {
+        let isUserStartGame = false;
+        isUserStartGame = item.currentGame.currentUserSolution.flat().includes(1);
+        return isUserStartGame;
+    });
+    const startedGamesIdArr = startedGamesArr.map((item) => item.currentGame.id);
     const solvedGamesIdArr = solvedGames
         .filter((elem) => elem.bestTime > 0)
         .map((item) => item.currentGame.id);
