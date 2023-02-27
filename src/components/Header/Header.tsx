@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { AsideButton } from './AsideButton/AsideButton';
-import { ColorThemeButton } from './ColorThemeButton/ColorThemeButton';
+import { ColorThemeButton, styleEmoji } from './ColorThemeButton/ColorThemeButton';
 import { LanguageDropDownButton } from './LanguageButton/LanguageDropdownButton';
 import { AuthMenu } from './AuthMenu';
 import { matchSmWindowSize, handleAsideAfterWindowResize } from '../../utils/helpers';
@@ -36,6 +36,7 @@ export function Header(): JSX.Element {
                             className="btn btn-outline-secondary"
                             data-bs-toggle="modal"
                             data-bs-target="#settingsModal"
+                            style={styleEmoji}
                         >
                             ⚙
                         </button>
