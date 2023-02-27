@@ -49,8 +49,8 @@ export function printNonogram(src: string, width: string): void {
             </body>
         </html>`
     );
-    printWindow?.document.close();
-    printWindow?.focus();
+    // printWindow?.document.close();
+    // printWindow?.focus();
     setTimeout(() => {
         printWindow?.print();
         printWindow?.close();
