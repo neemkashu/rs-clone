@@ -82,22 +82,19 @@ function Game({ id }: { id: string }): JSX.Element {
     }, []);
 
     return (
-        <>
-            <Loading />
-            <div className="p-0 mb-2 p-sm-1 d-flex flex-column gap-2">
-                {nonogramInStore ? (
-                    <>
-                        <GameHeader />
-                        <Chronometer />
-                        <Field />
-                        <WinChecker />
-                        <Controls />
-                    </>
-                ) : (
-                    <Loading />
-                )}
-            </div>
-        </>
+        <div className="p-0 mb-2 p-sm-1 d-flex flex-column gap-2">
+            {nonogramInStore ? (
+                <>
+                    <GameHeader />
+                    <Chronometer />
+                    <Field />
+                    <WinChecker />
+                    <Controls />
+                </>
+            ) : (
+                <Loading />
+            )}
+        </div>
     );
 }
 
