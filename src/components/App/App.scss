@@ -9,29 +9,6 @@
 }
 
 [data-bs-theme='dark'] {
-    // --bs-primary: #{$indigo};
-    // --bs-primary-bg-subtle: #{$indigo};
-    // --bs-primary-bg-subtle-dark: #{$indigo};
-
-    // .btn-primary {
-    //     --bs-btn-bg: #{$indigo};
-    // }
-    // [type='checkbox']::after {
-    //     left: -8px !important;
-    // }
-
-    // [type='checkbox']:checked::after {
-    //     left: 10px !important;
-    // }
-
-    // [type='checkbox']::before {
-    //     left: -8px !important;
-    // }
-
-    // .form-check-input:active {
-    //     filter: none !important;
-    // }
-
     --bs-body-color: #cfcfcf;
 
     .form-check-input::before {
@@ -70,6 +47,7 @@
         background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
     }
 }
+
 [data-bs-theme='light'] {
     body {
         background-image: url('../../image/5c6fbcc18371616914795402.jpg');

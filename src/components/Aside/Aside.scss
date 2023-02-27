@@ -8,7 +8,14 @@
     flex-direction: column;
     align-items: flex-end;
     padding: 10px 5px;
-    background-color: var(--bs-body-bg);
     height: 100%;
     z-index: 1000;
+}
+
+[data-bs-theme='light'] {
+    .aside-modal {
+        background-image: url('../../image/5c6fbcc18371616914795402.jpg');
+        background-repeat: repeat;
+        background-size: 100vw 100vh;
+    }
 }

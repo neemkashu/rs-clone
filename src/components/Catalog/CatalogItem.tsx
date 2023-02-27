@@ -81,7 +81,7 @@ export function CatalogItem({ catalogItem, cardNumber, solvedGames }: CatalogIte
                         {catalogItem.nonogram.height}
                     </div>
                     <div className="text-truncate my-1">
-                        {t('difficulty')}: {catalogItem.nonogram.difficulty}
+                        {t('difficulty')}: {catalogItem.nonogram.difficulty} / 5
                     </div>
                     <Link
                         to={`/print/${catalogItem.id}`}
