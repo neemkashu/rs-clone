@@ -12,5 +12,5 @@ export function GameWrapper(): JSX.Element {
         dispatch(clearGame());
     }, [dispatch, id]);
 
-    return <div className="w-100 h-100">{id && <Game id={id} />}</div>;
+    return <div>{id && <Game id={id} />}</div>;
 }
