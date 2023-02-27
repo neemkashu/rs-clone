@@ -57,7 +57,7 @@ export function Register(): JSX.Element {
                 .then(() => {
                     console.log('registered');
                     dispatch(changedCurrentUser(email));
-                    navigate('/catalog');
+                    navigate('/catalog', { replace: true });
                 })
                 .catch(() => {
                     console.log('error with register');

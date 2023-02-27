@@ -28,7 +28,7 @@ export function Auth(): JSX.Element {
                 .then(() => {
                     console.log('log in');
                     dispatch(changedCurrentUser(emailInput));
-                    navigate('/catalog');
+                    navigate('/catalog', { replace: true });
                 })
                 .catch(() => {
                     console.log('error with log in');
