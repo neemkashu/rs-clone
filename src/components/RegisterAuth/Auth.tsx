@@ -49,10 +49,10 @@ export function Auth(): JSX.Element {
     return (
         <div className="container d-flex align-items-center justify-content-center flex-column p-2">
             <div className="d-flex flex-column align-items-center">
-                <h3>{t('enterAccountTitle')}</h3>
-                <h6>
+                <div className="h3">{t('enterAccountTitle')}</div>
+                <div className="h6">
                     {t('dontHaveAccount')} <Link to="/register">{t('signUp')}</Link>
-                </h6>
+                </div>
             </div>
             <form
                 className="d-flex flex-column align-items-center"

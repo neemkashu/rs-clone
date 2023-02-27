@@ -78,10 +78,10 @@ export function Register(): JSX.Element {
     return (
         <div className="container d-flex align-items-center justify-content-center flex-column p-2">
             <div className="d-flex flex-column align-items-center">
-                <h3>{t('createAccountTitle')}</h3>
-                <h6>
+                <div className="h3">{t('createAccountTitle')}</div>
+                <div className="h6">
                     {t('alreadyHaveAccount')} <Link to="/auth">{t('signIn')}</Link>
-                </h6>
+                </div>
             </div>
             <form
                 className="d-flex flex-column align-items-center"
