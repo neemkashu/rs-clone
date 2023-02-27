@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { AsideButton } from './AsideButton/AsideButton';
-import { ColorThemeButton } from './ColorThemeButton/ColorThemeButton';
+import { ColorThemeButton, styleEmoji } from './ColorThemeButton/ColorThemeButton';
 import { LanguageDropDownButton } from './LanguageButton/LanguageDropdownButton';
 import { AuthMenu } from './AuthMenu';
 import { matchSmWindowSize, handleAsideAfterWindowResize } from '../../utils/helpers';
@@ -27,7 +27,8 @@ export function Header(): JSX.Element {
     return (
         <>
             <SettingsModal />
-            <header className="container p-2 border-bottom border-start border-end border-3 rounded-bottom">
+
+            <header className="navbar  container p-2 border-3 border-primary border-top-0">
                 <div className="row flex-wrap">
                     <div className="col d-flex justify-content-between justify-content-sm-start gap-2 py-1">
                         {isBurgerBtnVisible && <AsideButton />}
@@ -36,14 +37,15 @@ export function Header(): JSX.Element {
                             className="btn btn-primary"
                             data-bs-toggle="modal"
                             data-bs-target="#settingsModal"
+                            style={styleEmoji}
                         >
                             ⚙
                         </button>
                         <ColorThemeButton />
                         <LanguageDropDownButton />
                     </div>
-                    <AuthMenu />
                 </div>
+                <AuthMenu />
             </header>
         </>
     );

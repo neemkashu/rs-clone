@@ -14,6 +14,7 @@ import {
 } from './gameSlice';
 import { WinChecker } from './gameLogic/WinChecker';
 import { store } from '../store';
+import { Loading } from '../Loading/Loading';
 
 function saveGameWhenInvisible(dispatch: ReturnType<typeof useAppDispatch>) {
     const id = store.getState().game.present.currentNonogram?.id;
@@ -82,7 +83,7 @@ function Game({ id }: { id: string }): JSX.Element {
 
     return (
         <div className="p-0 mb-2 p-sm-1 d-flex flex-column gap-2">
-            {nonogramInStore && (
+            {nonogramInStore ? (
                 <>
                     <GameHeader />
                     <Chronometer />
@@ -90,6 +91,8 @@ function Game({ id }: { id: string }): JSX.Element {
                     <WinChecker />
                     <Controls />
                 </>
+            ) : (
+                <Loading />
             )}
         </div>
     );

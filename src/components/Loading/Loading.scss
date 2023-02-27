@@ -1,10 +1,10 @@
 .loading {
-    border: 15px solid blue;
+    border: 15px solid var(--bs-gray-700);
     border-radius: 50%;
-    border-top: 15px solid indigo;
+    border-top: 15px solid #ccc;
     width: 120px;
     height: 120px;
-    animation: spin 2s linear infinite;
+    animation: spin 3s linear infinite;
 }
 
 @keyframes spin {

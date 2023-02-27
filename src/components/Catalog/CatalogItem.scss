@@ -3,9 +3,9 @@
 }
 
 .catalog-item {
-    width: 128px;
+    width: 140px;
     &__image {
-        height: 96px;
+        max-height: 96px;
         overflow: hidden;
     }
 }
