@@ -37,13 +37,13 @@ export function Header(): JSX.Element {
                             className="btn btn-primary"
                             data-bs-toggle="modal"
                             data-bs-target="#settingsModal"
+                            style={styleEmoji}
                         >
                             ⚙
                         </button>
                         <ColorThemeButton />
                         <LanguageDropDownButton />
                     </div>
-                    <AuthMenu />
                 </div>
                 <AuthMenu />
             </header>
