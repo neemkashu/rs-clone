@@ -31,9 +31,9 @@ export function handleAsideAfterWindowResize(
     }
 }
 
-export function printElem(src: string, width: string): void {
-    const mywindow = window.open('', 'PRINT', 'height=720, width=1280');
-    mywindow?.document.write(
+export function printNonogram(src: string, width: string): void {
+    const printWindow = window.open('', 'PRINT', 'height=720, width=1280');
+    printWindow?.document.write(
         `<html>
             <head>
                 <title>${document.title}</title>
@@ -49,11 +49,11 @@ export function printElem(src: string, width: string): void {
             </body>
         </html>`
     );
-    mywindow?.document.close();
-    mywindow?.focus();
+    printWindow?.document.close();
+    printWindow?.focus();
     setTimeout(() => {
-        mywindow?.print();
-        mywindow?.close();
+        printWindow?.print();
+        printWindow?.close();
     }, 0);
 }
 
