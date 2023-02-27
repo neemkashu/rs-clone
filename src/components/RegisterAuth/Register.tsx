@@ -1,10 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../hooks';
 import { InputItem } from './InputItem';
 import {
-    checkUserNameInput,
     checkUserEmailInput,
     checkUserPasswordInput,
     checkUserRepeatPasswordInput,
@@ -12,58 +11,59 @@ import {
 import { ErrorItem } from './ErrorItem';
 import { registerWithEmailAndPassword } from '../../api/firebase';
 import { changedCurrentUser } from './userSlice';
+import { Loading } from '../Loading/Loading';
 
 export function Register(): JSX.Element {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
-    const [isUserNameNotValid, setIsUserNameNotValid] = useState<boolean>(false);
+    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isErrorWithRegister, setIsErrorWithRegister] = useState<boolean>(false);
     const [isUserEmailNotValid, setIsUserEmailNotValid] = useState<boolean>(false);
     const [isUserPasswordNotValid, setIsUserPasswordNotValid] = useState<boolean>(false);
     const [isUserRepeatPasswordNotValid, setIsUserRepeatPasswordNotValid] =
         useState<boolean>(false);
-    const userNameInput = useRef<HTMLInputElement>(null);
     const userEmailInput = useRef<HTMLInputElement>(null);
     const userPasswordInput = useRef<HTMLInputElement>(null);
     const userRepeatPasswordInput = useRef<HTMLInputElement>(null);
 
     function checkFormValidation() {
-        const name = userNameInput.current?.value;
         const email = userEmailInput.current?.value;
         const password = userPasswordInput.current?.value;
         const repeatPassword = userRepeatPasswordInput.current?.value;
-        checkUserNameInput(name, setIsUserNameNotValid);
-        checkUserEmailInput(email, setIsUserEmailNotValid);
-        checkUserPasswordInput(password, setIsUserPasswordNotValid);
+        checkUserEmailInput(email, setIsUserEmailNotValid, setIsErrorWithRegister);
+        checkUserPasswordInput(
+            password,
+            setIsUserPasswordNotValid,
+            setIsErrorWithRegister
+        );
         checkUserRepeatPasswordInput(
             password,
             repeatPassword,
-            setIsUserRepeatPasswordNotValid
+            setIsUserRepeatPasswordNotValid,
+            setIsErrorWithRegister
         );
 
         if (
-            !isUserNameNotValid &&
             !isUserEmailNotValid &&
             !isUserPasswordNotValid &&
             !isUserRepeatPasswordNotValid &&
-            name &&
             email &&
             password &&
             repeatPassword
         ) {
-            // Тут асинхронная функция будет делать запрос на сервер
-            registerWithEmailAndPassword(name, email, repeatPassword)
+            setIsLoading(true);
+            registerWithEmailAndPassword(email, repeatPassword)
                 .then(() => {
-                    // successful sign up
-                    dispatch(changedCurrentUser(email));
                     console.log('registered');
+                    dispatch(changedCurrentUser(email));
+                    navigate('/catalog');
                 })
-                .catch((e) => {
-                    // unsuccessful sign up
-                    console.log(e);
+                .catch(() => {
                     console.log('error with register');
+                    setIsErrorWithRegister(true);
+                    setIsLoading(false);
                 });
-
-            userNameInput.current.value = '';
             userEmailInput.current.value = '';
             userPasswordInput.current.value = '';
             userRepeatPasswordInput.current.value = '';
@@ -89,32 +89,14 @@ export function Register(): JSX.Element {
             >
                 <div className="input py-2">
                     <InputItem
-                        reference={userNameInput}
-                        type="text"
-                        placeholder="Login"
-                        onInput={() =>
-                            checkUserNameInput(
-                                userNameInput.current?.value,
-                                setIsUserNameNotValid
-                            )
-                        }
-                    />
-                </div>
-                {isUserNameNotValid && (
-                    <ErrorItem
-                        messageTitle={t('nameErrorTitle')}
-                        messageBody={t('nameErrorBody')}
-                    />
-                )}
-                <div className="input py-2">
-                    <InputItem
                         reference={userEmailInput}
                         type="e-mail"
                         placeholder="E-mail"
                         onInput={() =>
                             checkUserEmailInput(
                                 userEmailInput.current?.value,
-                                setIsUserEmailNotValid
+                                setIsUserEmailNotValid,
+                                setIsErrorWithRegister
                             )
                         }
                     />
@@ -133,7 +115,8 @@ export function Register(): JSX.Element {
                         onInput={() =>
                             checkUserPasswordInput(
                                 userPasswordInput.current?.value,
-                                setIsUserPasswordNotValid
+                                setIsUserPasswordNotValid,
+                                setIsErrorWithRegister
                             )
                         }
                     />
@@ -153,7 +136,8 @@ export function Register(): JSX.Element {
                             checkUserRepeatPasswordInput(
                                 userPasswordInput.current?.value,
                                 userRepeatPasswordInput.current?.value,
-                                setIsUserRepeatPasswordNotValid
+                                setIsUserRepeatPasswordNotValid,
+                                setIsErrorWithRegister
                             )
                         }
                     />
@@ -164,9 +148,19 @@ export function Register(): JSX.Element {
                         messageBody=""
                     />
                 )}
-                <button type="submit" className="btn btn-primary my-2">
-                    {t('signUp')}
-                </button>
+                {isErrorWithRegister && (
+                    <ErrorItem
+                        messageTitle={t('errorWithRegister')}
+                        messageBody={t('errorWithRegisterBody')}
+                    />
+                )}
+                {isLoading ? (
+                    <Loading />
+                ) : (
+                    <button type="submit" className="btn btn-primary my-2">
+                        {t('signUp')}
+                    </button>
+                )}
             </form>
         </div>
     );

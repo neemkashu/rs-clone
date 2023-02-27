@@ -6,7 +6,8 @@ export const styleEmoji = {
 };
 
 export function ColorThemeButton(): JSX.Element {
-    const [isLightTheme, setIsLightTheme] = useState(true);
+    const isCurrentThemeDark = localStorage.getItem('currentTheme') === 'dark';
+    const [isLightTheme, setIsLightTheme] = useState(!isCurrentThemeDark);
 
     function handleColorThemeChange(e: React.MouseEvent): void {
         setIsLightTheme(!isLightTheme);
@@ -14,7 +15,6 @@ export function ColorThemeButton(): JSX.Element {
 
     useEffect(() => {
         changeColorTheme(isLightTheme);
-        console.log('color change');
     }, [isLightTheme]);
 
     const classNames = isLightTheme ? 'btn btn-warning' : 'btn btn-primary';

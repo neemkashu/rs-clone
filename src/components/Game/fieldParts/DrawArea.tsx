@@ -1,5 +1,5 @@
 import { convertSettingToNumber } from '../../../utils/helpers';
-import { FieldPlace, fieldPlace, NonogramRaw } from '../../../utils/types';
+import { FieldPlace, fieldPlace } from '../../../utils/types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { store } from '../../store';
 import { filledLineHandler } from '../gameLogic/filledLineHandler';

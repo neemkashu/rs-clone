@@ -32,7 +32,6 @@ export async function logInWithEmailAndPassword(
 }
 
 export async function registerWithEmailAndPassword(
-    login: string,
     email: string,
     password: string
 ): Promise<void> {

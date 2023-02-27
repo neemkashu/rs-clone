@@ -10,7 +10,6 @@ export function GameWrapper(): JSX.Element {
 
     useEffect(() => {
         dispatch(clearGame());
-        console.log('id game wrapper', id);
     }, [dispatch, id]);
 
     return <div>{id && <Game id={id} />}</div>;

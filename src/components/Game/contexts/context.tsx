@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react';
-import { GameStatus, NonogramRaw } from '../../../utils/types';
+import { GameStatus, NonogramRaw } from '../gameUtils/types';
 
 export const NonogramContext = createContext<NonogramRaw | null>(null);
 

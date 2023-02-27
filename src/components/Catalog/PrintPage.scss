@@ -1,0 +1,16 @@
+.image-for-print-container {
+    z-index: 10;
+}
+
+#canvasToPrint100 {
+    width: 98% !important;
+    height: fit-content !important;
+}
+#canvasToPrint50 {
+    width: 50% !important;
+    height: fit-content !important;
+}
+#canvasToPrint25 {
+    width: 25% !important;
+    height: fit-content !important;
+}

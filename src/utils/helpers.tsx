@@ -33,14 +33,13 @@ export function handleAsideAfterWindowResize(
 
 export function printElem(src: string, width: string): void {
     const mywindow = window.open('', 'PRINT', 'height=720, width=1280');
-    console.log(width);
     mywindow?.document.write(
         `<html>
             <head>
                 <title>${document.title}</title>
             </head>
             <body>
-                <div style="width: ${width}; height: 100%">
+                <div style="width: ${width}; height: fit-content">
                     <img
                         src=${src}
                         alt="nonogram preview"
@@ -52,8 +51,10 @@ export function printElem(src: string, width: string): void {
     );
     mywindow?.document.close();
     mywindow?.focus();
-    mywindow?.print();
-    mywindow?.close();
+    setTimeout(() => {
+        mywindow?.print();
+        mywindow?.close();
+    }, 0);
 }
 
 export function handleAsideCloseBtnClick(): void {
@@ -82,7 +83,7 @@ export function validateUserNameInput(input: string): boolean {
 }
 
 export function validateUserEmailInput(input: string): boolean {
-    if (input.match(/^([\w]{3,})@([\w]+\.)([a-z]{2,5})$/gi)) return true;
+    if (input.match(/^(([\w]{1,}.[\w]{0,}){1,})@([\w]+\.)([a-z]{2,5})$/gi)) return true;
     return false;
 }
 
@@ -101,35 +102,48 @@ export function validateUserRepeatPasswordInput(
 
 export function checkUserNameInput(
     name: string | undefined,
-    setIsUserNameNotValid: Dispatch<SetStateAction<boolean>>
+    setIsUserNameNotValid: Dispatch<SetStateAction<boolean>>,
+    setIsErrorWithRegister: Dispatch<SetStateAction<boolean>>
 ): void {
     if (name && validateUserNameInput(name)) {
         setIsUserNameNotValid(false);
-    } else setIsUserNameNotValid(true);
+    } else {
+        setIsUserNameNotValid(true);
+        setIsErrorWithRegister(false);
+    }
 }
 
 export function checkUserEmailInput(
     email: string | undefined,
-    setIsUserEmailNotValid: Dispatch<SetStateAction<boolean>>
+    setIsUserEmailNotValid: Dispatch<SetStateAction<boolean>>,
+    setIsErrorWithRegister: Dispatch<SetStateAction<boolean>>
 ): void {
     if (email && validateUserEmailInput(email)) {
         setIsUserEmailNotValid(false);
-    } else setIsUserEmailNotValid(true);
+    } else {
+        setIsUserEmailNotValid(true);
+        setIsErrorWithRegister(false);
+    }
 }
 
 export function checkUserPasswordInput(
     password: string | undefined,
-    setIsUserPasswordNotValid: Dispatch<SetStateAction<boolean>>
+    setIsUserPasswordNotValid: Dispatch<SetStateAction<boolean>>,
+    setIsErrorWithRegister: Dispatch<SetStateAction<boolean>>
 ): void {
     if (password && validateUserPasswordInput(password)) {
         setIsUserPasswordNotValid(false);
-    } else setIsUserPasswordNotValid(true);
+    } else {
+        setIsUserPasswordNotValid(true);
+        setIsErrorWithRegister(false);
+    }
 }
 
 export function checkUserRepeatPasswordInput(
     password: string | undefined,
     repeatPassword: string | undefined,
-    setIsUserRepeatPasswordNotValid: Dispatch<SetStateAction<boolean>>
+    setIsUserRepeatPasswordNotValid: Dispatch<SetStateAction<boolean>>,
+    setIsErrorWithRegister: Dispatch<SetStateAction<boolean>>
 ): void {
     if (
         password &&
@@ -137,7 +151,10 @@ export function checkUserRepeatPasswordInput(
         validateUserRepeatPasswordInput(repeatPassword, password)
     ) {
         setIsUserRepeatPasswordNotValid(false);
-    } else setIsUserRepeatPasswordNotValid(true);
+    } else {
+        setIsUserRepeatPasswordNotValid(true);
+        setIsErrorWithRegister(false);
+    }
 }
 
 export function getEmptyCellSettingInCurrenLanguage(): {
@@ -204,6 +221,7 @@ export function getImageFromMatrix(matrix?: number[][]): string {
 export function changeColorTheme(isLightTheme: boolean) {
     const color = isLightTheme ? 'light' : 'dark';
     document.querySelector('html')?.setAttribute('data-bs-theme', color);
+    localStorage.setItem('currentTheme', color);
 }
 
 export function getUserCurrentTimes(

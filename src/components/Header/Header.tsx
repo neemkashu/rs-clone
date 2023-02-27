@@ -27,20 +27,23 @@ export function Header(): JSX.Element {
     return (
         <>
             <SettingsModal />
+
             <header className="navbar  container p-2 border-3 border-primary border-top-0">
-                <div className="col d-flex justify-content-between justify-content-sm-start gap-2 py-1">
-                    {isBurgerBtnVisible && <AsideButton />}
-                    <button
-                        type="button"
-                        className="btn btn-primary"
-                        data-bs-toggle="modal"
-                        data-bs-target="#settingsModal"
-                        style={styleEmoji}
-                    >
-                        ⚙
-                    </button>
-                    <ColorThemeButton />
-                    <LanguageDropDownButton />
+                <div className="row flex-wrap">
+                    <div className="col d-flex justify-content-between justify-content-sm-start gap-2 py-1">
+                        {isBurgerBtnVisible && <AsideButton />}
+                        <button
+                            type="button"
+                            className="btn btn-primary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#settingsModal"
+                        >
+                            ⚙
+                        </button>
+                        <ColorThemeButton />
+                        <LanguageDropDownButton />
+                    </div>
+                    <AuthMenu />
                 </div>
                 <AuthMenu />
             </header>
