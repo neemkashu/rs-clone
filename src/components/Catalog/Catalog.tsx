@@ -35,7 +35,6 @@ export function Catalog(): JSX.Element {
                     setFetching(false);
                     if (!(container?.scrollHeight > container?.clientHeight)) {
                         setTimeout(() => {
-                            console.log('ass');
                             setFetching(true);
                         }, 0);
                     }

@@ -35,7 +35,7 @@ export function PrintPage(): JSX.Element {
 
     function handlePrintClick(e: React.MouseEvent) {
         const targetButton = e.target as HTMLButtonElement;
-        const widthValue = targetButton.innerText;
+        const widthValue = targetButton.value;
         const image = imageContainer.current;
         if (image) {
             const printContent = (image as HTMLDivElement).querySelector(
@@ -89,6 +89,7 @@ export function PrintPage(): JSX.Element {
                         onClick={handlePrintClick}
                         type="button"
                         className="btn btn-primary"
+                        value={PrintSizes.FULL}
                     >
                         {t('full')}
                     </button>
@@ -96,6 +97,7 @@ export function PrintPage(): JSX.Element {
                         onClick={handlePrintClick}
                         type="button"
                         className="btn btn-primary"
+                        value={PrintSizes.HALF}
                     >
                         {t('half')}
                     </button>
@@ -103,6 +105,7 @@ export function PrintPage(): JSX.Element {
                         onClick={handlePrintClick}
                         type="button"
                         className="btn btn-primary"
+                        value={PrintSizes.SMALL}
                     >
                         {t('small')}
                     </button>
