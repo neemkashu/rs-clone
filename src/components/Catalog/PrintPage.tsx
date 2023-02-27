@@ -1,13 +1,13 @@
 import './PrintPage.scss';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import html2canvas from 'html2canvas';
 import {
     clearGame,
     loadNonogramByID,
-    selectNonogramRaw,
     updateUserGame,
+    selectNonogramRaw,
 } from '../Game/gameSlice';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import Field from '../Game/Field';
