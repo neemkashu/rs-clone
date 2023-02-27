@@ -11,9 +11,10 @@ import {
 } from '../Game/gameSlice';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import Field from '../Game/Field';
-import { printElem } from '../../utils/helpers';
+import { printNonogram } from '../../utils/helpers';
 import { makeInitialSaveGame } from '../Game/gameUtils/helpers';
 import { Loading } from '../Loading/Loading';
+import { PrintSizes, PrintSizesPercentage } from '../../utils/enums';
 
 const controllerNonogram = new AbortController();
 const { signal } = controllerNonogram;
@@ -43,9 +44,12 @@ export function PrintPage(): JSX.Element {
             if (printContent) {
                 html2canvas(printContent, { scale: 10 }).then((canvas) => {
                     const canvasImageSrc = canvas.toDataURL('image/png');
-                    if (widthValue === 'Full') printElem(canvasImageSrc, '100%');
-                    if (widthValue === 'Half') printElem(canvasImageSrc, '50%');
-                    if (widthValue === 'Small') printElem(canvasImageSrc, '25%');
+                    if (widthValue === PrintSizes.FULL)
+                        printNonogram(canvasImageSrc, PrintSizesPercentage.FULL);
+                    if (widthValue === PrintSizes.HALF)
+                        printNonogram(canvasImageSrc, PrintSizesPercentage.HALF);
+                    if (widthValue === PrintSizes.SMALL)
+                        printNonogram(canvasImageSrc, PrintSizesPercentage.SMALL);
                 });
             }
         }

@@ -31,3 +31,15 @@ export enum GameRadioSettingsCategories {
     HIGHLIGHT = 'highlightRadio',
     CROSS = 'crossOutRadio',
 }
+
+export enum PrintSizes {
+    FULL = 'Full',
+    HALF = 'Half',
+    SMALL = 'Small',
+}
+
+export enum PrintSizesPercentage {
+    FULL = '100%',
+    HALF = '50%',
+    SMALL = '25%',
+}
