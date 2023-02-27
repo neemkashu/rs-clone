@@ -27,7 +27,6 @@ export function Header(): JSX.Element {
     return (
         <>
             <SettingsModal />
-
             <header className="navbar container p-2 border-primary border-top-0">
                 <div className="col flex-wrap">
                     <div className="col d-flex justify-content-between justify-content-sm-start gap-2 py-1">

@@ -34,7 +34,7 @@ export default function SettingsModal(): JSX.Element {
                             <div className="d-flex align-items-center">
                                 <button
                                     type="button"
-                                    className="btn btn-outline-secondary"
+                                    className="btn btn-primary"
                                     data-bs-dismiss="modal"
                                     data-bs-target="#modalSettings"
                                 >

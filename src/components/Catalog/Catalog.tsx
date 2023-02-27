@@ -61,7 +61,7 @@ export function Catalog(): JSX.Element {
                 justifyContent: 'center',
                 display: 'grid',
                 gridGap: '1rem',
-                gridTemplateColumns: 'repeat(auto-fill, 320px)',
+                gridTemplateColumns: 'repeat(auto-fill, 250px)',
             }}
         >
             {catalogDB.map((item, index) => {

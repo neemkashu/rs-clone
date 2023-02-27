@@ -59,7 +59,7 @@ export function printElem(src: string, width: string): void {
 
 export function handleAsideCloseBtnClick(): void {
     const aside = document.body.querySelector('#aside') as HTMLDivElement;
-    aside.style.left = '-170px';
+    aside.style.left = '-200px';
 }
 
 export function getInitialLanguage(): string {

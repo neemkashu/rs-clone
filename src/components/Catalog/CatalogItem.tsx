@@ -57,7 +57,7 @@ export function CatalogItem({ catalogItem, cardNumber, solvedGames }: CatalogIte
     }
 
     return (
-        <div className="catalog-item border border-secondary border-2 rounded-1">
+        <div className="catalog-item border border-secondary border-4 rounded-1">
             <div className="py-1 px-3 w-100">
                 <div className="text-center my-1">{cardNumber}</div>
                 <Link

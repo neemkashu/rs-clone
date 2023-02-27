@@ -5,7 +5,7 @@ import { Sakura } from './Sakura';
 export function Main(): JSX.Element {
     const { t } = useTranslation();
     return (
-        <div className="position-relative">
+        <div className="position-relative col h-100">
             <Sakura />
             <h1>{t('mainHeader')}</h1>
             <p>{t('mainGreeting')}</p>

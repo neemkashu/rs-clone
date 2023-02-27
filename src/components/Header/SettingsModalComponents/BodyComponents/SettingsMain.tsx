@@ -37,7 +37,11 @@ export function SettingsMainContent() {
         <ul className="modal-body mb-0 py-1">
             <li className="ms-2 py-2">
                 <div className="form-check form-switch d-flex align-items-center">
-                    <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
+                    <label
+                        className="form-check-label"
+                        htmlFor="flexSwitchCheckDefault"
+                        style={{ position: 'relative', left: '-5px', top: '-10px' }}
+                    >
                         <input
                             role="button"
                             className="form-check-input"
@@ -52,7 +56,11 @@ export function SettingsMainContent() {
             </li>
             <li className="ms-2 py-2">
                 <div className="form-check form-switch d-flex align-items-center">
-                    <label className="form-check-label" htmlFor="flexSwitchCheckChecked">
+                    <label
+                        className="form-check-label"
+                        htmlFor="flexSwitchCheckChecked"
+                        style={{ position: 'relative', left: '-5px', top: '-10px' }}
+                    >
                         <input
                             role="button"
                             className="form-check-input"

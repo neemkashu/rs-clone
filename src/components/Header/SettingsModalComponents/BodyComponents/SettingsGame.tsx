@@ -94,9 +94,12 @@ export function SettingsGameContent() {
                 })}
             </li>
             <li className="ms-2">
-                <div className="form-check form-switch">
-                    <label className="form-check-label" htmlFor="flexSwitchCheckChecked">
-                        {t('lastCrossedOutDigitFillsLineWithCrosses')}
+                <div className="form-check form-switch d-flex align-items-center">
+                    <label
+                        className="form-check-label"
+                        htmlFor="flexSwitchCheckChecked"
+                        style={{ position: 'relative', left: '-5px', top: '-10px' }}
+                    >
                         <input
                             role="button"
                             className="form-check-input"
@@ -106,6 +109,7 @@ export function SettingsGameContent() {
                             onChange={handleCrossedOutDigitFillsLineWithCrossesInput}
                         />
                     </label>
+                    <div>{t('lastCrossedOutDigitFillsLineWithCrosses')}</div>
                 </div>
             </li>
         </ul>

@@ -68,9 +68,12 @@ export function SettingsViewContent() {
         <ul className="modal-body mb-0 py-1">
             <li className="ms-2">
                 {t('markingEmptyCell')}
-                <div className="form-check form-switch">
-                    <label className="form-check-label" htmlFor="emptyCell">
-                        {settingsView.markingAnEmptyCell.caption}
+                <div className="form-check form-switch d-flex align-items-center">
+                    <label
+                        className="form-check-label"
+                        htmlFor="emptyCell"
+                        style={{ position: 'relative', left: '-5px', top: '-10px' }}
+                    >
                         <input
                             role="button"
                             className="form-check-input"
@@ -80,12 +83,16 @@ export function SettingsViewContent() {
                             checked={returnEmptyCellStateInBoolean()}
                         />
                     </label>
+                    <div>{settingsView.markingAnEmptyCell.caption}</div>
                 </div>
             </li>
             <li className="ms-2">
-                <div className="form-check form-switch">
-                    <label className="form-check-label" htmlFor="guessTime">
-                        {t('showGuessTime')}
+                <div className="form-check form-switch d-flex align-items-center">
+                    <label
+                        className="form-check-label"
+                        htmlFor="guessTime"
+                        style={{ position: 'relative', left: '-5px', top: '-10px' }}
+                    >
                         <input
                             role="button"
                             className="form-check-input"
@@ -95,6 +102,7 @@ export function SettingsViewContent() {
                             onChange={handleGuessTimeChecked}
                         />
                     </label>
+                    <div>{t('showGuessTime')}</div>
                 </div>
             </li>
         </ul>
