@@ -1,7 +1,7 @@
 import { timeEnd } from 'console';
 import { useTranslation } from 'react-i18next';
 import { LanguagesShortNamesEnum } from '../../utils/enums';
-import { GameStatus, NonogramRaw } from '../../utils/types';
+import { GameStatus } from '../../utils/types';
 import { useAppSelector } from '../hooks';
 import { selectNonogramRaw, selectUserState } from './gameSlice';
 import { getTranslatedTitle } from './gameUtils/helpers';

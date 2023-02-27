@@ -6,6 +6,7 @@ import {
     NonogramSettingsViewState,
 } from '../../../utils/types';
 import { standardSettingsState } from '../../../utils/constants';
+import { getEmptyCellSettingInCurrenLanguage } from '../../../utils/helpers';
 
 function getInitialSettingsState(): {
     main: NonogramSettingsMainState;
@@ -49,9 +50,11 @@ export const settingsSlice = createSlice({
             const defaultSettings = standardSettingsState;
             state.main = defaultSettings.main;
             state.game = defaultSettings.game;
-            state.view = defaultSettings.view;
+            state.view = {
+                markingAnEmptyCell: getEmptyCellSettingInCurrenLanguage(),
+                showGuessTime: defaultSettings.view.showGuessTime,
+            };
             localStorage.setItem('nonogramSettings', JSON.stringify(state));
-            console.log('settings default');
         },
     },
 });

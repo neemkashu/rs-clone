@@ -80,5 +80,8 @@
     "noInput": "Bitte e-mail und Passwort eingeben",
     "incorrectInput": "Falsche e-mail oder Passwort",
     "errorWithRegister": "Fehler bei der Registrierung",
-    "errorWithRegisterBody": "Möglicherweise existiert diese E-Mail bereits"
+    "errorWithRegisterBody": "Möglicherweise existiert diese E-Mail bereits",
+    "clearPrintImage": "Klares Nonogramm",
+    "printImage": "Nonogramm drucken",
+    "pageSize": "Größe auf Papier"
 }

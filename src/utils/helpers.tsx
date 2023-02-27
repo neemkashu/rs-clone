@@ -31,25 +31,30 @@ export function handleAsideAfterWindowResize(
     }
 }
 
-export function printElem(src: HTMLDivElement, width: string): void {
+export function printElem(src: string, width: string): void {
     const mywindow = window.open('', 'PRINT', 'height=720, width=1280');
-    console.log(width);
     mywindow?.document.write(
         `<html>
             <head>
                 <title>${document.title}</title>
             </head>
             <body>
-                <div style="width: ${width}; height: 100%">
-                    ${src.innerHTML}
+                <div style="width: ${width}; height: fit-content">
+                    <img
+                        src=${src}
+                        alt="nonogram preview"
+                        style="width: 100%; maxHeight: 100%"
+                    />
                 </div>
             </body>
         </html>`
     );
     mywindow?.document.close();
     mywindow?.focus();
-    mywindow?.print();
-    mywindow?.close();
+    setTimeout(() => {
+        mywindow?.print();
+        mywindow?.close();
+    }, 0);
 }
 
 export function handleAsideCloseBtnClick(): void {

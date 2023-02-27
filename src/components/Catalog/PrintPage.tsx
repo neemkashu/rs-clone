@@ -1,21 +1,35 @@
 import './PrintPage.scss';
-import React, { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import html2canvas from 'html2canvas';
-import { clearGame, loadNonogramByID, selectNonogramRaw } from '../Game/gameSlice';
+import {
+    clearGame,
+    loadNonogramByID,
+    selectNonogramRaw,
+    updateUserGame,
+} from '../Game/gameSlice';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import Field from '../Game/Field';
+import { printElem } from '../../utils/helpers';
+import { makeInitialSaveGame } from '../Game/gameUtils/helpers';
 
 const controllerNonogram = new AbortController();
 const { signal } = controllerNonogram;
 
 export function PrintPage(): JSX.Element {
+    const { t } = useTranslation();
     const { id } = useParams();
-    const navigate = useNavigate();
-    const imageContainer = useRef(null);
-    const [imageSrc, setImageSrc] = useState<string>('');
-    const nonogramInStore = useAppSelector(selectNonogramRaw);
     const dispatch = useAppDispatch();
+    const imageContainer = useRef(null);
+    const nonogramInStore = useAppSelector(selectNonogramRaw);
+    const userGame = makeInitialSaveGame(nonogramInStore);
+
+    function handleClearClick() {
+        if (userGame) {
+            dispatch(updateUserGame(userGame));
+        }
+    }
 
     function handlePrintClick(e: React.MouseEvent) {
         const targetButton = e.target as HTMLButtonElement;
@@ -26,31 +40,14 @@ export function PrintPage(): JSX.Element {
                 '.game-field'
             ) as HTMLDivElement;
             if (printContent) {
-                html2canvas(printContent).then((canvas) => {
-                    document.body.innerHTML = '';
-                    // eslint-disable-next-line no-param-reassign
-                    if (widthValue === 'Full') canvas.id = 'canvasToPrint100';
-                    // eslint-disable-next-line no-param-reassign
-                    if (widthValue === 'Half') canvas.id = 'canvasToPrint50';
-                    // eslint-disable-next-line no-param-reassign
-                    if (widthValue === 'Small') canvas.id = 'canvasToPrint25';
-                    document.body.appendChild(canvas);
-                    window.print();
-                    // eslint-disable-next-line no-restricted-globals
-                    location.reload();
+                html2canvas(printContent, { scale: 10 }).then((canvas) => {
+                    const canvasImageSrc = canvas.toDataURL('image/png');
+                    if (widthValue === 'Full') printElem(canvasImageSrc, '100%');
+                    if (widthValue === 'Half') printElem(canvasImageSrc, '50%');
+                    if (widthValue === 'Small') printElem(canvasImageSrc, '25%');
                 });
             }
         }
-    }
-
-    function handleImageKeyUp(e: React.KeyboardEvent) {
-        e.stopPropagation();
-        console.log('key pressed');
-    }
-
-    function handleImageClick(e: React.MouseEvent) {
-        e.stopPropagation();
-        console.log('click');
     }
 
     useEffect(() => {
@@ -64,48 +61,43 @@ export function PrintPage(): JSX.Element {
         };
     }, [dispatch, id]);
 
-    // useEffect(() => {
-    //     if (id)
-    //         getNonogramMatrixForImage(id).then((data) =>
-    //             setImageSrc(getImageFromMatrix(data))
-    //         );
-    // }, [id]);
-
     return (
-        <div className="container py-3">
-            <div className="h4 text-center">Печать изображения</div>
-            <div
-                className="image-for-print-container"
-                ref={imageContainer}
-                onKeyUp={handleImageKeyUp}
-                role="button"
-                onClick={handleImageClick}
-                tabIndex={0}
-            >
+        <div className="py-3">
+            <div className="h4 text-center">{t('printImage')}</div>
+            <div className="image-for-print-container" ref={imageContainer}>
                 {nonogramInStore && <Field />}
             </div>
-            <div className="text-center">Размер на странице</div>
+            <div className="text-center my-2">
+                <button
+                    type="button"
+                    onClick={handleClearClick}
+                    className="btn btn-primary"
+                >
+                    {t('clearPrintImage')}
+                </button>
+            </div>
+            <div className="text-center my-2">{t('pageSize')}</div>
             <div className="d-flex justify-content-center">
                 <div className="btn-group">
                     {' '}
                     <button
                         onClick={handlePrintClick}
                         type="button"
-                        className="btn btn-outline-primary"
+                        className="btn btn-primary"
                     >
                         Full
                     </button>
                     <button
                         onClick={handlePrintClick}
                         type="button"
-                        className="btn btn-outline-primary"
+                        className="btn btn-primary"
                     >
                         Half
                     </button>
                     <button
                         onClick={handlePrintClick}
                         type="button"
-                        className="btn btn-outline-primary"
+                        className="btn btn-primary"
                     >
                         Small
                     </button>

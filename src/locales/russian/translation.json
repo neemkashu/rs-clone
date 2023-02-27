@@ -80,5 +80,8 @@
     "noInput": "Пожалуйста введите e-mail и пароль",
     "incorrectInput": "Неверный e-mail или пароль",
     "errorWithRegister": "Ошибка при регистрации",
-    "errorWithRegisterBody": "Возможно такой e-mail уже существует"
+    "errorWithRegisterBody": "Возможно такой e-mail уже существует",
+    "clearPrintImage": "Очистить кроссворд",
+    "printImage": "Печать кроссворда",
+    "pageSize": "Размер на бумаге"
 }

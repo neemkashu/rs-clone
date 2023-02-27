@@ -1,11 +1,10 @@
 import './CatalogItem.scss';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../hooks';
 import { CatalogItemProps } from '../../utils/types';
 import { getImageFromMatrix, getNonogramTitle } from '../../utils/helpers';
-import { Loading } from '../Loading/Loading';
 
 export function CatalogItem({ catalogItem, cardNumber, solvedGames }: CatalogItemProps) {
     const { t, i18n } = useTranslation();

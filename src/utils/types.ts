@@ -1,4 +1,5 @@
 import React, { MouseEventHandler } from 'react';
+import { NonogramRaw } from '../components/Game/gameUtils/types';
 import { SettingsTimingsEnum } from './enums';
 
 export type fieldPlace = 'header' | 'aside' | 'area' | 'miniature' | 'guide';
@@ -15,7 +16,7 @@ export type NonogramObject = {
             de: string;
         };
         colorMapping: {
-            1: string;
+            [key: number]: string;
         };
         goal: Array<number[]>;
         rows: Array<
@@ -143,19 +144,7 @@ export interface NonogramHint {
     hint: number;
     color: number;
 }
-export interface Nonogram {
-    height: number;
-    width: number;
-    title: Languages;
-    colorMapping: { [key: number]: string };
-    goal: number[][];
-    rows: NonogramHint[][];
-    columns: NonogramHint[][];
-}
-export interface NonogramRaw {
-    id: string;
-    nonogram: Nonogram;
-}
+
 export interface UserGameData {
     id: string;
     state: GameStatus;

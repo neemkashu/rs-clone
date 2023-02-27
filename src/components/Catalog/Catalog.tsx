@@ -24,7 +24,6 @@ export function Catalog(): JSX.Element {
 
     useEffect(() => {
         if (fetching && catalogDB.length < catalogDBLength) {
-            console.log('fetching');
             getCatalogDB(20, lastId)
                 .then((data) => {
                     const nonogramsDB = data[1];

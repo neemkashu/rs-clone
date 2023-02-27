@@ -1,5 +1,5 @@
 import { unifyTwoDimensionalArray } from '../../../utils/helpers';
-import { FieldPlace, fieldPlace, NonogramRaw } from '../../../utils/types';
+import { FieldPlace, fieldPlace } from '../../../utils/types';
 import { useAppSelector } from '../../hooks';
 import { selectNonogramRaw } from '../gameSlice';
 import TableAllRows from './TableAllRows';
