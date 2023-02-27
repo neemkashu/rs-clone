@@ -1,6 +1,6 @@
 export function Footer(): JSX.Element {
     return (
-        <footer className="footer container p-2 d-flex flex-wrap justify-content-center justify-content-sm-between border-3 border-secondary">
+        <footer className="footer container p-2 d-flex flex-wrap justify-content-center justify-content-sm-between navbar border-primary border-bottom-0">
             <div className="d-flex flex-wrap justify-content-between gap-3 p-1">
                 <a
                     className="col-auto text-decoration-none"

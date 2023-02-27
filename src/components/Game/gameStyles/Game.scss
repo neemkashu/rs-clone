@@ -4,19 +4,19 @@
     --cell-padding: 0px;
     --table-header-border: rgb(69, 186, 92);
     --table-header-border-dark: rgb(35, 127, 54);
-    --nonogram-body-color: #e6e4e48c;
-    --nonogram-body-light-color: #ffffff84;
-    --nonogram-border-color: #828499;
-    --nonogram-border-dark-color: #504f4f;
-    --nonogram-hints-color: #61626c;
-    --nonogram-hints-dark-color: #252525;
+    --nonogram-body-color: #e6e4e4cc;
+    --nonogram-body-light-color: #ffffff54;
+    --nonogram-border-color: #9092a8;
+    --nonogram-border-dark-color: #656565;
+    --nonogram-hints-color: #4f5059;
+    --nonogram-hints-dark-color: #313131;
 }
 
 [data-bs-theme='dark'] {
     .table {
         background-color: var(--nonogram-body-color) !important;
     }
-    .field-table  {
+    .field-table {
         border-color: var(--nonogram-border-dark-color) !important;
     }
     .nonogram-hints-border {
@@ -31,7 +31,7 @@
     .table {
         background-color: var(--nonogram-body-light-color) !important;
     }
-    .field-table  {
+    .field-table {
         border-color: var(--nonogram-border-color) !important;
     }
     .nonogram-hints-border {

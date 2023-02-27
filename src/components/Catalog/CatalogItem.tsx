@@ -6,7 +6,7 @@ import { useAppSelector } from '../hooks';
 import { CatalogItemProps } from '../../utils/types';
 import { getImageFromMatrix, getNonogramTitle } from '../../utils/helpers';
 
-const imageLinkStyle = { height: '80px' };
+const imageLinkStyle = { height: '100px' };
 const imagePreviewStyle = {
     maxHeight: '100%',
     maxWidth: '100%',
@@ -58,11 +58,11 @@ export function CatalogItem({ catalogItem, cardNumber, solvedGames }: CatalogIte
 
     return (
         <div className="catalog-item border border-secondary border-2 rounded-1">
-            <div className="p-1">
-                <div className="">{cardNumber}</div>
+            <div className="py-1 px-3 w-100">
+                <div className="text-center my-1">{cardNumber}</div>
                 <Link
                     to={`/game/${catalogItem.id}`}
-                    className="catalog-item__image d-flex justify-content-center align-content-center p-1"
+                    className="catalog-item__image d-flex justify-content-center align-content-center p-1 my-1"
                     style={imageLinkStyle}
                 >
                     <img
@@ -73,20 +73,20 @@ export function CatalogItem({ catalogItem, cardNumber, solvedGames }: CatalogIte
                     />
                 </Link>
                 <div>
-                    <div className="text-truncate">
+                    <div className="text-truncate my-1">
                         {getNonogramTitleDependingOnSettings()}
                     </div>
-                    <div>
+                    <div className="text-truncate my-1">
                         {t('size')}: {catalogItem.nonogram.width}x
                         {catalogItem.nonogram.height}
                     </div>
-                    <div>
-                        {t('difficulty')}: {catalogItem.nonogram.difficulty}
+                    <div className="text-truncate my-1">
+                        {t('difficulty')}: {catalogItem.nonogram.difficulty} / 5
                     </div>
                     <Link
                         to={`/print/${catalogItem.id}`}
                         type="button"
-                        className="btn btn-outline-secondary rounded-1"
+                        className="btn btn-secondary rounded-1 d-flex justify-content-center my-1"
                     >
                         {t('print')}
                     </Link>
