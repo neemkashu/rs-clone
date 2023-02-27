@@ -102,3 +102,12 @@ export type DragCellInfo = {
     indexNumberRow: number;
     hash?: string;
 };
+export const enum LineType {
+    ROW = 'row',
+    COLUMN = 'column',
+}
+
+export type IndexPair = {
+    indexRow: number;
+    indexNumberRow: number;
+};

@@ -6,7 +6,9 @@ import {
     CellAreaStateType,
     DragCellInfo,
     GameStatus,
+    IndexPair,
     Languages,
+    LineType,
     NonogramRaw,
     NonogramTime,
     UserFieldData,
@@ -291,3 +293,17 @@ export const getAreaCellStyle = (
         }
     }
 };
+
+export function indexes(
+    type: LineType,
+    indexLine: number,
+    indexInLine: number
+): IndexPair {
+    if (type === LineType.ROW) {
+        return { indexRow: indexLine, indexNumberRow: indexInLine };
+    }
+    if (type === LineType.COLUMN) {
+        return { indexRow: indexInLine, indexNumberRow: indexLine };
+    }
+    throw new Error('Incorrect line type!');
+}

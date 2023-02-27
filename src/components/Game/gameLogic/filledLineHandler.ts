@@ -2,75 +2,62 @@ import { useAppDispatch } from '../../hooks';
 import { store } from '../../store';
 import {
     addTimerId,
+    HugeActionList,
     updateAreaCell,
+    updateAreaCellAuto,
     updateHintCell,
+    updateHintCellAuto,
     updateMistakeData,
+    updatePaintProcess,
 } from '../gameSlice';
-import { checkIsLineCompleted, getColumnFromMatrix } from '../gameUtils/helpers';
-import { CellAreaState, ClickType, FieldPlace } from '../gameUtils/types';
+import { checkIsLineCompleted, getColumnFromMatrix, indexes } from '../gameUtils/helpers';
+import { CellAreaState, ClickType, FieldPlace, LineType } from '../gameUtils/types';
 
-export function fillRow(indexRow: number, dispatch: ReturnType<typeof useAppDispatch>) {
-    const hintLine = store.getState().game.present.userGame?.currentUserRows[indexRow];
-    const fieldLine =
-        store.getState().game.present.userGame?.currentUserSolution[indexRow];
-    hintLine?.forEach((hint, index) => {
-        if (hint) {
-            dispatch(
-                updateHintCell({
-                    isCrossedOut: true,
-                    indexColumn: index,
-                    indexRow,
-                    location: FieldPlace.ASIDE,
-                })
-            );
-        }
-    });
-    fieldLine?.forEach((cell, index) => {
-        if (cell === null) {
-            dispatch(
-                updateAreaCell({
-                    clickType: ClickType.MOUSE_CONTEXT,
-                    indexNumberRow: index,
-                    indexRow,
-                })
-            );
-        }
-    });
-}
-export function fillColumn(
-    indexNumberRow: number,
+export function fillLine(
+    type: LineType,
+    indexLine: number,
     dispatch: ReturnType<typeof useAppDispatch>
 ) {
     const hintLine =
-        store.getState().game.present.userGame?.currentUserColumns[indexNumberRow];
-    const fieldLine = getColumnFromMatrix(
-        store.getState().game.present.userGame?.currentUserSolution ?? null,
-        indexNumberRow
-    );
+        type === LineType.ROW
+            ? store.getState().game.present.userGame?.currentUserRows[indexLine]
+            : store.getState().game.present.userGame?.currentUserColumns[indexLine];
+
+    const location = type === LineType.ROW ? FieldPlace.ASIDE : FieldPlace.HEADER;
+
+    const field = store.getState().game.present.userGame?.currentUserSolution;
+    const lineSize = type === LineType.ROW ? field?.length : field && field[0].length;
+
+    if (lineSize === undefined) return;
+
     hintLine?.forEach((hint, index) => {
         if (hint) {
             dispatch(
-                updateHintCell({
+                updateHintCellAuto({
                     isCrossedOut: true,
-                    indexColumn: indexNumberRow,
-                    indexRow: index,
-                    location: FieldPlace.HEADER,
+                    indexLine,
+                    indexInLine: index,
+                    location,
                 })
             );
         }
     });
-    fieldLine?.forEach((cell, index) => {
+    for (let indexInLine = 0; indexInLine < lineSize; indexInLine += 1) {
+        const { indexRow, indexNumberRow } = indexes(type, indexLine, indexInLine);
+        const cell = field && field[indexRow][indexNumberRow];
         if (cell === null) {
             dispatch(
-                updateAreaCell({
-                    clickType: ClickType.MOUSE_CONTEXT,
+                updateAreaCellAuto({
+                    paint: CellAreaState.CROSSED,
+                    indexRow,
                     indexNumberRow,
-                    indexRow: index,
                 })
             );
         }
-    });
+    }
+    dispatch(updatePaintProcess(HugeActionList.AUTOCROSS));
 }
+
 export function filledLineHandler(
     indexRow: number,
     indexNumberRow: number,
@@ -99,7 +86,7 @@ export function filledLineHandler(
                 goalLineActual &&
                 checkIsLineCompleted(userLineActual, goalLineActual)
             ) {
-                fillRow(indexRow, dispatch);
+                fillLine(LineType.ROW, indexRow, dispatch);
             }
         }, delay);
         dispatch(addTimerId(complitedLineTimer));
@@ -132,7 +119,7 @@ export function filledLineHandler(
                 goalActualColumn &&
                 checkIsLineCompleted(userActualColumn, goalActualColumn)
             ) {
-                fillColumn(indexNumberRow, dispatch);
+                fillLine(LineType.COLUMN, indexNumberRow, dispatch);
             }
         }, delay);
         dispatch(addTimerId(complitedLineTimer));

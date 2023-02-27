@@ -53,7 +53,7 @@ export function WinChecker(): JSX.Element {
                 );
             }
         }
-    }, [nonogramRaw, gameStatus, dispatch, isWin]); // userSolution
+    }, [nonogramRaw, gameStatus, dispatch, isWin, userSolution]); // userSolution
 
     return <div>{isWin && <WinComponent />}</div>;
 }
