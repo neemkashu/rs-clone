@@ -1,5 +1,5 @@
 import './PrintPage.scss';
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import html2canvas from 'html2canvas';
@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from '../hooks';
 import Field from '../Game/Field';
 import { printElem } from '../../utils/helpers';
 import { makeInitialSaveGame } from '../Game/gameUtils/helpers';
+import { Loading } from '../Loading/Loading';
 
 const controllerNonogram = new AbortController();
 const { signal } = controllerNonogram;
@@ -65,9 +66,9 @@ export function PrintPage(): JSX.Element {
         <div className="py-3">
             <div className="h4 text-center">{t('printImage')}</div>
             <div className="image-for-print-container" ref={imageContainer}>
-                {nonogramInStore && <Field />}
+                {nonogramInStore ? <Field /> : <Loading />}
             </div>
-            <div className="text-center my-2">
+            <div className="text-center my-3">
                 <button
                     type="button"
                     onClick={handleClearClick}

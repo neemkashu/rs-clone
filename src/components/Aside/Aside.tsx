@@ -1,4 +1,5 @@
 import './Aside.scss';
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { handleAsideCloseBtnClick } from '../../utils/helpers';
@@ -7,7 +8,7 @@ export function Aside(): JSX.Element {
     const { t } = useTranslation();
 
     return (
-        <aside id="aside" className="border-3 border-secondary border-end">
+        <aside id="aside" className="border-3 border-primary border-end">
             <button
                 type="button"
                 onClick={handleAsideCloseBtnClick}
@@ -17,16 +18,16 @@ export function Aside(): JSX.Element {
                 ✕
             </button>
             <div id="aside-btns" className="container p-2 btn-group-vertical">
-                <NavLink to="/" className="btn btn-outline-primary">
+                <NavLink to="/" className="btn btn-secondary">
                     {t('catalogMainPage')}
                 </NavLink>
-                <NavLink to="/catalog" className="btn btn-outline-primary">
+                <NavLink to="/catalog" className="btn btn-secondary">
                     {t('catalogCatalog')}
                 </NavLink>
-                <NavLink to="/random-game" className="btn btn-outline-primary">
+                <NavLink to="/random-game" className="btn btn-secondary">
                     {t('catalogRandomGame')}
                 </NavLink>
-                <NavLink to="/how-to-solve" className="btn btn-outline-primary">
+                <NavLink to="/how-to-solve" className="btn btn-secondary">
                     {t('catalogHelp')}
                 </NavLink>
             </div>

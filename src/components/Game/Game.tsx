@@ -81,20 +81,16 @@ function Game({ id }: { id: string }): JSX.Element {
         };
     }, []);
 
-    return (
+    return nonogramInStore ? (
         <div className="p-0 mb-2 p-sm-1 d-flex flex-column gap-2">
-            {nonogramInStore ? (
-                <>
-                    <GameHeader />
-                    <Chronometer />
-                    <Field />
-                    <WinChecker />
-                    <Controls />
-                </>
-            ) : (
-                <Loading />
-            )}
+            <GameHeader />
+            <Chronometer />
+            <Field />
+            <WinChecker />
+            <Controls />
         </div>
+    ) : (
+        <Loading />
     );
 }
 

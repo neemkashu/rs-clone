@@ -5,9 +5,6 @@ import { getCatalogDB, getSolvedGames } from '../../api/requests';
 import { Loading } from '../Loading/Loading';
 import { catalogDBLength } from '../../utils/constants';
 
-// const controllerNonogram = new AbortController();
-// const { signal } = controllerNonogram;
-
 export function Catalog(): JSX.Element {
     const [catalogDB, setCatalogDB] = useState<NonogramObject[]>([]);
     const [solvedGamesArr, setSolvedGamesArr] = useState<UserGameObject[]>([]);
@@ -23,8 +20,9 @@ export function Catalog(): JSX.Element {
     }
 
     useEffect(() => {
+        const container = document.querySelector('.section-container') as HTMLDivElement;
         if (fetching && catalogDB.length < catalogDBLength) {
-            getCatalogDB(20, lastId)
+            getCatalogDB(10, lastId)
                 .then((data) => {
                     const nonogramsDB = data[1];
                     if (nonogramsDB.length) {
@@ -33,19 +31,20 @@ export function Catalog(): JSX.Element {
                         setLastId(data[0]);
                     }
                 })
-                .finally(() => setFetching(false));
+                .finally(() => {
+                    setFetching(false);
+                    if (!(container?.scrollHeight > container?.clientHeight)) {
+                        setTimeout(() => {
+                            console.log('ass');
+                            setFetching(true);
+                        }, 0);
+                    }
+                });
             getSolvedGames().then((data) => {
                 setSolvedGamesArr(data.data);
             });
         }
     }, [fetching]);
-
-    // useEffect(() => {
-    //     return () => {
-    //         console.log('unmount');
-    //         controllerNonogram.abort();
-    //     };
-    // }, []);
 
     useEffect(() => {
         const container = document.querySelector('.section-container');
@@ -56,7 +55,15 @@ export function Catalog(): JSX.Element {
     return isLoading ? (
         <Loading />
     ) : (
-        <div className="p-2 d-flex flex-wrap gap-2">
+        <div
+            className="p-2"
+            style={{
+                justifyContent: 'center',
+                display: 'grid',
+                gridGap: '1rem',
+                gridTemplateColumns: 'repeat(auto-fill, 320px)',
+            }}
+        >
             {catalogDB.map((item, index) => {
                 return (
                     <CatalogItem

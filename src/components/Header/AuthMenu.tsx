@@ -25,7 +25,7 @@ export function AuthMenu(): JSX.Element {
                 <div>{currentUser}</div>
                 <button
                     type="button"
-                    className="btn btn-outline-primary text-nowrap"
+                    className="btn btn-primary text-nowrap"
                     onClick={hanleSignOut}
                 >
                     {t('signOut')}
@@ -36,10 +36,10 @@ export function AuthMenu(): JSX.Element {
 
     return (
         <div className="col d-flex justify-content-center justify-content-sm-end gap-2 py-1">
-            <Link to="/auth" className="btn btn-outline-success text-nowrap">
+            <Link to="/auth" className="btn btn-success text-nowrap">
                 {t('signIn')}
             </Link>
-            <Link to="/register" className="btn btn-outline-primary text-nowrap">
+            <Link to="/register" className="btn btn-primary text-nowrap">
                 {t('signUp')}
             </Link>
         </div>

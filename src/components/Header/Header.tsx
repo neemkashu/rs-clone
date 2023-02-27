@@ -28,8 +28,8 @@ export function Header(): JSX.Element {
         <>
             <SettingsModal />
 
-            <header className="navbar  container p-2 border-3 border-primary border-top-0">
-                <div className="row flex-wrap">
+            <header className="navbar container p-2 border-primary border-top-0">
+                <div className="col flex-wrap">
                     <div className="col d-flex justify-content-between justify-content-sm-start gap-2 py-1">
                         {isBurgerBtnVisible && <AsideButton />}
                         <button
