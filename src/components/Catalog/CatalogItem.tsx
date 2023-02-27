@@ -6,6 +6,12 @@ import { useAppSelector } from '../hooks';
 import { CatalogItemProps } from '../../utils/types';
 import { getImageFromMatrix, getNonogramTitle } from '../../utils/helpers';
 
+const imageLinkStyle = { height: '80px' };
+const imagePreviewStyle = {
+    maxHeight: '100%',
+    maxWidth: '100%',
+};
+
 export function CatalogItem({ catalogItem, cardNumber, solvedGames }: CatalogItemProps) {
     const { t, i18n } = useTranslation();
     const settingsMain = useAppSelector((state) => state.settings.main);
@@ -46,21 +52,19 @@ export function CatalogItem({ catalogItem, cardNumber, solvedGames }: CatalogIte
     }
 
     return (
-        <div className="catalog-item border border-secondary border-2 rounded">
+        <div className="catalog-item border border-secondary border-2 rounded-1">
             <div className="p-1">
                 <div className="">{cardNumber}</div>
                 <Link
                     to={`/game/${catalogItem.id}`}
-                    className="catalog-item__image d-flex align-items-center p-1"
+                    className="catalog-item__image d-flex justify-content-center align-content-center p-1"
+                    style={imageLinkStyle}
                 >
                     <img
                         ref={imageToPrint}
                         src={getNonogramImageSrcDependingOnSettings()}
                         alt="nonogram preview"
-                        style={{
-                            width: '100%',
-                            maxHeight: '100%',
-                        }}
+                        style={imagePreviewStyle}
                     />
                 </Link>
                 <div>
@@ -77,7 +81,7 @@ export function CatalogItem({ catalogItem, cardNumber, solvedGames }: CatalogIte
                     <Link
                         to={`/print/${catalogItem.id}`}
                         type="button"
-                        className="btn btn-outline-secondary rounded"
+                        className="btn btn-outline-secondary rounded-1"
                     >
                         {t('print')}
                     </Link>
