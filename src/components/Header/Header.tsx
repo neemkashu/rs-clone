@@ -33,7 +33,7 @@ export function Header(): JSX.Element {
                         {isBurgerBtnVisible && <AsideButton />}
                         <button
                             type="button"
-                            className="btn btn-outline-secondary"
+                            className="btn btn-primary"
                             data-bs-toggle="modal"
                             data-bs-target="#settingsModal"
                         >

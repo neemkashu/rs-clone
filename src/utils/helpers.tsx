@@ -200,6 +200,7 @@ export function getImageFromMatrix(matrix?: number[][]): string {
 export function changeColorTheme(isLightTheme: boolean) {
     const color = isLightTheme ? 'light' : 'dark';
     document.querySelector('html')?.setAttribute('data-bs-theme', color);
+    localStorage.setItem('currentTheme', color);
 }
 
 export function getUserCurrentTimes(
