@@ -106,3 +106,8 @@ export const enum LineType {
     ROW = 'row',
     COLUMN = 'column',
 }
+
+export type IndexPair = {
+    indexRow: number;
+    indexNumberRow: number;
+};
