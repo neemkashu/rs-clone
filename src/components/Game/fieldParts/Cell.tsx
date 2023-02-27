@@ -71,9 +71,9 @@ export default function Cell({
             onDragOver={(event) => event.preventDefault()}
         >
             <div
-                style={{ lineHeight: '1.1' }}
+                style={{ lineHeight: '1.1rem' }}
                 onDragEnter={handleDragEnter}
-                className={`square lh-1 text-center ${stateStyle
+                className={`square text-center ${stateStyle
                     ?.filter((item) => item)
                     ?.join(' ')}`}
             >
