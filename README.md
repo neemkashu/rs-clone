@@ -1,8 +1,12 @@
+# RS Clone: Nonograms
+
+## Deploy 
+
+[nlb-nonograms.netlify.com](https://nlb-rs-nonogram.netlify.app/)
+
 ## Application functionality
 
-(https://www.nonograms.org)[https://www.nonograms.org]
-
-This application is a clone of the website (https://www.nonograms.org)[https://www.nonograms.org], which is dedicated to Paint-By-Numbers puzzles, also known as nonograms. The app features a catalog of puzzles, an intuitive game interface, and settings for both gameplay and appearance. There's also a handy game guide included. When you register with the app, you can save your game progress and continue playing on another device. Additionally, the app tracks your progress for each puzzle in the catalog. For more information, see the detailed description below.
+This application is a clone of the website [nonograms.org](https://www.nonograms.org), which is dedicated to Paint-By-Numbers puzzles, also known as `nonograms`. The app features a `catalog` of puzzles, an intuitive `game interface`, and `settings` for both gameplay and appearance. There's also a handy `game guide` included. When you register with the app, you can `save your game progress` and continue playing on another device. Additionally, the app tracks your progress for each puzzle in the catalog. For more information, see the detailed description below.
 
 1.  [Main page](modules/main-page.md)
 2.  [Game](modules/playground.md)
